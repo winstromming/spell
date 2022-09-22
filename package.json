@@ -1,0 +1,48 @@
+{
+  "name": "spell",
+  "version": "0.0.1",
+  "licence": "CC-BY-1.0",
+  "scripts": {
+    "build": "parcel build --dist-dir docs",
+    "watch": "parcel --dist-dir .parcel-server"
+  },
+  "dependencies": {
+    "@vicons/antd": "^0.12.0",
+    "@vicons/fluent": "^0.12.0",
+    "@vicons/ionicons5": "^0.12.0",
+    "@vicons/utils": "^0.1.4",
+    "lodash": "^4.17.21",
+    "naive-ui": "^2.33.3",
+    "vfonts": "^0.0.3",
+    "vue": "^3.2.39"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@parcel/transformer-vue": "2.7.0",
+    "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "eslint": "^7.0.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^7.0.0",
+    "parcel": "^2.7.0",
+    "prettier": "^2.7.1",
+    "process": "^0.11.10"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": false,
+    "printWidth": 100,
+    "singleAttributePerLine": false
+  },
+  "targets": {
+    "default": {
+      "publicUrl": ".",
+      "includeNodeModules": true
+    }
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "source": "code/index.html"
+}
