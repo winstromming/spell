@@ -1478,14 +1478,6 @@ export default {
     addYantra(key) {
       let yantra = this.yantras.get(key)
 
-      // check uniques
-      if (this.isUniqueYantraUsed(key)) {
-        // debounce(() => {
-        //   Toast.create(`The ${yantra.name} Yantra can only be selected once`)
-        // })()
-        return
-      }
-
       this.spell.yantras.push(yantra)
     },
     deleteYantra(key) {
@@ -1520,6 +1512,7 @@ export default {
     // Spell Stuff
     formatSpell(spell) {
       this.message.info(`${spell.name} was copied as Roll20 Macro to clipboard`)
+      this.message.warning("But I haven't finished this function yet :)")
     },
     removeSpell(spell) {
       let index = findIndex(this.saved, (item) => item.id === spell.id)
