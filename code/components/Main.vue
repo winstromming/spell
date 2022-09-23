@@ -1,9 +1,12 @@
 <template>
   <n-config-provider :theme="theme" :theme-overrides="{ common: { fontWeightStrong: '600' } }">
     <n-layout static embedded content-style="padding: 30px; padding-bottom: 100px; max-width: 600px; margin: 0 auto">
-      <n-tabs default-value="caster" size="large" animated>
+      <n-tabs default-value="spell" size="large" animated>
         <template #suffix>
-          <n-switch v-model:value="light" @update:value="setLight" />
+          <n-switch v-model:value="dark" @update:value="setDark">
+            <template #checked>Dark</template>
+            <template #unchecked>Dark</template>
+          </n-switch>
         </template>
         <n-tab-pane name="caster" tab="Caster">
           <n-space vertical>
@@ -43,8 +46,12 @@
             </Card>
           </n-space>
         </n-tab-pane>
-        <n-tab-pane name="spell" tab="Spell" :disabled="hasConfiguredCaster === false">
+        <n-tab-pane name="spell" tab="Spell">
           <n-space vertical>
+            <!-- Info -->
+            <n-alert type="info" v-if="hasConfiguredCaster === false">
+              <n-text>You need to configure your Gnosis and Arcana in the <b>Caster</b> tab first.</n-text>
+            </n-alert>
             <!-- Spell -->
             <Card title="Spell" :summary="spellSummary" v-if="hasConfiguredCaster">
               <template #content>
@@ -266,16 +273,17 @@
               <template #content>
                 <n-space vertical>
                   <n-text><b>Factors:</b> {{ item.factorSummary }}.</n-text>
-                  <n-text><b>Effects:</b> {{ item.effectSummary }}</n-text>
+                  <n-text v-if="item.effectSummary"><b>Effects:</b> {{ item.effectSummary }}</n-text>
                   <n-text v-if="item.yantraSummary"><b>Yantras:</b> {{ item.yantraSummary }}.</n-text>
                 </n-space>
               </template>
               <template #footer>
-                <n-space>
-                  <n-button @click="formatSpell(item)">Roll20</n-button>
-                  <n-button @click="copySpell(item)">Duplicate</n-button>
-                  <n-button @click="loadSpell(item)">Load</n-button>
-                  <n-button type="error" @click="removeSpell(item)">Delete</n-button>
+                <n-space justify="space-between">
+                  <n-button strong type="info" @click="formatSpell(item)">Roll20</n-button>
+                  <n-space>
+                    <n-button strong type="error" @click="removeSpell(item)">Remove</n-button>
+                    <n-button strong type="success" @click="loadSpell(item)">Load</n-button>
+                  </n-space>
                 </n-space>
               </template>
             </Card>
@@ -292,8 +300,8 @@
           <n-tag v-if="hasParadox" :bordered="false" round strong type="error"> Paradox {{ paradoxDice }} </n-tag>
         </n-space>
         <n-space size="small">
-          <n-button type="info" strong @click="formatSpell(spell)">Roll20</n-button>
           <n-button type="warning" strong @click="reset">Reset</n-button>
+          <n-button type="info" strong @click="formatSpell(spell)">Roll20</n-button>
           <n-button type="success" strong @click="saveSpell(spell)">Save</n-button>
         </n-space>
       </n-space>
@@ -408,7 +416,7 @@ export default {
       paradox: clone(defaultParadox),
       saved: [],
       theme: lightTheme,
-      light: true,
+      dark: false,
     }
   },
   computed: {
@@ -1147,6 +1155,7 @@ export default {
       if (this.spell.isPraxis) summary.push(`Praxis`)
       if (this.spell.isRote) summary.push(`Rote (+${this.spell.roteSkill})`)
       if (this.spell.spendWillpower) summary.push("Willpower")
+      if (this.spell.effects.length) summary.push(`Effects (${this.spell.effects.length})`)
       if (summary.length === 0) return "None"
       return summary.join(", ")
     },
@@ -1322,9 +1331,9 @@ export default {
     },
   },
   methods: {
-    setLight(value) {
-      if (value === false) this.theme = darkTheme
-      if (value === true) this.theme = lightTheme
+    setDark(value) {
+      if (value === true) this.theme = darkTheme
+      if (value === false) this.theme = lightTheme
     },
     chooseSpell(spell) {
       this.spell.name = spell.name
@@ -1510,22 +1519,16 @@ export default {
     },
     // Spell Stuff
     formatSpell(spell) {
-      this.message.info("Roll20 macro copied to clipboard")
+      this.message.info(`${spell.name} was copied as Roll20 Macro to clipboard`)
     },
     removeSpell(spell) {
       let index = findIndex(this.saved, (item) => item.id === spell.id)
       this.saved.splice(index, 1)
-    },
-    copySpell(spell) {
-      let index = findIndex(this.saved, (item) => item.id === spell.id)
-      const item = clone(spell)
-      item.id = new Date().getTime()
-      this.saved.splice(index + 1, 0, item)
-      this.message.info(`${spell.name} duplicated`)
+      this.message.error(`${spell.name} was removed from saved spells`)
     },
     loadSpell(spell) {
       this.spell = spell
-      this.message.info(`${spell.name} loaded`)
+      this.message.success(`${spell.name} configuration was loaded`)
     },
     saveSpell(spell) {
       const item = clone(spell)
@@ -1543,7 +1546,7 @@ export default {
       itemFactorSummary.push(`${this.rangeSummary} range`)
       itemFactorSummary.push(`${this.scaleSummary}`)
       const itemEffectSummary = item.effects.map(effect => effect.effect);
-      if (item.spendWillpower) itemEffectSummary.unshift("Spending willpower")
+      if (item.spendWillpower) itemEffectSummary.unshift("Willpower spent.")
       const itemYantraSummary = item.yantras.map(yantra => yantra.name);
       item.id = new Date().getTime()
       item.castingSummary = itemCastingSummary.join(", ")
@@ -1551,13 +1554,13 @@ export default {
       item.effectSummary = itemEffectSummary.join(" ")
       item.yantraSummary = itemYantraSummary.join(", ")
       this.saved.push(item)
-      this.message.success(`${spell.name} saved`)
+      this.message.success(`${spell.name} was added to saved spells`)
     },
     reset() {
       this.spell = clone(defaultSpell)
       this.paradox = clone(defaultParadox)
       this.conditions = clone(defaultConditions)
-      this.message.success("Reset the spell configuration")
+      this.message.warning("Spell configuration was reset")
     },
     log(text) {
       console.log(text)
@@ -1629,7 +1632,7 @@ body {
   stroke: var(--n-text-color);
 }
 .n-tabs-nav__suffix .n-switch.n-switch--active .n-switch__rail {
-    background-color: #f2c97d;
+    /* background-color: #f2c97d; */
 }
 .bottom {
   position: fixed;
