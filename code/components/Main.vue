@@ -1,12 +1,13 @@
 <template>
   <n-config-provider :theme="theme" :theme-overrides="{ common: { fontWeightStrong: '600' } }">
-    <n-layout static embedded content-style="padding: 30px; padding-bottom: 100px; max-width: 600px; margin: 0 auto">
-      <n-tabs default-value="spell" size="large" animated>
+    <n-layout static embedded>
+      <n-tabs default-value="spell" animated>
         <template #suffix>
-          <n-switch v-model:value="dark" @update:value="setDark">
+          <n-button quaternary :disabled="canCastSpell === false" size="small" type="warning" @click="reset"> Reset </n-button>
+          <!-- <n-switch v-model:value="dark" @update:value="setDark">
             <template #checked>Dark</template>
             <template #unchecked>Dark</template>
-          </n-switch>
+          </n-switch> -->
         </template>
         <n-tab-pane name="caster" tab="Caster">
           <n-space vertical>
@@ -57,7 +58,7 @@
               <template #content>
                 <n-space vertical size="large">
                   <n-select filterable placeholder="What spell are you casting?" v-model:value="spell.name" @update:value="chooseSpell" :options="chooseSpellOptions" />
-                  <n-text v-if="spell.name" italic depth="2">({{ spell.page }}) {{ spell.description }}</n-text>
+                  <n-text v-if="spell.name" italic depth="2">{{ spell.description }} ({{ spell.page }})</n-text>
                   <n-alert type="warning" v-if="spell.name && isSpellArcanaTooHigh">
                     <n-text>You don't have the arcana required for this spell</n-text>
                   </n-alert>
@@ -84,48 +85,41 @@
                   <n-table bordered striped class="e-table" style="margin-left: -5px; width: calc(100% + 10px)">
                     <tbody>
                       <tr>
-                        <td width="20">
+                        <td width="20" style="padding-right: 0">
                           <n-switch size="small" v-model:value="spell.isPraxis" @update:value="setRote(false)" />
                         </td>
-                        <td width="140">
+                        <td width="150">
                           <b>Cast as Praxis</b>
                         </td>
-                        <td colspan="2"></td>
+                        <td></td>
                       </tr>
                       <tr>
-                        <td width="20">
+                        <td width="20" style="padding-right: 0">
                           <n-switch size="small" v-model:value="spell.isRote" @update:value="setPraxis(false)" />
                         </td>
-                        <td width="140">
+                        <td width="150" colspan="2">
                           <b>Cast as Rote</b>
-                          <b v-if="spell.isRote"> (+{{ spell.roteSkill }})</b>
-                        </td>
-                        <td>
+                          <b v-if="spell.isRote"> (+{{ spell.roteSkill }} Skill)</b>
+                          <br />
                           <n-slider v-if="spell.isRote" :tooltip="false" :min="0" :max="10" v-model:value="spell.roteSkill" />
                         </td>
                       </tr>
                       <tr>
-                        <td width="20">
+                        <td width="20" style="padding-right: 0">
                           <n-switch size="small" v-model:value="spell.spendWillpower" />
                         </td>
-                        <td width="140">
-                          <b>Spend Willpower</b>
+                        <td width="150" colspan="2">
+                          <b>+1 Willpower:</b><br />
+                          Gain +3 dice.
                         </td>
-                        <td colspan="2">Gain +3 dice</td>
                       </tr>
-                    </tbody>
-                  </n-table>
-                  <n-table v-if="spell.additionalEffects" bordered striped class="e-table" style="margin-left: -5px; width: calc(100% + 10px)">
-                    <tbody>
                       <tr v-for="(item, index) of spell.additionalEffects" :key="index">
-                        <td v-if="item.cost" width="20">
+                        <td v-if="item.cost" width="20" style="padding-right: 0">
                           <n-switch size="small" :disabled="isEffectRestricted(item)" :value="isEffectAdded(item)" @update:value="toggleEffect(item)" />
                         </td>
-                        <td v-if="item.cost" width="140">
-                          <b>{{ item.cost.map(c => `+${c.value} ${c.type}`).join(", ")}}</b>
-                        </td>
-                        <td :colspan="item.cost ? 1 : 3">
-                          <b v-if="item.requirement">({{ item.requirement.map(v => `${v.arcana} ${v.value}`).join(", ") }}):</b>
+                        <td v-if="item.cost" colspan="2">
+                          <b>{{ item.cost.map(c => `+${c.value} ${c.type}`).join(", ")}}</b
+                          ><b v-if="item.requirement"> ({{ item.requirement.map(v => `${v.arcana} ${v.value}`).join(", ") }})</b><b>:</b><br />
                           {{ item.effect }}
                         </td>
                       </tr>
@@ -266,12 +260,13 @@
         <n-tab-pane name="saved" :tab="`Saved (${saved.length})`">
           <n-space vertical>
             <n-card embedded v-if="saved.length === 0">
-              <n-text italic depth="3">You haven't saved any spells!</n-text>
+              <n-text italic depth="3">No saved spells found</n-text>
             </n-card>
             <!-- Saved -->
             <Card :title="item.name" collapsed :summary="item.castingSummary" v-for="(item, index) in saved" :key="index">
               <template #content>
                 <n-space vertical>
+                  <n-text><b>Casting:</b> {{ item.castingSummary }}.</n-text>
                   <n-text><b>Factors:</b> {{ item.factorSummary }}.</n-text>
                   <n-text v-if="item.effectSummary"><b>Effects:</b> {{ item.effectSummary }}</n-text>
                   <n-text v-if="item.yantraSummary"><b>Yantras:</b> {{ item.yantraSummary }}.</n-text>
@@ -279,10 +274,10 @@
               </template>
               <template #footer>
                 <n-space justify="space-between">
-                  <n-button strong type="info" @click="formatSpell(item)">Roll20</n-button>
+                  <n-button quaternary size="small" type="error" @click="removeSpell(item)"> Remove </n-button>
                   <n-space>
-                    <n-button strong type="error" @click="removeSpell(item)">Remove</n-button>
-                    <n-button strong type="success" @click="loadSpell(item)">Load</n-button>
+                    <n-button size="small" type="info" @click="formatSpell(item)">Roll20</n-button>
+                    <n-button size="small" type="success" @click="loadSpell(item)">Load</n-button>
                   </n-space>
                 </n-space>
               </template>
@@ -291,18 +286,22 @@
         </n-tab-pane>
       </n-tabs>
     </n-layout>
-    <n-card class="bottom" v-if="canCastSpell">
-      <n-space horizontal size="small" justify="space-between">
-        <n-space size="small">
-          <n-tag :bordered="false" round strong :type="usedReach > freeReach ? 'warning' : 'success'"> Reach {{ usedReach }}/{{ freeReach }} </n-tag>
-          <n-tag :bordered="false" round strong :type="isDicePoolTooLow ? 'warning' : 'success'"> Dice Pool {{ dicePool }} </n-tag>
-          <n-tag :bordered="false" round strong type="success">Mana {{ totalMana }}</n-tag>
-          <n-tag v-if="hasParadox" :bordered="false" round strong type="error"> Paradox {{ paradoxDice }} </n-tag>
+    <n-card class="quick">
+      <n-space align="center" justify="space-between">
+        <n-space size="small" v-if="canCastSpell">
+          <n-tag size="small" :bordered="false" round strong :type="usedReach > freeReach ? 'warning' : 'success'"> Reach {{ usedReach }}/{{ freeReach }} </n-tag>
+          <n-tag size="small" :bordered="false" round strong :type="isDicePoolTooLow ? 'warning' : 'success'"> Dice Pool {{ dicePool }} </n-tag>
+          <n-tag size="small" :bordered="false" round strong type="success">Mana {{ totalMana }}</n-tag>
+          <n-tag v-if="hasParadox" size="small" :bordered="false" round strong type="error"> Paradox {{ paradoxDice }} </n-tag>
         </n-space>
-        <n-space size="small">
-          <n-button type="warning" strong @click="reset">Reset</n-button>
-          <n-button type="info" strong @click="formatSpell(spell)">Roll20</n-button>
-          <n-button type="success" strong @click="saveSpell(spell)">Save</n-button>
+        <n-space size="small" v-if="canCastSpell === false">
+          <n-tag size="small" disabled :bordered="false" round strong>Reach 0/0</n-tag>
+          <n-tag size="small" disabled :bordered="false" round strong>Dice Pool 0</n-tag>
+          <n-tag size="small" disabled :bordered="false" round strong>Mana 0</n-tag>
+        </n-space>
+        <n-space size="small" justify="end">
+          <n-button :disabled="canCastSpell === false" size="small" type="info" @click="formatSpell(spell)">Roll20</n-button>
+          <n-button :disabled="canCastSpell === false" size="small" type="success" @click="saveSpell(spell)">Save</n-button>
         </n-space>
       </n-space>
     </n-card>
@@ -314,7 +313,7 @@ import { clone, max, some, capitalize, findIndex, range } from "lodash"
 import { useMessage } from "naive-ui"
 import { darkTheme, lightTheme } from "naive-ui"
 
-import { Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline } from "@vicons/ionicons5"
+import { Close, Save, Reload, ChevronDown, ChevronUp, Ellipse, EllipseOutline } from "@vicons/ionicons5"
 
 import Card from "./Card.vue"
 
@@ -398,7 +397,7 @@ const defaultParadox = {
 }
 
 export default {
-  components: { Card, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
+  components: { Card, Save, Reload, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
   setup() {
     const message = useMessage()
     return {
@@ -552,7 +551,7 @@ export default {
       }
 
       // indefinite duration costs 1 reach
-      if (!this.isPrimaryFactor("duration") && this.spell.factors.duration === "a6") {
+      if (!this.isPrimaryFactor("Duration") && this.spell.factors.duration === "a6") {
         reach++
       }
 
@@ -637,7 +636,7 @@ export default {
     durationPenalty() {
       let penalty = durations.get(this.spell.factors.duration).penalty
 
-      if (this.isPrimaryFactor("duration")) {
+      if (this.isPrimaryFactor("Duration")) {
         penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
       }
 
@@ -653,7 +652,7 @@ export default {
     potencyPenalty() {
       let penalty = (this.potencyValue - 1) * 2
 
-      if (this.isPrimaryFactor("potency")) {
+      if (this.isPrimaryFactor("Potency")) {
         penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
       }
 
@@ -704,11 +703,11 @@ export default {
       return [
         {
           label: "Duration",
-          value: "duration",
+          value: "Duration",
         },
         {
           label: "Potency",
-          value: "potency",
+          value: "Potency",
         },
       ]
     },
@@ -779,7 +778,7 @@ export default {
       return this.spell.yantras.length
     },
     isConcentrationMantraAllowed() {
-      return this.isPrimaryFactor("duration") || this.spell.factors.duration !== "s1"
+      return this.isPrimaryFactor("Duration") || this.spell.factors.duration !== "s1"
     },
     isDedicatedToolYantraUsed: {
       cache: false,
@@ -934,7 +933,7 @@ export default {
       while (i++ < 11) {
         let penalty = (i - 1) * 2
 
-        if (this.isPrimaryFactor("potency")) {
+        if (this.isPrimaryFactor("Potency")) {
           penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
         }
 
@@ -956,7 +955,7 @@ export default {
       while (i++ < 11) {
         let penalty = (i - 1) * 2
 
-        if (this.isPrimaryFactor("potency")) {
+        if (this.isPrimaryFactor("Potency")) {
           penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
         }
 
@@ -1011,7 +1010,7 @@ export default {
         if (key[0] === "s") {
           let penalty = duration.penalty
 
-          if (this.isPrimaryFactor("duration")) {
+          if (this.isPrimaryFactor("Duration")) {
             penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
           }
 
@@ -1037,7 +1036,7 @@ export default {
         if (key[0] === "a") {
           let penalty = duration.penalty
 
-          if (this.isPrimaryFactor("duration")) {
+          if (this.isPrimaryFactor("Duration")) {
             penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
           }
 
@@ -1109,7 +1108,7 @@ export default {
         children: this.standardScaleOptions.map(({ value, number, size, area, penalty }) => {
           return {
             value: value,
-            label: `${number} subjects, ${area.toLowerCase()} (${penalty} dice)`,
+            label: `${number} subjects or ${area.toLowerCase()} (${penalty} dice)`,
           }
         }),
       })
@@ -1120,7 +1119,7 @@ export default {
         children: this.advancedScaleOptions.map(({ value, number, size, area, penalty }) => {
           return {
             value: value,
-            label: `${number} subjects, ${area.toLowerCase()} (${penalty} dice)`,
+            label: `${number} subjects or ${area.toLowerCase()} (${penalty} dice)`,
           }
         }),
       })
@@ -1154,8 +1153,7 @@ export default {
       let summary = []
       if (this.spell.isPraxis) summary.push(`Praxis`)
       if (this.spell.isRote) summary.push(`Rote (+${this.spell.roteSkill})`)
-      if (this.spell.spendWillpower) summary.push("Willpower")
-      if (this.spell.effects.length) summary.push(`Effects (${this.spell.effects.length})`)
+      if (this.spell.effects.length || this.spell.spendWillpower) summary.push(`Effects (${this.spell.effects.length + (this.spell.spendWillpower ? 1 : 0)})`)
       if (summary.length === 0) return "None"
       return summary.join(", ")
     },
@@ -1299,6 +1297,12 @@ export default {
       },
       deep: true,
     },
+    dark: {
+      handler(value) {
+        console.log('dark changed', value)
+        localStorage.setItem("dark", JSON.stringify(value))
+      },
+    },
     "spell.isRote": function (newer, older) {
       if (older === true && newer === false && this.hasYantra("a1")) {
         this.deleteYantra("a1")
@@ -1344,6 +1348,8 @@ export default {
       this.spell.roteSkills = spell.roteSkills
       this.spell.description = spell.description
       this.spell.additionalEffects = spell.additionalEffects
+      this.spell.effects = []
+      this.spell.yantras = []
       this.spell.page = spell.page
     },
     dots(num) {
@@ -1375,7 +1381,7 @@ export default {
       // permanence requires advanced
       if (
         this.spell.attainments.permanence &&
-        (this.spell.primaryArcana.arcana !== "Matter" || !this.isAdvanced("duration"))
+        (this.spell.primaryArcana.arcana !== "Matter" || !this.isAdvanced("Duration"))
       ) {
         // debounce(() => {
         //   this.spell.attainments.permanence = false
@@ -1550,7 +1556,10 @@ export default {
       this.message.success(`${spell.name} was added to saved spells`)
     },
     reset() {
-      this.spell = clone(defaultSpell)
+      console.log('default', defaultSpell)
+      console.log(this.spell)
+      Object.assign(this.spell, clone(defaultSpell))
+      console.log(this.spell)
       this.paradox = clone(defaultParadox)
       this.conditions = clone(defaultConditions)
       this.message.warning("Spell configuration was reset")
@@ -1560,7 +1569,6 @@ export default {
     },
   },
   mounted() {
-    this.message.success("Ready to use!")
     if (localStorage.getItem("caster")) {
       try {
         this.caster = JSON.parse(localStorage.getItem("caster"))
@@ -1577,6 +1585,15 @@ export default {
         localStorage.removeItem("saved")
       }
     }
+    if (localStorage.getItem("dark")) {
+      try {
+        this.dark = JSON.parse(localStorage.getItem("dark"))
+        this.setDark(this.dark)
+      } catch (err) {
+        console.error(err)
+        localStorage.removeItem("dark")
+      }
+    }
   },
 }
 </script>
@@ -1586,13 +1603,25 @@ html {
   height: 100%;
 }
 body {
-  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 .n-tabs .n-tabs-pane-wrapper {
   overflow: visible;
 }
 .n-layout {
-  min-height: 100vh;
+  height: 100vh;
+}
+.n-tabs {
+  padding: 60px 10px 100px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.n-tabs .n-tabs-tab-pad {
+  width: 5px;
+}
+.n-tabs .n-tabs-tab {
+  padding: 10px;
 }
 .s-modal {
   min-width: 400px;
@@ -1605,7 +1634,10 @@ body {
 }
 .e-table td {
   vertical-align: top;
-  line-height: 18px;
+  line-height: 19px;
+}
+.e-table td .n-switch {
+  vertical-align: top;
 }
 .n-card {
   box-shadow: var(--n-box-shadow);
@@ -1627,11 +1659,17 @@ body {
 .n-tabs-nav__suffix .n-switch.n-switch--active .n-switch__rail {
     /* background-color: #f2c97d; */
 }
-.bottom {
+.quick {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 70px;
+  z-index: 10;
+}
+.quick .n-card__content {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px !important;
 }
 </style>
