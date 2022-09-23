@@ -255,6 +255,50 @@
               </template>
               <template #footer> Gnosis {{ caster.gnosis }} allows the use of {{ maxYantras }} yantras. </template>
             </Card>
+            <!-- Paradox -->
+            <Card title="Paradox" collapsed :summary="paradoxSummary" v-if="canCastSpell">
+              <template #content>
+                <n-space vertical>
+                  <n-table bordered striped class="e-table" style="margin-left: -5px; width: calc(100% + 10px)">
+                    <tbody>
+                      <tr>
+                        <td width="20" style="padding-right: 0">
+                          <n-switch size="small" v-model:value="paradox.inured" />
+                        </td>
+                        <td colspan="2">
+                          <b>Mage is inured?</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="3">
+                          <n-space vertical>
+                            <b>Previous paradox rolls? ({{paradox.previous}})</b>
+                            <n-slider placement="bottom" v-model:value="paradox.previous" :min="0" :max="10" />
+                          </n-space>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="3">
+                          <n-space vertical>
+                            <b>Sleeper witnesses? ({{ ['None', 'One', 'Some', 'Many', 'Crowd'][paradox.sleepers] }})</b>
+                            <n-slider placement="bottom" v-model:value="paradox.sleepers" :min="0" :max="4" />
+                          </n-space>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="3">
+                          <n-space vertical>
+                            <b>Mana spent? ({{ paradox.manaSpent }})</b>
+                            <n-slider placement="bottom" v-model:value="paradox.manaSpent" :min="0" :max="caster.gnosis" />
+                          </n-space>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </n-table>
+                </n-space>
+              </template>
+              <template #footer> Advanced Scale doubles the number of subjects and adds 5 size per additional -2 dice penalty. </template>
+            </Card>
           </n-space>
         </n-tab-pane>
         <n-tab-pane name="saved" :tab="`Saved (${saved.length})`">
@@ -276,7 +320,7 @@
                 <n-space justify="space-between">
                   <n-button quaternary size="small" type="error" @click="removeSpell(item)"> Remove </n-button>
                   <n-space>
-                    <n-button size="small" type="info" @click="formatSpell(item)">Roll20</n-button>
+                    <n-button size="small" type="info" @click="copySavedSpell(item)">Roll20</n-button>
                     <n-button size="small" type="success" @click="loadSpell(item)">Load</n-button>
                   </n-space>
                 </n-space>
@@ -300,8 +344,8 @@
           <n-tag size="small" disabled :bordered="false" round strong>Mana 0</n-tag>
         </n-space>
         <n-space size="small" justify="end">
-          <n-button :disabled="canCastSpell === false" size="small" type="info" @click="formatSpell(spell)">Roll20</n-button>
-          <n-button :disabled="canCastSpell === false" size="small" type="success" @click="saveSpell(spell)">Save</n-button>
+          <n-button :disabled="canCastSpell === false" size="small" type="info" @click="copyActiveSpell()">Roll20</n-button>
+          <n-button :disabled="canCastSpell === false" size="small" type="success" @click="saveActiveSpell()">Save</n-button>
         </n-space>
       </n-space>
     </n-card>
@@ -390,9 +434,8 @@ const defaultConditions = {
 }
 const defaultParadox = {
   inured: false,
-  previousRolls: 0,
-  sleepers: false,
-  sleeperGroupSize: "on",
+  previous: 0,
+  sleepers: 0,
   manaSpent: 0,
 }
 
@@ -603,12 +646,12 @@ export default {
         mustRoll = true
       }
 
-      if (this.paradox.previousRolls > 0) {
-        pool += this.paradox.previousRolls
+      if (this.paradox.previous > 0) {
+        pool += this.paradox.previous
         mustRoll = true
       }
 
-      if (this.paradox.sleepers) {
+      if (this.paradox.sleepers > 0) {
         pool++
         mustRoll = true
       }
@@ -629,8 +672,8 @@ export default {
       return (
         this.usedReach > this.freeReach ||
         this.paradox.inured ||
-        this.paradox.previousRolls > 0 ||
-        this.paradox.sleepers
+        this.paradox.previous > 0 ||
+        this.paradox.sleepers > 0
       )
     },
     durationPenalty() {
@@ -1185,12 +1228,12 @@ export default {
         summary = this.paradoxDice + " dice"
       }
 
-      if (this.paradox.sleepers) {
-        if (this.paradox.sleeperGroupSize === "sm") {
+      if (this.paradox.sleepers > 0) {
+        if (this.paradox.sleepers === 2) {
           summary += " (with the 9-again quality)"
-        } else if (this.paradox.sleeperGroupSize === "md") {
+        } else if (this.paradox.sleepers === 3) {
           summary += " (with the 8-again quality)"
-        } else if (this.paradox.sleeperGroupSize === "lg") {
+        } else if (this.paradox.sleepers === 4) {
           summary += " (with the rote quality)"
         }
       }
@@ -1260,6 +1303,9 @@ export default {
     scalePenalty() {
       let scale = scales.get(this.spell.factors.scale)
       return scale ? scale.penalty : ""
+    },
+    paradoxSummary() {
+      return this.paradoxDiceSummary
     },
     yantrasSummary() {
       let yantrasNames = []
@@ -1516,20 +1562,7 @@ export default {
       }
     },
     // Spell Stuff
-    formatSpell(spell) {
-      this.message.info(`${spell.name} was copied as Roll20 Macro to clipboard`)
-      this.message.warning("But I haven't finished this function yet :)")
-    },
-    removeSpell(spell) {
-      let index = findIndex(this.saved, (item) => item.id === spell.id)
-      this.saved.splice(index, 1)
-      this.message.error(`${spell.name} was removed from saved spells`)
-    },
-    loadSpell(spell) {
-      this.spell = spell
-      this.message.success(`${spell.name} configuration was loaded`)
-    },
-    saveSpell(spell) {
+    getSpellWithSummary(spell) {
       const item = clone(spell)
       const itemCastingSummary = []
       if (item.isRote) itemCastingSummary.push("Rote")
@@ -1552,17 +1585,49 @@ export default {
       item.factorSummary = itemFactorSummary.join(", ")
       item.effectSummary = itemEffectSummary.join(" ")
       item.yantraSummary = itemYantraSummary.join(", ")
-      this.saved.push(item)
-      this.message.success(`${spell.name} was added to saved spells`)
+      item.actionSummary = { text: this.dicePoolSummary, dice: this.dicePool }
+      return item
+    },
+    putSpellMacroInClipboard(spell) {
+      const out = [];
+      out.push("&{template:default}");
+      out.push(`{{name=**${spell.name}** (${spell.primaryArcana.arcana} ${Array.from({ length: spell.primaryArcana.level }, v => "&bull;").join("")})}}`)
+      out.push(`{{casting=${spell.castingSummary}}}`)
+      out.push(`{{factors=${spell.factorSummary}}}`)
+      out.push(`{{effects=${spell.effectSummary || "None"}}}`)
+      out.push(`{{yantras=${spell.yantraSummary || "None"}}}`)
+      out.push(`{{=[Roll ${spell.actionSummary.text} to cast](!&#13;&#91;[&#63;{Number of dice|${spell.actionSummary.dice}}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
+      const text = out.join(" ");
+      navigator.clipboard.writeText(text).then(() => {
+        this.message.info(`${spell.name} was copied to clipboard`)
+      });
+    },
+    copyActiveSpell() {
+      const spell = this.getSpellWithSummary(this.spell)
+      this.putSpellMacroInClipboard(spell)
+    },
+    copySavedSpell(spell) {
+      this.putSpellMacroInClipboard(spell)
+    },
+    removeSpell(spell) {
+      let index = findIndex(this.saved, (item) => item.id === spell.id)
+      this.saved.splice(index, 1)
+      this.message.error(`${spell.name} was removed`)
+    },
+    loadSpell(spell) {
+      this.spell = spell
+      this.message.success(`${spell.name} was loaded`)
+    },
+    saveActiveSpell() {
+      const spell = this.getSpellWithSummary(this.spell)
+      this.saved.push(spell)
+      this.message.success(`${spell.name} was saved`)
     },
     reset() {
-      console.log('default', defaultSpell)
-      console.log(this.spell)
-      Object.assign(this.spell, clone(defaultSpell))
-      console.log(this.spell)
+      this.spell = clone(defaultSpell)
       this.paradox = clone(defaultParadox)
       this.conditions = clone(defaultConditions)
-      this.message.warning("Spell configuration was reset")
+      this.message.warning("Spell was reset")
     },
     log(text) {
       console.log(text)
