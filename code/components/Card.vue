@@ -33,7 +33,7 @@ export default {
     }
   },
   mounted() {
-    if (this.collapsed !== undefined) this.open = false
+    if (this.collapsed !== undefined) this.open = !!this.collapsed
   },
 }
 </script>

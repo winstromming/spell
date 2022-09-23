@@ -1,6841 +1,13375 @@
-export const spells = [
-  {
-    name: "Ectoplasmic Shaping",
-    arcana: "Death",
-    level: 1,
-    primaryArcana: "Death •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Crafts, Occult, Larceny",
-    description:
-      "Shape and mold ectoplasm, or create Open Condition on an object or location for a ghost to Manifest.",
-    reachEffects: [],
-    source: "MtAw2 p128",
-  },
-  {
-    name: "Deepen Shadows",
-    arcana: "Death",
-    level: 1,
-    primaryArcana: "Death •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Intimidation, Expression",
-    description: "Apply Poor Light Tilt in area.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Apply Blinded Tilt in an area.",
-      },
-    ],
-    source: "MtAw2 p128",
-  },
-  {
-    name: "Forensic Gaze",
-    arcana: "Death",
-    level: 1,
-    primaryArcana: "Death •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Medicine, Investigation, Expression",
-    description: "Learn how a subject died.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Witness final moments of a corpse's life.",
-      },
-    ],
-    source: "MtAw2 p128",
-  },
-  {
-    name: "Shadow Sculpting",
-    arcana: "Death",
-    level: 1,
-    primaryArcana: "Death •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Science, Expression",
-    description: "Shape shadows to your liking.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Both shape and animate shadows.",
-      },
-    ],
-    source: "MtAw2 p128",
-  },
-  {
-    name: "Soul Marks",
-    arcana: "Death",
-    level: 1,
-    primaryArcana: "Death •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Medicine, Occult, Empathy",
-    description: "Learn about a subjects soul.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Can use spell on unattached souls.",
-      },
-    ],
-    source: "MtAw2 p128",
-  },
-  {
-    name: "Speak with the Dead",
-    arcana: "Death",
-    level: 1,
-    primaryArcana: "Death •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Socialize, Expression, Investigation",
-    description:
-      "Sense and communicate with ghosts in Twilight. Sense anchors and determine a ghosts rank.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "See if an anchor is temporary or permanent.",
-      },
-      {
-        reach: 1,
-        effect: "Can be understood by ghosts that don't share your language.",
-      },
-    ],
-    source: "MtAw2 p128",
-  },
-  {
-    name: "Corpse Mask",
-    arcana: "Death",
-    level: 2,
-    primaryArcana: "Death ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Subterfuge, Crafts, Medicine",
-    description: "Alter a corpse's apparent time and cause of death.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Can cast this spell on injured living subjects. Turn cuts to burns etc.",
-      },
-      {
-        reach: 1,
-        effect: "Change corpse appearance completely even age and sex.",
-      },
-    ],
-    source: "MtAw2 p129",
-  },
-  {
-    name: "Decay",
-    arcana: "Death",
-    level: 2,
-    primaryArcana: "Death ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Subterfuge, Science, Occult",
-    description: "Age an object, lowering durability.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Decrease structure instead.",
-      },
-    ],
-    source: "MtAw2 p129",
-  },
-  {
-    name: "Ectoplasm",
-    arcana: "Death",
-    level: 2,
-    primaryArcana: "Death ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Expression, Academics",
-    description: "Create ectoplasm from your own orifices or that of a corpse.",
-    reachEffects: [],
-    source: "MtAw2 p129",
-  },
-  {
-    name: "Ghost Shield",
-    arcana: "Death",
-    level: 2,
-    primaryArcana: "Death ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Expression, Academics",
-    description:
-      "Protects subject form ghostly Numina, Influences and Manifestations as well as Death-Based entities. +1 Reach to protect from the physical attacks of Ghosts.",
-    reachEffects: [],
-    source: "MtAw2 p129",
-  },
-  {
-    name: "Sacrificial Relinquishment",
-    arcana: "Death",
-    level: 2,
-    primaryArcana: "Death ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Intimidation, Medicine, Streetwise",
-    description:
-      "Instead of spending a willpower dot to relinquish a spell you may instead make a blood sacrifice. This must be a sacrifice of Value, such as dozens of small unintelligent creatures, a few intelligent creatures or a single human.",
-    reachEffects: [],
-    source: "SoS 73",
-  },
-  {
-    name: "Shape Ephemera",
-    arcana: "Death",
-    level: 2,
-    primaryArcana: "Death ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Crafts, Expression, Science",
-    description: "Shape ephemera into objects, weapons or armor.",
-    reachEffects: [],
-    source: "MtAw2 p129",
-  },
-  {
-    name: "Soul Armor",
-    arcana: "Death",
-    level: 2,
-    primaryArcana: "Death ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Occult, Survival",
-    description: "Protect soul against hostile spells.",
-    reachEffects: [],
-    source: "MtAw2 p129",
-  },
-  {
-    name: "Soul Jar",
-    arcana: "Death",
-    level: 2,
-    primaryArcana: "Death ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Crafts, Occult, Persuasion",
-    description: "Trap unattached soul into container.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Bind soul to person with the soulless condition. An unwilling person may Withstand.",
-      },
-      {
-        reach: 2,
-        effect: "Spend a point of mana to make this spell lasting.",
-      },
-    ],
-    source: "MtAw2 p129",
-  },
-  {
-    name: "Suppress Aura",
-    arcana: "Death",
-    level: 2,
-    primaryArcana: "Death ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Subterfuge, Intimidation, Medicine",
-    description:
-      "Suppress Nimbus to appear as a sleeper to Mage Sight. Impose penalty to Empathy checks and supernatural attempts to read your emotional or mental state.",
-    reachEffects: [],
-    source: "MtAw2 p129",
-  },
-  {
-    name: "Suppress Life",
-    arcana: "Death",
-    level: 2,
-    primaryArcana: "Death ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Subterfuge, Medicine, Academics",
-    description: "Appear to be a corpse.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "Spend a point of Mana to cast reflexively.",
-      },
-    ],
-    source: "MtAw2 p130",
-  },
-  {
-    name: "Touch of the Grave",
-    arcana: "Death",
-    level: 2,
-    primaryArcana: "Death ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Survival, Crafts, Persuasion",
-    description:
-      "Interact with ghosts and other things in Death-attuned Twilight. Can pull objects from Twilight and make them visible and solid but with low durability.",
-    reachEffects: [],
-    source: "MtAw2 p130",
-  },
-  {
-    name: "Without a Trace",
-    arcana: "Death",
-    level: 2,
-    primaryArcana: "Death ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Science, Stealth, Subterfuge",
-    description: "Leave no forensic evidence like fingerprints.",
-    reachEffects: [],
-    source: "MtAw2 p130",
-  },
-  {
-    name: "Cold Snap",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Survival, Intimidation, Science",
-    description: "Apply Ice Tilt to area.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Also apply Extreme Cold Tilt.",
-      },
-    ],
-    source: "MtAw2 p130",
-  },
-  {
-    name: "Damage Ghost",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Intimidation, Brawl",
-    description: "Deal bashing damage to ghost.",
-    reachEffects: [],
-    source: "MtAw2 p130",
-  },
-  {
-    name: "Death Touched Item",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Occult, Subterfuge",
-    description:
-      "Turns ordinary objects into one capable of affecting objects of Death-attuned ephemera and shadow. It can interact with anything in Death attuned twilight or even items crafted of shadows by Death magic. It can deal damage to a Ghosts Corpus or Shadow items structure or prevent harm to the wearer. If the item is brought into twilight it doesn't lose its material form while under the effects of this spell.",
-    reachEffects: [],
-    source: "SoS 64",
-  },
-  {
-    name: "Devouring the Slain",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Intimidation, Medicine, Persuasion",
-    description: "Can take Willpower or Scour the pattern of an injured person.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "May affect a healty person who has recently taken damage.",
-      },
-      {
-        reach: 1,
-        effect: "Spell does not count toward limit of Scouring per day.",
-      },
-      {
-        reach: 1,
-        effect: "Use spell on ghosts.",
-      },
-    ],
-    source: "MtAw2 p130",
-  },
-  {
-    name: "Ghost Gate",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Academics, Expression",
-    description:
-      "Create a 2 dimensional gateway that converts anything passing through it into Death-attuned Twilight.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Can transform a subject into Twilight directly without a gate.",
-      },
-    ],
-    source: "MtAw2 p130",
-  },
-  {
-    name: "Ghost Summons",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: "Rank",
-    suggestedRoteSkills: "Persuasion, Socialize, Occult",
-    description: "Call a ghost in the local area to you.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spell also creates the Open Condition.",
-      },
-      {
-        reach: 1,
-        effect: "Can give the ghost a single word command to follow.",
-      },
-      {
-        reach: 1,
-        effect: "When near an Iris to the Underworld can call a ghost from there instead.",
-      },
-      {
-        reach: 2,
-        effect: "Can give ghost a complex command to follow.",
-      },
-    ],
-    source: "MtAw2 p131",
-  },
-  {
-    name: "Reaping Relinquishment",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Intimidation, Medicine, Occult",
-    description:
-      "The mage destroys a soul to relinquish a spell safely instead of spending a Willpower dot. Prime ••: The caster can destroy a soul stone instead for the same effect.",
-    reachEffects: [],
-    source: "SoS 73",
-  },
-  {
-    name: "Quicken Corpse",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Medicine, Crafts, Persuasion",
-    description: "Create a zombie.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Create zombie suited for combat.",
-      },
-      {
-        reach: 2,
-        effect: "Imbue zombie with exceptional physical prowess.",
-      },
-    ],
-    source: "MtAw2 p131",
-  },
-  {
-    name: "Quicken Ghost",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Potency",
-    withstand: "Cost: One Mana(Optional)",
-    suggestedRoteSkills: "Persuasion, Socialize, Medicine",
-    description: "Can boost ghost's Attributes or heal them.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "May choose to increase a ghosts Rank.",
-      },
-    ],
-    source: "MtAw2 p131",
-  },
-  {
-    name: "Rotting Flesh",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Intimidation, Occult, Empathy",
-    description: "Inflict bashing damage.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Subject suffers penalty to Social rolls.",
-      },
-    ],
-    source: "MtAw2 p132",
-  },
-  {
-    name: "Sever Soul",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Intimidation, Athletics, Expression",
-    description: "Take the soul from a Sleeper. Inflicts the Soulless Condition.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Skip the Soulless Condition and inflict the Enervated Condition instead.",
-      },
-      {
-        reach: 2,
-        effect:
-          "Skip both the Soulless and Enervated Conditions and inflict the Thrall Condition instead.",
-      },
-    ],
-    source: "MtAw2 p132",
-  },
-  {
-    name: "Shadow Crafting",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Intimidation, Occult",
-    description: "Shape shadows into objects, weapons or armor.",
-    reachEffects: [],
-    source: "MtAw2 p132",
-  },
-  {
-    name: "Unliving Vessel",
-    arcana: "Death",
-    level: 3,
-    primaryArcana: "Death •••",
-    secondaryArcana: "Prime •••",
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: "Resistance",
-    suggestedRoteSkills: "Crafts, Occult, Expression",
-    description:
-      "Prepares a Subject under the purview of Death for the Imbue Item Attainment. Can be used on items found in Ghostly Twilight, Items made of Ectoplasm, Corpses and Ghosts which will automatically withstand this spell. The Ghost must either be cast on within Twilight or while Manifested.",
-    reachEffects: [],
-    source: "SoS 69",
-  },
-  {
-    name: "Enervation",
-    arcana: "Death",
-    level: 4,
-    primaryArcana: "Death ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Occult, Intimidation, Subterfuge",
-    description: "Apply either the Leg Wrack Tilt or the Arm Wreck Tilt.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Apply the Immobilized Tilt.",
-      },
-    ],
-    source: "MtAw2 p132",
-  },
-  {
-    name: "Exorcism",
-    arcana: "Death",
-    level: 4,
-    primaryArcana: "Death ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: "Rank",
-    suggestedRoteSkills: "Brawl, Expression, Occult",
-    description:
-      "Destroy Manifestation Condition of a ghost or it's host. Add Mind 2: Spell works on Goetia.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Target cannot attempt to recreate destroyed conditions for the duration of the spell.",
-      },
-    ],
-    source: "MtAw2 p132",
-  },
-  {
-    name: "Goetic Evocatuion (Death Substitute)",
-    arcana: "Death",
-    level: 4,
-    primaryArcana: "Death ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Rank of Entity",
-    suggestedRoteSkills: "Intimidation, Occult, Persuasion",
-    description: "May convert pieces of a persons Psyche from a soul stone into a Ghost.",
-    reachEffects: [],
-    source: "SoS 90",
-  },
-  {
-    name: "Haunted Grimoire",
-    arcana: "Death",
-    level: 4,
-    primaryArcana: "Death ••••",
-    secondaryArcana: "Prime •",
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Total Arcanum dots of Rote + Rank",
-    suggestedRoteSkills: "Crafts, Intimidation, Occult",
-    description:
-      "*Costs 1 Mana* The Mage binds a Ghost to a grimoire, writing its essence into the vessel's pattern. This doesn't host the Ghost's numina or influences. The Grimoire gains the Open and Resonant Conditions. When cast the spell is increased by the Ghost's Rank for Primary Factor however the Ghost has a chance to escape with a Clash of Wills to the caster. When someone memorizes a Rote the Ghost has a chance to possess them using a CLash of Wills. This spell is a Wisdom Sin against Understanding.",
-    reachEffects: [],
-    source: "SoS 86",
-  },
-  {
-    name: "Revenant",
-    arcana: "Death",
-    level: 4,
-    primaryArcana: "Death ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Rank",
-    suggestedRoteSkills: "Craft, Brawl, Intimidation",
-    description: "Grant a ghost a Manifestation condition. Add Mind 4: Spell works on Goetia.",
-    reachEffects: [],
-    source: "MtAw2 p132",
-  },
-  {
-    name: "Scribe Daimonomikon",
-    arcana: "Death",
-    level: 4,
-    primaryArcana: "Death ••••",
-    secondaryArcana: "Prime •",
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Rank of Attainment + (10 - Caster's Gnosis)",
-    suggestedRoteSkills: "Crafts, Expression, Occult",
-    description:
-      "*Cost 1 Mana* Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "For 1 Mana, the Spell's Duration is Lasting.",
-      },
-    ],
-    source: "SoS 87",
-  },
-  {
-    name: "Shadow Flesh",
-    arcana: "Death",
-    level: 4,
-    primaryArcana: "Death ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Occult, Medicine, Subterfuge",
-    description: "Transform subject into a two or three-dimensional shadow.",
-    reachEffects: [],
-    source: "MtAw2 p132",
-  },
-  {
-    name: "Soul Grafting",
-    arcana: "Death",
-    level: 4,
-    primaryArcana: "Death ••••",
-    secondaryArcana: "Prime ••••",
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Crafts, Empathy, Occult",
-    description:
-      "Graft another Mage's soul stone to your own soul, this does not increase Gnosis but grants a +_1 for soul stone or +2 for complete souls Gnosis for the purpose of Spell casting time, Determining range for Aimed spells, Clash of Wills, Mana spends per turn, spell control, combining spells and Yantras per turn. You also recieve a +2 for Soul Stone and +3 for full souls Gnosis for Calculating Paradox. This is an act against Falling wisdom.",
-    reachEffects: [],
-    source: "SoS 90",
-  },
-  {
-    name: "Withering",
-    arcana: "Death",
-    level: 4,
-    primaryArcana: "Death ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Intimidation, Medicine, Science",
-    description: "Inflict lethal damage.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spend one Mana, Inflict aggravated damage instead.",
-      },
-    ],
-    source: "MtAw2 p133",
-  },
-  {
-    name: "Create Anchor",
-    arcana: "Death",
-    level: 5,
-    primaryArcana: "Death •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Crafts, Occult, Persuasion",
-    description: "Apply the Anchor Condition to a subject.",
-    reachEffects: [],
-    source: "MtAw2 p133",
-  },
-  {
-    name: "Create Avernian Gate",
-    arcana: "Death",
-    level: 5,
-    primaryArcana: "Death •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Crafts, Persuasion",
-    description:
-      "Create a gateway to the upper levels of the Underworld. This gives the area a Death Resonance and the Gateway Condition.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The gateway can lead to anywhere in the Underworld the mage has been before.",
-      },
-    ],
-    source: "MtAw2 p133",
-  },
-  {
-    name: "Create Ghost",
-    arcana: "Death",
-    level: 5,
-    primaryArcana: "Death •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Expression, Academics",
-    description: "Create a ghost of Rank 1. ghost is loyal to you.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spend one Mana, the ghost created is Rank 2.",
-      },
-    ],
-    source: "MtAw2 p133",
-  },
-  {
-    name: "Deny the Reaper",
-    arcana: "Death",
-    level: 5,
-    primaryArcana: "Death •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Medicine, Occult, Subterfuge",
-    description: "Reverse the effects of decay and age up to a number of months.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Can bring the recently dead back to life. Subject suffers Soulless Condition.",
-      },
-    ],
-    source: "MtAw2 p133",
-  },
-  {
-    name: "Empty Presence",
-    arcana: "Death",
-    level: 5,
-    primaryArcana: "Death •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Subterfuge, Persuasion, Stealth",
-    description:
-      "Destroys all evidence of a subjects existence and renders them invisible to the naked eye. If the subject takes violent action the spell ends immediately.",
-    reachEffects: [],
-    source: "MtAw2 p133",
-  },
-  {
-    name: "Sever the Awakened Soul",
-    arcana: "Death",
-    level: 5,
-    primaryArcana: "Death •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Crafts, Intimidation, Medicine",
-    description: "Severs the soul of an Awakened mage. Inflicts the Soulless Conditions.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Skip the Soulless Condition and inflict the Enervated Condition instead.",
-      },
-      {
-        reach: 2,
-        effect:
-          "Skip both the Soulless and Enervated Conditions and inflict the Thrall Condition instead.",
-      },
-    ],
-    source: "MtAw2 p133",
-  },
-  {
-    name: "Interconnections",
-    arcana: "Fate",
-    level: 1,
-    primaryArcana: "Fate •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Empathy, Investigation, Medicine",
-    description:
-      "Reveal sympathetic connections, who has violated an oath or geas and spells with conditional duration.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Detect possession, supernatural mind control and alterations of destiny.",
-      },
-      {
-        reach: 2,
-        effect: "Discern information about a persons destiny.",
-      },
-    ],
-    source: "MtAw2 p134",
-  },
-  {
-    name: "Oaths Fulfilled",
-    arcana: "Fate",
-    level: 1,
-    primaryArcana: "Fate •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Politics, Investigation",
-    description: "Know when the subject breaks or fulfills an oath.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Also receive a brief vision of the subject when the oath is fullfilled.",
-      },
-      {
-        reach: 1,
-        effect: "Track the subject of the spell.",
-      },
-      {
-        reach: 1,
-        effect: "Trigger event may be something that could only be seen by Mage Sight.",
-      },
-    ],
-    source: "MtAw2 p135",
-  },
-  {
-    name: "Quantum Flux",
-    arcana: "Fate",
-    level: 1,
-    primaryArcana: "Fate •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Firearms, Occult",
-    description:
-      "Negate a number of penalties to your Mundane actions or wait a turn to receive a bonus to your next mundane action.",
-    reachEffects: [],
-    source: "MtAw2 p135",
-  },
-  {
-    name: "Reading the Outmost Eddies",
-    arcana: "Fate",
-    level: 1,
-    primaryArcana: "Fate •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Computer, Persuasion, Subterfuge",
-    description:
-      "Subject of spell receives a minor twist of fate positive or negative in 24 hours. Only hostile applications are Withstood.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spell takes effect within an hour.",
-      },
-    ],
-    source: "MtAw2 p135",
-  },
-  {
-    name: "Serendipity",
-    arcana: "Fate",
-    level: 1,
-    primaryArcana: "Fate •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Crafts, Survival",
-    description: "Reveal what course of action will bring you closer to your goal.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "When making a roll to achieve your stated goal, you may substitute the used Skill with another of the same type (Mental, Physical, Social).",
-      },
-      {
-        reach: 2,
-        effect: "As above but may substitute any Skill.",
-      },
-    ],
-    source: "MtAw2 p135",
-  },
-  {
-    name: "Exceptional Luck",
-    arcana: "Fate",
-    level: 2,
-    primaryArcana: "Fate ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Intimidation, Occult, Socialize",
-    description: "Subject receives a boon or hex. A hex may be withstood.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "Boon or hex can affect spellcasting rolls.",
-      },
-      {
-        reach: 2,
-        effect: "Spend a point of Mana. This spell can be cast reflexive.",
-      },
-    ],
-    source: "MtAw2 p136",
-  },
-  {
-    name: "Fabricate Fortune",
-    arcana: "Fate",
-    level: 2,
-    primaryArcana: "Fate ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Larceny, Occult, Subterfuge",
-    description:
-      "Conceal and falsify a subjects fate or Destiny. This can fool spells with conditional triggers.",
-    reachEffects: [],
-    source: "MtAw2 p136",
-  },
-  {
-    name: "Fools Rush In",
-    arcana: "Fate",
-    level: 2,
-    primaryArcana: "Fate ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Socialize, Streetwise",
-    description: "Suffer no untrained skill penalties when facing a situation unprepared.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Also receive a dice bonus.",
-      },
-      {
-        reach: 3,
-        effect: "As above but bonus may apply to spellcasting rolls.",
-      },
-    ],
-    source: "MtAw2 p136",
-  },
-  {
-    name: "Lucky Number",
-    arcana: "Fate",
-    level: 2,
-    primaryArcana: "Fate ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Investigation, Larceny, Science",
-    description: "Guess the right password, phone number, etc. on the first try.",
-    reachEffects: [],
-    source: "MtAw2 p136",
-  },
-  {
-    name: "Malleable Thorns",
-    arcana: "Fate",
-    level: 2,
-    primaryArcana: "Fate ••",
-    secondaryArcana: "Mind ••",
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Empathy Survival",
-    description: "Mage states a goal and the Hedge alters itself to fulfill that goal.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Mage may also enact paradigm shifts.",
-      },
-    ],
-    source: "DE2 p377",
-  },
-  {
-    name: "Shifting the Odds",
-    arcana: "Fate",
-    level: 2,
-    primaryArcana: "Fate ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Investigation, Politics, Subterfuge",
-    description: "Find a particular kind of person, place or thing within 24 hours.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Find desired object within an hour.",
-      },
-    ],
-    source: "MtAw2 p136",
-  },
-  {
-    name: "Warding Gesture",
-    arcana: "Fate",
-    level: 2,
-    primaryArcana: "Fate ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Brawl, Occult, Subterfuge",
-    description:
-      "Protect a subject against supernatural effect that would alter her fate including supernatural compulsion. Subject may also be excluded form any area-effect spell you may cast.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Subject may be excluded from any spell/attainment you cast.",
-      },
-      {
-        reach: 2,
-        effect:
-          "Subject may be protected from any supernatural effects that target an area instead of individuals.",
-      },
-    ],
-    source: "MtAw2 p136",
-  },
-  {
-    name: "Grave Misfortune",
-    arcana: "Fate",
-    level: 3,
-    primaryArcana: "Fate •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Intimidation, Occult, Weaponry",
-    description: "The next time the subjects suffers damage, increase the damage.",
-    reachEffects: [],
-    source: "MtAw2 p137",
-  },
-  {
-    name: "Monkey's Paw",
-    arcana: "Fate",
-    level: 3,
-    primaryArcana: "Fate •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Drive, Crafts, Science",
-    description: "Bless or curse an object altering it's equipment bonus.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Anybody who caries the item also receives a boon or a hex.",
-      },
-      {
-        reach: 1,
-        effect: "Spend a point of Mana. Bonus or penalty may exceed five dice.",
-      },
-    ],
-    source: "MtAw2 p137",
-  },
-  {
-    name: "Shared Fate",
-    arcana: "Fate",
-    level: 3,
-    primaryArcana: "Fate •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Medicine, Persuasion, Politics",
-    description:
-      "Two or more subjects are bound together. Any damage, Tilt or Condition suffered by one will also affect the other.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Link is only one way.",
-      },
-      {
-        reach: 2,
-        effect:
-          "Subject is not linked to any other subjects. Instead, she suffers any damage, Tilt or Condition she inflicts on others.",
-      },
-    ],
-    source: "MtAw2 p137",
-  },
-  {
-    name: "Superlative Luck",
-    arcana: "Fate",
-    level: 3,
-    primaryArcana: "Fate •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Crafts, Occult",
-    description: "Cost: 1 Mana, Gain the rote quality.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect:
-          "Rote quality may effect ritual spellcasting but this also doubles the casting time.",
-      },
-    ],
-    source: "MtAw2 p137",
-  },
-  {
-    name: "Sworn Oaths",
-    arcana: "Fate",
-    level: 3,
-    primaryArcana: "Fate •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Occult, Politics",
-    description:
-      "Supernaturally enforce a vow. Adhere to the oath and the subject receives a boon, break an she suffers a hex.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "If spell control is maintained the mage is aware if the spell is a boon or a hex.",
-      },
-    ],
-    source: "MtAw2 p137",
-  },
-  {
-    name: "The Right Tool",
-    arcana: "Fate",
-    level: 3,
-    primaryArcana: "Fate •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Stealth, Expression",
-    description:
-      "Turn an ordinary object into the object needed to get the job done. During the duration of the spell this item could be conceivable used as the item needed to complete a task. When used for the new purpose the Items equipment bonus is increased (up to 5+) by the Potency, Items not normally used for the situation begin at 0.",
-    reachEffects: [],
-    source: "SoS 64",
-  },
-  {
-    name: "Wyrdbound Oaths",
-    arcana: "Fate",
-    level: 3,
-    primaryArcana: "Fate •••",
-    secondaryArcana: "Mind ••",
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Politics, Socialize",
-    description:
-      "Allow Mages to be valid participants in Wyrd-backed oaths. Failure to follow the oath or breaking it inflicts the Oathbreaker Condition.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "The effect is Lasting.",
-      },
-    ],
-    source: "DE2 p379",
-  },
-  {
-    name: "Atonement",
-    arcana: "Fate",
-    level: 4,
-    primaryArcana: "Fate ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: "Countered effect's Potency",
-    suggestedRoteSkills: "Academics, Occult, Subterfuge",
-    description:
-      "If a subject is cursed can grant them a quest that, if fulfilled, will lift the curse. Stronger curses require greater quests.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Quest can be undertaken by another on the subjects behalf.",
-      },
-    ],
-    source: "MtAw2 p137",
-  },
-  {
-    name: "Chaos Mastery",
-    arcana: "Fate",
-    level: 4,
-    primaryArcana: "Fate ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Empathy, Occult, Science",
-    description: "Can realize complex possibility such as causing a 1.000 coins to turn up heads.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spend one Mana. This spell when used as an attack can deal aggravated damage.",
-      },
-    ],
-    source: "MtAw2 p138",
-  },
-  {
-    name: "Divine Intervention",
-    arcana: "Fate",
-    level: 4,
-    primaryArcana: "Fate ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Intimidation, Occult, Subterfuge",
-    description:
-      "Replace one of the subjects Aspirations with a stated goal. Subject suffers ill luck when no pursuing this goal. This can also be reversed causing bad luck only when pursuing the goal.",
-    reachEffects: [],
-    source: "MtAw2 p138",
-  },
-  {
-    name: "Masking the False Fae",
-    arcana: "Fate",
-    level: 4,
-    primaryArcana: "Fate ••••",
-    secondaryArcana: "Mind •",
-    practice: "Patterning",
-    primaryFactor: "Duraton",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Empathy, Larceny, Socialize",
-    description:
-      "Allow Changelings to make Goblin Contracts with supernal entities. Releasing Paradox or on a critical failure the contract is made with an abyssal being. Add Death, Mind, or Spirit ••••: Allow Changelings to make Contracts with Goetia, ghosts, or spirits.",
-    reachEffects: [],
-    source: "DE2 p376",
-  },
-  {
-    name: "Scribe Daimonomikon",
-    arcana: "Fate",
-    level: 4,
-    primaryArcana: "Fate ••••",
-    secondaryArcana: "Prime •",
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Rank of Attainment + (10 - Caster's Gnosis)",
-    suggestedRoteSkills: "Crafts, Expression, Occult",
-    description:
-      "*Cost 1 Mana* Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "For 1 Mana, the Spell's Duration is Lasting.",
-      },
-    ],
-    source: "SoS 87",
-  },
-  {
-    name: "Strings of Fate",
-    arcana: "Fate",
-    level: 4,
-    primaryArcana: "Fate ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Academics, Persuasion, Stealth",
-    description:
-      "The mage can encourage a specific event to befall the subject. The event will come pass when circumstances allow. If the subject's cooperation is required opportunities for this event to come to pass will appear once a week.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Opportunities appear once a day.",
-      },
-    ],
-    source: "MtAw2 p138",
-  },
-  {
-    name: "Sever Oaths",
-    arcana: "Fate",
-    level: 4,
-    primaryArcana: "Fate ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Occult, Subterfuge, Weaponry",
-    description:
-      "Can have a variety of effects such as freeing a bound ephemeral entity or dispelling a conditional trigger.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "Spell's effects are lasting.",
-      },
-    ],
-    source: "MtAw2 p138",
-  },
-  {
-    name: "Forge Destiny",
-    arcana: "Fate",
-    level: 5,
-    primaryArcana: "Fate •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Intimidation, Occult, Persuasion",
-    description:
-      "Mage can grant the subject a supernatural merit or increase and decrease an existing one. Mage can impose Aspirations, Obsessions or a Doom on the subject.",
-    reachEffects: [],
-    source: "MtAw2 p139",
-  },
-  {
-    name: "Miracle",
-    arcana: "Fate",
-    level: 5,
-    primaryArcana: "Fate •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Persuasion, Subterfuge",
-    description:
-      "Mage gains a number of Intercessions that can be spend reflexively to increase/decrease dice pools or to cause likely events to happen on command.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spend one Intercession and Willpower to cause a low-probability event to pass.",
-      },
-      {
-        reach: 2,
-        effect: "Spend one Intercession, Willpower and Mana to let the incredible come to pass.",
-      },
-    ],
-    source: "MtAw2 p140",
-  },
-  {
-    name: "Pariah",
-    arcana: "Fate",
-    level: 5,
-    primaryArcana: "Fate •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Investigation, Medicine, Politics",
-    description: "Turns the whole world against the subject.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Mage can adjust the sensitivity of the curse.",
-      },
-    ],
-    source: "MtAw2 p139",
-  },
-  {
-    name: "Swarm of Locusts",
-    arcana: "Fate",
-    level: 5,
-    primaryArcana: "Fate •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Intimidation, Occult, Science",
-    description:
-      "Create chaotic conditions that cause Environmental Tilts of player's choosing on the area. This spell is a breaking point for most Sleepers.",
-    reachEffects: [],
-    source: "MtAw2 p140",
-  },
-  {
-    name: "Influence Electricity",
-    arcana: "Forces",
-    level: 1,
-    primaryArcana: "Forces •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Computers, Crafts, Science",
-    description: "Operate or shut down electrical devices.",
-    reachEffects: [],
-    source: "MtAw2 p140",
-  },
-  {
-    name: "Influence Fire",
-    arcana: "Forces",
-    level: 1,
-    primaryArcana: "Forces •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Science, Survival",
-    description: "Guide flames along a particular path.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Increase or decrease the size of a flame.",
-      },
-    ],
-    source: "MtAw2 p140",
-  },
-  {
-    name: "Kinetic Efficiency",
-    arcana: "Forces",
-    level: 1,
-    primaryArcana: "Forces •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Science, Survival",
-    description: "Run faster, jump further or lift more.",
-    reachEffects: [],
-    source: "MtAw2 p141",
-  },
-  {
-    name: "Influence Heat",
-    arcana: "Forces",
-    level: 1,
-    primaryArcana: "Forces •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Science, Survival",
-    description:
-      "Control the flow of heat in an area. Can protect against heat- or cold-related Environments up to level 2(see p.224).",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Protect against Environments up to level 3.",
-      },
-      {
-        reach: 2,
-        effect: "Protect against Environments up to level 4.",
-      },
-    ],
-    source: "MtAw2 p141",
-  },
-  {
-    name: "Nightvision",
-    arcana: "Forces",
-    level: 1,
-    primaryArcana: "Forces •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Investigation, Science, Stealth",
-    description:
-      "Suffer no penalty form dim to no light. Bright lights can inflict the Blind Condition.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "No longer risk the Blind Condition from sudden bright lights.",
-      },
-    ],
-    source: "MtAw2 p141",
-  },
-  {
-    name: "Receiver",
-    arcana: "Forces",
-    level: 1,
-    primaryArcana: "Forces •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Investigation, Science",
-    description: "Hear sounds outside normal human frequency.",
-    reachEffects: [],
-    source: "MtAw2 p141",
-  },
-  {
-    name: "Tune In",
-    arcana: "Forces",
-    level: 1,
-    primaryArcana: "Forces •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Computers, Empathy, Science",
-    description: "Become able to see and listen to data transmission.",
-    reachEffects: [],
-    source: "MtAw2 p141",
-  },
-  {
-    name: "Control Electricity",
-    arcana: "Forces",
-    level: 2,
-    primaryArcana: "Forces ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Computers, Science",
-    description:
-      "Alter the flow of a current or decrease it, but you cannot increase it. Direct a buildings electricity to one outlet, or divide the power from one outlet to many other sources.",
-    reachEffects: [],
-    source: "MtAw2 p142",
-  },
-  {
-    name: "Control Fire",
-    arcana: "Forces",
-    level: 2,
-    primaryArcana: "Forces ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Science, Survival",
-    description: "Increase or decrease the heat or size of a fire.",
-    reachEffects: [],
-    source: "MtAw2 p142",
-  },
-  {
-    name: "Control Gravity",
-    arcana: "Forces",
-    level: 2,
-    primaryArcana: "Forces ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Occult, Science",
-    description: "Cause gravity to pull upwards or horizontally.",
-    reachEffects: [],
-    source: "MtAw2 p142",
-  },
-  {
-    name: "Control Heat",
-    arcana: "Forces",
-    level: 2,
-    primaryArcana: "Forces ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Science, Survival",
-    description:
-      "Increase or decrease the temperature of an area this may cause an Extreme Environment.",
-    reachEffects: [],
-    source: "MtAw2 p142",
-  },
-  {
-    name: "Control Light",
-    arcana: "Forces",
-    level: 2,
-    primaryArcana: "Forces ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Investigation, Science",
-    description: "Can focus or disperse light, and alter its wavelength on the spectrum.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Can create a mirroring effect or a complete black-out which causes the Blinded Tilt or provides substantial cover.",
-      },
-    ],
-    source: "MtAw2 p142",
-  },
-  {
-    name: "Control Sound",
-    arcana: "Forces",
-    level: 2,
-    primaryArcana: "Forces ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Stealth, Science",
-    description:
-      "Amplify or dampen sound, can also influence the direction of sound. Loud sounds can cause the Deafened Tilt in combat.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Create an echoing effect which imposes a penalty to stealth rolls.",
-      },
-      {
-        reach: 1,
-        effect: "Gain a bonus to hearing-based perception rolls.",
-      },
-    ],
-    source: "MtAw2 p142",
-  },
-  {
-    name: "Control Weather",
-    arcana: "Forces",
-    level: 2,
-    primaryArcana: "Forces ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Science, Survival",
-    description: "Make changes to the weather may create an Extreme Environments up to level 4.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Weather changes are more gradual.",
-      },
-      {
-        reach: 2,
-        effect: "Required for more drastic changes.",
-      },
-    ],
-    source: "MtAw2 p143",
-  },
-  {
-    name: "Environmental Shield",
-    arcana: "Forces",
-    level: 2,
-    primaryArcana: "Forces ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Science, Survival",
-    description:
-      "This spell gives resistance to any Conditions and Tilts caused by the environment.",
-    reachEffects: [],
-    source: "MtAw2 p143",
-  },
-  {
-    name: "Invisibility",
-    arcana: "Forces",
-    level: 2,
-    primaryArcana: "Forces ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Larceny, Science, Stealth",
-    description: "Make a subject invisible.",
-    reachEffects: [],
-    source: "MtAw2 p143",
-  },
-  {
-    name: "Kinetic Blow",
-    arcana: "Forces",
-    level: 2,
-    primaryArcana: "Forces ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Brawl, Science",
-    description: "Unarmed attacks gain a bonus.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Apply the Knocked Down Tilt.",
-      },
-      {
-        reach: 1,
-        effect: "Apply the Stunned Tilt.",
-      },
-      {
-        reach: 1,
-        effect: "Spell can affect held weapons.",
-      },
-      {
-        reach: 2,
-        effect: "Spell affects thrown weapons but can also grant bullets Armor Piercing.",
-      },
-    ],
-    source: "MtAw2 p143",
-  },
-  {
-    name: "Transmission",
-    arcana: "Forces",
-    level: 2,
-    primaryArcana: "Forces ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Expression, Science",
-    description: "Hijack existing signals and change the transmitted data or its destination.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "The signal becomes /'/encrypted/'/ only specific actions will allow somebody to read them.",
-      },
-    ],
-    source: "MtAw2 p144",
-  },
-  {
-    name: "Zoom In",
-    arcana: "Forces",
-    level: 2,
-    primaryArcana: "Forces ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Investigation, Science, Survival",
-    description: "See distant objects or better examine small ones.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "See clearly for miles.",
-      },
-      {
-        reach: 1,
-        effect: "Clearly examine dust-sized particles.",
-      },
-      {
-        reach: 1,
-        effect: "No longer suffer penalties form atmospheric conditions.",
-      },
-      {
-        reach: 2,
-        effect: "Clearly see microscopic particles, even molecular bonds.",
-      },
-    ],
-    source: "MtAw2 p144",
-  },
-  {
-    name: "Call Lightning",
-    arcana: "Forces",
-    level: 3,
-    primaryArcana: "Forces •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Firearms, Science",
-    description:
-      "Can call lightning from an existing storm which may be created with /'/Control Weather/'/.",
-    reachEffects: [],
-    source: "MtAw2 p144",
-  },
-  {
-    name: "Data Hog",
-    arcana: "Forces",
-    level: 3,
-    primaryArcana: "Forces •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Computer, Larceny, Persuasion",
-    description:
-      "Increase or decrease a computer device's capability to process, accept and transfer data by Potency.",
-    reachEffects: [],
-    source: "SoS 65",
-  },
-  {
-    name: "Energize Object",
-    arcana: "Forces",
-    level: 3,
-    primaryArcana: "Forces •••",
-    secondaryArcana: "Prime ••",
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Larceny, Science",
-    description:
-      "*Cost 1 Mana* Primes an object with the potential for activation to hold a spell. Once the object is primed a mage may spend a Mana to cast any other spell on the object which doesn't activate until appropriate force is applied to the object. May store spells up to Potency which won't take affect until either the controlling mage cancels this spell, the duration ends or the correct force is applied to the object.",
-    reachEffects: [],
-    source: "SoS 69",
-  },
-  {
-    name: "Gravitic Supremacy",
-    arcana: "Forces",
-    level: 3,
-    primaryArcana: "Forces •••",
-    secondaryArcana: null,
-    practice: "Fraying/Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Science, Survival",
-    description: "Increase or decrease gravity.",
-    reachEffects: [],
-    source: "MtAw2 p144",
-  },
-  {
-    name: "Perpetual Motion",
-    arcana: "Forces",
-    level: 3,
-    primaryArcana: "Forces •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Science, Survival",
-    description: "The subject no longer requires an energy input for the duration of the spell.",
-    reachEffects: [],
-    source: "SoS 65",
-  },
-  {
-    name: "Rapid Access Memory",
-    arcana: "Forces",
-    level: 3,
-    primaryArcana: "Forces •••",
-    secondaryArcana: "Prime •••",
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Larceny, Science",
-    description:
-      "Allows the Subject to use the attainment Imbue Item on computer Software which can later be activated on a computer.",
-    reachEffects: [],
-    source: "SoS 69",
-  },
-  {
-    name: "Telekinesis",
-    arcana: "Forces",
-    level: 3,
-    primaryArcana: "Forces •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Brawl, Science",
-    description:
-      "Use telekinetic force to lift or manipulate an object remotely. Potency is applied to either Strength or Dexterity the remaining stat becomes 1.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Divide Potency between Two of the Three Physical Attributes.",
-      },
-      {
-        reach: 2,
-        effect: "Divide Potency between any of the Three Physical Attributes.",
-      },
-    ],
-    source: "MtAw2 p144",
-  },
-  {
-    name: "Telekinetic Strike",
-    arcana: "Forces",
-    level: 3,
-    primaryArcana: "Forces •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Firearms, Science",
-    description: "Deal bashing damage.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Apply the Knocked Down or Stunned Tilt.",
-      },
-    ],
-    source: "MtAw2 p145",
-  },
-  {
-    name: "Turn Momentum",
-    arcana: "Forces",
-    level: 3,
-    primaryArcana: "Forces •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Firearms, Science",
-    description:
-      "When applying defense against an object this spell may be used, causing the object to be deflected in an uncontrolled direction though it never reverses direction. Add Time 1: Use a Reach, you can now turn objects too fast for you to apply defense against.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spell can be used as an reflexive action.",
-      },
-      {
-        reach: 1,
-        effect:
-          "Mage has control over where the object is deflected, sol long as the new direction is within 90 degrees of the original arc.",
-      },
-      {
-        reach: 2,
-        effect: "Objects direction can be completely reversed Ranged weapons hit their users.",
-      },
-    ],
-    source: "MtAw2 p145",
-  },
-  {
-    name: "Velocity Control",
-    arcana: "Forces",
-    level: 3,
-    primaryArcana: "Forces •••",
-    secondaryArcana: null,
-    practice: "Fraying or Perfecting",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Firearms, Science",
-    description: "Increase or decrease an objects speed.",
-    reachEffects: [],
-    source: "MtAw2 p145",
-  },
-  {
-    name: "Electromagnetic Pulse",
-    arcana: "Forces",
-    level: 4,
-    primaryArcana: "Forces ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Computers, Science",
-    description:
-      "By Unraveling electricity in the Subject this Creates an EMP that snuffs out powered devices in the affected area. Military devices may be shielded. Magical devices require a Clash of Wills. If used on a Living being this acts as an attack spell.",
-    reachEffects: [],
-    source: "MtAw2 p145",
-  },
-  {
-    name: "Levitation",
-    arcana: "Forces",
-    level: 4,
-    primaryArcana: "Forces ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Athletics, Science, Survival",
-    description:
-      "Levitate a subject, if unwilling the spell is withstood. You may direct the levitation each turn as an instant action. Without the mages focus the subject simply stops and floats in midair.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Subject retains momentum form turn to turn, floating slowly in whatever direction it was last directed in.",
-      },
-      {
-        reach: 1,
-        effect:
-          "Subject can fly freely, apply defense normally and a speed equal to the mage's Gnosis+spell's Potency.",
-      },
-    ],
-    source: "MtAw2 p145",
-  },
-  {
-    name: "Rend Friction",
-    arcana: "Forces",
-    level: 4,
-    primaryArcana: "Forces ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Drive, Science",
-    description:
-      "Increase or decrease friction. Increases can cause lethal damage. Decreases cause objects to move after they normally would have stopped.",
-    reachEffects: [],
-    source: "MtAw2 p145",
-  },
-  {
-    name: "Thunderbolt",
-    arcana: "Forces",
-    level: 4,
-    primaryArcana: "Forces ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Firearms, Science",
-    description: "Deal lethal damage.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spend one Mana, spell deals aggravated damage.",
-      },
-    ],
-    source: "MtAw2 p146",
-  },
-  {
-    name: "Transform Energy",
-    arcana: "Forces",
-    level: 4,
-    primaryArcana: "Forces ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Occult, Science",
-    description: "Transform one type of energy into another of the same level.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "May decrease the level of transformed energy by one. This Reach can be applied multiply times.",
-      },
-      {
-        reach: 1,
-        effect: "Split one type of energy into two others.",
-      },
-      {
-        reach: 1,
-        effect: "Spend one Mana, increase the level of transformed energy by one.",
-      },
-    ],
-    source: "MtAw2 p146",
-  },
-  {
-    name: "Adverse Weather",
-    arcana: "Forces",
-    level: 5,
-    primaryArcana: "Forces •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Occult, Science",
-    description: "Create Extreme Environments of nearly any kind up to level 4.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Can create weather drastically different from the local conditions.",
-      },
-    ],
-    source: "MtAw2 p146",
-  },
-  {
-    name: "Create Energy",
-    arcana: "Forces",
-    level: 5,
-    primaryArcana: "Forces •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Occult, Science",
-    description: "Create any type of energy form nothing, including sunlight and radiation.",
-    reachEffects: [],
-    source: "MtAw2 p146",
-  },
-  {
-    name: "Eradicate Energy",
-    arcana: "Forces",
-    level: 5,
-    primaryArcana: "Forces •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Intimidation, Science, Survival",
-    description: "Explosively destroy energy, if used on a creature the spell is instantly fatal.",
-    reachEffects: [],
-    source: "MtAw2 p146",
-  },
-  {
-    name: "Earthquake",
-    arcana: "Forces",
-    level: 5,
-    primaryArcana: "Forces •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Science, Survival",
-    description:
-      "Apply damage to all structures within the affected area. Buildings made to withstand earthquakes subtract their Durability.",
-    reachEffects: [],
-    source: "MtAw2 p147",
-  },
-  {
-    name: "Analyze Life",
-    arcana: "Life",
-    level: 1,
-    primaryArcana: "Life •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Animal Ken, Medicine, Survival",
-    description:
-      "Observe a creature and learn information like species, age, sex and overall health. A supernatural creature's species shows up as unknown unless the mage has studied it's kind before. Can discern amount of dots in physical attributes and any illnesses, injuries, Personal Tilts and Condition on target.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "May learn a specific Physical Attribute level, rather than just the total number of dots.",
-      },
-    ],
-    source: "MtAw2 p148",
-  },
-  {
-    name: "Cleanse the Body",
-    arcana: "Life",
-    level: 1,
-    primaryArcana: "Life •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Medicine, Survival",
-    description: "Help subject resist any toxins in her system.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "The subject may make a resistance roll immediately, in addition to the normal ones from regular intervals.",
-      },
-    ],
-    source: "MtAw2 p148",
-  },
-  {
-    name: "Heightened Senses",
-    arcana: "Life",
-    level: 1,
-    primaryArcana: "Life •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Investigation, Survival",
-    description: "Heighten desired senses. Grants bonus to perception roles.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "You can track by scent.",
-      },
-    ],
-    source: "MtAw2 p149",
-  },
-  {
-    name: "Speak With Beasts",
-    arcana: "Life",
-    level: 1,
-    primaryArcana: "Life •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Animal Ken, Empathy, Survival",
-    description:
-      "Magically speak with a specific species of animal. Animals have limited ability to understand things around them, for example a rat may refer to a cat and vampire alike as simply a /'/predator/'/.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "May communicate with all animals rather than only a single species.",
-      },
-    ],
-    source: "MtAw2 p148",
-  },
-  {
-    name: "Web of Life",
-    arcana: "Life",
-    level: 1,
-    primaryArcana: "Life •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Investigation, Medicine, Survival",
-    description: "Detect all forms of specified life in the spells area of effect.",
-    reachEffects: [],
-    source: "MtAw2 p148",
-  },
-  {
-    name: "Body Control",
-    arcana: "Life",
-    level: 2,
-    primaryArcana: "Life ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Medicine, Survival",
-    description:
-      "Slow Breathing, Heartbeat and/or Metabolism. Up your Initiative, eliminate or increase body odors and halve healing time for bashing damage. +2 reach: Half healing time for lethal damage.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Gain 1/0 armor.",
-      },
-    ],
-    source: "MtAw2 p148",
-  },
-  {
-    name: "Control Instincts",
-    arcana: "Life",
-    level: 2,
-    primaryArcana: "Life ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Animal Ken, Intimidation, Persuasion",
-    description:
-      "Trigger a specific instinctual response in animals(includes humans). Subject suffers a Condition related to the desired  instinct.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Control instincts of living supernatural creatures.",
-      },
-    ],
-    source: "MtAw2 p149",
-  },
-  {
-    name: "Lure and Repel",
-    arcana: "Life",
-    level: 2,
-    primaryArcana: "Life ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Animal Ken, Persuasion, Survival",
-    description:
-      "Create a lure or repellent that works on a specific organism. Plant and bacteria have 0 resolve for the purposes of this spell.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Lured creatures may offer food or small favors a appropriate for the animal.",
-      },
-      {
-        reach: 1,
-        effect:
-          "Lured creatures treat the subject good if a lure or bad if a repellent for the purposes of first impressions in Social maneuvering.",
-      },
-    ],
-    source: "MtAw2 p149",
-  },
-  {
-    name: "Mutable Mask",
-    arcana: "Life",
-    level: 2,
-    primaryArcana: "Life ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Medicine, Stealth, Subterfuge",
-    description:
-      "Change a subjects appearance, apparent sex, voice, smell, etc. Changes are illusionary, bio-metric devices will still pick up the truth. Cannot imitate specific people.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "Can duplicate the appearance of a specific person, including fingerprints.",
-      },
-    ],
-    source: "MtAw2 p149",
-  },
-  {
-    name: "Purge Illness",
-    arcana: "Life",
-    level: 2,
-    primaryArcana: "Life ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Medicine, Survival",
-    description:
-      "Cure yourself of an illness. Compare Potency to the illness'rating if less, reduce the illness by the difference if more, eliminate the illness.",
-    reachEffects: [],
-    source: "MtAw2 p149",
-  },
-  {
-    name: "Bruise Flesh",
-    arcana: "Life",
-    level: 3,
-    primaryArcana: "Life •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Brawl, Intimidation, Medicine",
-    description: "Deal bashing damage.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Inflict an additional -1 penalty to any wound penalties the target might have.",
-      },
-    ],
-    source: "MtAw2 p150",
-  },
-  {
-    name: "Contact High",
-    arcana: "Life",
-    level: 3,
-    primaryArcana: "Life •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Medicine, Occult, Science",
-    description:
-      "Creates a drug that targets the nervous system. Anyone who comes into contact with the Subject is affected by this drug for one scene. The Caster determines if it increases Initiative equal to Potency or penalizes Initiative equal to Potency. The drug affects a living subject as well as any touching it.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Living subjects are Immune but still spread the drug to anything they touch.",
-      },
-    ],
-    source: "SoS 65",
-  },
-  {
-    name: "Degrading the Form",
-    arcana: "Life",
-    level: 3,
-    primaryArcana: "Life •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Duration",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Brawl, Medicine, Survival",
-    description: "Reduce a targets Physical Attributes, but only one.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spell may effect two different Physical Attributes.",
-      },
-    ],
-    source: "MtAw2 p150",
-  },
-  {
-    name: "Honing the Form",
-    arcana: "Life",
-    level: 3,
-    primaryArcana: "Life •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Medicine, Survival",
-    description:
-      "Raise Strength, Dexterity or Stamina, but no higher than a subjects max for these stats.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Spell may effect two different Physical. This effect can be applied twice so that all three attributes may be affected.",
-      },
-      {
-        reach: 1,
-        effect: "Spend a point of Mana, may increase stats beyond the allowed maximum.",
-      },
-    ],
-    source: "MtAw2 p150",
-  },
-  {
-    name: "Knit",
-    arcana: "Life",
-    level: 3,
-    primaryArcana: "Life •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Medicine, Survival",
-    description: "Heal 2 bashing damage per Potency.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "You can heal Personal Tilts such as Arm Wrack.",
-      },
-      {
-        reach: 1,
-        effect: "Can heal damage done by deprivation.",
-      },
-      {
-        reach: 1,
-        effect: "Reproduce the effect of night's rest, regain a Willpower point if appropriate.",
-      },
-      {
-        reach: 1,
-        effect: "Heal one lethal per Potency instead of 2 Bashing.",
-      },
-    ],
-    source: "MtAw2 p150",
-  },
-  {
-    name: "Living Vessel",
-    arcana: "Life",
-    level: 3,
-    primaryArcana: "Life •••",
-    secondaryArcana: "Prime •••",
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Academics, Medicine, Persuasion",
-    description:
-      "Prepare a subject under the purview of Life for the Imbue Item Attainment. The mage can use the Attainment to imbue any living subject.",
-    reachEffects: [],
-    source: "SoS 69",
-  },
-  {
-    name: "Many Faces",
-    arcana: "Life",
-    level: 3,
-    primaryArcana: "Life •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Medicine, Stealth, Subterfuge",
-    description:
-      "Like /'/Mutable Mask/'/ only the changes are real rather than an illusion. Poor vision or other senses can be restored. Missing organs and limbs can not be restored however. You may also rearrange the subjects Physical Attributes. Add Time 3: You can change physical age as well.",
-    reachEffects: [],
-    source: "MtAw2 p150",
-  },
-  {
-    name: "Steal Life Force",
-    arcana: "Life",
-    level: 3,
-    primaryArcana: "Life •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Crafts, Medicine, Persuasion",
-    description:
-      "This spell is cast on a mage to alter his imbument process causing the item to damage the user. The item appears to function as normal but requires Life force to function. This item deals 1 point of Lethal damage for each point of Mana spent to cast the imbued spell, if the Item runs out of Mana it deals Lethal to the user to replenish its Mana.",
-    reachEffects: [],
-    source: "SoS 72",
-  },
-  {
-    name: "Transform Life",
-    arcana: "Life",
-    level: 3,
-    primaryArcana: "Life •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Animal Ken, Science, Survival",
-    description:
-      "Give life features normally belonging to other organisms. Gills, Claws, Senses, Etc.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "The bestowed feature, if permanent, can be passed on to a creatures descendants.",
-      },
-    ],
-    source: "MtAw2 p150",
-  },
-  {
-    name: "Accelerate Growth",
-    arcana: "Life",
-    level: 4,
-    primaryArcana: "Life ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Animal Ken, Medicine, Science",
-    description:
-      "Cause a lifeform to rapidly grow, at the end of the duration the subject will return to their actual age. If the subject exceeds its natural lifespan, it will die of old age.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "When the spell ends the subject will rapidly de-age at an even faster rate than they grew, returning to their actual age in minutes. This puts great stress on the target. They must make a Stamina roll and on a failure they will enter a coma for a number of days.",
-      },
-    ],
-    source: "MtAw2 p151",
-  },
-  {
-    name: "Animal Minion",
-    arcana: "Life",
-    level: 4,
-    primaryArcana: "Life ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Animal Ken, Science, Survival",
-    description:
-      "The mage takes complete bodily control of a subject. Difference in gait may be noticeable to those familiair with the subject. The mage's body will be inert while this spell is active.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Target behaves more normally, as you understand the targets habits.",
-      },
-    ],
-    source: "MtAw2 p151",
-  },
-  {
-    name: "Life-Force Assault",
-    arcana: "Life",
-    level: 4,
-    primaryArcana: "Life ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Brawl, Intimidation, Medicine",
-    description: "Deal lethal damage.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Inflict an additional -2 penalty to any wound penalties the target might have.",
-      },
-      {
-        reach: 1,
-        effect: "Spend a point of Mana, deal aggravated damage.",
-      },
-    ],
-    source: "MtAw2 p152",
-  },
-  {
-    name: "Living Grimoire",
-    arcana: "Life",
-    level: 4,
-    primaryArcana: "Life ••••",
-    secondaryArcana: "Prime ••••",
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Total Arcanum dots used in the Rote + Stamina",
-    suggestedRoteSkills: "Crafts, Medicine, Occult",
-    description:
-      "The Mage scribes a single rote per casting of this spell onto a living being. Casting this spell constitutes as an act of Hubris against Understanding Wisdom.",
-    reachEffects: [],
-    source: "SoS 85",
-  },
-  {
-    name: "Mend",
-    arcana: "Life",
-    level: 4,
-    primaryArcana: "Life ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Medicine, Survival",
-    description: "Heal 2 lethal wounds per Potency.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Can erase scars.",
-      },
-      {
-        reach: 1,
-        effect: "Can heal damage done by deprivation.",
-      },
-      {
-        reach: 1,
-        effect: "Reproduce the effect of night's rest, regain a Willpower point if appropriate.",
-      },
-      {
-        reach: 1,
-        effect: "Spend a point of Mana, can heal aggravated damage.",
-      },
-    ],
-    source: "MtAw2 p152",
-  },
-  {
-    name: "Regeneration",
-    arcana: "Life",
-    level: 4,
-    primaryArcana: "Life ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Medicine, Survival",
-    description: "Cost: 1 Mana, restore lost organs or limbs.",
-    reachEffects: [],
-    source: "MtAw2 p152",
-  },
-  {
-    name: "Shapechanging",
-    arcana: "Life",
-    level: 4,
-    primaryArcana: "Life ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Animal Ken, Science, Survival",
-    description:
-      "Take on the form of another creature. Clothes and gear do not change with you. Instincts of the new form may need to be resisted with a Composure + Resolve roll. Add Matter 4: Gear changes with you to fit the new form.",
-    reachEffects: [],
-    source: "MtAw2 p152",
-  },
-  {
-    name: "Create Life",
-    arcana: "Life",
-    level: 5,
-    primaryArcana: "Life •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Medicine, Science, Survival",
-    description:
-      "Design and create any form of life you desire. If cast with finite duration life will disappear at the end of the spell, this may count as an Act of Hubris. Add Mind 5: Give your organism a true mind as appropriate to type.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Creature can be given additional features as per /'/Transform Life/'/.",
-      },
-    ],
-    source: "MtAw2 p153",
-  },
-  {
-    name: "Contagion",
-    arcana: "Life",
-    level: 5,
-    primaryArcana: "Life •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Medicine, Occult, Science",
-    description: "Create minor or life-threatening diseases.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Create a never before seen disease. This is likely to be an Act of Hubris as no creature in the world could have developed any defenses against it.",
-      },
-    ],
-    source: "MtAw2 p153",
-  },
-  {
-    name: "Salt the Earth",
-    arcana: "Life",
-    level: 5,
-    primaryArcana: "Life •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Medicine, Science, Survival",
-    description:
-      "Destroy life-force in an area. This Creates an Extreme Environment equal to Potency.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Individual living things that survive, will still suffer an additional -1 to any wound penalties they might have.",
-      },
-    ],
-    source: "MtAw2 p153",
-  },
-  {
-    name: "Craftsmen's Eye",
-    arcana: "Matter",
-    level: 1,
-    primaryArcana: "Matter •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Investigation, Science",
-    description:
-      "Study an object for one turn to learn it's intended function. If the object has no purpose that will be revealed instead. If something prevents the object from fulfilling it's function, the spell will reveal the nature of the problem. Add Fate 1: Name a task while casting the spell. All objects that could help you with this task will become obvious to you.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Learn <i>how</i> to use the studied object. This grants the 8-Again when using the object. Only one object can benefit from this bonus at once.",
-      },
-      {
-        reach: 2,
-        effect: "Learn <i>all</i> possible uses for an object.",
-      },
-    ],
-    source: "MtAw2 p154",
-  },
-  {
-    name: "Detect Substance",
-    arcana: "Matter",
-    level: 1,
-    primaryArcana: "Matter •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Investigation, Science",
-    description:
-      "Become aware of a chosen type of substance in the area. /'/Iron/'/, /'/A knife/'/ and /'/My hunting Knife/'/ are all valid choices. Add Time 1: Determine if an object has been in the area. Add Forces 1: Search for a specific type of electronic information.",
-    reachEffects: [],
-    source: "MtAw2 p154",
-  },
-  {
-    name: "Discern Composition",
-    arcana: "Matter",
-    level: 1,
-    primaryArcana: "Matter •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Investigation, Science",
-    description:
-      "Become aware of an objects weight, density and the precise elements in it's makeup. Add Space 2: Know not only what an object was made of but also where the materials came from.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Also become aware of any objects hidden within the studied object.",
-      },
-      {
-        reach: 1,
-        effect: "You know an object's structural weak points. Reduce Durability by spell Potency.",
-      },
-    ],
-    source: "MtAw2 p154",
-  },
-  {
-    name: "Lodestone",
-    arcana: "Matter",
-    level: 1,
-    primaryArcana: "Matter •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Larceny, Science",
-    description:
-      "Choose a substance or type of object. Those objects will be drawn toward you or repelled away from you.",
-    reachEffects: [],
-    source: "MtAw2 p154",
-  },
-  {
-    name: "Remote Control",
-    arcana: "Matter",
-    level: 1,
-    primaryArcana: "Matter •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Drive, Intimidation",
-    description: "Control a mechanical object, to make it fulfill its function.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Perform more complex task while controlling the object.",
-      },
-    ],
-    source: "MtAw2 p155",
-  },
-  {
-    name: "Alchemist's Touch",
-    arcana: "Matter",
-    level: 2,
-    primaryArcana: "Matter ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Survival, Persuasion",
-    description:
-      "Choose a material, you become largely immune to its deleterious effects. The material cannot inflict bashing damage and lethal damage is reduced by spell Potency. The spell does not protect against damage from a sword or gun. Add Forces 2: You are now also protected against the damage from the extreme temperature of a material.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Choose an additional material to be protected against.",
-      },
-      {
-        reach: 2,
-        effect:
-          "Your immune to both the bashing and lethal, aggravated damage is reduced by Potency.",
-      },
-    ],
-    source: "MtAw2 p155",
-  },
-  {
-    name: "Find the Balance",
-    arcana: "Matter",
-    level: 2,
-    primaryArcana: "Matter ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Persuasion, Science",
-    description: "Improve the balance and heft of an item. This grants it the 9-Again quality.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Grant a tool the 8-Again quality instead.",
-      },
-    ],
-    source: "MtAw2 p155",
-  },
-  {
-    name: "Hidden Hoard",
-    arcana: "Matter",
-    level: 2,
-    primaryArcana: "Matter ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Larceny, Occult, Subterfuge",
-    description:
-      "Make matter difficult to detect. Mundane attempts to locate automatically fail. Supernatural power enters a Clash of Wills.",
-    reachEffects: [],
-    source: "MtAw2 p156",
-  },
-  {
-    name: "Machine Invisibility",
-    arcana: "Matter",
-    level: 2,
-    primaryArcana: "Matter ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Larceny, Science, Stealth",
-    description:
-      "Become invisible to mechanical sensors. Supernatural items enter a Clash of Wills.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "This spell now also works on constructs animated with magic, like zombies and golems. This triggers a Clash of Wills.",
-      },
-    ],
-    source: "MtAw2 p156",
-  },
-  {
-    name: "Shaping",
-    arcana: "Matter",
-    level: 2,
-    primaryArcana: "Matter ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Expression, Persuasion",
-    description: "Shape liquids and gases in any form you desire in defiance of gravity.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Can alter solids as well. Warped tools or weapons will have their equipment bonus reduced by potency, if reduced to 0 the object becomes useless.",
-      },
-      {
-        reach: 1,
-        effect:
-          "If creating or repairing an object in an extended action reduce its required successes by this spell's Potency, the number cannot fall below one.",
-      },
-      {
-        reach: 2,
-        effect:
-          "The shaping can create an appropriate Environmental Tilt, such as Earthquake, Flooded or Howling Winds.",
-      },
-    ],
-    source: "MtAw2 p156",
-  },
-  {
-    name: "Aegis",
-    arcana: "Matter",
-    level: 3,
-    primaryArcana: "Matter •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Crafts, Science",
-    description:
-      "For each level of Potency grant an object one of the following: Raise/lower ballistic Armor by 1, raise/lower general Armor by 1, raise/lower Defense penalty by 1.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The armor becomes immune to the Armor-Piercing effect.",
-      },
-    ],
-    source: "MtAw2 p156",
-  },
-  {
-    name: "Alter Conductivity",
-    arcana: "Matter",
-    level: 3,
-    primaryArcana: "Matter •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Computer, Science, Subterfuge",
-    description: "Make an object more or less conductive to electricity.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Alter an objects conductivity to other forms of energy. Each additional type is an extra Reach.",
-      },
-    ],
-    source: "MtAw2 p156",
-  },
-  {
-    name: "Alter Integrity",
-    arcana: "Matter",
-    level: 3,
-    primaryArcana: "Matter •••",
-    secondaryArcana: null,
-    practice: "Fraying or Perfecting",
-    primaryFactor: "Potency",
-    withstand: "Durability",
-    suggestedRoteSkills: "Crafts, Medicine, Subterfuge",
-    description: "Increase or decrease an objects Durability.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Instead of increasing Durability by 1 increase structure by 2.",
-      },
-      {
-        reach: 2,
-        effect: "The effect is lasting.",
-      },
-    ],
-    source: "MtAw2 p156",
-  },
-  {
-    name: "Crucible",
-    arcana: "Matter",
-    level: 3,
-    primaryArcana: "Matter •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Occult, Science",
-    description:
-      "Grant a tool the 8-Again for a number of turns. Valuable objects will have their Availability rating increased, this rating cannot become more than double the original rating.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Spend one point of Mana, The object gains the rote quality for a number of rolls. So long as the durability last this effect can be recharged by spending more Mana.",
-      },
-      {
-        reach: 1,
-        effect: "Availability may be triple the original rating.",
-      },
-    ],
-    source: "MtAw2 p157",
-  },
-  {
-    name: "Hone the Perfected Form",
-    arcana: "Matter",
-    level: 3,
-    primaryArcana: "Matter •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Persuasion, Science",
-    description:
-      "*Cost 1 Mana* The mage takes an ordinary metal (iron, gold, silver, mercury, copper, tin or lead) and transmutes it into its perfected metal. Forces ●●●: May perfect fire.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "The spell may Perfect another substance like Glass or Gemstones.",
-      },
-    ],
-    source: "SoS 61",
-  },
-  {
-    name: "Nigredo and Albedo",
-    arcana: "Matter",
-    level: 3,
-    primaryArcana: "Matter •••",
-    secondaryArcana: null,
-    practice: "Fraying or Perfecting",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Brawl, Medicine",
-    description: "Repair or damage an objects Structure.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "When damaging ignore durability.",
-      },
-    ],
-    source: "MtAw2 p157",
-  },
-  {
-    name: "Shrink and Grow",
-    arcana: "Matter",
-    level: 3,
-    primaryArcana: "Matter •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: "Durability",
-    suggestedRoteSkills: "Crafts, Expression, Science",
-    description:
-      "Increase or decrease an objects size. Add Life 3: Can be cast on living subjects, unwilling subjects may Withstand with Stamina.",
-    reachEffects: [],
-    source: "MtAw2 p157",
-  },
-  {
-    name: "Spell Potion",
-    arcana: "Matter",
-    level: 3,
-    primaryArcana: "Matter •••",
-    secondaryArcana: "Prime ••",
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Medicine, Subterfuge",
-    description:
-      "*Costs 1 Mana* Magically alters an ingested item, making it act as a storage vessel for another spell. Once the Ingested item has been primed for holding a mage may spend a Mana to cast any other spell on the item if it uses touch/self range. The cast spell doesn't take affect until the item is ingested. May store spells up to level of Potency which don't activate until either Spell Potion is canceled, the Duration ends or the food is injested.",
-    reachEffects: [],
-    source: "SoS 70",
-  },
-  {
-    name: "State Change",
-    arcana: "Matter",
-    level: 3,
-    primaryArcana: "Matter •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: "Durability",
-    suggestedRoteSkills: "Crafts, Persuasion, Science",
-    description:
-      "Change material one step along the path from solid to liquid to gas. This does not cause any temperature change. Add Forces 3: You may transmute matter into plasma.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "You may transform solids directly int gas and vice versa.",
-      },
-    ],
-    source: "MtAw2 p157",
-  },
-  {
-    name: "Windstrike",
-    arcana: "Matter",
-    level: 3,
-    primaryArcana: "Matter •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Brawl, Crafts",
-    description: "Deal bashing damage.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Create an appropriate Environmental Tilt.",
-      },
-    ],
-    source: "MtAw2 p157",
-  },
-  {
-    name: "Wonderful Machine",
-    arcana: "Matter",
-    level: 3,
-    primaryArcana: "Matter •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Politics, Science",
-    description:
-      "Integrate multiple machines into one another. Add Life 3: Machine properties can be grafted onto a living thing or vice versa.",
-    reachEffects: [],
-    source: "MtAw2 p157",
-  },
-  {
-    name: "Endless Bounty",
-    arcana: "Matter",
-    level: 4,
-    primaryArcana: "Matter ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Science, Streetwise",
-    description:
-      "Never run out of small expendable items. Enchant a single item that contains a smaller expendable item. For the duration of the spell the expendable item never runs out. E.g.: Money in wallet, Bullets in magazine, Gas in car tank.",
-    reachEffects: [],
-    source: "SoS 66",
-  },
-  {
-    name: "Forge Dumanium",
-    arcana: "Matter",
-    level: 4,
-    primaryArcana: "Matter ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Expression, Persuasion",
-    description:
-      "*Costs 1 Mana* Combine perfected metals into a single metal called Dumanium. The object is Durability 1 and holds 1 point of Mana. Weapons made from Dumanium can spend Mana to deal aggravated Damage for a single attack.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect:
-          "The Spell is Lasting however this relies on all the Metals to remain perfect, should a perfected metal become mundane the alloy will collapse.",
-      },
-    ],
-    source: "SoS 62",
-  },
-  {
-    name: "Forge Sophis",
-    arcana: "Matter",
-    level: 4,
-    primaryArcana: "Matter ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Occult, Science",
-    description:
-      "*Costs 1 Mana* Combine perfected metals into a single metal that scavenges Mana called Sophis. The object is Durability 1 and can hold 1 Mana. Potency increases this 1 for 1 for Durability and Mana.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect:
-          "The Spell is Lasting however this relies on all the Metals to remain perfect, should a perfected metal become mundane the alloy will collapse.",
-      },
-    ],
-    source: "SoS 62",
-  },
-  {
-    name: "Forge Thaumium",
-    arcana: "Matter",
-    level: 4,
-    primaryArcana: "Matter ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Occult, Survival",
-    description:
-      "*Costs 1 Mana* Combine perfected metals to create Thaumium, The object is Durability 1 and holds 1 point of Mana which it spends to shield against Magic. Other Arcanum ●●: Thaumium can protect against other types of Magic provided they fall under the Arcanum.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect:
-          "The Spell is Lasting however this relies on all the Metals to remain perfect, should a perfected metal become mundane the alloy will collapse.",
-      },
-    ],
-    source: "SoS 62",
-  },
-  {
-    name: "Ghostwall",
-    arcana: "Matter",
-    level: 4,
-    primaryArcana: "Matter ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Occult, Stealth",
-    description:
-      "Turn objects intangible. Add Death 3, Mind 3 or Spirit 3: The object may be shifted into the Twilight, attuned to the used Arcanum.",
-    reachEffects: [],
-    source: "MtAw2 p158",
-  },
-  {
-    name: "Golem",
-    arcana: "Matter",
-    level: 4,
-    primaryArcana: "Matter ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Expression, Occult",
-    description:
-      "Animate a statue or other object. Add Death 4 or Spirit 4: A ghost or spirit may serve as the intelligence of the golem. Add Mind 5: Grant true  intelligence see /'/Psychic Genesis/'/.",
-    reachEffects: [],
-    source: "MtAw2 p158",
-  },
-  {
-    name: "Piercing Earth",
-    arcana: "Matter",
-    level: 4,
-    primaryArcana: "Matter ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Brawl, Crafts",
-    description: "Deal lethal damage.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Create an appropriate Environmental Tilt.",
-      },
-      {
-        reach: 1,
-        effect: "Spend a point of Mana, deal aggravated damage.",
-      },
-    ],
-    source: "MtAw2 p158",
-  },
-  {
-    name: "Transubstantiation",
-    arcana: "Matter",
-    level: 4,
-    primaryArcana: "Matter ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Empathy, Science",
-    description:
-      "Transform any type of matter into another type. Add Life 4: Transform matter into living things or vice versa.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Transmute multiply substance into a single substance or vice versa.",
-      },
-    ],
-    source: "MtAw2 p158",
-  },
-  {
-    name: "Annihilate Matter",
-    arcana: "Matter",
-    level: 5,
-    primaryArcana: "Matter •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Potency",
-    withstand: "Durability",
-    suggestedRoteSkills: "Athletics, Intimidation, Science",
-    description: "Destroy matter completely.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spend a point of Mana, can now destroy magical objects as well.",
-      },
-    ],
-    source: "MtAw2 p158",
-  },
-  {
-    name: "Ex Nihilo",
-    arcana: "Matter",
-    level: 5,
-    primaryArcana: "Matter •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Expression, Science",
-    description: "Create an object or relatively uncomplicated tool out of nothing.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Create a complex machine or electronic device, like a car or smartphone.",
-      },
-    ],
-    source: "MtAw2 p158",
-  },
-  {
-    name: "Self-Repairing Machine",
-    arcana: "Matter",
-    level: 5,
-    primaryArcana: "Matter •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Medicine, Occult",
-    description: "Cause a machine to repair Potency in Structure per day.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The machine heals every hour.",
-      },
-      {
-        reach: 2,
-        effect: "The machine heals every 15 minutes.",
-      },
-    ],
-    source: "MtAw2 p159",
-  },
-  {
-    name: "Know Nature",
-    arcana: "Mind",
-    level: 1,
-    primaryArcana: "Mind •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Science, Subterfuge",
-    description: "Determine a subject's Virtue, Vice and Mental and Social Attribute levels.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Also determine Aspirations and Obsessions.",
-      },
-    ],
-    source: "MtAw2 p159",
-  },
-  {
-    name: "Mental Scan",
-    arcana: "Mind",
-    level: 1,
-    primaryArcana: "Mind •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Empathy, Investigation, Occult",
-    description: "Ask storyteller questions about a subject's mental or emotional state.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Read surface thoughts for snippets of a subject's current ideas or words and phrases before they are actually spoken.",
-      },
-    ],
-    source: "MtAw2 p159",
-  },
-  {
-    name: "One Mind, Two Thoughts",
-    arcana: "Mind",
-    level: 1,
-    primaryArcana: "Mind •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Expression, Science",
-    description:
-      "Perform two Mental or Social extended tasks at the same time. Neither can be a purely Physical task.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "May perform two Mental instant tasks at the same time.",
-      },
-      {
-        reach: 2,
-        effect: "If in the Astral Realms one of the actions may be /'/Physical/'/.",
-      },
-    ],
-    source: "MtAw2 p159",
-  },
-  {
-    name: "Perfect Recall",
-    arcana: "Mind",
-    level: 1,
-    primaryArcana: "Mind •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Expression, Investigation",
-    description: "Recall old memories with perfect accuracy.",
-    reachEffects: [],
-    source: "MtAw2 p160",
-  },
-  {
-    name: "Alter Mental Pattern",
-    arcana: "Mind",
-    level: 2,
-    primaryArcana: "Mind ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Science, Stealth, Subterfuge",
-    description:
-      "Add to subterfuge rolls. Supernatural powers that read surface thoughts or emotions provoke a Clash of Wills.",
-    reachEffects: [],
-    source: "MtAw2 p160",
-  },
-  {
-    name: "Dream Reaching",
-    arcana: "Mind",
-    level: 2,
-    primaryArcana: "Mind ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Empathy, Medicine, Persuasion",
-    description:
-      "Enter a subject's dream. You can influence but not take part in the dream. Cast on self to be able to remember your own dreams.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "You can become an active part of the dream. Cast on self induces lucid dreaming.",
-      },
-    ],
-    source: "MtAw2 p160",
-  },
-  {
-    name: "Emotional Urging",
-    arcana: "Mind",
-    level: 2,
-    primaryArcana: "Mind ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Empathy, Intimidation, Subterfuge",
-    description: "Open or close a subject's doors.",
-    reachEffects: [],
-    source: "MtAw2 p160",
-  },
-  {
-    name: "First Impressions",
-    arcana: "Mind",
-    level: 2,
-    primaryArcana: "Mind ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Crafts, Socialize, Subterfuge",
-    description: "Raise or lower the first impression.",
-    reachEffects: [],
-    source: "MtAw2 p160",
-  },
-  {
-    name: "Incognito Presence",
-    arcana: "Mind",
-    level: 2,
-    primaryArcana: "Mind ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Stealth, Subterfuge",
-    description:
-      "Costs ●. The Mage hides the Subject's Psychic Presence which Prevents people form remembering their presence or looking their way. Active attempts to do so with supernatural abilities (Including active Mage sight) provoke a Clash of Wills.",
-    reachEffects: [],
-    source: "MtAw2 p160",
-  },
-  {
-    name: "Memory Hole",
-    arcana: "Mind",
-    level: 2,
-    primaryArcana: "Mind ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Medicine, Subterfuge",
-    description:
-      "Hide a specific memory forgetting it completely for the duration of the spell, One memory per Potency.",
-    reachEffects: [],
-    source: "MtAw2 p160",
-  },
-  {
-    name: "Mental Shield",
-    arcana: "Mind",
-    level: 2,
-    primaryArcana: "Mind ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Intimidation, Survival",
-    description:
-      "Protects the Subject from Mental Attacks, Goetia Powers, Influences or Manifestations that target them.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Also Protects from Physical attacks of Goetia.",
-      },
-    ],
-    source: "MtAw2 p160",
-  },
-  {
-    name: "Narcissus' Mirror",
-    arcana: "Mind",
-    level: 2,
-    primaryArcana: "Mind ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Intimidation, Occult, Subterfuge",
-    description:
-      "The mage can reflect the mental and emotional effects of a Nimbus tilt back onto its source. Whenever the Mage is subjected to a tilt that affects a Mental or Social trait this spell provokes a Clash of Wills. If the mage wins affect the instigator of the Tilt. Can be cast if the Mage is already under the effects of a tilt to immediately create a Clash of Wills. Substitute Life ••: This Spell affects Nimbus Tilts relating to Physical Traits or purely Physical effects instead. Add Life ••: This Spell affects all types of Nimbus Tilt. Add Prime ••: Affects other type of Supernatural Auras with the appropriate kinds of effects.",
-    reachEffects: [],
-    source: "SoS 94",
-  },
-  {
-    name: "Physic Domination",
-    arcana: "Mind",
-    level: 2,
-    primaryArcana: "Mind ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Expression, Intimidation, Subterfuge",
-    description:
-      "Send one word commands to a subject that they are compelled to act upon, even against their will.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Take control of a subject, forcing him to take actions against their will. These actions cannot put him serious danger however.",
-      },
-      {
-        reach: 1,
-        effect: "Force the subject to take an additional task.",
-      },
-    ],
-    source: "MtAw2 p161",
-  },
-  {
-    name: "Ritual Focus",
-    arcana: "Mind",
-    level: 2,
-    primaryArcana: "Mind ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Empathy, Leadership?(awaiting Errata), Persuasion",
-    description:
-      "AVariant on Telepathy linking a Mage and his Subjects allowing him to guide them as they work in unison on a particular spell (see /'/Teamwork/'/, MtAw 2e p.119) Must have Scale to affect every other Awakened participant in Ritual. Secondary Actors in ritual add Potency to dice pool.",
-    reachEffects: [],
-    source: "SoS 55",
-  },
-  {
-    name: "Soul Windows",
-    arcana: "Mind",
-    level: 2,
-    primaryArcana: "Mind ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Investigation, Stealth",
-    description:
-      "By Splitting their senses a mage may view whats happening around their Soul Stone 360° or hears the sounds in its vicinity. This doesn't require sympathetic range. Add Forces ••: The mage may project their voice through the stone to speak or create a hologram of themselves.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The mage experiences the Stone's surroundings with all their Senses.",
-      },
-      {
-        reach: 1,
-        effect: "For each reach spent the Mage may split their senses to another Soul Stone.",
-      },
-    ],
-    source: "SoS 90",
-  },
-  {
-    name: "Telepathy",
-    arcana: "Mind",
-    level: 2,
-    primaryArcana: "Mind ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Crafts, Empathy, Socialize",
-    description:
-      "Surface thoughts of the subjects play out in the each others minds. This may grant a bonus or penalty between the subjects. A deliberate message may be send along the link.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Only thoughts that the originating subject wants to share are shared.",
-      },
-      {
-        reach: 1,
-        effect: "All subjects have the ability to send and receive thoughts.",
-      },
-    ],
-    source: "MtAw2 p161",
-  },
-  {
-    name: "Astral Grimoire",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: "Prime •",
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: "Total Arcanum dots used in rote",
-    suggestedRoteSkills: "Crafts, Expression, Occult",
-    description:
-      "*Costs 1 Mana* Scribe a Rote within ones own Oneiros, these can be cast from the Grimoire without needing to meditate to the Astral.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "The Mage can scribe the grimoire within the Temenos making it available to any who travel there. These can only be cast directly from the Astral representation or with its Summoned goetia.",
-      },
-      {
-        reach: 1,
-        effect: "For 1 point of Mana the Spell's duration is lasting.",
-      },
-      {
-        reach: 2,
-        effect:
-          "The Mage can scribe within the Anima Mundi, these don't manifest as books or scrolls but as constellations or rock formations. Figuring these out is a mystery of itself.",
-      },
-    ],
-    source: "SoS 85",
-  },
-  {
-    name: "Augment Mind",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Expression, Survival",
-    description: "Increase a Mental or Social Attribute by Potency, up to normal limits.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Divide increase between an additional Attribute.",
-      },
-      {
-        reach: 2,
-        effect: "For 1 Mana, go above normal limits.",
-      },
-    ],
-    source: "MtAw2 p161",
-  },
-  {
-    name: "Befuddle",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: "Composure or Resolve",
-    suggestedRoteSkills: "Intimidation, Persuasion, Science",
-    description:
-      "Lower a Mental or Social Attributes. One Potency equal one dot to a minimum of one.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "May lower an additional Attribute per reach, dividing Potency among the options.",
-      },
-    ],
-    source: "MtAw2 p163",
-  },
-  {
-    name: "Broken Relinquishment",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Intimidation, Occult, Subterfuge",
-    description:
-      "This spell creates a breaking point for the subject as a way to relinquish spells without spending a willpower dot. The next act of hubris, braking point or genre equivalent by a subject of this spell suffers penalty by Potency.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The Subject of this spell immediately suffers a breaking point.",
-      },
-    ],
-    source: "SoS 73",
-  },
-  {
-    name: "Clear Thoughts",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Intimidation, Persuasion",
-    description:
-      "Suppress a Mental Condition or Tilt per Potency, for the Duration. Can't affect Paradox Conditions; those cause by the supernatural provoke a Clash of Wills.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Subject gains 1 Willpower.",
-      },
-      {
-        reach: 2,
-        effect: "Effect is lasting.",
-      },
-    ],
-    source: "MtAw2 p161",
-  },
-  {
-    name: "Enhance Skill",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Expression, Survival",
-    description:
-      "Increase an Skill with already at least one rank by Potency, for the Duration, up to their normal limits. + 2 Reach: for 1 Mana, go above normal limits.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Divide increase between an additional Skill.",
-      },
-    ],
-    source: "MtAw2 p161",
-  },
-  {
-    name: "Give Me That",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Crafts, Empathy, Persuasion",
-    description:
-      "The subject item evokes a concept of ownership. Those who do not Withstand the spell gain the Persistent Condition: Obsession with the object as their focus. Space ●●●: Individuals with the Obsessed Condition to the object also gain a Strong sympathetic link to it for the spells duration.",
-    reachEffects: [],
-    source: "SoS 66",
-  },
-  {
-    name: "Goetic Summons",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: "Rank",
-    suggestedRoteSkills: "Persuasion, Socialize, Occult",
-    description:
-      "Call the nearest Goetia; one personally known, specified by type of Resonance, or the nearest generally. Add Spirit or Death 2: it gains the Materialized Condition for the duration.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Also creates the Open Condition.",
-      },
-      {
-        reach: 1,
-        effect: "May give it a one-word command.",
-      },
-      {
-        reach: 2,
-        effect: "May give a complex but single task command.",
-      },
-      {
-        reach: 1,
-        effect:
-          "Summon a Goetia from the subject's Oneiros at a place one could reach the Astral. Must spend the Mana it would take to enter.",
-      },
-      {
-        reach: 2,
-        effect: "Summon from the Temenos.",
-      },
-      {
-        reach: 3,
-        effect: "Summon from Anima Mundi.",
-      },
-    ],
-    source: "MtAw2 p162",
-  },
-  {
-    name: "Imposter",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Persuasion, Stealth, Subterfuge",
-    description:
-      "Cause the subject to believe the caster is someone else. Manipulation + Subterfuge every minute if mimicking a specific person. Can't replicate Social Merits; any Doors opened benefit the assumed identity.",
-    reachEffects: [],
-    source: "MtAw2 p162",
-  },
-  {
-    name: "Psychic Assault",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Intimidation, Medicine",
-    description: "Deal Bashing equal to Potency, mimicking a stroke.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Give target -1 to Mental rolls (may stack 3 times).",
-      },
-    ],
-    source: "MtAw2 p162",
-  },
-  {
-    name: "Sleep of the Just",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Academics, Athletics, Occult",
-    description:
-      "Control sleep cycle and dreams. Anything else entering or influencing dreams provokes Clash of Wills.",
-    reachEffects: [],
-    source: "MtAw2 p162",
-  },
-  {
-    name: "Supernal Translation",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: "Prime ●●●",
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Expression, Occult",
-    description:
-      "Allows the subject to comprehend and translate High Speech as they hear or read it as if they had up Mage Sight. Does not allow them to Speak or Write it back and is still subject to Dissonance and Quiescence.",
-    reachEffects: [],
-    source: "SoS 28",
-  },
-  {
-    name: "Read the Depths",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Empathy, Investigation, Medicine",
-    description: "Read memories and ideas from target's subconscious.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Modify one of the memories read, for the Duration.",
-      },
-    ],
-    source: "MtAw2 p162",
-  },
-  {
-    name: "Universal Language",
-    arcana: "Mind",
-    level: 3,
-    primaryArcana: "Mind •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Investigation, Persuasion",
-    description:
-      "Target can understand and translate any language they are able to perceive: spoken, written, symbols, encoded signals, body language, hand symbols, or thoughts. Does not allow non-Awakened to understand High Speech.",
-    reachEffects: [],
-    source: "MtAw2 p162",
-  },
-  {
-    name: "Haunted Grimoire",
-    arcana: "Mind",
-    level: 4,
-    primaryArcana: "Mind ••••",
-    secondaryArcana: "Prime •",
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Total Arcanum dots of Rote + Rank",
-    suggestedRoteSkills: "Crafts, Intimidation, Occult",
-    description:
-      "*Costs 1 Mana* The Mage binds a Goetia to a grimoire, writing its essence into the vessel's pattern. This doesn't host the Goetia's numina or influences nor does it have an essence pool. The Grimoire gains the Open and Resonant Conditions. When cast the spell is increased by the Goetia Rank for Primary Factor however the Goetia has a chance to escape with a Clash of Wills to the caster. When someone memorizes a Rote the Goetia has a chance to possess them using a Clash of Wills. This spell is a Wisdom Sin against Understanding.",
-    reachEffects: [],
-    source: "SoS 86",
-  },
-  {
-    name: "Possession",
-    arcana: "Mind",
-    level: 4,
-    primaryArcana: "Mind ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Medicine, Persuasion, Subterfuge",
-    description: "Can possess the subject inflicting the Possessed Condition(see p. 261).",
-    reachEffects: [],
-    source: "MtAw2 p165",
-  },
-  {
-    name: "Gain Skill",
-    arcana: "Mind",
-    level: 4,
-    primaryArcana: "Mind ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Expression, Science",
-    description:
-      "Increase a Skill by Potency. This cannot go above the normal maximum. + 1 Reach: for 1 Mana, go above normal limits.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Divide the increase between an additional Skill.",
-      },
-    ],
-    source: "MtAw2 p163",
-  },
-  {
-    name: "Goetic Evocatuion",
-    arcana: "Mind",
-    level: 4,
-    primaryArcana: "Mind ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Rank of Entity",
-    suggestedRoteSkills: "Intimidation, Occult, Persuasion",
-    description: "May convert pieces of a persons Psyche from a soul stone into a Goetia.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "The Mage may extract the Goetia directly into his own Oneiros.",
-      },
-    ],
-    source: "SoS 90",
-  },
-  {
-    name: "Hallucination",
-    arcana: "Mind",
-    level: 4,
-    primaryArcana: "Mind ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Academics, Persuasion, Subterfuge",
-    description: "Create an illusion that affects all senses but touch.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The illusion can now be /'/touched/'/ by the subject. It cannot harm or attack.",
-      },
-    ],
-    source: "MtAw2 p163",
-  },
-  {
-    name: "Mind Flay",
-    arcana: "Mind",
-    level: 4,
-    primaryArcana: "Mind ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Intimidation, Science",
-    description: "Deal lethal damage.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Cause Insane Tilt.",
-      },
-      {
-        reach: 2,
-        effect: "Spend a point of Mana, deal aggravated damage.",
-      },
-    ],
-    source: "MtAw2 p164",
-  },
-  {
-    name: "Psychic Projection",
-    arcana: "Mind",
-    level: 4,
-    primaryArcana: "Mind ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Academics, Occult, Socialize",
-    description:
-      "Astral project into Twilight or into somebody's dreams. Add Spirit 2: May project into the Shadow. Withstand is Gauntlet rating.",
-    reachEffects: [],
-    source: "MtAw2 p164",
-  },
-  {
-    name: "Psychic Reprogramming",
-    arcana: "Mind",
-    level: 4,
-    primaryArcana: "Mind ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Intimidation, Medicine, Persuasion",
-    description:
-      "For each point of Potency change one of the followin: Virtue, Vice, Short-Term Aspiration, Long-Term Aspiration, Obsession, a non-Physical Persistent Condition, or may move one dot between two Social Skills, or between two Mental Skills.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "May also move between two Social Attributes, or two Mental Attributes.",
-      },
-    ],
-    source: "MtAw2 p164",
-  },
-  {
-    name: "Scribe Daimonomikon",
-    arcana: "Mind",
-    level: 4,
-    primaryArcana: "Mind ••••",
-    secondaryArcana: "Prime •",
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Rank of Attainment + (10 - Caster's Gnosis)",
-    suggestedRoteSkills: "Crafts, Expression, Occult",
-    description:
-      "*Cost 1 Mana* Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "For 1 Mana, the Spell's Duration is Lasting.",
-      },
-    ],
-    source: "SoS 87",
-  },
-  {
-    name: "Terrorize",
-    arcana: "Mind",
-    level: 4,
-    primaryArcana: "Mind ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Expression, Intimidation, Medicine",
-    description: "Cause the Insensate Tilt for the duration or until it's resolved.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Inflict Broken Condition instead.",
-      },
-    ],
-    source: "MtAw2 p164",
-  },
-  {
-    name: "Amorality",
-    arcana: "Mind",
-    level: 5,
-    primaryArcana: "Mind •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Crafts, Empathy, Expression",
-    description:
-      "Remove Virtue or Vice. Without Virtue the subject regains two Willpower for indulging Vice. Without Vice the subject cannot engage in any activity that would be a breaking point or Act of Hubris.",
-    reachEffects: [],
-    source: "MtAw2 p164",
-  },
-  {
-    name: "No Exit",
-    arcana: "Mind",
-    level: 5,
-    primaryArcana: "Mind •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Expression, Persuasion, Science",
-    description:
-      "For the duration of the spell the subject is in a catatonic state. Reading of the subjects mind or memory reveals this spell.",
-    reachEffects: [],
-    source: "MtAw2 p164",
-  },
-  {
-    name: "Mind Wipe",
-    arcana: "Mind",
-    level: 5,
-    primaryArcana: "Mind •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Academics, Intimidation, Occult",
-    description:
-      "Remove large portions of the subjects memories, inflicts the Amnesia Tilt for the duration of the spell. You can affect one month of time per level Potency. You can specify what portions are forgotten.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "May specify what memories are erased, rather than just erasing a single span of time.",
-      },
-      {
-        reach: 2,
-        effect: "The effect is Lasting.",
-      },
-    ],
-    source: "MtAw2 p164",
-  },
-  {
-    name: "Psychic Genesis",
-    arcana: "Mind",
-    level: 5,
-    primaryArcana: "Mind •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Expression, Science",
-    description: "Create a self-aware intelligence. This is a Rank 1 Goetia in Twilight.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The entity works as a sleepwalker for the purposes of assisting ritual casting.",
-      },
-      {
-        reach: 1,
-        effect: "For one Mana, the rank is 2.",
-      },
-    ],
-    source: "MtAw2 p165",
-  },
-  {
-    name: "Social Networking",
-    arcana: "Mind",
-    level: 5,
-    primaryArcana: "Mind •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Persuasion, Politics, Socialize",
-    description:
-      "For every level of Potency, gain one dot in one of the following Merits: Allies, Contacts or Status.",
-    reachEffects: [],
-    source: "MtAw2 p165",
-  },
-  {
-    name: "Dispel Magic",
-    arcana: "Prime",
-    level: 1,
-    primaryArcana: "Prime •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Potency",
-    withstand: "Arcanum rating of the subject spell’s caster",
-    suggestedRoteSkills: "Athletics, Intimidation, Occult",
-    description:
-      "Temporarily suppress or destroy an active spell. Add Fate 1: Selectively suppress spell.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "Make the effect Lasting.",
-      },
-    ],
-    source: "MtAw2 p 165",
-  },
-  {
-    name: "Nimbus Tuning",
-    arcana: "Prime",
-    level: 1,
-    primaryArcana: "Prime •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Investigation, Occult",
-    description:
-      "The mage can tune in more attentively to any Signature Nimbus he scrutinizes with Focused Mage sight. For Each potency learn one of the following: Gnosis, Wisdom, Virtue/Vice, An Act of Hubris resulting from cast magic, An Obsession related to the remaining Magic, Whether the Magic resulted in Paradox.",
-    reachEffects: [],
-    source: "SoS 94",
-  },
-  {
-    name: "Pierce Deception",
-    arcana: "Prime",
-    level: 1,
-    primaryArcana: "Prime •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Investigation, Medicine, Occult",
-    description: "See through falsehoods magical and mundane.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Get a sense of the actual truth.",
-      },
-    ],
-    source: "MtAw2 p 165",
-  },
-  {
-    name: "Sacred Geometry",
-    arcana: "Prime",
-    level: 1,
-    primaryArcana: "Prime •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Occult, Survival",
-    description:
-      "Reveal ley lines and nodes. Add Death 1 or Spirit 1: See Avernian Gates or Loci as well.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Reveal Hallows.",
-      },
-    ],
-    source: "MtAw2 p 166",
-  },
-  {
-    name: "Scribe Grimoire",
-    arcana: "Prime",
-    level: 1,
-    primaryArcana: "Prime •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Potency",
-    withstand: "Total Arcanum dots of all Arcana used in the spell being scribed",
-    suggestedRoteSkills: "Crafts, Expression, Occult",
-    description:
-      "Create a Grimoire full of Rotes or transcribe it from one medium to another. Add Forces ●●: Transcribe the grimoire without needed equipment.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Make the Grimoire Lasting.",
-      },
-    ],
-    source: "MtAw2 p 166, SoS p83",
-  },
-  {
-    name: "Shared Mage Sight",
-    arcana: "Prime",
-    level: 1,
-    primaryArcana: "Prime •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Expression, Investigation, Occult",
-    description:
-      "*Cost 1+ Mana per Arcanum per subject* Share your Mage sight with another Mage. Prime ●●●●: Can be used on a Sleepwalker under the effects of Apocalypse. Other Arcanum ●: *1 Mana per Arcanum* May add or substitute Prime for another Arcanum.",
-    reachEffects: [],
-    source: "SoS 28",
-  },
-  {
-    name: "Supernal Signature",
-    arcana: "Prime",
-    level: 1,
-    primaryArcana: "Prime •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Intimidation, Politics",
-    description:
-      "The Mage flares her Immediate Nimbus to imprint her signature on a subject, The signature reflects her Shadow Name and lasts for the Duration of the spell. Anyone who Studies the nimbus under focused mage sight can not only sense the details of the Nimbus but the Casters Supernal Identity. This moves the Caster one impression level up the Social Maneuvering unless the viewer succeeds a Resolve + Composure - Potency roll.",
-    reachEffects: [],
-    source: "SoS 93",
-  },
-  {
-    name: "Supernal Vision",
-    arcana: "Prime",
-    level: 1,
-    primaryArcana: "Prime •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Occult, Survival",
-    description: "Perceive the Supernal properties of a subject.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Perceive the non-Supernal magical properties of a subject.",
-      },
-    ],
-    source: "MtAw2 p 166",
-  },
-  {
-    name: "Word of Command",
-    arcana: "Prime",
-    level: 1,
-    primaryArcana: "Prime •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Craft, Occult, Persuasion",
-    description:
-      "Bypass triggers to activate magical effects. Add Any Other Arcanum 1: Add another Arcanum to activate magical effects and objects created by other sources of power.",
-    reachEffects: [],
-    source: "MtAw2 p 166",
-  },
-  {
-    name: "As Above, So Below",
-    arcana: "Prime",
-    level: 2,
-    primaryArcana: "Prime ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Occult, Politics",
-    description: "Empower Yantras with 9-Again on spellcasting rolls.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Make it 8-again.",
-      },
-    ],
-    source: "MtAw2 p 166",
-  },
-  {
-    name: "Cloak Nimbus",
-    arcana: "Prime",
-    level: 2,
-    primaryArcana: "Prime ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Politics, Stealth, Subterfuge",
-    description:
-      "Veil Nimbus and emotional state of auras. Attempts to see are subject to a Clash of Wills. Immediate Nimbus does not flare unless the caster chooses to. Signature Nimbus viewed by Mage Sight provokes Clash of Wills. Flaring or imprinting your Nimbus will immediately end this spell.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Make your Nimbus appear lesser. For every Reach you may lower any of Gnosis, Mana or Arcanum to a desired lower false Trait value.",
-      },
-    ],
-    source: "MtAw2 p 167",
-  },
-  {
-    name: "Fractured Grimoire",
-    arcana: "Prime",
-    level: 2,
-    primaryArcana: "Prime ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Investigation, Occult",
-    description: "",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The mage may fracture the Grimoire into as many pieces as she wants.",
-      },
-    ],
-    source: "SoS 84",
-  },
-  {
-    name: "Invisible Runes",
-    arcana: "Prime",
-    level: 2,
-    primaryArcana: "Prime ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Intimidation, Persuasion",
-    description:
-      "Leave message in High Speech only visible to Mage Sight. Alteration or overwriting of these messages provokes a Clash of Wills.",
-    reachEffects: [],
-    source: "MtAw2 p 167",
-  },
-  {
-    name: "Light Under a Bushel",
-    arcana: "Prime",
-    level: 2,
-    primaryArcana: "Prime ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Investigation, Subterfuge",
-    description:
-      "Adds Mages Potency to the number of rolls before Mages Nimbus leaks into a mystery.",
-    reachEffects: [],
-    source: "SoS 28",
-  },
-  {
-    name: "Nimbus Forgery",
-    arcana: "Prime",
-    level: 2,
-    primaryArcana: "Prime ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Larceny, Subterfuge",
-    description:
-      "Once a Mage has scrutinized an Immediate or Signature Nimbus with Focused mage sight she may cast this spell to disguise her own Nimbus as the Scrutinized one. If its the Immediate Nimbus it copies the Tilts of the Forged one instead of her own, if Signature nimbus any spell left behind holds the Forged one instead of her own until this spells duration ends. Any attempt to pierce the deception results with a Clash of Wills.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "The Mage Forges all three types of nimbus with one casting even if she's only scrutinized one.",
-      },
-    ],
-    source: "SoS 94",
-  },
-  {
-    name: "Path to Jerusalem",
-    arcana: "Prime",
-    level: 2,
-    primaryArcana: "Prime ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Potency",
-    withstand: "Opacity",
-    suggestedRoteSkills: "Expression, Larceny, Subterfuge",
-    description: "Add Spell's Potency to the Opacity of the Subject Mystery.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Every Reach spent allows mage to plant 1 falsehood of Surface or Deep information. Recognizing this is a Clash of Wills when focused on with Focused Mage Sight.",
-      },
-    ],
-    source: "SoS 28",
-  },
-  {
-    name: "Supernal Veil",
-    arcana: "Prime",
-    level: 2,
-    primaryArcana: "Prime ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Subterfuge, Survival",
-    description:
-      "Veil supernatural phenomenon including spells. Peripheral Mage Sight will fail to detect, active attempts cause a Clash of Wills.",
-    reachEffects: [],
-    source: "MtAw2 p 168",
-  },
-  {
-    name: "Sustain Nimbus",
-    arcana: "Prime",
-    level: 2,
-    primaryArcana: "Prime ••",
-    secondaryArcana: "Time •",
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Investigation, Survival",
-    description:
-      "The mage casts this on a Signature Nimbus she's studied under Focused Mage Sight. Rather than fading like normal the Nimbus persists for the Duration of the spell, Once the Duration expires it fades at its usual rate.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "Duration is Lasting.",
-      },
-    ],
-    source: "SoS 93",
-  },
-  {
-    name: "Wards and Signs",
-    arcana: "Prime",
-    level: 2,
-    primaryArcana: "Prime ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Intimidation, Occult, Survival",
-    description:
-      "When subject is target of a spell apply Potency as Withstand rating. Spells used near but not directly at the target are not Withstood by this spell.",
-    reachEffects: [],
-    source: "MtAw2 p 168",
-  },
-  {
-    name: "Words of Truth",
-    arcana: "Prime",
-    level: 2,
-    primaryArcana: "Prime ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Intimidation, Persuasion",
-    description:
-      "All subjects of the spell can hear and understand the caster regardless of distance, noise or language barriers. Subjects feel what the mage says is true, but this effect only works on statements the mage knows are true. May remove one Door or improve impression level by one per Potency.",
-    reachEffects: [],
-    source: "MtAw2 p 168",
-  },
-  {
-    name: "Aetheric Winds",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Expression, Occult",
-    description: "Attack with shrieking aetheric wind.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Create Heavy Winds Environmental Tilt.",
-      },
-      {
-        reach: 1,
-        effect: "Destroy target's Mana instead of dealing damage.",
-      },
-    ],
-    source: "MtAw2 p 168",
-  },
-  {
-    name: "Camera Obscura",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Craft, Expression, Science",
-    description:
-      "*Cost 1 Mana* This spell enchants a Camera, video recorder or similar device and allows it to record Supernal Energies allowing a mage to study the recordings using Active and Focused mage sight.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "1Mana to make the recordings Lasting.",
-      },
-    ],
-    source: "SoS 28",
-  },
-  {
-    name: "Channel Mana",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Politics, Socialize",
-    description:
-      "Move Mana equal to Potency between vessels(mages, Hallows, etc). This cannot exceed Gnosis-derived the Mana per turn limit though.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Ignore Mana per turn limit for this spell.",
-      },
-    ],
-    source: "MtAw2 p 168",
-  },
-  {
-    name: "Cleanse Pattern",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Investigation, Occult, Stealth",
-    description:
-      "Remove the dramatic failure of a focused Mage Sight Revelation. This spell will also remove a mage's Signature Nimbus form the subject.",
-    reachEffects: [],
-    source: "MtAw2 p 168",
-  },
-  {
-    name: "Display of Power",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Brawl, Occult, Socialize",
-    description:
-      "Imagos become visible to all forms of Active Mage Sight. Add Fate •: Make clauses of fae Contracts visible.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "For one Mana all attempts to Counterspell gain the Rote Quality.",
-      },
-    ],
-    source: "MtAw2 p 168, DE2 379",
-  },
-  {
-    name: "Ephemeral Enchantment",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Occult, Weaponry",
-    description: "Subject becomes solid to any and all Twilight entities.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect:
-          "For one Mana, if the subject is a weapon it will inflict aggravated damage to one specified Twilight entity. Every additional entity costs one Mana.",
-      },
-    ],
-    source: "MtAw2 p 169",
-  },
-  {
-    name: "Geomancy",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Expression, Occult",
-    description:
-      "Move ley lines within the area of effect. May also change the Resonance Keyword of a Node.",
-    reachEffects: [],
-    source: "MtAw2 p 169",
-  },
-  {
-    name: "Imbue Room",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: "Space ●●●",
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Larceny, Occult, Science",
-    description:
-      "Allows a Mage to prepare a room or space for the Imbue Item attainment. Unlike an object the room does not have Mana storage so all Mana must be spent by the user of the Imbued room.",
-    reachEffects: [],
-    source: "SoS 69",
-  },
-  {
-    name: "Mana Battery",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Occult, Subterfuge",
-    description:
-      "Allows a Mage to prime an item to store Mana, The mage casts the spell on a subject prior to using the Attainment Imbue Item. The subject is Primed to accept a Mana pool but not a spell, the Number of successes necessary to imbue the item is equal to the Mana Pool imbued within. An Item created this way can be used to cast spells without using a Mages own Mana, and can be refilled with Mana using the spell Channel Mana.",
-    reachEffects: [],
-    source: "SoS 70",
-  },
-  {
-    name: "Platonic Form",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Crafts, Expression",
-    description:
-      "*Cost 1+ Mana* - Create a simple Tass object or tool of Size 5 or less from Mana. Durability is 1 and contains one Mana. Potency may be allocated to the following effects: Increase Durability by +1, Increase Mana capacity by +1, If a tool add +1 equipment bonus though each use of the tool now uses one up Mana. When all Mana is used up the object crumbles. If the spell expires any unused Mana will be lost.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "If a tool it gains the 8-Again.",
-      },
-      {
-        reach: 2,
-        effect: "Effect is Lasting(Still crumbles if all Mana is expended or absorbed).",
-      },
-    ],
-    source: "MtAw2 p 169",
-  },
-  {
-    name: "Primary Subject",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Intimidation, Occult, Subterfuge",
-    description:
-      "*Cost 1+ Mana* This spell alters the imbument process, creating an item that will always target the user. The subject of the spell must be a mage.",
-    reachEffects: [],
-    source: "SoS 72",
-  },
-  {
-    name: "Reveal Marks",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: "Time ●●",
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Expression, Investigation",
-    description:
-      "You may discern all signature Nimbuses associated with the Subject, This spell reduces the difficulty to Focused Mage Sight to scrutinize the subject for a signature Nimbus and reveals all Nimbuses associated with the subject. Add Potency as bonus die to reveal them.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Add bonus dice equal to Potency to Clash of Wills to reveal an obscured Signature Nimbus.",
-      },
-    ],
-    source: "SoS 74",
-  },
-  {
-    name: "Scribe Palimpsest",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: "Rotes Total Arcanum dots +1",
-    suggestedRoteSkills: "Crafts, Expression, Occult",
-    description:
-      "*Costs 1 Mana* Like /'/Scribe Grimoire/'/ this spell gives physical form to a single rote's symbols using a Grimoire that has had its contents erased, scrubbed, scribbled out, painted over or otherwise made unreadable. The Storyteller chooses one Arcanum when the character casts this spell. Whenever a character later casts the rote from the completed Grimoire, it acts as though it incorporated dots of the chosen Arcanum equal to this spell’s Potency, creating unpredictable blended effects.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "For 1 point of Mana, the spell's Duration is Lasting.",
-      },
-    ],
-    source: "SoS 84",
-  },
-  {
-    name: "Spirit Vessel",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: "Spirit ●●●",
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: "Resistance",
-    suggestedRoteSkills: "Academics, Intimidation, Occult",
-    description:
-      "Prepare a Spirit for the Imbue Item Attainment. The mage must either cast the spell through the Gauntlet or the spirit must be Manifested. The subject automatically withstands the casting.",
-    reachEffects: [],
-    source: "SoS 69",
-  },
-  {
-    name: "Steal Mana",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Duration",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Expression, Occult, Subterfuge",
-    description:
-      "*Costs 1 Mana* This spell alters the imbument process resulting in an item that siphons its users Mana. When under this spell when Imbuing an item you may set a Mana capacity to the item, instead of imbuing it with that much Mana it steals it from its user. When someone goes to activate the spell it will steal mana equal to capacity, should it attempt to take more than its capacity the leftover Mana dissipates into the atmosphere. If the user doesn't have enough Mana it deals Bashing damage for each Mana it cannot siphon.",
-    reachEffects: [],
-    source: "SoS 72",
-  },
-  {
-    name: "Stealing Fire",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Expression, Larceny, Persuasion",
-    description:
-      "Temporarily turn Sleeper into a Sleepwalker. Breaking points from magic will hit only when the spell expires.",
-    reachEffects: [],
-    source: "MtAw2 p 168",
-  },
-  {
-    name: "Stored Spell",
-    arcana: "Prime",
-    level: 3,
-    primaryArcana: "Prime •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Occult, Subterfuge",
-    description:
-      "AMage may make an item capable of holding a spell until later activation similar to the Attainment Imbue Item. Once this spell is in effect a mage may spend a Mana to cast any other spell on the item that uses touch/self range, which is contained and unactivated. Stored Spell may store spells up to its level in Potency. These spells don't activate until someone Spends a point of Mana to activate the spell, Stored Spell is canceled, The duration of Stored Spell ends or the Duration of the stored spells end.",
-    reachEffects: [],
-    source: "SoS 70",
-  },
-  {
-    name: "Apocalypse",
-    arcana: "Prime",
-    level: 4,
-    primaryArcana: "Prime ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Occult, Persuasion, Socialize",
-    description:
-      "Grant a Sleeper the ability to see what a Mage sees. +1 Reach and Add Any Other Arcanum 1: Add the Arcanum to the granted Sight.",
-    reachEffects: [],
-    source: "MtAw2 p 169",
-  },
-  {
-    name: "Celestial Fire",
-    arcana: "Prime",
-    level: 4,
-    primaryArcana: "Prime ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Expression, Occult",
-    description: "Attack spell inflict Lethal equal to Potency.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spell ignites flammable object in the scene.",
-      },
-      {
-        reach: 1,
-        effect: "For one Mana, spell deals aggravated damage.",
-      },
-      {
-        reach: 1,
-        effect:
-          "May destroy target's Mana instead of dealing damage, spend Potency between regular and Mana damage.",
-      },
-    ],
-    source: "MtAw2 p 170",
-  },
-  {
-    name: "Destroy Tass",
-    arcana: "Prime",
-    level: 4,
-    primaryArcana: "Prime ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: "Durability",
-    suggestedRoteSkills: "Brawl, Intimidation, Occult",
-    description:
-      "Successful casting destroys Tass. Mana form the tass is not destroyed but released into the world likely to the nearest Hallow.",
-    reachEffects: [],
-    source: "MtAw2 p 170",
-  },
-  {
-    name: "Hallow Dance",
-    arcana: "Prime",
-    level: 4,
-    primaryArcana: "Prime ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Hallow Rating",
-    suggestedRoteSkills: "Expression, Occult, Survival",
-    description:
-      "Suppress an active Hallow or awaken a dormant one. Rousing requires Potency equal to the Hallow's rating. Dampening reduces the Hallow's dot rating by Potency, if it falls to zero or less the Hallow is rendered dormant.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "For one point of Mana the effect is Lasting.",
-      },
-    ],
-    source: "MtAw2 p 170",
-  },
-  {
-    name: "Primal Transfer",
-    arcana: "Prime",
-    level: 4,
-    primaryArcana: "Prime ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Crafts, Empathy, Subterfuge",
-    description:
-      "This allows a Mage to transfer spell control of a spell they've cast to another mage. The spell transfers Spells up to Potency from Caster to Subject. Once the Duration ends control returns to the Caster.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect:
-          "If Primal Transfer is Imbued into an item with this effect spell control is passed to the user of the Item allowing the user to assign reach and reassign spell factors.",
-      },
-    ],
-    source: "SoS 71",
-  },
-  {
-    name: "Scribe Daimonomikon",
-    arcana: "Prime",
-    level: 4,
-    primaryArcana: "Prime ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Rank of Attainment + (10 - Caster's Gnosis)",
-    suggestedRoteSkills: "Crafts, Expression, Occult",
-    description:
-      "*Cost 1 Mana* Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "For 1 Mana, the Spell's Duration is Lasting.",
-      },
-    ],
-    source: "SoS 87",
-  },
-  {
-    name: "Supernal Dispellation",
-    arcana: "Prime",
-    level: 4,
-    primaryArcana: "Prime ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: "Arcanum rating of the subject spell’s caster",
-    suggestedRoteSkills: "Athletics, Intimidation, Occult",
-    description:
-      "Success suppresses target spell for Supernal Dispellations Duration. Add Fate 1: Selectively suppress spell.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "Make the effect Lasting.",
-      },
-    ],
-    source: "MtAw2 p 170",
-  },
-  {
-    name: "Transfer Soul Stone",
-    arcana: "Prime",
-    level: 4,
-    primaryArcana: "Prime ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Occult, Persuasion",
-    description: "May transfer a Soul Stone from one object to another of size 2 or below.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "This spell is Lasting.",
-      },
-    ],
-    source: "SoS 91",
-  },
-  {
-    name: "Blasphemy",
-    arcana: "Prime",
-    level: 5,
-    primaryArcana: "Prime •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Potency",
-    withstand: "Hallow Rating, if applicable",
-    suggestedRoteSkills: "Athletics, Occult, Survival",
-    description: "Sever the connection to the Supernal in an area.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "Make the effect Lasting.",
-      },
-    ],
-    source: "MtAw2 p 170",
-  },
-  {
-    name: "Create Truth",
-    arcana: "Prime",
-    level: 5,
-    primaryArcana: "Prime •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: "Hallow Rating",
-    suggestedRoteSkills: "Expression, Occult, Persuasion",
-    description:
-      "Cost 5 Mana per Potency. Create Hallow with rating equal to Potency, Hallows cannot have a rating above 5.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "For 5 Mana the effect is Lasting.",
-      },
-    ],
-    source: "MtAw2 p 170",
-  },
-  {
-    name: "Eidolon",
-    arcana: "Prime",
-    level: 5,
-    primaryArcana: "Prime •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Crafts, Occult",
-    description:
-      "Like /'/Platonic Form/'/ but can create animate Tass. May spend Potency on an additional effect: Grand the mage a dot of the Retainer Merit. Construct will obey it's owners command, any mage can claim ownership by marking it with his Nimbus. Add Forces ●●●: The Construct is not Obviously Magical. Add Mind ●●●●●: The Construct may be given a mind of its own. Pg. 165 for details.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "The effect is Lasting, Tass still crumbles if all it's mana is spend.",
-      },
-    ],
-    source: "MtAw2 p 171",
-  },
-  {
-    name: "Forge Purpose",
-    arcana: "Prime",
-    level: 5,
-    primaryArcana: "Prime •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Empathy, Expression, Medicine",
-    description:
-      "Subject gains one of the caster's Obsessions. If subject is a mage already possessing the maximum number of Obsessions this spell causes a Clash of Wills. If successful replace one of these Obsessions.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Can grant a wholly new Obsession.",
-      },
-    ],
-    source: "MtAw2 p 171",
-  },
-  {
-    name: "Word of Unmaking",
-    arcana: "Prime",
-    level: 5,
-    primaryArcana: "Prime •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Potency",
-    withstand: "Merit rating or Durability",
-    suggestedRoteSkills: "Intimidation, Occult, Weaponry",
-    description: "Destroy a magical item, but not artifacts.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect:
-          "Item explodes violently, roll the item Merit rating or Durability. Anyone within 1 yard per dot suffers lethal damage per success.",
-      },
-    ],
-    source: "MtAw2 p 171",
-  },
-  {
-    name: "Correspondence",
-    arcana: "Space",
-    level: 1,
-    primaryArcana: "Space •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Empathy, Medicine",
-    description:
-      "Learn one of subjects sympathetic links per Potency. The oldest and strongest are revealed first. If the link is nearby you will learn it't exact location too.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "You can follow a link to it's other end.",
-      },
-      {
-        reach: 1,
-        effect:
-          "Learn the emotional aspect of the connection. Connection /'/My childhood home/'/ may carry notes of comfort or fear depending on the subject.",
-      },
-      {
-        reach: 2,
-        effect:
-          "Specify what links you want to learn. The answer comes form the subjects perspective.",
-      },
-      {
-        reach: 2,
-        effect: "If used on a keyed spell or iris this spell can learn the key.",
-      },
-    ],
-    source: "MtAw2 p172",
-  },
-  {
-    name: "Ground Eater",
-    arcana: "Space",
-    level: 1,
-    primaryArcana: "Space •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Potency",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Athletics, Science, Survival",
-    description: "Add or reduce Speed by Potency. Speed cannot go below 1.",
-    reachEffects: [],
-    source: "MtAw2 p173",
-  },
-  {
-    name: "Isolation",
-    arcana: "Space",
-    level: 1,
-    primaryArcana: "Space •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Potency",
-    withstand: "Composure",
-    suggestedRoteSkills: "Academics, Intimidation, Subterfuge",
-    description:
-      "Any attempt to interact with other people costs a Willpower point. Even then, dice pools are penalized by Potency. Prolonged exposure to spell (a day per point of subject's Composure) may cause breaking points or Conditions like Shaken or Spooked.",
-    reachEffects: [],
-    source: "MtAw2 p173",
-  },
-  {
-    name: "Locate Object",
-    arcana: "Space",
-    level: 1,
-    primaryArcana: "Space •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Occult, Science",
-    description: "Can find the subject in spell area.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Can track the subject even if it leaves the area.",
-      },
-    ],
-    source: "MtAw2 p173",
-  },
-  {
-    name: "The Outward and Inward Eye",
-    arcana: "Space",
-    level: 1,
-    primaryArcana: "Space •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Firearms, Investigation, Occult",
-    description:
-      "Gain 360 degree vision and hearing. All attempts to ambush the character fail, or in the case of exceptional camouflage or distraction a chance die. Finally all penalties due to range, cover or concealment(but not darkness or other poor visibility situations) are reduced by Potency.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect:
-          "Can see through warps or shortcuts in Space. This includes Distortion Irises, additional Arcana may allow sight into other types of Irises, this is at Storyteller's discretion.",
-      },
-    ],
-    source: "MtAw2 p174",
-  },
-  {
-    name: "Borrow Threads",
-    arcana: "Space",
-    level: 2,
-    primaryArcana: "Space ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: "Sympathy",
-    suggestedRoteSkills: "Larceny, Occult, Subterfuge",
-    description:
-      "Allows the transfer of a number of sympathetic connections between the caster and the subject(s) of the spell equal to potency. The caster must be aware of the links, either through other magic or knowledge of the subject.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "The caster may also transfer connections between subjects affected without being involved in the transfer.",
-      },
-      {
-        reach: 1,
-        effect: "The caster may copy connections instead of transferring them.",
-      },
-    ],
-    source: "MtAw2 p174",
-  },
-  {
-    name: "Break Boundary",
-    arcana: "Space",
-    level: 2,
-    primaryArcana: "Space ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Larceny, Persuasion",
-    description:
-      "Allows the subject to slip past an obstacle that is obstructing a path or similar restriction of movement.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "The subject can fit through narrow or restrictive passageways they couldn't normally fit through.",
-      },
-      {
-        reach: 2,
-        effect:
-          "Subjects unable to move can pass through obstructions, appearing on the other side.",
-      },
-    ],
-    source: "MtAw2 p174",
-  },
-  {
-    name: "Lying Maps",
-    arcana: "Space",
-    level: 2,
-    primaryArcana: "Space ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Academics, Politics, Survival",
-    description:
-      "Makes a subject certain that a path of the caster's choosing is the correct path to a destination.",
-    reachEffects: [],
-    source: "MtAw2 p174",
-  },
-  {
-    name: "Scrying",
-    arcana: "Space",
-    level: 2,
-    primaryArcana: "Space ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Computers, Occult, Subterfuge",
-    description:
-      "Allows the caster to remotely view a distant location, with varying effects depending on the type of Sympathetic connection. Spells can also be cast on subjects as if one were viewing them remotely. The scrying window may be invisible or visible to everyone in the vicinity. Add Fate 2: The caster can select specific people who can see the scrying window.",
-    reachEffects: [],
-    source: "MtAw2 p174",
-  },
-  {
-    name: "Secret Door",
-    arcana: "Space",
-    level: 2,
-    primaryArcana: "Space ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Stealth, Subterfuge",
-    description:
-      "Allows the caster to hide a passageway from mundane perception, invoking Clash of Wills against magical perception.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "AKey may be specified to allow entry.",
-      },
-    ],
-    source: "MtAw2 p175",
-  },
-  {
-    name: "Veil Sympathy",
-    arcana: "Space",
-    level: 2,
-    primaryArcana: "Space ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: "Sympathy",
-    suggestedRoteSkills: "Politics, Subterfuge, Survival",
-    description: "Conceals one of the subject's sympathetic connections.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "May make the subject appear to have a nonexistent connection.",
-      },
-      {
-        reach: 1,
-        effect: "Prevents the connection from being used as a Sympathetic Yantra.",
-      },
-      {
-        reach: 2,
-        effect: "The caster may suppress all of the subject's connections.",
-      },
-    ],
-    source: "MtAw2 p175",
-  },
-  {
-    name: "Ward",
-    arcana: "Space",
-    level: 2,
-    primaryArcana: "Space ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Subterfuge, Weaponry",
-    description: "Prevents space from being manipulated in an area.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The caster may specify a Key that can allow the manipulation of space.",
-      },
-      {
-        reach: 2,
-        effect: "The caster may ward an Iris.",
-      },
-    ],
-    source: "MtAw2 p176",
-  },
-  {
-    name: "Ban",
-    arcana: "Space",
-    level: 3,
-    primaryArcana: "Space •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Intimidation, Science, Stealth",
-    description:
-      "Cuts an area off from the outside world, including light, sound, and air. Add Any Arcanum 2: Exclude phenomena under that Arcanum, or only Ban phenomena of that Arcanum.",
-    reachEffects: [],
-    source: "MtAw2 p176",
-  },
-  {
-    name: "Co-Location",
-    arcana: "Space",
-    level: 3,
-    primaryArcana: "Space •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Firearms, Science",
-    description:
-      "Allows the overlapping of multiple locations. Individuals who can perceive this overlap may switch between locations reflexively once a turn.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Anything in the overlapped locations may be made visible to the naked eye.",
-      },
-      {
-        reach: 1,
-        effect: "The caster may make the Co-Location a two-dimensional plane, creating a portal.",
-      },
-      {
-        reach: 1,
-        effect: "The caster may specify a Key needed to use the overlap.",
-      },
-      {
-        reach: 2,
-        effect:
-          "Individuals who can perceive the overlap may reflexively switch locations twice per turn instead of once.",
-      },
-    ],
-    source: "MtAw2 p176",
-  },
-  {
-    name: "Forced Sympathy",
-    arcana: "Space",
-    level: 3,
-    primaryArcana: "Space •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Empathy, Stealth, Subterfuge",
-    description:
-      "Must be cast on a Mage to alter his imbument process. Whenever a user casts the item's spell it always targets the subject with the closest sympathy to the user. Closest sympathy is determined by the best sympathetic Yantra on the user at the time of Casting. If the user has multiple items which could be used as Sympathetic Yantras the spells effect occurs on the one in closest physical range.",
-    reachEffects: [],
-    source: "SoS 73",
-  },
-  {
-    name: "Optimal Container",
-    arcana: "Space",
-    level: 3,
-    primaryArcana: "Space •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Larceny, Science, Subterfuge",
-    description:
-      "Expand the dimensions within a container to allow it to hold larger objects than usual. Enhance the sized item a container can hold by its base size + Potency.",
-    reachEffects: [],
-    source: "SoS 66",
-  },
-  {
-    name: "Perfect Sympathy",
-    arcana: "Space",
-    level: 3,
-    primaryArcana: "Space •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Empathy, Larceny",
-    description:
-      "Allows the subject to gain 8-Again when taking an action on a subject that is one of their Strong sympathies.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Can redirect spells at Sympathetic Range to a Strong connection instead.",
-      },
-      {
-        reach: 1,
-        effect:
-          "For one Mana, the subject gains (Potency) rote actions when taking an action on a subject that is one of their Strong sympathies.",
-      },
-      {
-        reach: 1,
-        effect: "The benefits extend to Medium sympathetic connections.",
-      },
-    ],
-    source: "MtAw2 p176",
-  },
-  {
-    name: "Warp",
-    arcana: "Space",
-    level: 3,
-    primaryArcana: "Space •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Brawl, Medicine",
-    description:
-      "Deals bashing damage equal to Potency by twisting the space the subject occupies.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The pain inflicts the Arm Wrack or Leg Wrack Tilt.",
-      },
-    ],
-    source: "MtAw2 p177",
-  },
-  {
-    name: "Web-Weaver",
-    arcana: "Space",
-    level: 3,
-    primaryArcana: "Space •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Crafts, Empathy, Persuasion",
-    description:
-      "Allows bolstering of a sympathetic connection. Add Time 2: The caster may use temporal sympathy to anything the subject touched in the target time.",
-    reachEffects: [],
-    source: "MtAw2 p177",
-  },
-  {
-    name: "Alter Direction",
-    arcana: "Space",
-    level: 4,
-    primaryArcana: "Space ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Firearms, Persuasion",
-    description:
-      "Allows the caster to change (Potency) absolute directions (e.g. north, south, up, down) in an area, or change directions relative to a chosen subject.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The caster can redefine directions in curves rather than just straight lines.",
-      },
-    ],
-    source: "MtAw2 p177",
-  },
-  {
-    name: "Collapse",
-    arcana: "Space",
-    level: 4,
-    primaryArcana: "Space ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Firearms, Intimidation",
-    description:
-      "Forces a subject and a chosen object to occupy the same space, dealing (Potency) lethal damage.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "For 1 Mana, damage inflicted becomes Aggravated.",
-      },
-      {
-        reach: 1,
-        effect: "The co-located object remains inside the subject.",
-      },
-    ],
-    source: "MtAw2 p177",
-  },
-  {
-    name: "Cut Threads",
-    arcana: "Space",
-    level: 4,
-    primaryArcana: "Space ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: "Sympathy (Connection)",
-    suggestedRoteSkills: "Persuasion, Politics, Weaponry",
-    description:
-      "Destroy a sympathetic connection, effect is lasting, but connection can be restored in time.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect:
-          "Remove the subject's sympathetic name. This is not lasting and only last until the spell expires.",
-      },
-    ],
-    source: "MtAw2 p177",
-  },
-  {
-    name: "Secret Room",
-    arcana: "Space",
-    level: 4,
-    primaryArcana: "Space ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Science, Survival",
-    description:
-      "Enlarge or shrink a space. Making a box bigger on the inside than on the outside, for example. Scale has to encompass the targets current size. And goes up or down equal to Potency in steps along the Area Scale Factor.",
-    reachEffects: [],
-    source: "MtAw2 p178",
-  },
-  {
-    name: "Teleportation",
-    arcana: "Space",
-    level: 4,
-    primaryArcana: "Space ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Larceny, Persuasion, Science",
-    description:
-      "Teleport a subject to another location. You may use the Sympathetic Range Attainment on either the subject or the location but not both.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "You may swap the location of two subjects with no more a point of Size difference.",
-      },
-      {
-        reach: 2,
-        effect:
-          "You may now use two separate Sympathetic Ranges. The spell is Withstood by the worse of the two connections.",
-      },
-    ],
-    source: "MtAw2 p178",
-  },
-  {
-    name: "Create Sympathy",
-    arcana: "Space",
-    level: 5,
-    primaryArcana: "Space •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Potency",
-    withstand: "Desired Sympathy",
-    suggestedRoteSkills: "Empathy, Persuasion, Politics",
-    description:
-      "Create a new sympathetic connection for the subject. This is Lasting, but may fade with time.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The created connection is Lasting and never fades. Only magic can sever it now.",
-      },
-      {
-        reach: 2,
-        effect:
-          "Give a subject a new sympathetic name. This is not Lasting and fades when the spell ends.",
-      },
-    ],
-    source: "MtAw2 p178",
-  },
-  {
-    name: "Forge No Chains",
-    arcana: "Space",
-    level: 5,
-    primaryArcana: "Space •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Subterfuge, Survival",
-    description:
-      "For the Duration of the spell the subjects cannot create new sympathetic connection. blood, hair, etc shed during the Duration of the spell do not link back to the subject. This also has an effect on any Space spells you leave behind. Any attempt to scrutinize your spells with Mage Sight has the spell's Potency added to the Opacity.",
-    reachEffects: [],
-    source: "MtAw2 p178",
-  },
-  {
-    name: "Pocket Dimension",
-    arcana: "Space",
-    level: 5,
-    primaryArcana: "Space •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Expression, Survival",
-    description:
-      "Create a space. By default this space is devoid of the other arcana: No Death or Spirit means no Twilight, No Time means things inside are held in stasis (unaging but also never growing/improving). Unless a portal connects the space to a point in the world the only way to get there is to teleport. Spells cast within never cause Paradox unless they sympathetic range is used to affect something outside of the space. The mage herself is considered a material sympathetic yantra for her own Pocket Dimension. If the space is ever destroyed or the spell expires objects within return to the exact location from which they entered the space. Add Time 2: Time flows normally within the space mirroring time passed in the physical world. Without oxygen inside the space however this means anything inside can asphyxiate. Add Death 2, Mind 2 or Spirit 2: The space now contains a Twilight attuned to the Arcanum used.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Create an Iris to the Pocket Dimension in the physical world. For an additional Reach you may specify a Key for this Iris.",
-      },
-    ],
-    source: "MtAw2 p178",
-  },
-  {
-    name: "Quarantine",
-    arcana: "Space",
-    level: 5,
-    primaryArcana: "Space •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Larceny, Socialize",
-    description:
-      "Remove a subject from space altogether. The world adjusts for the missing space. A Quarantined house doesn't leave behind an empty space, instead the neighboring house would now find themselves adjacent. Meanwhile those within the Quarentined space will find they cannot leave. Similar to a Pocket Dimension except it still has it's own Time, Twilight, Matter and so forth. Add Mind 4: For the Duration of the spell no one remembers the area used to exist. Those within do still remember. Add Time 5: For the duration of the spell the area and those within retroactively never existed. History rewrites itself, but returns to normal when the spell expires.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Specify a Key that allows access to and from the removed area.",
-      },
-    ],
-    source: "MtAw2 p179",
-  },
-  {
-    name: "Unnaming",
-    arcana: "Space",
-    level: 5,
-    primaryArcana: "Space •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Duration",
-    withstand: "Composure",
-    suggestedRoteSkills: "Empathy, Expression, Occult",
-    description:
-      "The Mage Erases a subject's sympathetic name from existance, the exicised name is immediately replaced with one that matches whatever most sleepers would use to refer to her as. Any Sympathetic connections to the old name cease to exist as well. Any mage attempting to cast sympathetically using the mage faces a penalty until learning the new one. Add Prime •••••: The Spell can be used on an Awakened Subject's Shadow Name and Nimbus instead. The Shadow name isn't replaced immediately and the subject needs to build their Supernal identity from scratch.",
-    reachEffects: [],
-    source: "SoS 94",
-  },
-  {
-    name: "Coaxing the Spirits",
-    arcana: "Spirit",
-    level: 1,
-    primaryArcana: "Spirit •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Potency",
-    withstand: "Composure or Rank",
-    suggestedRoteSkills: "Politics, Athletics, Expression",
-    description:
-      "Compel a Spirit or it's physical representation to take a single instant action that is in accordance to it's nature.",
-    reachEffects: [],
-    source: "MtAw2 p 180",
-  },
-  {
-    name: "Exorcist's Eye",
-    arcana: "Spirit",
-    level: 1,
-    primaryArcana: "Spirit •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Survival, Socialize",
-    description:
-      "See and speak with any Spirit, be they in Twilight, slumbering in an object or possessing somebody. Can also see the conduit of any Spirit with the Reaching Manifestation. Add Death 1 or Mind 1: These benefits extend to ghost or Goetia respectively.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Can see across the Gauntlet, Withstood by Gauntlet Strength.",
-      },
-    ],
-    source: "MtAw2 p 180",
-  },
-  {
-    name: "Gremlins",
-    arcana: "Spirit",
-    level: 1,
-    primaryArcana: "Spirit •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Larceny, Politics, Subterfuge",
-    description:
-      "Cause Spirit of object to hinder it's user. Each level of Potency causes one failure with the item to become a dramatic failure. A player's character can earn a Beat from this as per normal.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "As long as the object is within sensory range, can decide what failure become dramatic failures.",
-      },
-    ],
-    source: "MtAw2 p 180",
-  },
-  {
-    name: "Invoke Bane",
-    arcana: "Spirit",
-    level: 1,
-    primaryArcana: "Spirit •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Duration",
-    withstand: "Rank",
-    suggestedRoteSkills: "Brawl, Intimidation, Occult",
-    description:
-      "Force a Spirit to avoid it's Bane even more then normal. Spirit needs to spend a Willpower to come within the area(this is the Area factor of the spell) of it's bane and cannot touch it. Spirits above Rank 5 are unaffected by this spell.",
-    reachEffects: [],
-    source: "MtAw2 p 180",
-  },
-  {
-    name: "Know Spirit",
-    arcana: "Spirit",
-    level: 1,
-    primaryArcana: "Spirit •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Potency",
-    withstand: "Rank",
-    suggestedRoteSkills: "Academics, Brawl, Socialize",
-    description:
-      "Learn a number of facts about the Spirit equal to Potency: Spirit's name, Rank, Manifestations, Numina, Influences and roughly how strong these are, Ban, Bane.",
-    reachEffects: [],
-    source: "MtAw2 p 180",
-  },
-  {
-    name: "Cap the Well",
-    arcana: "Spirit",
-    level: 2,
-    primaryArcana: "Spirit ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Politics, Survival, Persuasion",
-    description:
-      "Any attempt to feed from a source of Essence affected by this spell provokes a Clash of Wills.",
-    reachEffects: [],
-    source: "MtAw2 p 180",
-  },
-  {
-    name: "Channel Essence",
-    arcana: "Spirit",
-    level: 2,
-    primaryArcana: "Spirit ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Persuasion, Survival",
-    description:
-      "Move Essence equal to Potency but no higher than the Gnosis-derived Mana per turn, from a Resonant Condition or suitable receptacle to a Spirit. You can store Essence into your own Pattern which stays even after the spell has expired. You can hold an amount of Mana and Essence equal to Gnosis-derived maximum Mana.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "Spell may be cast on ghosts or Goetia respectively&lt;b/&gt;+1 Reach",
-      },
-    ],
-    source: "MtAw2 p 180",
-  },
-  {
-    name: "Command Spirit",
-    arcana: "Spirit",
-    level: 2,
-    primaryArcana: "Spirit ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: "Rank",
-    suggestedRoteSkills: "Medicine, Athletics, Persuasion",
-    description:
-      "Force a Spirit to undertake a number of actions equal to Potency. Spirit may/will abandon uncomplete task if the spell Duration expires. No effect on Spirits above Rank 5.",
-    reachEffects: [],
-    source: "MtAw2 p 181",
-  },
-  {
-    name: "Ephemeral Shield",
-    arcana: "Spirit",
-    level: 2,
-    primaryArcana: "Spirit ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Animal Ken, Medicine, Stealth",
-    description:
-      "Any Spirit Numina, Influences and Manifestations, Spirit Spells  and werewolf Gifts aimed at subject provoke a Clash of Wills. Add Death 2 or Mind 2: Shield affects ghosts or Goetia respectively.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "ASpirits physical attacks are likewise affected.",
-      },
-    ],
-    source: "MtAw2 p 181",
-  },
-  {
-    name: "Gossamer Touch",
-    arcana: "Spirit",
-    level: 2,
-    primaryArcana: "Spirit ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Brawl, Crafts, Intimidation",
-    description:
-      "Can interact physically with Spirits in Twilight. Add Death 2 or Mind 2: Affects ghosts or Goetia respectively.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Object you carry are likewise physical to Spirits.",
-      },
-      {
-        reach: 1,
-        effect: "Unarmed attacks against Spirits deal Potency extra damage.",
-      },
-    ],
-    source: "MtAw2 p 181",
-  },
-  {
-    name: "Opener of the Way",
-    arcana: "Spirit",
-    level: 2,
-    primaryArcana: "Spirit ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Computers, Socialize",
-    description: "Shift Resonant Condition to Open Condition or vice versa.",
-    reachEffects: [],
-    source: "MtAw2 p 181",
-  },
-  {
-    name: "Shadow Walk",
-    arcana: "Spirit",
-    level: 2,
-    primaryArcana: "Spirit ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Stealth, Streetwise",
-    description:
-      "Subject becomes shrouded from Spirit and Spirit magics notice. Supernatural effects to detect provoke a Clash of Wills.",
-    reachEffects: [],
-    source: "MtAw2 p 181",
-  },
-  {
-    name: "Slumber",
-    arcana: "Spirit",
-    level: 2,
-    primaryArcana: "Spirit ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: "Rank",
-    suggestedRoteSkills: "Expression, Occult, Weaponry",
-    description:
-      "Reduce the rate at which a hibernating Spirit regains Essence. Instead of one Essence per day the Spirit only regains one Essence per Potency days.",
-    reachEffects: [],
-    source: "MtAw2 p 181",
-  },
-  {
-    name: "Bolster Spirit",
-    arcana: "Spirit",
-    level: 3,
-    primaryArcana: "Spirit •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Medicine, Occult, Expression",
-    description: "Heal a Spirit. Each level of Potency heals two bashing damage.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Instead of healing, each level of Potency can increase one of the Spirit's Attributes by one for the duration of the spell.",
-      },
-      {
-        reach: 2,
-        effect: "Spend one Mana to increase the Spirit's Rank by one.",
-      },
-    ],
-    source: "MtAw2 p 181",
-  },
-  {
-    name: "Erode Resonance",
-    arcana: "Spirit",
-    level: 3,
-    primaryArcana: "Spirit •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Brawl, Intimidation",
-    description: "Remove a subject's Open or Resonant condition. This effect is Lasting.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Any future attempts to create the Conditions suffers a penalty equal to Potency.",
-      },
-    ],
-    source: "MtAw2 p 181",
-  },
-  {
-    name: "Howl From Beyond",
-    arcana: "Spirit",
-    level: 3,
-    primaryArcana: "Spirit •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Firearms, Medicine",
-    description: "Attack spell deal bashing damage equal to Potency.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The subject gains the Open Condition.",
-      },
-      {
-        reach: 1,
-        effect:
-          "Can target beings on the other side of the Gauntlet, but is Withstood by Gauntlet Strength.",
-      },
-    ],
-    source: "MtAw2 p 182",
-  },
-  {
-    name: "Place of Power",
-    arcana: "Spirit",
-    level: 3,
-    primaryArcana: "Spirit •••",
-    secondaryArcana: null,
-    practice: "Fraying or Perfecting",
-    primaryFactor: "Potency",
-    withstand: "Gauntlet Strength",
-    suggestedRoteSkills: "Academics, Expression, Survival",
-    description: "Raise or lower Gauntlet Strength in spell Area by Potency.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Alter Gauntlet independently on either side. For example making it easier to enter the Shadow but harder to leave or vice versa.",
-      },
-    ],
-    source: "MtAw2 p 182",
-  },
-  {
-    name: "Reaching",
-    arcana: "Spirit",
-    level: 3,
-    primaryArcana: "Spirit •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: "Gauntlet Strength",
-    suggestedRoteSkills: "Athletics, Medicine, Socialize",
-    description: "Interact physically and magically with things on the other side of the Gauntlet.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Open an Iris between the physical world and the Shadow, which anybody can pass through. For another Reach may specify a Key.",
-      },
-    ],
-    source: "MtAw2 p 182",
-  },
-  {
-    name: "Rouse Spirit",
-    arcana: "Spirit",
-    level: 3,
-    primaryArcana: "Spirit •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Potency",
-    withstand: "Rank",
-    suggestedRoteSkills: "Athletics, Expression, Investigation",
-    description:
-      "Awaken a Spirit early Potency required is equal to the difference between the Spirit's current Essence and total Corpus.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "For each additional Reach, the Spirit wakes with an additional Corpus box cleared.",
-      },
-    ],
-    source: "MtAw2 p 182",
-  },
-  {
-    name: "Spirit Summons",
-    arcana: "Spirit",
-    level: 3,
-    primaryArcana: "Spirit •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: "Rank",
-    suggestedRoteSkills: "Persuasion, Socialize, Occult",
-    description: "Call a Spirit in the local area to you.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spell also creates the Open Condition.",
-      },
-      {
-        reach: 1,
-        effect: "Can give the Spirit a single word command to follow.",
-      },
-      {
-        reach: 1,
-        effect:
-          "Can call a Spirit form the Shadow instead. Spell it Withstood by the greater of Rank and Gauntlet Strength.",
-      },
-      {
-        reach: 2,
-        effect: "Can give Spirit a complex command to follow.",
-      },
-    ],
-    source: "MtAw2 p 182",
-  },
-  {
-    name: "Spiritual Tool",
-    arcana: "Spirit",
-    level: 3,
-    primaryArcana: "Spirit •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Occult, Survival",
-    description:
-      "Enhance an item to be more in-tune with the Shadow and Spirits in general. The object becomes both an item of the material world and the shadow and is able to interact with spirits both within Twilight and the Shadow. If the item is carried into either other realm it retains its material form when it returns to the material world.",
-    reachEffects: [],
-    source: "SoS 66",
-  },
-  {
-    name: "Banishment",
-    arcana: "Spirit",
-    level: 4,
-    primaryArcana: "Spirit ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: "Rank",
-    suggestedRoteSkills: "Brawl, Expression, Occult",
-    description:
-      "Strip a number of Manifestation Conditions equal to Potency. Effect is Lasting, but Conditions may be reasteablished as normal. No effect on Spirits above Rank 5. Add Mind 4: affect Goetia. Add Death4: addect Ghosts.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Conditions cannot be reestablished until spell duration has expired.",
-      },
-    ],
-    source: "MtAw2 p 182",
-  },
-  {
-    name: "Bind Spirit",
-    arcana: "Spirit",
-    level: 4,
-    primaryArcana: "Spirit ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Rank",
-    suggestedRoteSkills: "Crafts, Brawl, Intimidation",
-    description:
-      "Grant a number of Manifestation Conditions equal to Potency. No effect on Spirits above Rank 5. Add Mind 4: effect Goetia. Add Death 4: effect Ghosts.",
-    reachEffects: [],
-    source: "MtAw2 p 183",
-  },
-  {
-    name: "Craft Fetish",
-    arcana: "Spirit",
-    level: 4,
-    primaryArcana: "Spirit ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: "Rank",
-    suggestedRoteSkills: "Crafts, Occult, Persuasion",
-    description:
-      "Create a Fetish an item that contains a Spirit. And can be used to call upon a number of one of the Spirit's Influence dots and Numina equal to Potency. These abilities cost Essence and the item has the Spirit's Essence pool. Triggering the bound Spirit's Ban or Bane destroys the fetish. A fetish without a Spirit may also be created and can hold 10+Potency Essence.",
-    reachEffects: [],
-    source: "MtAw2 p 183",
-  },
-  {
-    name: "Familiar",
-    arcana: "Spirit",
-    level: 4,
-    primaryArcana: "Spirit ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Expression, Intimidate",
-    description:
-      "Gain the Familiar Merit for the duration of the spell. Both parties must be willing. Cannot effect Spirits above Rank 2. Substitute Death 4 or Mind 4: Bind a Ghost or Goetia respectively.",
-    reachEffects: [],
-    source: "MtAw2 p 183",
-  },
-  {
-    name: "Haunted Grimoire",
-    arcana: "Spirit",
-    level: 4,
-    primaryArcana: "Spirit ••••",
-    secondaryArcana: "Prime •",
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Total Arcanum dots of Rote + Rank",
-    suggestedRoteSkills: "Crafts, Intimidation, Occult",
-    description:
-      "*Costs 1 Mana* The Mage binds a spirit to a grimoire, writing its essence into the vessel's pattern. This doesn't host the Spirits numina or influences nor does it have an essence pool. The Grimoire gains the Open and Resonant Conditions. When cast the spell is increased by the Spirits Rank for Primary Factor however the Spirit has a chance to escape with a Clash of Wills to the caster. When someone memorizes a Rote the Spirit has a chance to possess them using a CLash of Wills. This spell is a Wisdom Sin against Understanding.",
-    reachEffects: [],
-    source: "SoS 86",
-  },
-  {
-    name: "Scribe Daimonomikon",
-    arcana: "Spirit",
-    level: 4,
-    primaryArcana: "Spirit ••••",
-    secondaryArcana: "Prime •",
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Rank of Attainment + (10 - Caster's Gnosis)",
-    suggestedRoteSkills: "Crafts, Expression, Occult",
-    description:
-      "*Cost 1 Mana* Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "For 1 Mana, the Spell's Duration is Lasting.",
-      },
-    ],
-    source: "SoS 87",
-  },
-  {
-    name: "Shadow Scream",
-    arcana: "Spirit",
-    level: 4,
-    primaryArcana: "Spirit ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Firearms, Medicine",
-    description: "Deal Lethal damage equal to Potency. Can hit targets in Twilight.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "For one point of Mana damage is aggravated.",
-      },
-      {
-        reach: 1,
-        effect: "Can destroy Essence divide Potency between regular and Essence damage.",
-      },
-      {
-        reach: 1,
-        effect: "Target gains Open Condition.",
-      },
-      {
-        reach: 1,
-        effect: "Can hit target on the other side of the Gauntlet.",
-      },
-    ],
-    source: "MtAw2 p 183",
-  },
-  {
-    name: "Shape Spirit",
-    arcana: "Spirit",
-    level: 4,
-    primaryArcana: "Spirit ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Rank",
-    suggestedRoteSkills: "Crafts, Medicine, Persuasion",
-    description:
-      "Change a Spirit with a number of effects equal to Potency: Change nature, Redistribute Attribute dots, Heal one Lethal corpus, Redefine and redistribute Influences, Add/remove/replace one Manifestation, Add/remove/replace one Numen, Rewrite Ban or Bane. In addition can also change the Spirit's size, shape and appearance but no bigger than the spell's Scale factor. Traits must stay within Rank-derived maximums. Change revert at the end of spell duration.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "For one Mana heal aggravated damage.",
-      },
-    ],
-    source: "MtAw2 p 184",
-  },
-  {
-    name: "Twilit Body",
-    arcana: "Spirit",
-    level: 4,
-    primaryArcana: "Spirit ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Subterfuge, Survival",
-    description:
-      "Turn yourself(and whatever you're wearing) into Spirit-attuned ephemera, and thus in Twilight.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Can become immaterial even in realms where Twilight doesn't normally exist.",
-      },
-    ],
-    source: "MtAw2 p 184",
-  },
-  {
-    name: "World Walker",
-    arcana: "Spirit",
-    level: 4,
-    primaryArcana: "Spirit ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Gauntlet Strength",
-    suggestedRoteSkills: "Athletics, Persuasion, Survival",
-    description: "Bring subject across the Gauntlet, no portal necessary.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Give conjured Spirit Materialized Condition.",
-      },
-    ],
-    source: "MtAw2 p 184",
-  },
-  {
-    name: "Annihilate Spirit",
-    arcana: "Spirit",
-    level: 5,
-    primaryArcana: "Spirit •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Potency",
-    withstand: "Rank",
-    suggestedRoteSkills: "Intimidation, Science, Weaponry",
-    description:
-      "Utterly destroy a Spirit. The Spirit may spend an Essence to roll Power + Finesse in a Clash of Wills to prevent this. But if the spell succeeds the Spirit is destroyed even if it still has Essence it won't go into hibernation the Spirit is simply gone. Cannot affect Spirits above Rank 5.",
-    reachEffects: [],
-    source: "MtAw2 p 184",
-  },
-  {
-    name: "Birth Spirit",
-    arcana: "Spirit",
-    level: 5,
-    primaryArcana: "Spirit •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Medicine, Expression",
-    description: "Create a Rank 1 Spirit.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "For one Mana, create a Rank 2 Spirit.",
-      },
-    ],
-    source: "MtAw2 p 184",
-  },
-  {
-    name: "Create Locus",
-    arcana: "Spirit",
-    level: 5,
-    primaryArcana: "Spirit •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: "Gauntlet Strength",
-    suggestedRoteSkills: "Crafts, Empathy, Survival",
-    description: "Create a Locus at a location with the Resonant Condition.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The Locus generates Essence equal to Potency per day.",
-      },
-    ],
-    source: "MtAw2 p 184",
-  },
-  {
-    name: "Essence Fountain",
-    arcana: "Spirit",
-    level: 5,
-    primaryArcana: "Spirit •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Expression, Occult",
-    description:
-      "Create Essence equal to Potency. The Essence has a Resonance of your choosing, as long as you have encountered it before.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Flavor the Essence with multiple Resonances.",
-      },
-    ],
-    source: "MtAw2 p 185",
-  },
-  {
-    name: "Spirit Manse",
-    arcana: "Spirit",
-    level: 5,
-    primaryArcana: "Spirit •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Expression, Survival",
-    description:
-      "Create a place in the Shadow for yourself and gain the Safe Place Merit with rating equal to Potency.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "You may create an Iris between this place and the material world and may give it a key. But the spell becomes Withstood by Gauntlet Strength.",
-      },
-    ],
-    source: "MtAw2 p 185",
-  },
-  {
-    name: "Divination",
-    arcana: "Time",
-    level: 1,
-    primaryArcana: "Time •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Empathy, Investigation",
-    description:
-      "Ask a general question regarding the future with an answer of /'/Yes/'/, /'/No/'/ or /'/Irrelevant/'/.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The questions asked can be more specific and the answer gives more information.",
-      },
-    ],
-    source: "MtAw2ed p186",
-  },
-  {
-    name: "Green Light/Red Light",
-    arcana: "Time",
-    level: 1,
-    primaryArcana: "Time •",
-    secondaryArcana: null,
-    practice: "Compelling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Computer, Larceny, Subterfuge",
-    description:
-      "Cast Positively: Anything that can help the subject achieve the objective faster will happen at the exact moment to do so. Cast Negatively: Anything that can delay the target will happen at the exact moment to do so.",
-    reachEffects: [],
-    source: "MtAw2ed p187",
-  },
-  {
-    name: "Momentary Flux",
-    arcana: "Time",
-    level: 1,
-    primaryArcana: "Time •",
-    secondaryArcana: null,
-    practice: "Knowing",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Investigation, Streetwise, Survival",
-    description:
-      "The Mage can determine if the subject will prove beneficial or baneful in the future. When acting on the information gained, the Mage can add the spell's potency to their Initiative.",
-    reachEffects: [],
-    source: "MtAw2ed p187",
-  },
-  {
-    name: "Perfect Timing",
-    arcana: "Time",
-    level: 1,
-    primaryArcana: "Time •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Socialize, Streetwise",
-    description:
-      "The subject can spend a turn during the spell's duration on planning, and, in doing so, can add the spell's Potency to their next instant action.",
-    reachEffects: [],
-    source: "MtAw2ed p187",
-  },
-  {
-    name: "Postcognition",
-    arcana: "Time",
-    level: 1,
-    primaryArcana: "Time •",
-    secondaryArcana: null,
-    practice: "Unveiling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Empathy, Investigation",
-    description:
-      "The mage can see into the subject's past, wieving it all from a moment declared in /'/real time/'/. The mage does not lose Defense when watching the vision.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The mage can rewind, speed up, slow down and pause the vision at any given time.",
-      },
-    ],
-    source: "MtAw2ed p187",
-  },
-  {
-    name: "Choose the Thread",
-    arcana: "Time",
-    level: 2,
-    primaryArcana: "Time ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Occult, Science, Subterfuge",
-    description:
-      "You may roll twice for your next mundane dice roll. Then choose which takes effect.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect: "May affect rolls for spellcasting and other supernatural powers.",
-      },
-    ],
-    source: "MtAw2ed p187",
-  },
-  {
-    name: "Constant Presence",
-    arcana: "Time",
-    level: 2,
-    primaryArcana: "Time ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Persuasion, Survival",
-    description:
-      "Preserve yourself against alterations to the timeline. Any alterations that would change you provoke a Clash of Wills. If you win the world will still be altered but you will not be.",
-    reachEffects: [],
-    source: "MtAw2ed p187",
-  },
-  {
-    name: "Hung Spell",
-    arcana: "Time",
-    level: 2,
-    primaryArcana: "Time ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Occult, Expression",
-    description:
-      "The subject of this spell must be a mage. The subject may then spend a Mana to /'/hang/'/ his spell. Hung Spell may hold up to a Potency in number of spells these spells still counts against the caster's spell control. Any hanged spells will not have their Durations expire but won't take effect yet either. When Hung Spell ceases all the hanged spells immediately take effect according to their own Durations and effects.",
-    reachEffects: [],
-    source: "MtAw2ed p188",
-  },
-  {
-    name: "Shield of Chronos",
-    arcana: "Time",
-    level: 2,
-    primaryArcana: "Time ••",
-    secondaryArcana: null,
-    practice: "Veiling",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Stealth, Subterfuge",
-    description:
-      "Anybody trying to view the subject through time, either by looking at the presently shielded subject's future or into a past when the subject was shielded. Provokes a Clash of Wills.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Instead of simply preventing Time magic from seeing the subject. You may show a false series of events that the magic /'/discovers/'/. If powers would seek to pierce the illusion anyway this provokes a Clash of Wills.",
-      },
-    ],
-    source: "MtAw2ed p188",
-  },
-  {
-    name: "Tipping the Hourglass",
-    arcana: "Time",
-    level: 2,
-    primaryArcana: "Time ••",
-    secondaryArcana: null,
-    practice: "Ruling",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Athletics, Crafts, Investigation",
-    description:
-      "Add or subtract Potency from a subjects Initiative. Subjects who have already taken an action this turn need to wait until the next turn to take advantage of their new Initiative.",
-    reachEffects: [],
-    source: "MtAw2ed p188",
-  },
-  {
-    name: "Veil of Moments",
-    arcana: "Time",
-    level: 2,
-    primaryArcana: "Time ••",
-    secondaryArcana: null,
-    practice: "Shielding",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Medicine, Investigation Subterfuge",
-    description:
-      "Protect a subject from Time's effects. The subject will not bleed out form wounds, poison, toxins and the progression of disease are stalled. New Conditions and Tilts cannot be imposed on the subject. Supernatural powers that would anyway provoke a Clash of Wills. Downsides of the spell: you no longer heal naturally while under the spell's effect. Healing through Pattern Restoration and Life magic will still work. Willpower and Mana cannot be restored and Experiences cannot be spend. The subjects ceases aging.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "May ignore Persistent Conditions. Time spend under this spell does not count toward any time necessary for Conditions to lapse.",
-      },
-      {
-        reach: 1,
-        effect: "May heal naturally.",
-      },
-      {
-        reach: 1,
-        effect: "May regain Willpower.",
-      },
-      {
-        reach: 1,
-        effect: "May regain Mana.",
-      },
-    ],
-    source: "MtAw2ed p188",
-  },
-  {
-    name: "Acceleration",
-    arcana: "Time",
-    level: 3,
-    primaryArcana: "Time •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Drive, Stealth",
-    description:
-      "Speed up a subjects movements. Multiply speed by Potency, apply Defense against firearms and take the first action in a turn (unless you choose to delay it). You also apply Potency to Defense buy only when dodging.",
-    reachEffects: [],
-    source: "MtAw2ed p189",
-  },
-  {
-    name: "Chronos' Curse",
-    arcana: "Time",
-    level: 3,
-    primaryArcana: "Time •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Academics, Occult, Intimidation",
-    description:
-      "Slow a subject down. This reduces their Defense by Potency and divides their Speed by Potency, rounding down. Subject go last in a turn.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Spend one Mana, the subject loses all Defense against attacks.",
-      },
-      {
-        reach: 1,
-        effect:
-          "Multiply the time per roll of extended actions by Potency. This does not effect the ritaul casting times of mages.",
-      },
-    ],
-    source: "MtAw2ed p190",
-  },
-  {
-    name: "Shifting Sands",
-    arcana: "Time",
-    level: 3,
-    primaryArcana: "Time •••",
-    secondaryArcana: null,
-    practice: "Fraying",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Occult, Survival",
-    description:
-      "The subject goes back in time a number of turns equal to Potency. Any injuries and Conditions obtained or Mana and Willpower spend in the reversed turns do not change back and stay as they are. Any spells cast in the reversed time are canceled. Once the subject catches up to the present, any changes made become Lasting.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "Travel back a full scene. This Reach may be applied multiple times.",
-      },
-    ],
-    source: "MtAw2ed p190",
-  },
-  {
-    name: "Temporal Summoning",
-    arcana: "Time",
-    level: 3,
-    primaryArcana: "Time •••",
-    secondaryArcana: null,
-    practice: "Weaving",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Investigation, Persuasion",
-    description:
-      "Return the subject to an younger version of itself. Buildings can be restored and injuries healed. Once the spell ends any changed made revert back to normal. Any injuries and Conditions obtained while this spell was active carry over to the subjects present self. Limits of Spell includes not being able to bring the dead back and a vampire returned to 'Childhood' becomes a vampiric child.",
-    reachEffects: [],
-    source: "MtAw2ed p190",
-  },
-  {
-    name: "Time Limit",
-    arcana: "Time",
-    level: 3,
-    primaryArcana: "Time •••",
-    secondaryArcana: "Prime ••",
-    practice: "Weaving",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Expression, Science, Survival",
-    description:
-      "The Caster instills a time limit on the effects of an imbued spell as she relinquishes it for one week per dot of Potency. This applies to one person each use so a new user can make the item work again but only for the time limit.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "The spell's time limit is increased to one month per Potency.",
-      },
-    ],
-    source: "SoS 71",
-  },
-  {
-    name: "Weight of Years",
-    arcana: "Time",
-    level: 3,
-    primaryArcana: "Time •••",
-    secondaryArcana: null,
-    practice: "Perfecting",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Crafts, Intimidation, Medicine",
-    description:
-      "An attack spell. Deal Bashing damage equal to Potency. If used on objects or structures. Apply Potency directly as damage to Structure and reduce Durability by 1 for every 2 points of Structure lost.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect: "For living subjects the spell also reduces Athletics by Potency.",
-      },
-    ],
-    source: "MtAw2ed p191",
-  },
-  {
-    name: "Present as Past",
-    arcana: "Time",
-    level: 4,
-    primaryArcana: "Time ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Empathy, Investigation, Streetwise",
-    description:
-      "The subject gains the following benefits. In combat you can require that all affected characters declare their action for that turn. You do not need to declare your own and can act anywhere in the Initiative order that you want. This trumps all supernatural powers except those from the Time Arcanum, these cause a Clash of Wills. In social situations this spell removes a number of Doors equal to Potency from the subject or adds Doors to yourself when the subject performs Social maneuvering against you.",
-    reachEffects: [],
-    source: "MtAw2ed p191",
-  },
-  {
-    name: "Prophecy",
-    arcana: "Time",
-    level: 4,
-    primaryArcana: "Time ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Expression, Investigation",
-    description:
-      "This spell works like /'/Divination/'/ except that you can now ask 'what if?' questions. You can ask a number of question equal to Potency.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "By applying this spell to Social interaction you may reduce a number of Doors equal to Potency.",
-      },
-    ],
-    source: "MtAw2ed p191",
-  },
-  {
-    name: "Rend Lifespan",
-    arcana: "Time",
-    level: 4,
-    primaryArcana: "Time ••••",
-    secondaryArcana: null,
-    practice: "Unraveling",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Athletics, Medicine, Intimidation",
-    description: "An attack spell. Deal Lethal damage equal to Potency.",
-    reachEffects: [],
-    source: "MtAw2ed p191",
-  },
-  {
-    name: "Rewrite History",
-    arcana: "Time",
-    level: 4,
-    primaryArcana: "Time ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Resolve",
-    suggestedRoteSkills: "Expression, Investigation, Persuasion",
-    description:
-      "Change the subject's timeline as though different choices were made. Without Temporal Sympathy only recent decisions can be rewritten. Once the spell ends the person instantly reverts to the original timeline. Memories of the time under this spell will seem hazy, distant and dreamlike but the subject will remember the time at least to some extent. Supernatural creatures are not normally affected by this spell.",
-    reachEffects: [
-      {
-        reach: 1,
-        effect:
-          "Reassign a number of the subject's Skill or Merit dot equal to Potency. These can not exceed the subject's maximum.",
-      },
-      {
-        reach: 1,
-        effect:
-          "Reassign a number of the subject's Attributes equal to Potency. These may no exceed the subject's natural maximum or below the character creation priorities of Primary, Secondary and Tertiary.",
-      },
-      {
-        reach: 2,
-        effect:
-          "This spell can affect supernatural creatures. And may revert them back to before they acquired their supernatural template.",
-      },
-    ],
-    source: "MtAw2ed p191",
-  },
-  {
-    name: "Temporal Stutter",
-    arcana: "Time",
-    level: 4,
-    primaryArcana: "Time ••••",
-    secondaryArcana: null,
-    practice: "Patterning",
-    primaryFactor: "Potency",
-    withstand: "Stamina",
-    suggestedRoteSkills: "Intimidation, Science, Survival",
-    description:
-      "Throw a subject forward in time. The subject vanishes from the world and won't reappear until the spell expires. If, while reappearing, something new now occupies the space the subject used to inhabit apply the Knocked Down Tilt to whichever of the two has the least Size.",
-    reachEffects: [],
-    source: "MtAw2ed p192",
-  },
-  {
-    name: "Blink of an Eye",
-    arcana: "Time",
-    level: 5,
-    primaryArcana: "Time •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Crafts, Occult",
-    description:
-      "This spell turns the next extended action into a instant action. A number of rolls for the extended action may be made in this turn equal to Potency. This spell does not affect ritual casting time for mages.",
-    reachEffects: [
-      {
-        reach: 2,
-        effect:
-          "For a point of Mana this spell can affect spellcasting times. Increase the effective Gnosis of a mage equal to Potency for calculating ritual casting times only. For every point over Gnosis 10 reduce the interval by one turn.",
-      },
-    ],
-    source: "MtAw2ed p192",
-  },
-  {
-    name: "Corridors of Time",
-    arcana: "Time",
-    level: 5,
-    primaryArcana: "Time •••••",
-    secondaryArcana: null,
-    practice: "Unmaking",
-    primaryFactor: "Potency",
-    withstand: null,
-    suggestedRoteSkills: "Academics, Investigation, Persuasion",
-    description:
-      "The Subject inhabits their own Past self and is able to Change History. Subject arrives at the Location they were in at the time chosen and is free to make different decisions. Can be viewed under active Time mage sight. Once the mage has 'Caught up' to the present or the spells duration factor is up the changes made to History become Lasting.",
-    reachEffects: [],
-    source: "MtAw2ed p192",
-  },
-  {
-    name: "Temporal Pocket",
-    arcana: "Time",
-    level: 5,
-    primaryArcana: "Time •••••",
-    secondaryArcana: null,
-    practice: "Making",
-    primaryFactor: "Duration",
-    withstand: null,
-    suggestedRoteSkills: "Occult, Science, Stealth",
-    description:
-      "Grant the subject extra time. The entire world around the subject freezes. The subject may do move and touch things freely. But physically moving, consuming or injuring anything ends the spell at the completion of such an action.",
-    reachEffects: [],
-    source: "MtAw2ed p192",
-  },
-]
+export const spells =
+  [
+    {
+      name: "Ectoplasmic Shaping",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Larceny",
+      ],
+      page: "Mage: Awakening p128",
+      description:
+        "Shape and mold ectoplasm, or create Open Condition on an object or location for a ghost to Manifest.",
+    },
+    {
+      name: "Deepen Shadows",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Intimidation",
+        "Expression",
+      ],
+      page: "Mage: Awakening p128",
+      description:
+        "Apply Poor Light Tilt in area.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Apply Blinded Tilt in an area",
+          },
+        ],
+    },
+    {
+      name: "Forensic Gaze",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Medicine",
+        "Investigation",
+        "Expression",
+      ],
+      page: "Mage: Awakening p128",
+      description:
+        "Learn how a subject died.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Witness final moments of a corpse's life",
+          },
+        ],
+    },
+    {
+      name: "Shadow Sculpting",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Science",
+        "Expression",
+      ],
+      page: "Mage: Awakening p128",
+      description:
+        "Shape shadows to your liking.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Both shape and animate shadows",
+          },
+        ],
+    },
+    {
+      name: "Soul Marks",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Medicine",
+        "Occult",
+        "Empathy",
+      ],
+      page: "Mage: Awakening p128",
+      description:
+        "Learn about a subjects soul.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can use spell on unattached souls",
+          },
+        ],
+    },
+    {
+      name: "Speak with the Dead",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Socialize",
+        "Expression",
+        "Investigation",
+      ],
+      page: "Mage: Awakening p128",
+      description:
+        "Sense and communicate with ghosts in Twilight. Sense anchors and determine a ghosts rank.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "See if an anchor is temporary or permanent",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can be understood by ghosts that don't share your language",
+          },
+        ],
+    },
+    {
+      name: "Corpse Mask",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Subterfuge",
+        "Crafts",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p129",
+      description:
+        "Alter a corpse's apparent time and cause of death.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can cast this spell on injured living subjects. Turn cuts to burns etc.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Change corpse appearance completely even age and sex",
+          },
+        ],
+    },
+    {
+      name: "Decay",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Subterfuge",
+        "Science",
+        "Occult",
+      ],
+      page: "Mage: Awakening p129",
+      description:
+        "Age an object, lowering durability.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Decrease structure instead",
+          },
+        ],
+    },
+    {
+      name: "Ectoplasm",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Expression",
+        "Academics",
+      ],
+      page: "Mage: Awakening p129",
+      description:
+        "Create ectoplasm from your own orifices or that of a corpse.",
+    },
+    {
+      name: "Ghost Shield",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Occult",
+        "Expression",
+        "Academics",
+      ],
+      page: "Mage: Awakening p129",
+      description:
+        "Protects subject form ghostly Numina, Influences and Manifestations as well as Death-Based entities.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "to protect from the physical attacks of Ghosts",
+          },
+        ],
+    },
+    {
+      name: "Sacrificial Relinquishment",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Intimidation",
+        "Medicine",
+        "Streetwise",
+      ],
+      page: "Signs of Sorcery p73",
+      description:
+        "Instead of spending a willpower dot to relinquish a spell you may instead make a blood sacrifice. This must be a sacrifice of Value, such as dozens of small unintelligent creatures, a few intelligent creatures or a single human.",
+    },
+    {
+      name: "Shape Ephemera",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Science",
+      ],
+      page: "Mage: Awakening p129",
+      description:
+        "Shape ephemera into objects, weapons or armor.",
+    },
+    {
+      name: "Soul Armor",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Occult",
+        "Survival",
+      ],
+      page: "Mage: Awakening p129",
+      description:
+        "Protect soul against hostile spells.",
+    },
+    {
+      name: "Soul Jar",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p129",
+      description:
+        "Trap unattached soul into container.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Bind soul to person with the soulless condition. An unwilling person may Withstand.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Make this spell lasting",
+          },
+        ],
+    },
+    {
+      name: "Suppress Aura",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Subterfuge",
+        "Intimidation",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p129",
+      description:
+        "Suppress Nimbus to appear as a sleeper to Mage Sight. Impose penalty to Empathy checks and supernatural attempts to read your emotional or mental state.",
+    },
+    {
+      name: "Suppress Life",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Subterfuge",
+        "Medicine",
+        "Academics",
+      ],
+      page: "Mage: Awakening p130",
+      description:
+        "Appear to be a corpse.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Cast reflexively",
+          },
+        ],
+    },
+    {
+      name: "Touch of the Grave",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Survival",
+        "Crafts",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p130",
+      description:
+        "Interact with ghosts and other things in Death-attuned Twilight. Can pull objects from Twilight and make them visible and solid but with low durability.",
+    },
+    {
+      name: "Without a Trace",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Science",
+        "Stealth",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p130",
+      description:
+        "Leave no forensic evidence like fingerprints.",
+    },
+    {
+      name: "Cold Snap",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Survival",
+        "Intimidation",
+        "Science",
+      ],
+      page: "Mage: Awakening p130",
+      description:
+        "Apply Ice Tilt to area.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Also apply Extreme Cold Tilt",
+          },
+        ],
+    },
+    {
+      name: "Damage Ghost",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Occult",
+        "Intimidation",
+        "Brawl",
+      ],
+      page: "Mage: Awakening p130",
+      description:
+        "Deal bashing damage to ghost.",
+    },
+    {
+      name: "Death Touched Item",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p64",
+      description:
+        "Turns ordinary objects into one capable of affecting objects of Death-attuned ephemera and shadow. It can interact with anything in Death attuned twilight or even items crafted of shadows by Death magic. It can deal damage to a Ghosts Corpus or Shadow items structure or prevent harm to the wearer. If the item is brought into twilight it doesn't lose its material form while under the effects of this spell.",
+    },
+    {
+      name: "Devouring the Slain",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Intimidation",
+        "Medicine",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p130",
+      description:
+        "Can take Willpower or Scour the pattern of an injured person.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "May affect a healty person who has recently taken damage",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell does not count toward limit of Scouring per day",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Use spell on ghosts",
+          },
+        ],
+    },
+    {
+      name: "Ghost Gate",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Academics",
+        "Expression",
+      ],
+      page: "Mage: Awakening p130",
+      description:
+        "Create a 2 dimensional gateway that converts anything passing through it into Death-attuned Twilight.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can transform a subject into Twilight directly without a gate",
+          },
+        ],
+    },
+    {
+      name: "Ghost Summons",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Persuasion",
+        "Socialize",
+        "Occult",
+      ],
+      page: "Mage: Awakening p131",
+      description:
+        "Call a ghost in the local area to you.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell also creates the Open Condition",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can give the ghost a single word command to follow",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "When near an Iris to the Underworld can call a ghost from there instead",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Can give ghost a complex command to follow",
+          },
+        ],
+    },
+    {
+      name: "Reaping Relinquishment",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Intimidation",
+        "Medicine",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p73",
+      description:
+        "The mage destroys a soul to relinquish a spell safely instead of spending a Willpower dot.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Prime",
+                  value: 2,
+                },
+              ],
+            effect:
+              "The caster can destroy a soul stone instead for the same effect",
+          },
+        ],
+    },
+    {
+      name: "Quicken Corpse",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Medicine",
+        "Crafts",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p131",
+      description:
+        "Create a zombie.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Create zombie suited for combat",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Imbue zombie with exceptional physical prowess",
+          },
+        ],
+    },
+    {
+      name: "Quicken Ghost",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Cost: One Mana(Optional)",
+      roteSkills: [
+        "Persuasion",
+        "Socialize",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p131",
+      description:
+        "Can boost ghost's Attributes or heal them.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "May choose to increase a ghosts Rank",
+          },
+        ],
+    },
+    {
+      name: "Rotting Flesh",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Empathy",
+      ],
+      page: "Mage: Awakening p132",
+      description:
+        "Inflict bashing damage.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Subject suffers penalty to Social rolls",
+          },
+        ],
+    },
+    {
+      name: "Sever Soul",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Intimidation",
+        "Athletics",
+        "Expression",
+      ],
+      page: "Mage: Awakening p132",
+      description:
+        "Take the soul from a Sleeper. Inflicts the Soulless Condition.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Skip the Soulless Condition and inflict the Enervated Condition instead.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Skip both the Soulless and Enervated Conditions and inflict the Thrall Condition instead.",
+          },
+        ],
+    },
+    {
+      name: "Shadow Crafting",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Intimidation",
+        "Occult",
+      ],
+      page: "Mage: Awakening p132",
+      description:
+        "Shape shadows into objects, weapons or armor.",
+    },
+    {
+      name: "Unliving Vessel",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 3,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resistance",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Expression",
+      ],
+      page: "Signs of Sorcery p69",
+      description:
+        "Prepares a Subject under the purview of Death for the Imbue Item Attainment. Can be used on items found in Ghostly Twilight, Items made of Ectoplasm, Corpses and Ghosts which will automatically withstand this spell. The Ghost must either be cast on within Twilight or while Manifested.",
+    },
+    {
+      name: "Enervation",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Occult",
+        "Intimidation",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p132",
+      description:
+        "Apply either the Leg Wrack Tilt or the Arm Wreck Tilt.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Apply the Immobilized Tilt",
+          },
+        ],
+    },
+    {
+      name: "Exorcism",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Brawl",
+        "Expression",
+        "Occult",
+      ],
+      page: "Mage: Awakening p132",
+      description:
+        "Destroy Manifestation Condition of a ghost or it's host.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Spell works on Goetia",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Target cannot attempt to recreate destroyed conditions for the duration of the spell",
+          },
+        ],
+    },
+    {
+      name: "Goetic Evocatuion (Death Substitute)",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Rank of Entity",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Persuasion",
+      ],
+      page: "Signs of Sorcery p90",
+      description:
+        "May convert pieces of a persons Psyche from a soul stone into a Ghost.",
+    },
+    {
+      name: "Haunted Grimoire",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 4,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Total Arcanum dots of Rote + Rank",
+      roteSkills: [
+        "Crafts",
+        "Intimidation",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p86",
+      mana: 1,
+      description:
+        "The Mage binds a Ghost to a grimoire, writing its essence into the vessel's pattern. This doesn't host the Ghost's numina or influences. The Grimoire gains the Open and Resonant Conditions. When cast the spell is increased by the Ghost's Rank for Primary Factor however the Ghost has a chance to escape with a Clash of Wills to the caster. When someone memorizes a Rote the Ghost has a chance to possess them using a Clash of Wills. This spell is a Wisdom Sin against Understanding.",
+    },
+    {
+      name: "Revenant",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Craft",
+        "Brawl",
+        "Intimidation",
+      ],
+      page: "Mage: Awakening p132",
+      description:
+        "Grant a ghost a Manifestation condition.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              {
+                Mind: 4,
+              },
+            Effect:
+              "Spell works on Goetia",
+          },
+        ],
+    },
+    {
+      name: "Scribe Daimonomikon",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 4,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rank of Attainment + (10 - Caster's Gnosis)",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p87",
+      mana: 1,
+      description:
+        "Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Duration is Lasting",
+          },
+        ],
+    },
+    {
+      name: "Shadow Flesh",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Occult",
+        "Medicine",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p132",
+      description:
+        "Transform subject into a two or three-dimensional shadow.",
+    },
+    {
+      name: "Soul Grafting",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 4,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Crafts",
+        "Empathy",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p90",
+      description:
+        "Graft another Mage's soul stone to your own soul, this does not increase Gnosis but grants a +1 for soul stone or +2 for complete souls Gnosis for the purpose of Spell casting time, Determining range for Aimed spells, Clash of Wills, Mana spends per turn, spell control, combining spells and Yantras per turn. You also recieve a +2 for Soul Stone and +3 for full souls Gnosis for Calculating Paradox. This is an act against Falling wisdom.",
+    },
+    {
+      name: "Withering",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Intimidation",
+        "Medicine",
+        "Science",
+      ],
+      page: "Mage: Awakening p133",
+      description:
+        "Inflict lethal damage.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Inflict aggravated damage instead",
+          },
+        ],
+    },
+    {
+      name: "Create Anchor",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p133",
+      description:
+        "Apply the Anchor Condition to a subject.",
+    },
+    {
+      name: "Create Avernian Gate",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Crafts",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p133",
+      description:
+        "Create a gateway to the upper levels of the Underworld. This gives the area a Death Resonance and the Gateway Condition.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The gateway can lead to anywhere in the Underworld the mage has been before",
+          },
+        ],
+    },
+    {
+      name: "Create Ghost",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Expression",
+        "Academics",
+      ],
+      page: "Mage: Awakening p133",
+      description:
+        "Create a ghost of Rank 1. ghost is loyal to you.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Ghost created is Rank 2",
+          },
+        ],
+    },
+    {
+      name: "Deny the Reaper",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Medicine",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p133",
+      description:
+        "Reverse the effects of decay and age up to a number of months.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can bring the recently dead back to life. Subject suffers Soulless Condition",
+          },
+        ],
+    },
+    {
+      name: "Empty Presence",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Subterfuge",
+        "Persuasion",
+        "Stealth",
+      ],
+      page: "Mage: Awakening p133",
+      description:
+        "Destroys all evidence of a subjects existence and renders them invisible to the naked eye. If the subject takes violent action the spell ends immediately.",
+    },
+    {
+      name: "Sever the Awakened Soul",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Crafts",
+        "Intimidation",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p133",
+      description:
+        "Severs the soul of an Awakened mage. Inflicts the Soulless Conditions.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Skip the Soulless Condition and inflict the Enervated Condition instead.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Skip both the Soulless and Enervated Conditions and inflict the Thrall Condition instead.",
+          },
+        ],
+    },
+    {
+      name: "Interconnections",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Empathy",
+        "Investigation",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p134",
+      description:
+        "Reveal sympathetic connections, who has violated an oath or geas and spells with conditional duration.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Detect possession, supernatural mind control and alterations of destiny",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Discern information about a persons destiny",
+          },
+        ],
+    },
+    {
+      name: "Oaths Fulfilled",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Politics",
+        "Investigation",
+      ],
+      page: "Mage: Awakening p135",
+      description:
+        "Know when the subject breaks or fulfills an oath.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Also receive a brief vision of the subject when the oath is fullfilled",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Track the subject of the spell",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Trigger event may be something that could only be seen by Mage Sight",
+          },
+        ],
+    },
+    {
+      name: "Quantum Flux",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Firearms",
+        "Occult",
+      ],
+      page: "Mage: Awakening p135",
+      description:
+        "Negate a number of penalties to your Mundane actions or wait a turn to receive a bonus to your next mundane action.",
+    },
+    {
+      name: "Reading the Outmost Eddies",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Computer",
+        "Persuasion",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p135",
+      description:
+        "Subject of spell receives a minor twist of fate positive or negative in 24 hours. Only hostile applications are Withstood.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell takes effect within an hour",
+          },
+        ],
+    },
+    {
+      name: "Serendipity",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Crafts",
+        "Survival",
+      ],
+      page: "Mage: Awakening p135",
+      description:
+        "Reveal what course of action will bring you closer to your goal.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "When making a roll to achieve your stated goal, you may substitute the used Skill with another of the same type (Mental, Physical, Social)",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "As above but may substitute any Skill",
+          },
+        ],
+    },
+    {
+      name: "Exceptional Luck",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Socialize",
+      ],
+      page: "Mage: Awakening p136",
+      description:
+        "Subject receives a boon or hex. A hex may be withstood.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Boon or hex can affect spellcasting rolls",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "This spell can be cast reflexive",
+          },
+        ],
+    },
+    {
+      name: "Fabricate Fortune",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Larceny",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p136",
+      description:
+        "Conceal and falsify a subjects fate or Destiny. This can fool spells with conditional triggers.",
+    },
+    {
+      name: "Fools Rush In",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Socialize",
+        "Streetwise",
+      ],
+      page: "Mage: Awakening p136",
+      description:
+        "Suffer no untrained skill penalties when facing a situation unprepared.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Receive a dice bonus (not to spellcasting rolls)",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 3,
+              },
+            ],
+            effect:
+              "Recieve a dice bonus that may apply to spellcasting rolls",
+          },
+        ],
+    },
+    {
+      name: "Lucky Number",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Investigation",
+        "Larceny",
+        "Science",
+      ],
+      page: "Mage: Awakening p136",
+      description:
+        "Guess the right password, phone number, etc. on the first try.",
+    },
+    {
+      name: "Shifting the Odds",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Investigation",
+        "Politics",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p136",
+      description:
+        "Find a particular kind of person, place or thing within 24 hours.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Find desired object within an hour",
+          },
+        ],
+    },
+    {
+      name: "Warding Gesture",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Brawl",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p136",
+      description:
+        "Protect a subject against supernatural effect that would alter her fate including supernatural compulsion. Subject may also be excluded form any area-effect spell you may cast.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Subject may be excluded from any spell/attainment you cast",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Subject may be protected from any supernatural effects that target an area instead of individuals",
+          },
+        ],
+    },
+    {
+      name: "Grave Misfortune",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Weaponry",
+      ],
+      page: "Mage: Awakening p137",
+      description:
+        "The next time the subjects suffers damage, increase the damage.",
+    },
+    {
+      name: "Monkey's Paw",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Drive",
+        "Crafts",
+        "Science",
+      ],
+      page: "Mage: Awakening p137",
+      description:
+        "Bless or curse an object altering it's equipment bonus.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Anybody who caries the item also receives a boon or a hex",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Bonus or penalty may exceed five dice",
+          },
+        ],
+    },
+    {
+      name: "Shared Fate",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Medicine",
+        "Persuasion",
+        "Politics",
+      ],
+      page: "Mage: Awakening p137",
+      description:
+        "Two or more subjects are bound together. Any damage, Tilt or Condition suffered by one will also affect the other.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Link is only one way",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Subject is not linked to any other subjects. Instead, she suffers any damage, Tilt or Condition she inflicts on others",
+          },
+        ],
+    },
+    {
+      name: "Superlative Luck",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Crafts",
+        "Occult",
+      ],
+      page: "Mage: Awakening p137",
+      mana: 1,
+      description:
+        "Gain the rote quality.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Rote quality may effect ritual spellcasting but this also doubles the casting time",
+          },
+        ],
+    },
+    {
+      name: "Sworn Oaths",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Expression",
+        "Occult",
+        "Politics",
+      ],
+      page: "Mage: Awakening p137",
+      description:
+        "Supernaturally enforce a vow. Adhere to the oath and the subject receives a boon, break an she suffers a hex.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "If spell control is maintained the mage is aware if the spell is a boon or a hex",
+          },
+        ],
+    },
+    {
+      name: "The Right Tool",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Stealth",
+        "Expression",
+      ],
+      page: "Signs of Sorcery p64",
+      description:
+        "Turn an ordinary object into the object needed to get the job done. During the duration of the spell this item could be conceivable used as the item needed to complete a task. When used for the new purpose the Items equipment bonus is increased (up to 5+) by the Potency, Items not normally used for the situation begin at 0.",
+    },
+    {
+      name: "Atonement",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Countered effect's Potency",
+      roteSkills: [
+        "Academics",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p137",
+      description:
+        "If a subject is cursed can grant them a quest that, if fulfilled, will lift the curse. Stronger curses require greater quests.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Quest can be undertaken by another on the subjects behalf",
+          },
+        ],
+    },
+    {
+      name: "Chaos Mastery",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Empathy",
+        "Occult",
+        "Science",
+      ],
+      page: "Mage: Awakening p138",
+      description:
+        "Can realize complex possibility such as causing a 1.000 coins to turn up heads.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "This spell when used as an attack can deal aggravated damage",
+          },
+        ],
+    },
+    {
+      name: "Divine Intervention",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p138",
+      description:
+        "Replace one of the subjects Aspirations with a stated goal. Subject suffers ill luck when no pursuing this goal. This can also be reversed causing bad luck only when pursuing the goal.",
+    },
+    {
+      name: "Scribe Daimonomikon",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 4,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rank of Attainment + (10 - Caster's Gnosis)",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p87",
+      mana: 1,
+      description:
+        "Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                level: 1,
+              },
+            ],
+            effect:
+              "Spell's Duration is Lasting",
+          },
+        ],
+    },
+    {
+      name: "Strings of Fate",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Academics",
+        "Persuasion",
+        "Stealth",
+      ],
+      page: "Mage: Awakening p138",
+      description:
+        "The mage can encourage a specific event to befall the subject. The event will come pass when circumstances allow. If the subject's cooperation is required opportunities for this event to come to pass will appear once a week.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Opportunities appear once a day",
+          },
+        ],
+    },
+    {
+      name: "Sever Oaths",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Occult",
+        "Subterfuge",
+        "Weaponry",
+      ],
+      page: "Mage: Awakening p138",
+      description:
+        "Can have a variety of effects such as freeing a bound ephemeral entity or dispelling a conditional trigger.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Spell's effects are lasting",
+          },
+        ],
+    },
+    {
+      name: "Forge Destiny",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p139",
+      description:
+        "Mage can grant the subject a supernatural merit or increase and decrease an existing one. Mage can impose Aspirations, Obsessions or a Doom on the subject.",
+    },
+    {
+      name: "Miracle",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Persuasion",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p140",
+      description:
+        "Mage gains a number of Intercessions that can be spend reflexively to increase/decrease dice pools or to cause likely events to happen on command.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Willpower",
+                level: 1,
+              },
+            ],
+            effect:
+              "Spend one Intercession and Willpower to cause a low-probability event to pass",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+              {
+                type: "Willpower",
+                level: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spend one Intercession, Willpower and Mana to let the incredible come to pass",
+          },
+        ],
+    },
+    {
+      name: "Pariah",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Investigation",
+        "Medicine",
+        "Politics",
+      ],
+      page: "Mage: Awakening p139",
+      description:
+        "Turns the whole world against the subject.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Mage can adjust the sensitivity of the curse",
+          },
+        ],
+    },
+    {
+      name: "Swarm of Locusts",
+      primaryArcana:
+        {
+          arcana:
+            "Fate",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Science",
+      ],
+      page: "Mage: Awakening p140",
+      description:
+        "Create chaotic conditions that cause Environmental Tilts of player's choosing on the area. This spell is a breaking point for most Sleepers.",
+    },
+    {
+      name: "Influence Electricity",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Computers",
+        "Crafts",
+        "Science",
+      ],
+      page: "Mage: Awakening p140",
+      description:
+        "Operate or shut down electrical devices.",
+    },
+    {
+      name: "Influence Fire",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p140",
+      description:
+        "Guide flames along a particular path.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Increase or decrease the size of a flame",
+          },
+        ],
+    },
+    {
+      name: "Kinetic Efficiency",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p141",
+      description:
+        "Run faster, jump further or lift more.",
+    },
+    {
+      name: "Influence Heat",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p141",
+      description:
+        "Control the flow of heat in an area. Can protect against heat- or cold-related Environments up to level 2(see p.224).",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Protect against Environments up to level 3",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Protect against Environments up to level 4",
+          },
+        ],
+    },
+    {
+      name: "Nightvision",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Investigation",
+        "Science",
+        "Stealth",
+      ],
+      page: "Mage: Awakening p141",
+      description:
+        "Suffer no penalty form dim to no light. Bright lights can inflict the Blind Condition.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "No longer risk the Blind Condition from sudden bright lights",
+          },
+        ],
+    },
+    {
+      name: "Receiver",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Empathy",
+        "Investigation",
+        "Science",
+      ],
+      page: "Mage: Awakening p141",
+      description:
+        "Hear sounds outside normal human frequency.",
+    },
+    {
+      name: "Tune In",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Computers",
+        "Empathy",
+        "Science",
+      ],
+      page: "Mage: Awakening p141",
+      description:
+        "Become able to see and listen to data transmission.",
+    },
+    {
+      name: "Control Electricity",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Computers",
+        "Science",
+      ],
+      page: "Mage: Awakening p142",
+      description:
+        "Alter the flow of a current or decrease it, but you cannot increase it. Direct a buildings electricity to one outlet, or divide the power from one outlet to many other sources.",
+    },
+    {
+      name: "Control Fire",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p142",
+      description:
+        "Increase or decrease the heat or size of a fire.",
+    },
+    {
+      name: "Control Gravity",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Occult",
+        "Science",
+      ],
+      page: "Mage: Awakening p142",
+      description:
+        "Cause gravity to pull upwards or horizontally.",
+    },
+    {
+      name: "Control Heat",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p142",
+      description:
+        "Increase or decrease the temperature of an area this may cause an Extreme Environment.",
+    },
+    {
+      name: "Control Light",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Investigation",
+        "Science",
+      ],
+      page: "Mage: Awakening p142",
+      description:
+        "Can focus or disperse light, and alter its wavelength on the spectrum.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can create a mirroring effect or a complete black-out which causes the Blinded Tilt or provides substantial cover",
+          },
+        ],
+    },
+    {
+      name: "Control Sound",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Expression",
+        "Stealth",
+        "Science",
+      ],
+      page: "Mage: Awakening p142",
+      description:
+        "Amplify or dampen sound, can also influence the direction of sound. Loud sounds can cause the Deafened Tilt in combat.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Create an echoing effect which imposes a penalty to stealth rolls",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Gain a bonus to hearing-based perception rolls",
+          },
+        ],
+    },
+    {
+      name: "Control Weather",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p143",
+      description:
+        "Make changes to the weather may create an Extreme Environments up to level 4.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Weather changes are more gradual",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Required for more drastic changes",
+          },
+        ],
+    },
+    {
+      name: "Environmental Shield",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p143",
+      description:
+        "This spell gives resistance to any Conditions and Tilts caused by the environment.",
+    },
+    {
+      name: "Invisibility",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Larceny",
+        "Science",
+        "Stealth",
+      ],
+      page: "Mage: Awakening p143",
+      description:
+        "Make a subject invisible.",
+    },
+    {
+      name: "Kinetic Blow",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Brawl",
+        "Science",
+      ],
+      page: "Mage: Awakening p143",
+      description:
+        "Unarmed attacks gain a bonus.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Apply the Knocked Down Tilt",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Apply the Stunned Tilt",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell can affect held weapons",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Spell affects thrown weapons but can also grant bullets Armor Piercing",
+          },
+        ],
+    },
+    {
+      name: "Transmission",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Science",
+      ],
+      page: "Mage: Awakening p144",
+      description:
+        "Hijack existing signals and change the transmitted data or its destination.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The signal becomes 'encrypted' only specific actions will allow somebody to read them",
+          },
+        ],
+    },
+    {
+      name: "Zoom In",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Investigation",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p144",
+      description:
+        "See distant objects or better examine small ones.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "See clearly for miles",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Clearly examine dust-sized particles",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "No longer suffer penalties form atmospheric conditions",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Clearly see microscopic particles, even molecular bonds",
+          },
+        ],
+    },
+    {
+      name: "Call Lightning",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Firearms",
+        "Science",
+      ],
+      page: "Mage: Awakening p144",
+      description:
+        "Can call lightning from an existing storm which may be created with 'Control Weather'.",
+    },
+    {
+      name: "Data Hog",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Computer",
+        "Larceny",
+        "Persuasion",
+      ],
+      page: "Signs of Sorcery p65",
+      description:
+        "increase or decrease a computer device's capability to process, accept and transfer data by Potency.",
+    },
+    {
+      name: "Energize Object",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 3,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Expression",
+        "Larceny",
+        "Science",
+      ],
+      page: "Signs of Sorcery p69",
+      mana: 1,
+      description:
+        "Primes an object with the potential for activation to hold a spell. Once the object is primed a mage may spend a Mana to cast any other spell on the object which doesn't activate until appropriate force is applied to the object. May store spells up to Potency which won't take affect until either the controlling mage cancels this spell, the duration ends or the correct force is applied to the object.",
+    },
+    {
+      name: "Gravitic Supremacy",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 3,
+        },
+      practice:
+        "Fraying/Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p144",
+      description:
+        "Increase or decrease gravity.",
+    },
+    {
+      name: "Perpetual Motion",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Expression",
+        "Science",
+        "Survival",
+      ],
+      page: "Signs of Sorcery p65",
+      description:
+        "The subject no longer requires an energy input for the duration of the spell.",
+    },
+    {
+      name: "Rapid Access Memory",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 3,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Expression",
+        "Larceny",
+        "Science",
+      ],
+      page: "Signs of Sorcery p69",
+      description:
+        "Allows the Subject to use the attainment Imbue Item on computer Software which can later be activated on a computer.",
+    },
+    {
+      name: "Telekinesis",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Brawl",
+        "Science",
+      ],
+      page: "Mage: Awakening p144",
+      description:
+        "Use telekinetic force to lift or manipulate an object remotely. Potency is applied to either Strength or Dexterity the remaining stat becomes 1.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Divide Potency between Two of the Three Physical Attributes",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Divide Potency between any of the Three Physical Attributes",
+          },
+        ],
+    },
+    {
+      name: "Telekinetic Strike",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Firearms",
+        "Science",
+      ],
+      page: "Mage: Awakening p145",
+      description:
+        "Deal bashing damage.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Apply the Knocked Down or Stunned Tilt",
+          },
+        ],
+    },
+    {
+      name: "Turn Momentum",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Firearms",
+        "Science",
+      ],
+      page: "Mage: Awakening p145",
+      description:
+        "When applying defense against an object this spell may be used, causing the object to be deflected in an uncontrolled direction though it never reverses direction.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell can be used as an reflexive action",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Mage has control over where the object is deflected, sol long as the new direction is within 90 degrees of the original arc",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Objects direction can be completely reversed Ranged weapons hit their users",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Time",
+                  value: 1,
+                },
+              ],
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "You can now turn objects too fast for you to apply defense against",
+          },
+        ],
+    },
+    {
+      name: "Velocity Control",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 3,
+        },
+      practice:
+        "Fraying or Perfecting",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Firearms",
+        "Science",
+      ],
+      page: "Mage: Awakening p145",
+      description:
+        "Increase or decrease an objects speed.",
+    },
+    {
+      name: "Electromagnetic Pulse",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Computers",
+        "Science",
+      ],
+      page: "Mage: Awakening p145",
+      description:
+        "By Unraveling electricity in the Subject this Creates an EMP that snuffs out powered devices in the affected area. Military devices may be shielded. Magical devices require a Clash of Wills. If used on a Living being this acts as an attack spell.",
+    },
+    {
+      name: "Levitation",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Athletics",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p145",
+      description:
+        "Levitate a subject, if unwilling the spell is withstood. You may direct the levitation each turn as an instant action. Without the mages focus the subject simply stops and floats in midair.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Subject retains momentum form turn to turn, floating slowly in whatever direction it was last directed in",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Subject can fly freely, apply defense normally and a speed equal to the mage's Gnosis+spell's Potency",
+          },
+        ],
+    },
+    {
+      name: "Rend Friction",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Drive",
+        "Science",
+      ],
+      page: "Mage: Awakening p145",
+      description:
+        "Increase or decrease friction. Increases can cause lethal damage. Decreases cause objects to move after they normally would have stopped.",
+    },
+    {
+      name: "Thunderbolt",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Firearms",
+        "Science",
+      ],
+      page: "Mage: Awakening p146",
+      description:
+        "Deal lethal damage.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell deals aggravated damage",
+          },
+        ],
+    },
+    {
+      name: "Transform Energy",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Science",
+      ],
+      page: "Mage: Awakening p146",
+      description:
+        "Transform one type of energy into another of the same level.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "May decrease the level of transformed energy by one. This Reach can be applied multiply times",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Split one type of energy into two others",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Increase the level of transformed energy by one",
+          },
+        ],
+    },
+    {
+      name: "Adverse Weather",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Science",
+      ],
+      page: "Mage: Awakening p146",
+      description:
+        "Create Extreme Environments of nearly any kind up to level 4.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can create weather drastically different from the local conditions",
+          },
+        ],
+    },
+    {
+      name: "Create Energy",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Science",
+      ],
+      page: "Mage: Awakening p146",
+      description:
+        "Create any type of energy form nothing, including sunlight and radiation.",
+    },
+    {
+      name: "Eradicate Energy",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Intimidation",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p146",
+      description:
+        "Explosively destroy energy, if used on a creature the spell is instantly fatal.",
+    },
+    {
+      name: "Earthquake",
+      primaryArcana:
+        {
+          arcana:
+            "Forces",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p147",
+      description:
+        "Apply damage to all structures within the affected area. Buildings made to withstand earthquakes subtract their Durability.",
+    },
+    {
+      name: "Analyze Life",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Animal Ken",
+        "Medicine",
+        "Survival",
+      ],
+      page: "Mage: Awakening p148",
+      description:
+        "Observe a creature and learn information like species, age, sex and overall health. A supernatural creature's species shows up as unknown unless the mage has studied it's kind before. Can discern amount of dots in physical attributes and any illnesses, injuries, Personal Tilts and Condition on target.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "May learn a specific Physical Attribute level, rather than just the total number of dots",
+          },
+        ],
+    },
+    {
+      name: "Cleanse the Body",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Medicine",
+        "Survival",
+      ],
+      page: "Mage: Awakening p148",
+      description:
+        "Help subject resist any toxins in her system.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The subject may make a resistance roll immediately, in addition to the normal ones from regular intervals",
+          },
+        ],
+    },
+    {
+      name: "Heightened Senses",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Empathy",
+        "Investigation",
+        "Survival",
+      ],
+      page: "Mage: Awakening p149",
+      description:
+        "Heighten desired senses. Grants bonus to perception roles.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "You can track by scent",
+          },
+        ],
+    },
+    {
+      name: "Speak With Beasts",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Animal Ken",
+        "Empathy",
+        "Survival",
+      ],
+      page: "Mage: Awakening p148",
+      description:
+        "Magically speak with a specific species of animal. Animals have limited ability to understand things around them, for example a rat may refer to a cat and vampire alike as simply a 'predator'.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "May communicate with all animals rather than only a single species",
+          },
+        ],
+    },
+    {
+      name: "Web of Life",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Investigation",
+        "Medicine",
+        "Survival",
+      ],
+      page: "Mage: Awakening p148",
+      description:
+        "Detect all forms of specified life in the spells area of effect.",
+    },
+    {
+      name: "Body Control",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Medicine",
+        "Survival",
+      ],
+      page: "Mage: Awakening p148",
+      description:
+        "Slow Breathing, Heartbeat and/or Metabolism. Up your Initiative, eliminate or increase body odors and halve healing time for bashing damage.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Gain 1/0 armor",
+          },
+          {
+            cost: [
+              {
+                value: 2,
+                type: "reach",
+              },
+            ],
+            effect:
+              "Half healing time for lethal damage",
+          },
+        ],
+    },
+    {
+      name: "Control Instincts",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Animal Ken",
+        "Intimidation",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p149",
+      description:
+        "Trigger a specific instinctual response in animals(includes humans). Subject suffers a Condition related to the desired instinct.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Control instincts of living supernatural creatures",
+          },
+        ],
+    },
+    {
+      name: "Lure and Repel",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Animal Ken",
+        "Persuasion",
+        "Survival",
+      ],
+      page: "Mage: Awakening p149",
+      description:
+        "Create a lure or repellent that works on a specific organism. Plant and bacteria have 0 resolve for the purposes of this spell.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Lured creatures may offer food or small favors a appropriate for the animal",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Lured creatures treat the subject good if a lure or bad if a repellent for the purposes of first impressions in Social maneuvering",
+          },
+        ],
+    },
+    {
+      name: "Mutable Mask",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Medicine",
+        "Stealth",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p149",
+      description:
+        "Change a subjects appearance, apparent sex, voice, smell, etc. Changes are illusionary, bio-metric devices will still pick up the truth. Cannot imitate specific people.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Can duplicate the appearance of a specific person, including fingerprints",
+          },
+        ],
+    },
+    {
+      name: "Purge Illness",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Medicine",
+        "Survival",
+      ],
+      page: "Mage: Awakening p149",
+      description:
+        "Cure yourself of an illness. Compare Potency to the illness'rating if less, reduce the illness by the difference if more, eliminate the illness.",
+    },
+    {
+      name: "Bruise Flesh",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Brawl",
+        "Intimidation",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p150",
+      description:
+        "Deal bashing damage.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Inflict an additional -1 penalty to any wound penalties the target might have",
+          },
+        ],
+    },
+    {
+      name: "Contact High",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Medicine",
+        "Occult",
+        "Science",
+      ],
+      page: "Signs of Sorcery p65",
+      description:
+        "Creates a drug that targets the nervous system. Anyone who comes into contact with the Subject is affected by this drug for one scene. The Caster determines if it increases Initiative equal to Potency or penalizes Initiative equal to Potency. The drug affects a living subject as well as any touching it.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Living subjects are Immune but still spread the drug to anything they touch",
+          },
+        ],
+    },
+    {
+      name: "Degrading the Form",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Brawl",
+        "Medicine",
+        "Survival",
+      ],
+      page: "Mage: Awakening p150",
+      description:
+        "Reduce a targets Physical Attributes, but only one.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell may effect two different Physical Attributes",
+          },
+        ],
+    },
+    {
+      name: "Honing the Form",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Medicine",
+        "Survival",
+      ],
+      page: "Mage: Awakening p150",
+      description:
+        "Raise Strength, Dexterity or Stamina, but no higher than a subjects max for these stats.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell may effect two different Physical. This effect can be applied twice so that all three attributes may be affected",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "May increase stats beyond the allowed maximum",
+          },
+        ],
+    },
+    {
+      name: "Knit",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Empathy",
+        "Medicine",
+        "Survival",
+      ],
+      page: "Mage: Awakening p150",
+      description:
+        "Heal 2 bashing damage per Potency.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "You can heal Personal Tilts such as Arm Wrack",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can heal damage done by deprivation",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Reproduce the effect of night's rest, regain a Willpower point if appropriate",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Heal one lethal per Potency instead of 2 Bashing",
+          },
+        ],
+    },
+    {
+      name: "Living Vessel",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 3,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Academics",
+        "Medicine",
+        "Persuasion",
+      ],
+      page: "Signs of Sorcery p69",
+      description:
+        "Prepare a subject under the purview of Life for the Imbue Item Attainment. The mage can use the Attainment to imbue any living subject.",
+    },
+    {
+      name: "Many Faces",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Medicine",
+        "Stealth",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p150",
+      description:
+        "Like 'Mutable Mask' only the changes are real rather than an illusion. Poor vision or other senses can be restored. Missing organs and limbs can not be restored however. You may also rearrange the subjects Physical Attributes.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Time",
+                  value: 3,
+                },
+              ],
+            effect:
+              "You can change physical age as well",
+          },
+        ],
+    },
+    {
+      name: "Steal Life Force",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Crafts",
+        "Medicine",
+        "Persuasion",
+      ],
+      page: "Signs of Sorcery p72",
+      description:
+        "This spell is cast on a mage to alter his imbument process causing the item to damage the user. The item appears to function as normal but requires Life force to function. This item deals 1 point of Lethal damage for each point of Mana spent to cast the imbued spell, if the Item runs out of Mana it deals Lethal to the user to replenish its Mana.",
+    },
+    {
+      name: "Transform Life",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Animal Ken",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p150",
+      description:
+        "Give life features normally belonging to other organisms. Gills, Claws, Senses, Etc.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The bestowed feature, if permanent, can be passed on to a creatures descendants",
+          },
+        ],
+    },
+    {
+      name: "Accelerate Growth",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Animal Ken",
+        "Medicine",
+        "Science",
+      ],
+      page: "Mage: Awakening p151",
+      description:
+        "Cause a lifeform to rapidly grow, at the end of the duration the subject will return to their actual age. If the subject exceeds its natural lifespan, it will die of old age.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "When the spell ends the subject will rapidly de-age at an even faster rate than they grew, returning to their actual age in minutes. This puts great stress on the target. They must make a Stamina roll and on a failure they will enter a coma for a number of days.",
+          },
+        ],
+    },
+    {
+      name: "Animal Minion",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Animal Ken",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p151",
+      description:
+        "The mage takes complete bodily control of a subject. Difference in gait may be noticeable to those familiair with the subject. The mage's body will be inert while this spell is active.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Target behaves more normally, as you understand the targets habits",
+          },
+        ],
+    },
+    {
+      name: "Life-Force Assault",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Brawl",
+        "Intimidation",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p152",
+      description:
+        "Deal lethal damage.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Inflict an additional -2 penalty to any wound penalties the target might have",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mana",
+                  level: 1,
+                },
+              ],
+            effect:
+              "Spend a point of Mana, deal aggravated damage",
+          },
+        ],
+    },
+    {
+      name: "Living Grimoire",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 4,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Total Arcanum dots used in the Rote + Stamina",
+      roteSkills: [
+        "Crafts",
+        "Medicine",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p85",
+      description:
+        "The Mage scribes a single rote per casting of this spell onto a living being. Casting this spell constitutes as an act of Hubris against Understanding Wisdom.",
+    },
+    {
+      name: "Mend",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Empathy",
+        "Medicine",
+        "Survival",
+      ],
+      page: "Mage: Awakening p152",
+      description:
+        "Heal 2 lethal wounds per Potency.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can erase scars",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can heal damage done by deprivation",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Reproduce the effect of night's rest, regain a Willpower point if appropriate",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can heal aggravated damage",
+          },
+        ],
+    },
+    {
+      name: "Regeneration",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Medicine",
+        "Survival",
+      ],
+      page: "Mage: Awakening p152",
+      mana: 1,
+      description:
+        "Restore lost organs or limbs.",
+    },
+    {
+      name: "Shapechanging",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Animal Ken",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p152",
+      description:
+        "Take on the form of another creature. Clothes and gear do not change with you. Instincts of the new form may need to be resisted with a Composure + Resolve roll.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Matter",
+                  value: 4,
+                },
+              ],
+            effect:
+              "Gear changes with you to fit the new form",
+          },
+        ],
+    },
+    {
+      name: "Create Life",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Medicine",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p153",
+      description:
+        "Design and create any form of life you desire. If cast with finite duration life will disappear at the end of the spell, this may count as an Act of Hubris.",
+      additionalEffects:
+        [
+          {
+            Cost: [
+              {
+                type: "Mind",
+                value: 5,
+              },
+            ],
+            effect:
+              "Give your organism a true mind as appropriate to type",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Creature can be given additional features as per 'Transform Life'",
+          },
+        ],
+    },
+    {
+      name: "Contagion",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Medicine",
+        "Occult",
+        "Science",
+      ],
+      page: "Mage: Awakening p153",
+      description:
+        "Create minor or life-threatening diseases.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Create a never before seen disease. This is likely to be an Act of Hubris as no creature in the world could have developed any defenses against it",
+          },
+        ],
+    },
+    {
+      name: "Salt the Earth",
+      primaryArcana:
+        {
+          arcana:
+            "Life",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Medicine",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p153",
+      description:
+        "Destroy life-force in an area. This Creates an Extreme Environment equal to Potency.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Individual living things that survive, will still suffer an additional -1 to any wound penalties they might have",
+          },
+        ],
+    },
+    {
+      name: "Craftsmen's Eye",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Investigation",
+        "Science",
+      ],
+      page: "Mage: Awakening p154",
+      description:
+        "Study an object for one turn to learn it's intended function. If the object has no purpose that will be revealed instead. If something prevents the object from fulfilling it's function, the spell will reveal the nature of the problem.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Learn how to use the studied object. This grants the 8-Again when using the object. Only one object can benefit from this bonus at once",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Learn all possible uses for an object",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Fate",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Name a task while casting the spell. All objects that could help you with this task will become obvious to you",
+          },
+        ],
+    },
+    {
+      name: "Detect Substance",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Investigation",
+        "Science",
+      ],
+      page: "Mage: Awakening p154",
+      description:
+        "Become aware of a chosen type of substance in the area. 'Iron', 'A knife' and 'My hunting Knife' are all valid choices.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  type: "Time",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Determine if an object has been in the area",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Forces",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Search for a specific type of electronic information",
+          },
+        ],
+    },
+    {
+      name: "Discern Composition",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Investigation",
+        "Science",
+      ],
+      page: "Mage: Awakening p154",
+      description:
+        "Become aware of an objects weight, density and the precise elements in it's makeup.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Also become aware of any objects hidden within the studied object",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "You know an object's structural weak points. Reduce Durability by spell Potency",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Space",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Know not only what an object was made of but also where the materials came from",
+          },
+        ],
+    },
+    {
+      name: "Lodestone",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Larceny",
+        "Science",
+      ],
+      page: "Mage: Awakening p154",
+      description:
+        "Choose a substance or type of object. Those objects will be drawn toward you or repelled away from you.",
+    },
+    {
+      name: "Remote Control",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Drive",
+        "Intimidation",
+      ],
+      page: "Mage: Awakening p155",
+      description:
+        "Control a mechanical object, to make it fulfill its function.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Perform more complex task while controlling the object",
+          },
+        ],
+    },
+    {
+      name: "Alchemist's Touch",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Survival",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p155",
+      description:
+        "Choose a material, you become largely immune to its deleterious effects. The material cannot inflict bashing damage and lethal damage is reduced by spell Potency. The spell does not protect against damage from a sword or gun.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Choose an additional material to be protected against",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Your immune to both the bashing and lethal, aggravated damage is reduced by Potency",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Forces",
+                  value: 2,
+                },
+              ],
+            effect:
+              "You are now also protected against the damage from the extreme temperature of a material",
+          },
+        ],
+    },
+    {
+      name: "Find the Balance",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Persuasion",
+        "Science",
+      ],
+      page: "Mage: Awakening p155",
+      description:
+        "Improve the balance and heft of an item. This grants it the 9-Again quality.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Grant a tool the 8-Again quality instead",
+          },
+        ],
+    },
+    {
+      name: "Hidden Hoard",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Larceny",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p156",
+      description:
+        "Make matter difficult to detect. Mundane attempts to locate automatically fail. Supernatural power enters a Clash of Wills.",
+    },
+    {
+      name: "Machine Invisibility",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Larceny",
+        "Science",
+        "Stealth",
+      ],
+      page: "Mage: Awakening p156",
+      description:
+        "Become invisible to mechanical sensors. Supernatural items enter a Clash of Wills.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "This spell now also works on constructs animated with magic, like zombies and golems. This triggers a Clash of Wills",
+          },
+        ],
+    },
+    {
+      name: "Shaping",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p156",
+      description:
+        "Shape liquids and gases in any form you desire in defiance of gravity.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can alter solids as well. Warped tools or weapons will have their equipment bonus reduced by potency, if reduced to 0 the object becomes useless",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "If creating or repairing an object in an extended action reduce its required successes by this spell's Potency, the number cannot fall below one",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The shaping can create an appropriate Environmental Tilt, such as Earthquake, Flooded or Howling Winds",
+          },
+        ],
+    },
+    {
+      name: "Aegis",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Crafts",
+        "Science",
+      ],
+      page: "Mage: Awakening p156",
+      description:
+        "For each level of Potency grant an object one of the following: Raise/lower ballistic Armor by 1, raise/lower general Armor by 1, raise/lower Defense penalty by 1.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The armor becomes immune to the Armor-Piercing effect",
+          },
+        ],
+    },
+    {
+      name: "Alter Conductivity",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Computer",
+        "Science",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p156",
+      description:
+        "Make an object more or less conductive to electricity.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Alter an objects conductivity to other forms of energy. Each additional type is an extra Reach",
+          },
+        ],
+    },
+    {
+      name: "Alter Integrity",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 3,
+        },
+      practice:
+        "Fraying or Perfecting",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Durability",
+      roteSkills: [
+        "Crafts",
+        "Medicine",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p156",
+      description:
+        "Increase or decrease an objects Durability.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Instead of increasing Durability by 1 increase structure by 2",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The effect is lasting",
+          },
+        ],
+    },
+    {
+      name: "Crucible",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Science",
+      ],
+      page: "Mage: Awakening p157",
+      description:
+        "Grant a tool the 8-Again for a number of turns. Valuable objects will have their Availability rating increased, this rating cannot become more than double the original rating.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "The object gains the rote quality for a number of rolls. So long as the durability last this effect can be recharged by spending more Mana",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Availability may be triple the original rating",
+          },
+        ],
+    },
+    {
+      name: "Hone the Perfected Form",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Persuasion",
+        "Science",
+      ],
+      page: "Signs of Sorcery p61",
+      mana: 1,
+      description:
+        "The mage takes an ordinary metal (iron, gold, silver, mercury, copper, tin or lead) and transmutes it into its perfected metal.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The spell may Perfect another substance like Glass or Gemstones",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Forces",
+                  value: 3,
+                },
+              ],
+            effect:
+              "May perfect fire",
+          },
+        ],
+    },
+    {
+      name: "Nigredo and Albedo",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 3,
+        },
+      practice:
+        "Fraying or Perfecting",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Brawl",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p157",
+      description:
+        "Repair or damage an objects Structure.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "When damaging ignore durability",
+          },
+        ],
+    },
+    {
+      name: "Shrink and Grow",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Durability",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Science",
+      ],
+      page: "Mage: Awakening p157",
+      description:
+        "Increase or decrease an objects size.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Life",
+                  value: 3,
+                },
+              ],
+            effect:
+              "Can be cast on living subjects, unwilling subjects may Withstand with Stamina",
+          },
+        ],
+    },
+    {
+      name: "Spell Potion",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 3,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Medicine",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p70",
+      mana: 1,
+      description:
+        "Magically alters an ingested item, making it act as a storage vessel for another spell. Once the Ingested item has been primed for holding a mage may spend a Mana to cast any other spell on the item if it uses touch/self range. The cast spell doesn't take affect until the item is ingested. May store spells up to level of Potency which don't activate until either Spell Potion is canceled, the Duration ends or the food is injested.",
+    },
+    {
+      name: "State Change",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Durability",
+      roteSkills: [
+        "Crafts",
+        "Persuasion",
+        "Science",
+      ],
+      page: "Mage: Awakening p157",
+      description:
+        "Change material one step along the path from solid to liquid to gas. This does not cause any temperature change.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "You may transform solids directly int gas and vice versa",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Forces",
+                  value: 3,
+                },
+              ],
+            effect:
+              "You may transmute matter into plasma",
+          },
+        ],
+    },
+    {
+      name: "Windstrike",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Brawl",
+        "Crafts",
+      ],
+      page: "Mage: Awakening p157",
+      description:
+        "Deal bashing damage.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Create an appropriate Environmental Tilt",
+          },
+        ],
+    },
+    {
+      name: "Wonderful Machine",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Politics",
+        "Science",
+      ],
+      page: "Mage: Awakening p157",
+      description:
+        "Integrate multiple machines into one another.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Life",
+                  value: 3,
+                },
+              ],
+            effect:
+              "Machine properties can be grafted onto a living thing or vice versa",
+          },
+        ],
+    },
+    {
+      name: "Endless Bounty",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Science",
+        "Streetwise",
+      ],
+      page: "Signs of Sorcery p66",
+      description:
+        "Never run out of small expendable items. Enchant a single item that contains a smaller expendable item. For the duration of the spell the expendable item never runs out E.g.: Money in wallet, Bullets in magazine, Gas in car tank.",
+    },
+    {
+      name: "Forge Dumanium",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Persuasion",
+      ],
+      page: "Signs of Sorcery p62",
+      mana: 1,
+      description:
+        "Combine perfected metals into a single metal called Dumanium. The object is Durability 1 and holds 1 point of Mana. Weapons made from Dumanium can spend Mana to deal aggravated Damage for a single attack.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The Spell is Lasting however this relies on all the Metals to remain perfect, should a perfected metal become mundane the alloy will collapse",
+          },
+        ],
+    },
+    {
+      name: "Forge Sophis",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Science",
+      ],
+      page: "Signs of Sorcery p62",
+      mana: 1,
+      description:
+        "Combine perfected metals into a single metal that scavenges Mana called Sophis. The object is Durability 1 and can hold 1 Mana. Potency increases this 1 for 1 for Durability and Mana.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The Spell is Lasting however this relies on all the Metals to remain perfect, should a perfected metal become mundane the alloy will collapse",
+          },
+        ],
+    },
+    {
+      name: "Forge Thaumium",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Survival",
+      ],
+      page: "Signs of Sorcery p62",
+      mana: 1,
+      description:
+        "Combine perfected metals to create Thaumium, The object is Durability 1 and holds 1 point of Mana which it spends to shield against Magic.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The Spell is Lasting however this relies on all the Metals to remain perfect, should a perfected metal become mundane the alloy will collapse",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Thaumium can protect against Death",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Thaumium can protect against Mind",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Prime",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Thaumium can protect against Prime",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Spirit",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Thaumium can protect against Spirit",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Life",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Thaumium can protect against Life",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Time",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Thaumium can protect against Time",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Forces",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Thaumium can protect against Forces",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Matter",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Thaumium can protect against Matter",
+          },
+        ],
+    },
+    {
+      name: "Ghostwall",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Occult",
+        "Stealth",
+      ],
+      page: "Mage: Awakening p158",
+      description:
+        "Turn objects intangible.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 3,
+                },
+              ],
+            effect:
+              "The object may be shifted into the Twilight, attuned to Death",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 3,
+                },
+              ],
+            effect:
+              "The object may be shifted into the Twilight, attuned to Mind",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Spirit",
+                  value: 3,
+                },
+              ],
+            effect:
+              "The object may be shifted into the Twilight, attuned to Spirit",
+          },
+        ],
+    },
+    {
+      name: "Golem",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Occult",
+      ],
+      page: "Mage: Awakening p158",
+      description:
+        "Animate a statue or other object.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 4,
+                },
+                {
+                  arcana:
+                    "Spirit",
+                  value: 4,
+                },
+              ],
+            effect:
+              "A ghost or spirit may serve as the intelligence of the golem",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 5,
+                },
+              ],
+            effect:
+              "Grant true intelligence see 'Psychic Genesis'",
+          },
+        ],
+    },
+    {
+      name: "Piercing Earth",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Brawl",
+        "Crafts",
+      ],
+      page: "Mage: Awakening p158",
+      description:
+        "Deal lethal damage.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Create an appropriate Environmental Tilt",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Deal aggravated damage",
+          },
+        ],
+    },
+    {
+      name: "Transubstantiation",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Empathy",
+        "Science",
+      ],
+      page: "Mage: Awakening p158",
+      description:
+        "Transform any type of matter into another type.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Transmute multiply substance into a single substance or vice versa",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Life",
+                  value: 4,
+                },
+              ],
+            effect:
+              "Transform matter into living things or vice versa",
+          },
+        ],
+    },
+    {
+      name: "Annihilate Matter",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Durability",
+      roteSkills: [
+        "Athletics",
+        "Intimidation",
+        "Science",
+      ],
+      page: "Mage: Awakening p158",
+      description:
+        "Destroy matter completely.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                arcana:
+                  "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spend a point of Mana, can now destroy magical objects as well",
+          },
+        ],
+    },
+    {
+      name: "Ex Nihilo",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Science",
+      ],
+      page: "Mage: Awakening p158",
+      description:
+        "Create an object or relatively uncomplicated tool out of nothing.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Create a complex machine or electronic device, like a car or smartphone",
+          },
+        ],
+    },
+    {
+      name: "Self-Repairing Machine",
+      primaryArcana:
+        {
+          arcana:
+            "Matter",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Medicine",
+        "Occult",
+      ],
+      page: "Mage: Awakening p159",
+      description:
+        "Cause a machine to repair Potency in Structure per day.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The machine heals every hour",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The machine heals every 15 minutes",
+          },
+        ],
+    },
+    {
+      name: "Know Nature",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Empathy",
+        "Science",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p159",
+      description:
+        "Determine a subject's Virtue, Vice and Mental and Social Attribute levels.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Also determine Aspirations and Obsessions",
+          },
+        ],
+    },
+    {
+      name: "Mental Scan",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Empathy",
+        "Investigation",
+        "Occult",
+      ],
+      page: "Mage: Awakening p159",
+      description:
+        "Ask storyteller questions about a subject's mental or emotional state.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Read surface thoughts for snippets of a subject's current ideas or words and phrases before they are actually spoken",
+          },
+        ],
+    },
+    {
+      name: "One Mind, Two Thoughts",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Expression",
+        "Science",
+      ],
+      page: "Mage: Awakening p159",
+      description:
+        "Perform two Mental or Social extended tasks at the same time. Neither can be a purely Physical task.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "May perform two Mental instant tasks at the same time",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "If in the Astral Realms one of the actions may be 'Physical'",
+          },
+        ],
+    },
+    {
+      name: "Perfect Recall",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Expression",
+        "Investigation",
+      ],
+      page: "Mage: Awakening p160",
+      description:
+        "Recall old memories with perfect accuracy.",
+    },
+    {
+      name: "Alter Mental Pattern",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Science",
+        "Stealth",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p160",
+      description:
+        "Add to subterfuge rolls. Supernatural powers that read surface thoughts or emotions provoke a Clash of Wills.",
+    },
+    {
+      name: "Dream Reaching",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Empathy",
+        "Medicine",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p160",
+      description:
+        "Enter a subject's dream. You can influence but not take part in the dream. Cast on self to be able to remember your own dreams.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "You can become an active part of the dream. Cast on self induces lucid dreaming",
+          },
+        ],
+    },
+    {
+      name: "Emotional Urging",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Empathy",
+        "Intimidation",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p160",
+      description:
+        "Open or close a subject's doors.",
+    },
+    {
+      name: "First Impressions",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Crafts",
+        "Socialize",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p160",
+      description:
+        "Raise or lower the first impression.",
+    },
+    {
+      name: "Incognito Presence",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Empathy",
+        "Stealth",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p160",
+      mana: 1,
+      description:
+        "The Mage hides the Subject's Psychic Presence which Prevents people form remembering their presence or looking their way. Active attempts to do so with supernatural abilities (Including active Mage sight) provoke a Clash of Wills.",
+    },
+    {
+      name: "Memory Hole",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Medicine",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p160",
+      description:
+        "Hide a specific memory forgetting it completely for the duration of the spell, One memory per Potency.",
+    },
+    {
+      name: "Mental Shield",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Intimidation",
+        "Survival",
+      ],
+      page: "Mage: Awakening p160",
+      description:
+        "Protects the Subject from Mental Attacks, Goetia Powers, Influences or Manifestations that target them.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Also Protects from Physical attacks of Goetia",
+          },
+        ],
+    },
+    {
+      name: "Narcissus' Mirror (Mind)",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p94",
+      description:
+        "The mage can reflect the mental and emotional effects of a Nimbus tilt back onto its source. Whenever the Mage is subjected to a tilt that affects a Mental or Social trait this spell provokes a Clash of Wills. If the mage wins affect the instigator of the Tilt. Can be cast if the Mage is already under the effects of a tilt to immediately create a Clash of Wills.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Life",
+                  value: 2,
+                },
+              ],
+            effect:
+              "This Spell affects all types of Nimbus Tilt",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Prime",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Affects other type of Supernatural Auras with the appropriate kinds of effects",
+          },
+        ],
+    },
+    {
+      name: "Narcissus' Mirror (Life)",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p94",
+      description:
+        "The mage can reflect the Physical effects of a Nimbus tilt back onto its source. Whenever the Mage is subjected to a tilt that affects a Physcial trait this spell provokes a Clash of Wills. If the mage wins affect the instigator of the Tilt. Can be cast if the Mage is already under the effects of a tilt to immediately create a Clash of Wills..",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Life",
+                  value: 2,
+                },
+              ],
+            effect:
+              "This Spell affects all types of Nimbus Tilt",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Prime",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Affects other type of Supernatural Auras with the appropriate kinds of effects",
+          },
+        ],
+    },
+    {
+      name: "Physic Domination",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Expression",
+        "Intimidation",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p161",
+      description:
+        "Send one word commands to a subject that they are compelled to act upon, even against their will.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "take control of a subject, forcing him to take actions against their will. These actions cannot put him serious danger however",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Force the subject to take an additional task",
+          },
+        ],
+    },
+    {
+      name: "Ritual Focus",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Empathy",
+        "Leadership?(awaiting Errata)",
+        "Persuasion",
+      ],
+      page: "Signs of Sorcery p55",
+      description:
+        "A Variant on Telepathy linking a Mage and his Subjects allowing him to guide them as they work in unison on a particular spell (see 'Teamwork', MtAw 2e p.119) Must have Scale to affect every other Awakened participant in Ritual. Secondary Actors in ritual add Potency to dice pool..",
+    },
+    {
+      name: "Soul Windows",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Empathy",
+        "Investigation",
+        "Stealth",
+      ],
+      page: "Signs of Sorcery p90",
+      description:
+        "By Splitting their senses a mage may view whats happening around their Soul Stone 360° or hears the sounds in its vicinity. This doesn't require sympathetic range.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Forces",
+                  value: 2,
+                },
+              ],
+            effect:
+              "The mage may project their voice through the stone to speak or create a hologram of themselves",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The mage experiences the Stone's surroundings with all their Senses",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "For each reach spent the Mage may split their senses to another Soul Stone",
+          },
+        ],
+    },
+    {
+      name: "Telepathy",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Crafts",
+        "Empathy",
+        "Socialize",
+      ],
+      page: "Mage: Awakening p161",
+      description:
+        "Surface thoughts of the subjects play out in the each others minds. This may grant a bonus or penalty between the subjects. A deliberate message may be send along the link.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Only thoughts that the originating subject wants to share are shared",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "All subjects have the ability to send and receive thoughts",
+          },
+        ],
+    },
+    {
+      name: "Astral Grimoire",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Total Arcanum dots used in rote",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p85",
+      mana: 1,
+      description:
+        "Scribe a Rote within ones own Oneiros, these can be cast from the Grimoire without needing to meditate to the Astral.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The Mage can scribe the grimoire within the Temenos making it available to any who travel there. These can only be cast directly from the Astral representation or with its Summoned goetia",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell's duration is lasting",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The Mage can scribe within the Anima Mundi, these don't manifest as books or scrolls but as constellations or rock formations. Figuring these out is a mystery of itself",
+          },
+        ],
+    },
+    {
+      name: "Augment Mind",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Expression",
+        "Survival",
+      ],
+      page: "Mage: Awakening p161",
+      description:
+        "Increase a Mental or Social Attribute by Potency, up to normal limits.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Divide increase between an additional Attribute.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Go above normal limits.",
+          },
+        ],
+    },
+    {
+      name: "Befuddle",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure or Resolve",
+      roteSkills: [
+        "Intimidation",
+        "Persuasion",
+        "Science",
+      ],
+      page: "Mage: Awakening p163",
+      description:
+        "Lower a Mental or Social Attributes. One Potency equal one dot to a minimum of one.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "May lower an additional Attribute per reach, dividing Potency among the options",
+          },
+        ],
+    },
+    {
+      name: "Broken Relinquishment",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p73",
+      description:
+        "This spell creates a breaking point for the subject as a way to relinquish spells without spending a willpower dot. The next act of hubris, braking point or genre equivalent by a subject of this spell suffers penalty by Potency.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The Subject of this spell immediately suffers a breaking point",
+          },
+        ],
+    },
+    {
+      name: "Clear Thoughts",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Empathy",
+        "Intimidation",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p161",
+      description:
+        "Suppress a Mental Condition or Tilt per Potency, for the Duration. Can't affect Paradox Conditions; those cause by the supernatural provoke a Clash of Wills.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "subject gains 1 Willpower.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "effect is lasting.",
+          },
+        ],
+    },
+    {
+      name: "Enhance Skill",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Expression",
+        "Survival",
+      ],
+      page: "Mage: Awakening p161",
+      description:
+        "Increase an Skill with already at least one rank by Potency, for the Duration, up to their normal limits.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Divide increase between an additional Skill.",
+          },
+          {
+            cost: [
+              {
+                value: 2,
+                type: "Reach",
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Go above normal limits.",
+          },
+        ],
+    },
+    {
+      name: "Give Me That",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Crafts",
+        "Empathy",
+        "Persuasion",
+      ],
+      page: "Signs of Sorcery p66",
+      description:
+        "The subject item evokes a concept of ownership. Those who do not Withstand the spell gain the Persistent Condition: Obsession with the object as their focus.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Space",
+                  value: 3,
+                },
+              ],
+            effect:
+              "Individuals with the Obsessed Condition to the object also gain a Strong sympathetic link to it for the spells duration",
+          },
+        ],
+    },
+    {
+      name: "Goetic Summons",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Persuasion",
+        "Socialize",
+        "Occult",
+      ],
+      page: "Mage: Awakening p162",
+      description:
+        "Call the nearest Goetia; one personally known, specified by type of Resonance, or the nearest generally.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Spirit",
+                  value: 2,
+                },
+                {
+                  arcana:
+                    "Death",
+                  value: 2,
+                },
+              ],
+            effect:
+              "it gains the Materialized Condition for the duration.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Also creates the Open Condition.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "May give it a one-word command.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "may give a complex but single task command.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "summon a Goetia from the subject's Oneiros at a place one could reach the Astral. Must spend the Mana it would take to enter.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "summon from the Temenos.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 3,
+              },
+            ],
+            effect:
+              "summon from Anima Mundi.",
+          },
+        ],
+    },
+    {
+      name: "Imposter",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Persuasion",
+        "Stealth",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p162",
+      description:
+        "Cause the subject to believe the caster is someone else. Manipulation + Subterfuge every minute if mimicking a specific person. Can't replicate Social Merits; any Doors opened benefit the assumed identity.",
+    },
+    {
+      name: "Psychic Assault",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Intimidation",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p162",
+      description:
+        "Deal Bashing equal to Potency, mimicking a stroke.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "give target -1 to Mental rolls.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "give target -2 to Mental rolls.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 3,
+              },
+            ],
+            effect:
+              "give target -3 to Mental rolls.",
+          },
+        ],
+    },
+    {
+      name: "Sleep of the Just",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Academics",
+        "Athletics",
+        "Occult",
+      ],
+      page: "Mage: Awakening p162",
+      description:
+        "Control sleep cycle and dreams. Anything else entering or influencing dreams provokes Clash of Wills.",
+    },
+    {
+      name: "Supernal Translation",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Empathy",
+        "Expression",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p28",
+      description:
+        "Allows the subject to comprehend and translate High Speech as they hear or read it as if they had up Mage Sight. Does not allow them to Speak or Write it back and is still subject to Dissonance and Quiescence.",
+    },
+    {
+      name: "Read the Depths",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Empathy",
+        "Investigation",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p162",
+      description:
+        "Read memories and ideas from target's subconscious.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "modify one of the memories read, for the Duration.",
+          },
+        ],
+    },
+    {
+      name: "Universal Language",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Investigation",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p162",
+      description:
+        "Target can understand and translate any language they are able to perceive: spoken, written, symbols, encoded signals, body language, hand symbols, or thoughts. Does not allow non-Awakened to understand High Speech.",
+    },
+    {
+      name: "Haunted Grimoire",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 4,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Total Arcanum dots of Rote + Rank",
+      roteSkills: [
+        "Crafts",
+        "Intimidation",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p86",
+      mana: 1,
+      description:
+        "The Mage binds a Goetia to a grimoire, writing its essence into the vessel's pattern. This doesn't host the Goetia's numina or influences nor does it have an essence pool. The Grimoire gains the Open and Resonant Conditions. When cast the spell is increased by the Goetia Rank for Primary Factor however the Goetia has a chance to escape with a Clash of Wills to the caster. When someone memorizes a Rote the Goetia has a chance to possess them using a Clash of Wills. This spell is a Wisdom Sin against Understanding.",
+    },
+    {
+      name: "Possession",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Medicine",
+        "Persuasion",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p165",
+      description:
+        "Can possess the subject inflicting the Possessed Condition(see p. 261).",
+    },
+    {
+      name: "Gain Skill",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Science",
+      ],
+      page: "Mage: Awakening p163",
+      description:
+        "Increase a Skill by Potency. This cannot go above the normal maximum.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Divide the increase between an additional Skill.",
+          },
+          {
+            cost: [
+              {
+                value: 1,
+                type: "Reach",
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Go above normal limits.",
+          },
+        ],
+    },
+    {
+      name: "Goetic Evocatuion",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Rank of Entity",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Persuasion",
+      ],
+      page: "Signs of Sorcery p90",
+      description:
+        "May convert pieces of a persons Psyche from a soul stone into a Goetia.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The Mage may extract the Goetia directly into his own Oneiros",
+          },
+        ],
+    },
+    {
+      name: "Hallucination",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Academics",
+        "Persuasion",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p163",
+      description:
+        "Create an illusion that affects all senses but touch.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The illusion can now be 'touched' by the subject. It cannot harm or attack.",
+          },
+        ],
+    },
+    {
+      name: "Mind Flay",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Expression",
+        "Intimidation",
+        "Science",
+      ],
+      page: "Mage: Awakening p164",
+      description:
+        "Deal lethal damage.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Cause Insane Tilt",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Deal aggravated damage",
+          },
+        ],
+    },
+    {
+      name: "Psychic Projection",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Academics",
+        "Occult",
+        "Socialize",
+      ],
+      page: "Mage: Awakening p164",
+      description:
+        "Astral project into Twilight or into somebody's dreams.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Spirit",
+                  value: 2,
+                },
+              ],
+            effect:
+              "May project into the Shadow. Withstand is Gauntlet rating.",
+          },
+        ],
+    },
+    {
+      name: "Psychic Reprogramming",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Intimidation",
+        "Medicine",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p164",
+      description:
+        "For each point of Potency change one of the followin: Virtue, Vice, Short-Term Aspiration, Long-Term Aspiration, Obsession, a non-Physical Persistent Condition, or may move one dot between two Social Skills, or between two Mental Skills.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "May also move between two Social Attributes, or two Mental Attributes.",
+          },
+        ],
+    },
+    {
+      name: "Scribe Daimonomikon",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 4,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rank of Attainment + (10 - Caster's Gnosis)",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p87",
+      mana: 1,
+      description:
+        "Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell's Duration is Lasting",
+          },
+        ],
+    },
+    {
+      name: "Terrorize",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Expression",
+        "Intimidation",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p164",
+      description:
+        "Cause the Insensate Tilt for the duration or until it's resolved.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Inflict Broken Condition instead",
+          },
+        ],
+    },
+    {
+      name: "Amorality",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Crafts",
+        "Empathy",
+        "Expression",
+      ],
+      page: "Mage: Awakening p164",
+      description:
+        "Remove Virtue or Vice. Without Virtue the subject regains two Willpower for indulging Vice. Without Vice the subject cannot engage in any activity that would be a breaking point or Act of Hubris.",
+    },
+    {
+      name: "No Exit",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Expression",
+        "Persuasion",
+        "Science",
+      ],
+      page: "Mage: Awakening p164",
+      description:
+        "For the duration of the spell the subject is in a catatonic state. Reading of the subjects mind or memory reveals this spell.",
+    },
+    {
+      name: "Mind Wipe",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Academics",
+        "Intimidation",
+        "Occult",
+      ],
+      page: "Mage: Awakening p164",
+      description:
+        "Remove large portions of the subjects memories, inflicts the Amnesia Tilt for the duration of the spell. You can affect one month of time per level Potency. You can specify what portions are forgotten.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "May specify what memories are erased, rather than just erasing a single span of time.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The effect is Lasting",
+          },
+        ],
+    },
+    {
+      name: "Psychic Genesis",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Expression",
+        "Science",
+      ],
+      page: "Mage: Awakening p165",
+      description:
+        "Create a self-aware intelligence. This is a Rank 1 Goetia in Twilight.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The entity works as a sleepwalker for the purposes of assisting ritual casting.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Goetia is Rank 2",
+          },
+        ],
+    },
+    {
+      name: "Social Networking",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Persuasion",
+        "Politics",
+        "Socialize",
+      ],
+      page: "Mage: Awakening p165",
+      description:
+        "For every level of Potency, gain one dot in one of the following Merits: Allies, Contacts or Status.",
+    },
+    {
+      name: "Dispel Magic",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Arcanum rating of the subject spell’s caster",
+      roteSkills: [
+        "Athletics",
+        "Intimidation",
+        "Occult",
+      ],
+      page: "Mage: Awakening p165",
+      description:
+        "Temporarily suppress or destroy an active spell.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Fate",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Selectively suppress spell",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Make the effect Lasting",
+          },
+        ],
+    },
+    {
+      name: "Nimbus Tuning",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Empathy",
+        "Investigation",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p94",
+      description:
+        "The mage can tune in more attentively to any Signature Nimbus he scrutinizes with Focused Mage sight. For Each potency learn one of the following: Gnosis, Wisdom, Virtue/Vice, An Act of Hubris resulting from cast magic, An Obsession related to the remaining Magic, Whether the Magic resulted in Paradox.",
+    },
+    {
+      name: "Pierce Deception",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Investigation",
+        "Medicine",
+        "Occult",
+      ],
+      page: "Mage: Awakening p165",
+      description:
+        "See through falsehoods magical and mundane.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Get a sense of the actual truth",
+          },
+        ],
+    },
+    {
+      name: "Sacred Geometry",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Occult",
+        "Survival",
+      ],
+      page: "Mage: Awakening p166",
+      description:
+        "Reveal ley lines and nodes.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Reveal Hallows",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 1,
+                },
+                {
+                  arcana:
+                    "Spirit",
+                  value: 1,
+                },
+              ],
+            effect:
+              "See Avernian Gates or Loci as well.",
+          },
+        ],
+    },
+    {
+      name: "Scribe Grimoire",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Total Arcanum dots of all Arcana used in the spell being scribed",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Occult",
+      ],
+      page: "Mage: Awakening p166, Signs of Sorcery p83",
+      description:
+        "Create a Grimoire full of Rotes or transcribe it from one medium to another.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Make the Grimoire Lasting",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Forces",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Transcribe the grimoire without needed equipment.",
+          },
+        ],
+    },
+    {
+      name: "Shared Mage Sight",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Expression",
+        "Investigation",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p28",
+      description:
+        "Share your Mage sight with another Mage. (Costs 1 Mana per Arcanum per subject, select using additional effects) .",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Prime",
+                  value: 4,
+                },
+              ],
+            effect:
+              "Can be used on a Sleepwalker under the effects of Apocalypse",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 1,
+                },
+              ],
+            cost: [
+              {
+                type: "Mana",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Share Mind Mage Sight",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Time",
+                  value: 1,
+                },
+              ],
+            cost: [
+              {
+                type: "Mana",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Share Time Mage Sight",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Space",
+                  value: 1,
+                },
+              ],
+            cost: [
+              {
+                type: "Mana",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Share Space Mage Sight",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Forces",
+                  value: 1,
+                },
+              ],
+            cost: [
+              {
+                type: "Mana",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Share Forces Mage Sight",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Matter",
+                  value: 1,
+                },
+              ],
+            cost: [
+              {
+                type: "Mana",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Share Matter Mage Sight",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Life",
+                  value: 1,
+                },
+              ],
+            cost: [
+              {
+                type: "Mana",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Share Life Mage Sight",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 1,
+                },
+              ],
+            cost: [
+              {
+                type: "Mana",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Share Death Mage Sight",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Prime",
+                  value: 1,
+                },
+              ],
+            cost: [
+              {
+                type: "Mana",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Share Prime Mage Sight",
+          },
+        ],
+    },
+    {
+      name: "Supernal Signature",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Expression",
+        "Intimidation",
+        "Politics",
+      ],
+      page: "Signs of Sorcery p93",
+      description:
+        "The Mage flares her Immediate Nimbus to imprint her signature on a subject, The signature reflects her Shadow Name and lasts for the Duration of the spell. Anyone who Studies the nimbus under focused mage sight can not only sense the details of the Nimbus but the Casters Supernal Identity. This moves the Caster one impression level up the Social Maneuvering unless the viewer succeeds a Resolve + Composure - Potency roll.",
+    },
+    {
+      name: "Supernal Vision",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Empathy",
+        "Occult",
+        "Survival",
+      ],
+      page: "Mage: Awakening p166",
+      description:
+        "Perceive the Supernal properties of a subject.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Perceive the non-Supernal magical properties of a subject",
+          },
+        ],
+    },
+    {
+      name: "Word of Command",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Craft",
+        "Occult",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p166",
+      description:
+        "Bypass triggers to activate magical effects of Prime arcana.",
+      additionalEffects:
+        [
+          {
+            requirements:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Activate magical effects and objects created by Mind arcana",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Matter",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Activate magical effects and objects created by Matter arcana",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Space",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Activate magical effects and objects created by Space arcana",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Forces",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Activate magical effects and objects created by Forcesarcana",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Time",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Activate magical effects and objects created by Time arcana",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Life",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Activate magical effects and objects created by Life arcana",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Activate magical effects and objects created by Death arcana",
+          },
+        ],
+    },
+    {
+      name: "As Above, So Below",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Occult",
+        "Politics",
+      ],
+      page: "Mage: Awakening p166",
+      description:
+        "Empower Yantras with 9-Again on spellcasting rolls.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Make it 8-again",
+          },
+        ],
+    },
+    {
+      name: "Cloak Nimbus",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Politics",
+        "Stealth",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p167",
+      description:
+        "Veil Nimbus and emotional state of auras. Attempts to see are subject to a Clash of Wills. Immediate Nimbus does not flare unless the caster chooses to. Signature Nimbus viewed by Mage Sight provokes Clash of Wills. Flaring or imprinting your Nimbus will immediately end this spell.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Make your Nimbus appear lesser. For every Reach you may lower a level of Gnosis to a desired lower false Trait value",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Make your Nimbus appear lesser. For every Reach you may lower a level of Mana to a desired lower false Trait value",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Make your Nimbus appear lesser. For every Reach you may lower a level of Arcanum to a desired lower false Trait value",
+          },
+        ],
+    },
+    {
+      name: "Fractured Grimoire",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Investigation",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p84",
+      mana: 1,
+      description:
+        "The mage copies one whole grimoire into two or more disparate parts that individually mean nothing. Only someone with all parts may use the rotes within the Grimoire.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                value: 1,
+                type: "Reach",
+              },
+            ],
+            effect:
+              "The mage may fracture the Grimoire into as many pieces as she wants.",
+          },
+        ],
+    },
+    {
+      name: "Invisible Runes",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Expression",
+        "Intimidation",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p167",
+      description:
+        "Leave message in High Speech only visible to Mage Sight. Alteration or overwriting of these messages provokes a Clash of Wills.",
+    },
+    {
+      name: "Light Under a Bushel",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Empathy",
+        "Investigation",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p28",
+      description:
+        "Adds Mages Potency to the number of rolls before Mages Nimbus leaks into a mystery.",
+    },
+    {
+      name: "Nimbus Forgery",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Expression",
+        "Larceny",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p94",
+      description:
+        "Once a Mage has scrutinized an Immediate or Signature Nimbus with Focused mage sight she may cast this spell to disguise her own Nimbus as the Scrutinized one. If its the Immediate Nimbus it copies the Tilts of the Forged one instead of her own, if Signature nimbus any spell left behind holds the Forged one instead of her own until this spells duration ends. Any attempt to pierce the deception results with a Clash of Wills.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The Mage Forges all three types of nimbus with one casting even if she's only scrutinized one.",
+          },
+        ],
+    },
+    {
+      name: "Path to Jerusalem",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Opacity",
+      roteSkills: [
+        "Expression",
+        "Larceny",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p28",
+      description:
+        "Add Spell's Potency to the Opacity of the Subject Mystery.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Every Reach spent allows mage to plant 1 falsehood of Surface or Deep information. Recognizing this is a Clash of Wills when focused on with Focused Mage Sight.",
+          },
+        ],
+    },
+    {
+      name: "Supernal Veil",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Subterfuge",
+        "Survival",
+      ],
+      page: "Mage: Awakening p168",
+      description:
+        "Veil supernatural phenomenon including spells. Peripheral Mage Sight will fail to detect, active attempts cause a Clash of Wills.",
+    },
+    {
+      name: "Sustain Nimbus",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 1,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Expression",
+        "Investigation",
+        "Survival",
+      ],
+      page: "Signs of Sorcery p93",
+      description:
+        "The mage casts this on a Signature Nimbus she's studied under Focused Mage Sight. Rather than fading like normal the Nimbus persists for the Duration of the spell, Once the Duration expires it fades at its usual rate.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Duration is Lasting",
+          },
+        ],
+    },
+    {
+      name: "Wards and Signs",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Survival",
+      ],
+      page: "Mage: Awakening p168",
+      description:
+        "When subject is target of a spell apply Potency as Withstand rating. Spells used near but not directly at the target are not Withstood by this spell.",
+    },
+    {
+      name: "Words of Truth",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Expression",
+        "Intimidation",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p168",
+      description:
+        "All subjects of the spell can hear and understand the caster regardless of distance, noise or language barriers. Subjects feel what the mage says is true, but this effect only works on statements the mage knows are true. May remove one Door or improve impression level by one per Potency.",
+    },
+    {
+      name: "Aetheric Winds",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Expression",
+        "Occult",
+      ],
+      page: "Mage: Awakening p168",
+      description:
+        "Attack with shrieking aetheric wind.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Create Heavy Winds Environmental Tilt",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Destroy target's Mana instead of dealing damage",
+          },
+        ],
+    },
+    {
+      name: "Camera Obscura",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Craft",
+        "Expression",
+        "Science",
+      ],
+      page: "Signs of Sorcery p28",
+      mana: 1,
+      description:
+        "This spell enchants a Camera, video recorder or similar device and allows it to record Supernal Energies allowing a mage to study the recordings using Active and Focused mage sight.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "1 Mana to make the recordings Lasting",
+          },
+        ],
+    },
+    {
+      name: "Channel Mana",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Occult",
+        "Politics",
+        "Socialize",
+      ],
+      page: "Mage: Awakening p168",
+      description:
+        "Move Mana equal to Potency between vessels(mages, Hallows, etc). This cannot exceed Gnosis-derived the Mana per turn limit though.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Ignore Mana per turn limit for this spell",
+          },
+        ],
+    },
+    {
+      name: "Cleanse Pattern",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Investigation",
+        "Occult",
+        "Stealth",
+      ],
+      page: "Mage: Awakening p168",
+      description:
+        "Remove the dramatic failure of a focused Mage Sight Revelation. This spell will also remove a mage's Signature Nimbus form the subject.",
+    },
+    {
+      name: "Display of Power",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Brawl",
+        "Occult",
+        "Socialize",
+      ],
+      page: "Mage: Awakening p168",
+      description:
+        "Imagos become visible to all forms of Active Mage Sight.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "All attempts to Counterspell gain the Rote Quality",
+          },
+          {
+            requirements:
+              [
+                {
+                  arcana:
+                    "Fate",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Make clauses of fae Contracts visible.",
+          },
+        ],
+    },
+    {
+      name: "Ephemeral Enchantment",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Weaponry",
+      ],
+      page: "Mage: Awakening p169",
+      description:
+        "Subject becomes solid to any and all Twilight entities.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+              {
+                type: "Mana",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "If the subject is a weapon it will inflict aggravated damage to one specified Twilight entity. Every additional entity costs one Mana",
+          },
+        ],
+    },
+    {
+      name: "Geomancy",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Expression",
+        "Occult",
+      ],
+      page: "Mage: Awakening p169",
+      description:
+        "Move ley lines within the area of effect. May also change the Resonance Keyword of a Node.",
+    },
+    {
+      name: "Imbue Room",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Larceny",
+        "Occult",
+        "Science",
+      ],
+      page: "Signs of Sorcery p69",
+      description:
+        "Allows a Mage to prepare a room or space for the Imbue Item attainment. Unlike an object the room does not have Mana storage so all Mana must be spent by the user of the Imbued room.",
+    },
+    {
+      name: "Mana Battery",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p70",
+      description:
+        "Allows a Mage to prime an item to store Mana, The mage casts the spell on a subject prior to using the Attainment Imbue Item. The subject is Primed to accept a Mana pool but not a spell, the Number of successes necessary to imbue the item is equal to the Mana Pool imbued within. An Item created this way can be used to cast spells without using a Mages own Mana, and can be refilled with Mana using the spell Channel Mana.",
+    },
+    {
+      name: "Platonic Form",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Crafts",
+        "Expression",
+      ],
+      page: "Mage: Awakening p169",
+      mana: 1,
+      description:
+        " Create a simple Tass object or tool of Size 5 or less from Mana. Durability is 1 and contains one Mana. Potency may be allocated to the following effects: Increase Durability by +1, Increase Mana capacity by +1, If a tool add +1 equipment bonus though each use of the tool now uses one up Mana. When all Mana is used up the object crumbles. If the spell expires any unused Mana will be lost.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "If a tool it gains the 8-Again",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Effect is Lasting(Still crumbles if all Mana is expended or absorbed)",
+          },
+        ],
+    },
+    {
+      name: "Primary Subject",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p72",
+      mana: 1,
+      description:
+        "This spell alters the imbument process, creating an item that will always target the user. The subject of the spell must be a mage.",
+    },
+    {
+      name: "Reveal Marks",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 2,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Investigation",
+      ],
+      page: "Signs of Sorcery p74",
+      description:
+        "You may discern all signature Nimbuses associated with the Subject, This spell reduces the difficulty to Focused Mage Sight to scrutinize the subject for a signature Nimbus and reveals all Nimbuses associated with the subject. Add Potency as bonus die to reveal them.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Add bonus dice equal to Potency to Clash of Wills to reveal an obscured Signature Nimbus",
+          },
+        ],
+    },
+    {
+      name: "Scribe Palimpsest",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rotes Total Arcanum dots +1",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p84",
+      mana: 1,
+      description:
+        "Like 'Scribe Grimoire' this spell gives physical form to a single rote's symbols using a Grimoire that has had its contents erased, scrubbed, scribbled out, painted over or otherwise made unreadable. The Storyteller chooses one Arcanum when the character casts this spell. Whenever a character later casts the rote from the completed Grimoire, it acts as though it incorporated dots of the chosen Arcanum equal to this spell’s Potency, creating unpredictable blended effects..",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "The spell's Duration is Lasting",
+          },
+        ],
+    },
+    {
+      name: "Spirit Vessel",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resistance",
+      roteSkills: [
+        "Academics",
+        "Intimidation",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p69",
+      description:
+        "Prepare a Spirit for the Imbue Item Attainment. The mage must either cast the spell through the Gauntlet or the spirit must be Manifested. The subject automatically withstands the casting.",
+    },
+    {
+      name: "Steal Mana",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Expression",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p72",
+      mana: 1,
+      description:
+        "This spell alters the imbument process resulting in an item that siphons its users Mana. When under this spell when Imbuing an item you may set a Mana capacity to the item, instead of imbuing it with that much Mana it steals it from its user. When someone goes to activate the spell it will steal mana equal to capacity, should it attempt to take more than its capacity the leftover Mana dissipates into the atmosphere. If the user doesn't have enough Mana it deals Bashing damage for each Mana it cannot siphon.",
+    },
+    {
+      name: "Stealing Fire",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Expression",
+        "Larceny",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p168",
+      description:
+        "Temporarily turn Sleeper into a Sleepwalker. Breaking points from magic will hit only when the spell expires.",
+    },
+    {
+      name: "Stored Spell",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p70",
+      description:
+        "A Mage may make an item capable of holding a spell until later activation similar to the Attainment Imbue Item. Once this spell is in effect a mage may spend a Mana to cast any other spell on the item that uses touch/self range, which is contained and unactivated. Stored Spell may store spells up to its level in Potency. These spells don't activate until someone Spends a point of Mana to activate the spell, Stored Spell is canceled, The duration of Stored Spell ends or the Duration of the stored spells end.",
+    },
+    {
+      name: "Apocalypse",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Occult",
+        "Persuasion",
+        "Socialize",
+      ],
+      page: "Mage: Awakening p169",
+      description:
+        "Grant a Sleeper the ability to see what a Mage sees.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                value: 1,
+                type: "Reach",
+              },
+            ],
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 1,
+                },
+              ],
+            effect:
+              "add Mind Arcanum included in granted Sight.",
+          },
+          {
+            cost: [
+              {
+                value: 1,
+                type: "Reach",
+              },
+            ],
+            requirement:
+              [
+                {
+                  arcana:
+                    "Space",
+                  value: 1,
+                },
+              ],
+            effect:
+              "add Space Arcanum included in granted Sight.",
+          },
+          {
+            cost: [
+              {
+                value: 1,
+                type: "Reach",
+              },
+            ],
+            requirement:
+              [
+                {
+                  arcana:
+                    "Time",
+                  value: 1,
+                },
+              ],
+            effect:
+              "add Time Arcanum included in granted Sight.",
+          },
+          {
+            cost: [
+              {
+                value: 1,
+                type: "Reach",
+              },
+            ],
+            requirement:
+              [
+                {
+                  arcana:
+                    "Forces",
+                  value: 1,
+                },
+              ],
+            effect:
+              "add Forces Arcanum included in granted Sight.",
+          },
+          {
+            cost: [
+              {
+                value: 1,
+                type: "Reach",
+              },
+            ],
+            requirement:
+              [
+                {
+                  arcana:
+                    "Prime",
+                  value: 1,
+                },
+              ],
+            effect:
+              "add Prime Arcanum included in granted Sight.",
+          },
+          {
+            cost: [
+              {
+                value: 1,
+                type: "Reach",
+              },
+            ],
+            requirement:
+              [
+                {
+                  arcana:
+                    "Matter",
+                  value: 1,
+                },
+              ],
+            effect:
+              "add Matter Arcanum included in granted Sight.",
+          },
+          {
+            cost: [
+              {
+                value: 1,
+                type: "Reach",
+              },
+            ],
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 1,
+                },
+              ],
+            effect:
+              "add Death Arcanum included in granted Sight.",
+          },
+          {
+            cost: [
+              {
+                value: 1,
+                type: "Reach",
+              },
+            ],
+            requirement:
+              [
+                {
+                  arcana:
+                    "Life",
+                  value: 1,
+                },
+              ],
+            effect:
+              "add Life Arcanum included in granted Sight.",
+          },
+        ],
+    },
+    {
+      name: "Celestial Fire",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Expression",
+        "Occult",
+      ],
+      page: "Mage: Awakening p170",
+      description:
+        "Attack spell inflict Lethal equal to Potency.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell ignites flammable object in the scene",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell deals aggravated damage",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "May destroy target's Mana instead of dealing damage, spend Potency between regular and Mana damage",
+          },
+        ],
+    },
+    {
+      name: "Destroy Tass",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Durability",
+      roteSkills: [
+        "Brawl",
+        "Intimidation",
+        "Occult",
+      ],
+      page: "Mage: Awakening p170",
+      description:
+        "Successful casting destroys Tass. Mana form the tass is not destroyed but released into the world likely to the nearest Hallow.",
+    },
+    {
+      name: "Hallow Dance",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Hallow Rating",
+      roteSkills: [
+        "Expression",
+        "Occult",
+        "Survival",
+      ],
+      page: "Mage: Awakening p170",
+      description:
+        "Suppress an active Hallow or awaken a dormant one. Rousing requires Potency equal to the Hallow's rating. Dampening reduces the Hallow's dot rating by Potency, if it falls to zero or less the Hallow is rendered dormant.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "The effect is Lasting",
+          },
+        ],
+    },
+    {
+      name: "Primal Transfer",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Crafts",
+        "Empathy",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p71",
+      description:
+        "This allows a Mage to transfer spell control of a spell they've cast to another mage. The spell transfers Spells up to Potency from Caster to Subject. Once the Duration ends control returns to the Caster.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "If Primal Transfer is Imbued into an item with this effect spell control is passed to the user of the Item allowing the user to assign reach and reassign spell factors",
+          },
+        ],
+    },
+    {
+      name: "Scribe Daimonomikon",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rank of Attainment + (10 - Caster's Gnosis)",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p87",
+      mana: 1,
+      description:
+        "Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell's Duration is Lasting",
+          },
+        ],
+    },
+    {
+      name: "Supernal Dispellation",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Arcanum rating of the subject spell’s caster",
+      roteSkills: [
+        "Athletics",
+        "Intimidation",
+        "Occult",
+      ],
+      page: "Mage: Awakening p170",
+      description:
+        "Success suppresses target spell for Supernal Dispellations Duration.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  type: "Fate",
+                  value: 1,
+                },
+              ],
+            effect:
+              "Selectively suppress spell",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Make the effect Lasting",
+          },
+        ],
+    },
+    {
+      name: "Transfer Soul Stone",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Persuasion",
+      ],
+      page: "Signs of Sorcery p91",
+      description:
+        "May transfer a Soul Stone from one object to another of size 2 or below.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "This spell is Lasting",
+          },
+        ],
+    },
+    {
+      name: "Blasphemy",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Hallow Rating, if applicable",
+      roteSkills: [
+        "Athletics",
+        "Occult",
+        "Survival",
+      ],
+      page: "Mage: Awakening p170",
+      description:
+        "Sever the connection to the Supernal in an area.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Make the effect Lasting",
+          },
+        ],
+    },
+    {
+      name: "Create Truth",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Hallow Rating",
+      roteSkills: [
+        "Expression",
+        "Occult",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p170",
+      description:
+        "Create Hallow with rating equal to Potency, Hallows cannot have a rating above 5. Costs 5 mana per Potency. (Add mana using Additional Effects).",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Mana",
+                value: 5,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Costs 5 Mana per point of potency",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+              {
+                type: "Mana",
+                value: 5,
+              },
+            ],
+            effect:
+              "Effect is Lasting",
+          },
+        ],
+    },
+    {
+      name: "Eidolon",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Crafts",
+        "Occult",
+      ],
+      page: "Mage: Awakening p171",
+      description:
+        "Like 'Platonic Form' but can create animate Tass. May spend Potency on an additional effect: Grand the mage a dot of the Retainer Merit. Construct will obey it's owners command, any mage can claim ownership by marking it with his Nimbus.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Forces",
+                  value: 3,
+                },
+              ],
+            effect:
+              "The Construct is not Obviously Magical",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 5,
+                },
+              ],
+            effect:
+              "The Construct may be given a mind of its own. Pg. 165 for details",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The effect is Lasting, Tass still crumbles if all it's mana is spend",
+          },
+        ],
+    },
+    {
+      name: "Forge Purpose",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Empathy",
+        "Expression",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p171",
+      description:
+        "Subject gains one of the caster's Obsessions. If subject is a mage already possessing the maximum number of Obsessions this spell causes a Clash of Wills. If successful replace one of these Obsessions.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can grant a wholly new Obsession",
+          },
+        ],
+    },
+    {
+      name: "Word of Unmaking",
+      primaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Merit rating or Durability",
+      roteSkills: [
+        "Intimidation",
+        "Occult",
+        "Weaponry",
+      ],
+      page: "Mage: Awakening p171",
+      description:
+        "Destroy a magical item, but not artifacts.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Item explodes violently, roll the item Merit rating or Durability. Anyone within 1 yard per dot suffers lethal damage per success",
+          },
+        ],
+    },
+    {
+      name: "Correspondence",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Empathy",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p172",
+      description:
+        "Learn one of subjects sympathetic links per Potency. The oldest and strongest are revealed first. If the link is nearby you will learn it't exact location too.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "You can follow a link to it's other end.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Learn the emotional aspect of the connection. Connection 'My childhood home' may carry notes of comfort or fear depending on the subject.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Specify what links you want to learn. The answer comes form the subjects perspective.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "If used on a keyed spell or iris this spell can learn the key.",
+          },
+        ],
+    },
+    {
+      name: "Ground Eater",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Athletics",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p173",
+      description:
+        "Add or reduce Speed by Potency. Speed cannot go below 1.",
+    },
+    {
+      name: "Isolation",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Academics",
+        "Intimidation",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p173",
+      description:
+        "Any attempt to interact with other people costs a Willpower point. Even then, dice pools are penalized by Potency. Prolonged exposure to spell (a day per point of subject's Composure) may cause breaking points or Conditions like Shaken or Spooked.",
+    },
+    {
+      name: "Locate Object",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Empathy",
+        "Occult",
+        "Science",
+      ],
+      page: "Mage: Awakening p173",
+      description:
+        "Can find the subject in spell area.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can track the subject even if it leaves the area.",
+          },
+        ],
+    },
+    {
+      name: "The Outward and Inward Eye",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Firearms",
+        "Investigation",
+        "Occult",
+      ],
+      page: "Mage: Awakening p174",
+      description:
+        "Gain 360 degree vision and hearing. All attempts to ambush the character fail, or in the case of exceptional camouflage or distraction a chance die. Finally all penalties due to range, cover or concealment(but not darkness or other poor visibility situations) are reduced by Potency..",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Can see through warps or shortcuts in Space. This includes Distortion Irises, additional Arcana may allow sight into other types of Irises, this is at Storyteller's discretion",
+          },
+        ],
+    },
+    {
+      name: "Borrow Threads",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Sympathy",
+      roteSkills: [
+        "Larceny",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p174",
+      description:
+        "Allows the transfer of a number of sympathetic connections between the caster and the subject(s) of the spell equal to potency. The caster must be aware of the links, either through other magic or knowledge of the subject.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The caster may also transfer connections between subjects affected without being involved in the transfer.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The caster may copy connections instead of transferring them.",
+          },
+        ],
+    },
+    {
+      name: "Break Boundary",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Larceny",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p174",
+      description:
+        "Allows the subject to slip past an obstacle that is obstructing a path or similar restriction of movement.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The subject can fit through narrow or restrictive passageways they couldn't normally fit through.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Subjects unable to move can pass through obstructions, appearing on the other side.",
+          },
+        ],
+    },
+    {
+      name: "Lying Maps",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Academics",
+        "Politics",
+        "Survival",
+      ],
+      page: "Mage: Awakening p174",
+      description:
+        "Makes a subject certain that a path of the caster's choosing is the correct path to a destination.",
+    },
+    {
+      name: "Scrying",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Computers",
+        "Occult",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p174",
+      description:
+        "Allows the caster to remotely view a distant location, with varying effects depending on the type of Sympathetic connection. Spells can also be cast on subjects as if one were viewing them remotely. The scrying window may be invisible or visible to everyone in the vicinity.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Fate",
+                  value: 2,
+                },
+              ],
+            effect:
+              "The caster can select specific people who can see the scrying window.",
+          },
+        ],
+    },
+    {
+      name: "Secret Door",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Stealth",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p175",
+      description:
+        "Allows the caster to hide a passageway from mundane perception, invoking Clash of Wills against magical perception.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "A Key may be specified to allow entry.",
+          },
+        ],
+    },
+    {
+      name: "Veil Sympathy",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Sympathy",
+      roteSkills: [
+        "Politics",
+        "Subterfuge",
+        "Survival",
+      ],
+      page: "Mage: Awakening p175",
+      description:
+        "Conceals one of the subject's sympathetic connections.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "May make the subject appear to have a nonexistent connection.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Prevents the connection from being used as a Sympathetic Yantra.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The caster may suppress all of the subject's connections.",
+          },
+        ],
+    },
+    {
+      name: "Ward",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Subterfuge",
+        "Weaponry",
+      ],
+      page: "Mage: Awakening p176",
+      description:
+        "Prevents space from being manipulated in an area.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The caster may specify a Key that can allow the manipulation of space.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "The caster may ward an Iris.",
+          },
+        ],
+    },
+    {
+      name: "Ban",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Intimidation",
+        "Science",
+        "Stealth",
+      ],
+      page: "Mage: Awakening p176",
+      description:
+        "Cuts an area off from the outside world, including light, sound, and air.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Exclude or only ban Mind phenomena.",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Space",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Exclude or only ban Space phenomena.",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Matter",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Exclude or only ban Matter phenomena.",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Forces",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Exclude or only ban Force phenomena.",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Time ",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Exclude or only ban Time phenomena.",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Prime",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Exclude or only ban Prime phenomena.",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Life",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Exclude or only ban Life phenomena.",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Exclude or only ban Death phenomena.",
+          },
+        ],
+    },
+    {
+      name: "Co-Location",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Firearms",
+        "Science",
+      ],
+      page: "Mage: Awakening p176",
+      description:
+        "Allows the overlapping of multiple locations. Individuals who can perceive this overlap may switch between locations reflexively once a turn.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Anything in the overlapped locations may be made visible to the naked eye.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The caster may make the Co-Location a two-dimensional plane, creating a portal.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The caster may specify a Key needed to use the overlap.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Individuals who can perceive the overlap may reflexively switch locations twice per turn instead of once.",
+          },
+        ],
+    },
+    {
+      name: "Forced Sympathy",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Empathy",
+        "Stealth",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p73",
+      description:
+        "Must be cast on a Mage to alter his imbument process. Whenever a user casts the item's spell it always targets the subject with the closest sympathy to the user. Closest sympathy is determined by the best sympathetic Yantra on the user at the time of Casting. If the user has multiple items which could be used as Sympathetic Yantras the spells effect occurs on the one in closest physical range..",
+    },
+    {
+      name: "Optimal Container",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Larceny",
+        "Science",
+        "Subterfuge",
+      ],
+      page: "Signs of Sorcery p66",
+      description:
+        "Expand the dimensions within a container to allow it to hold larger objects than usual. Enhance the sized item a container can hold by its base size + Potency.",
+    },
+    {
+      name: "Perfect Sympathy",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Empathy",
+        "Larceny",
+      ],
+      page: "Mage: Awakening p176",
+      description:
+        "Allows the subject to gain 8-Again when taking an action on a subject that is one of their Strong sympathies.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can redirect spells at Sympathetic Range to a Strong connection instead.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "The subject gains (Potency) rote actions when taking an action on a subject that is one of their Strong sympathies.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The benefits extend to Medium sympathetic connections.",
+          },
+        ],
+    },
+    {
+      name: "Warp",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Brawl",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p177",
+      description:
+        "Deals bashing damage equal to Potency by twisting the space the subject occupies.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The pain inflicts the Arm Wrack or Leg Wrack Tilt.",
+          },
+        ],
+    },
+    {
+      name: "Web-Weaver",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Crafts",
+        "Empathy",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p177",
+      description:
+        "Allows bolstering of a sympathetic connection.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Time",
+                  value: 2,
+                },
+              ],
+            effect:
+              "The caster may use temporal sympathy to anything the subject touched in the target time.",
+          },
+        ],
+    },
+    {
+      name: "Alter Direction",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Firearms",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p177",
+      description:
+        "Allows the caster to change (Potency) absolute directions (e.g. north, south, up, down) in an area, or change directions relative to a chosen subject.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The caster can redefine directions in curves rather than just straight lines.",
+          },
+        ],
+    },
+    {
+      name: "Collapse",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Firearms",
+        "Intimidation",
+      ],
+      page: "Mage: Awakening p177",
+      description:
+        "Forces a subject and a chosen object to occupy the same space, dealing (Potency) lethal damage.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Damage inflicted becomes Aggravated.",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The co-located object remains inside the subject.",
+          },
+        ],
+    },
+    {
+      name: "Cut Threads",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Sympathy (Connection)",
+      roteSkills: [
+        "Persuasion",
+        "Politics",
+        "Weaponry",
+      ],
+      page: "Mage: Awakening p177",
+      description:
+        "Destroy a sympathetic connection, effect is lasting, but connection can be restored in time.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Remove the subject's sympathetic name. This is not lasting and only last until the spell expires",
+          },
+        ],
+    },
+    {
+      name: "Secret Room",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Expression",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p178",
+      description:
+        "Enlarge or shrink a space. Making a box bigger on the inside than on the outside, for example. Scale has to encompass the targets current size. And goes up or down equal to Potency in steps along the Area Scale Factor.",
+    },
+    {
+      name: "Teleportation",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Larceny",
+        "Persuasion",
+        "Science",
+      ],
+      page: "Mage: Awakening p178",
+      description:
+        "Teleport a subject to another location. You may use the Sympathetic Range Attainment on either the subject or the location but not both.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "You may swap the location of two subjects with no more a point of Size difference",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "You may now use two separate Sympathetic Ranges. The spell is Withstood by the worse of the two connections",
+          },
+        ],
+    },
+    {
+      name: "Create Sympathy",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Desired Sympathy",
+      roteSkills: [
+        "Empathy",
+        "Persuasion",
+        "Politics",
+      ],
+      page: "Mage: Awakening p178",
+      description:
+        "Create a new sympathetic connection for the subject. This is Lasting, but may fade with time.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The created connection is Lasting and never fades. Only magic can sever it now",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Give a subject a new sympathetic name. This is not Lasting and fades when the spell ends",
+          },
+        ],
+    },
+    {
+      name: "Forge No Chains",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Subterfuge",
+        "Survival",
+      ],
+      page: "Mage: Awakening p178",
+      description:
+        "For the Duration of the spell the subjects cannot create new sympathetic connection. blood, hair, etc shed during the Duration of the spell do not link back to the subject. This also has an effect on any Space spells you leave behind. Any attempt to scrutinize your spells with Mage Sight has the spell's Potency added to the Opacity.",
+    },
+    {
+      name: "Pocket Dimension",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Survival",
+      ],
+      page: "Mage: Awakening p178",
+      description:
+        "Create a space. By default this space is devoid of the other arcana: No Death or Spirit means no Twilight, No Time means things inside are held in stasis (unaging but also never growing/improving). Unless a portal connects the space to a point in the world the only way to get there is to teleport. Spells cast within never cause Paradox unless they sympathetic range is used to affect something outside of the space. The mage herself is considered a material sympathetic yantra for her own Pocket Dimension. If the space is ever destroyed or the spell expires objects within return to the exact location from which they entered the space..",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Create an Iris to the Pocket Dimension in the physical world. For an additional Reach you may specify a Key for this Iris.",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Time",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Time flows normally within the space mirroring time passed in the physical world. Without oxygen inside the space however this means anything inside can asphyxiate.",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 2,
+                },
+              ],
+            effect:
+              "The space now contains a Twilight attuned to Death",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 2,
+                },
+              ],
+            effect:
+              "The space now contains a Twilight attuned to Mind",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Spirit",
+                  value: 2,
+                },
+              ],
+            effect:
+              "The space now contains a Twilight attuned to Spirit",
+          },
+        ],
+    },
+    {
+      name: "Quarantine",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Larceny",
+        "Socialize",
+      ],
+      page: "Mage: Awakening p179",
+      description:
+        "Remove a subject from space altogether. The world adjusts for the missing space. A Quarantined house doesn't leave behind an empty space, instead the neighboring house would now find themselves adjacent. Meanwhile those within the Quarentined space will find they cannot leave. Similar to a Pocket Dimension except it still has it's own Time, Twilight, Matter and so forth.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Specify a Key that allows access to and from the removed area.",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 4,
+                },
+              ],
+            effect:
+              "For the Duration of the spell no one remembers the area used to exist. Those within do still remember.",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Time",
+                  value: 5,
+                },
+              ],
+            effect:
+              "For the duration of the spell the area and those within retroactively never existed. History rewrites itself, but returns to normal when the spell expires",
+          },
+        ],
+    },
+    {
+      name: "Unnaming",
+      primaryArcana:
+        {
+          arcana:
+            "Space",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Composure",
+      roteSkills: [
+        "Empathy",
+        "Expression",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p94",
+      description:
+        "The Mage Erases a subject's sympathetic name from existance, the exicised name is immediately replaced with one that matches whatever most sleepers would use to refer to her as. Any Sympathetic connections to the old name cease to exist as well. Any mage attempting to cast sympathetically using the mage faces a penalty until learning the new one..",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Prime",
+                  value: 5,
+                },
+              ],
+            effect:
+              "The Spell can be used on an Awakened Subject's Shadow Name and Nimbus instead. The Shadow name isn't replaced immediately and the subject needs to build their Supernal identity from scratch",
+          },
+        ],
+    },
+    {
+      name: "Coaxing the Spirits",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Composure or Rank",
+      roteSkills: [
+        "Politics",
+        "Athletics",
+        "Expression",
+      ],
+      page: "Mage: Awakening p180",
+      description:
+        "Compel a Spirit or it's physical representation to take a single instant action that is in accordance to it's nature.",
+    },
+    {
+      name: "Exorcist's Eye",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Survival",
+        "Socialize",
+      ],
+      page: "Mage: Awakening p180",
+      description:
+        "See and speak with any Spirit, be they in Twilight, slumbering in an object or possessing somebody. Can also see the conduit of any Spirit with the Reaching Manifestation.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can see across the Gauntlet, Withstood by Gauntlet Strength",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 1,
+                },
+              ],
+            effect:
+              "These benefits extend to ghost",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 1,
+                },
+              ],
+            effect:
+              "These benefits extend to Goetia",
+          },
+        ],
+    },
+    {
+      name: "Gremlins",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Larceny",
+        "Politics",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p180",
+      description:
+        "Cause Spirit of object to hinder it's user. Each level of Potency causes one failure with the item to become a dramatic failure. A player's character can earn a Beat from this as per normal.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "As long as the object is within sensory range, can decide what failure become dramatic failures",
+          },
+        ],
+    },
+    {
+      name: "Invoke Bane",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Brawl",
+        "Intimidation",
+        "Occult",
+      ],
+      page: "Mage: Awakening p180",
+      description:
+        "Force a Spirit to avoid it's Bane even more then normal. Spirit needs to spend a Willpower to come within the area(this is the Area factor of the spell) of it's bane and cannot touch it. Spirits above Rank 5 are unaffected by this spell.",
+    },
+    {
+      name: "Know Spirit",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Academics",
+        "Brawl",
+        "Socialize",
+      ],
+      page: "Mage: Awakening p180",
+      description:
+        "Learn a number of facts about the Spirit equal to Potency: Spirit's name, Rank, Manifestations, Numina, Influences and roughly how strong these are, Ban, Bane.",
+    },
+    {
+      name: "Cap the Well",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Politics",
+        "Survival",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p180",
+      description:
+        "Any attempt to feed from a source of Essence affected by this spell provokes a Clash of Wills.",
+    },
+    {
+      name: "Channel Essence",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Occult",
+        "Persuasion",
+        "Survival",
+      ],
+      page: "Mage: Awakening p180",
+      description:
+        "Move Essence equal to Potency but no higher than the Gnosis-derived Mana per turn, from a Resonant Condition or suitable receptacle to a Spirit. You can store Essence into your own Pattern which stays even after the spell has expired. You can hold an amount of Mana and Essence equal to Gnosis-derived maximum Mana.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Spell may be cast on ghosts",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Spell may be cast on Goetia",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can siphon Essence directly from a Spirit, subject may resist with Rank",
+          },
+        ],
+    },
+    {
+      name: "Command Spirit",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Medicine",
+        "Athletics",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p181",
+      description:
+        "Force a Spirit to undertake a number of actions equal to Potency. Spirit may/will abandon uncomplete task if the spell Duration expires. No effect on Spirits above Rank 5.",
+    },
+    {
+      name: "Ephemeral Shield",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Animal Ken",
+        "Medicine",
+        "Stealth",
+      ],
+      page: "Mage: Awakening p181",
+      description:
+        "Any Spirit Numina, Influences and Manifestations, Spirit Spells and werewolf Gifts aimed at subject provoke a Clash of Wills.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "A Spirits physical attacks are likewise affected",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Shield affects ghosts",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Shield affects Goetia",
+          },
+        ],
+    },
+    {
+      name: "Gossamer Touch",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Brawl",
+        "Crafts",
+        "Intimidation",
+      ],
+      page: "Mage: Awakening p181",
+      description:
+        "Can interact physically with Spirits in Twilight.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Affects ghosts",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 2,
+                },
+              ],
+            effect:
+              "Affects Goetia",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Object you carry are likewise physical to Spirits",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Unarmed attacks against Spirits deal Potency extra damage",
+          },
+        ],
+    },
+    {
+      name: "Opener of the Way",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Computers",
+        "Socialize",
+      ],
+      page: "Mage: Awakening p181",
+      description:
+        "Shift Resonant Condition to Open Condition or vice versa.",
+    },
+    {
+      name: "Shadow Walk",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Stealth",
+        "Streetwise",
+      ],
+      page: "Mage: Awakening p181",
+      description:
+        "Subject becomes shrouded from Spirit and Spirit magics notice. Supernatural effects to detect provoke a Clash of Wills.",
+    },
+    {
+      name: "Slumber",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Expression",
+        "Occult",
+        "Weaponry",
+      ],
+      page: "Mage: Awakening p181",
+      description:
+        "Reduce the rate at which a hibernating Spirit regains Essence. Instead of one Essence per day the Spirit only regains one Essence per Potency days.",
+    },
+    {
+      name: "Bolster Spirit",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Medicine",
+        "Occult",
+        "Expression",
+      ],
+      page: "Mage: Awakening p181",
+      description:
+        "Heal a Spirit. Each level of Potency heals two bashing damage.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Instead of healing, each level of Potency can increase one of the Spirit's Attributes by one for the duration of the spell",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Increase the Spirit's Rank by one.",
+          },
+        ],
+    },
+    {
+      name: "Erode Resonance",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Brawl",
+        "Intimidation",
+      ],
+      page: "Mage: Awakening p181",
+      description:
+        "Remove a subject's Open or Resonant condition. This effect is Lasting.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Any future attempts to create the Conditions suffers a penalty equal to Potency",
+          },
+        ],
+    },
+    {
+      name: "Howl From Beyond",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Expression",
+        "Firearms",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p182",
+      description:
+        "Attack spell deal bashing damage equal to Potency.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "the subject gains the Open Condition",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can target beings on the other side of the Gauntlet, but is Withstood by Gauntlet Strength",
+          },
+        ],
+    },
+    {
+      name: "Place of Power",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 3,
+        },
+      practice:
+        "Fraying or Perfecting",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Gauntlet Strength",
+      roteSkills: [
+        "Academics",
+        "Expression",
+        "Survival",
+      ],
+      page: "Mage: Awakening p182",
+      description:
+        "Raise or lower Gauntlet Strength in spell Area by Potency.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Alter Gauntlet independently on either side. For example making it easier to enter the Shadow but harder to leave or vice versa",
+          },
+        ],
+    },
+    {
+      name: "Reaching",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Gauntlet Strength",
+      roteSkills: [
+        "Athletics",
+        "Medicine",
+        "Socialize",
+      ],
+      page: "Mage: Awakening p182",
+      description:
+        "Interact physically and magically with things on the other side of the Gauntlet.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Open an Iris between the physical world and the Shadow, which anybody can pass through. For another Reach may specify a Key",
+          },
+        ],
+    },
+    {
+      name: "Rouse Spirit",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Athletics",
+        "Expression",
+        "Investigation",
+      ],
+      page: "Mage: Awakening p182",
+      description:
+        "Awaken a Spirit early Potency required is equal to the difference between the Spirit's current Essence and total Corpus.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "For each additional Reach, the Spirit wakes with an additional Corpus box cleared",
+          },
+        ],
+    },
+    {
+      name: "Spirit Summons",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Persuasion",
+        "Socialize",
+        "Occult",
+      ],
+      page: "Mage: Awakening p182",
+      description:
+        "Call a Spirit in the local area to you.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Spell also creates the Open Condition",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can give the Spirit a single word command to follow",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can call a Spirit form the Shadow instead. Spell it Withstood by the greater of Rank and Gauntlet Strength",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "Can give Spirit a complex command to follow",
+          },
+        ],
+    },
+    {
+      name: "Spiritual Tool",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Empathy",
+        "Occult",
+        "Survival",
+      ],
+      page: "Signs of Sorcery p66",
+      description:
+        "Enhance an item to be more in-tune with the Shadow and Spirits in general. The object becomes both an item of the material world and the shadow and is able to interact with spirits both within Twilight and the Shadow. If the item is carried into either other realm it retains its material form when it returns to the material world.",
+    },
+    {
+      name: "Banishment",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Brawl",
+        "Expression",
+        "Occult",
+      ],
+      page: "Mage: Awakening p182",
+      description:
+        "Strip a number of Manifestation Conditions equal to Potency. Effect is Lasting, but Conditions may be reasteablished as normal. No effect on Spirits above Rank 5.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 4,
+                },
+              ],
+            effect:
+              "affect Goetia",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 4,
+                },
+              ],
+            effect:
+              "affect Ghosts",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Conditions cannot be reestablished until spell duration has expired",
+          },
+        ],
+    },
+    {
+      name: "Bind Spirit",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Crafts",
+        "Brawl",
+        "Intimidation",
+      ],
+      page: "Mage: Awakening p183",
+      description:
+        "Grant a number of Manifestation Conditions equal to Potency. No effect on Spirits above Rank 5.",
+      additionalEffects:
+        [
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Mind",
+                  value: 4,
+                },
+              ],
+            effect:
+              "affect Goetia",
+          },
+          {
+            requirement:
+              [
+                {
+                  arcana:
+                    "Death",
+                  value: 4,
+                },
+              ],
+            effect:
+              "affect Ghosts",
+          },
+        ],
+    },
+    {
+      name: "Craft Fetish",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p183",
+      description:
+        "Create a Fetish an item that contains a Spirit. And can be used to call upon a number of one of the Spirit's Influence dots and Numina equal to Potency. These abilities cost Essence and the item has the Spirit's Essence pool. Triggering the bound Spirit's Ban or Bane destroys the fetish. A fetish without a Spirit may also be created and can hold 10+Potency Essence.",
+    },
+    {
+      name: "Familiar",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Expression",
+        "Intimidate",
+      ],
+      page: "Mage: Awakening p183",
+      description:
+        "Gain the Familiar Merit for the duration of the spell. Both parties must be willing. Cannot effect Spirits above Rank 2. Can also bind a Ghost or Geotia as familiar, to do so select respective alternate spell listing.",
+    },
+    {
+      name: "Familiar (Ghost)",
+      primaryArcana:
+        {
+          arcana:
+            "Death",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Expression",
+        "Intimidate",
+      ],
+      page: "Mage: Awakening p183",
+      description:
+        "Gain the Familiar Merit for the duration of the spell. Both parties must be willing. Cannot effect Spirits above Rank 2.",
+    },
+    {
+      name: "Familiar (Goetia)",
+      primaryArcana:
+        {
+          arcana:
+            "Mind",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Athletics",
+        "Expression",
+        "Intimidate",
+      ],
+      page: "Mage: Awakening p183",
+      description:
+        "Gain the Familiar Merit for the duration of the spell. Both parties must be willing. Cannot effect Spirits above Rank 2.",
+    },
+    {
+      name: "Haunted Grimoire",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 4,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Total Arcanum dots of Rote + Rank",
+      roteSkills: [
+        "Crafts",
+        "Intimidation",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p86",
+      mana: 1,
+      description:
+        "The Mage binds a spirit to a grimoire, writing its essence into the vessel's pattern. This doesn't host the Spirits numina or influences nor does it have an essence pool. The Grimoire gains the Open and Resonant Conditions. When cast the spell is increased by the Spirits Rank for Primary Factor however the Spirit has a chance to escape with a Clash of Wills to the caster. When someone memorizes a Rote the Spirit has a chance to possess them using a CLash of Wills. This spell is a Wisdom Sin against Understanding.",
+    },
+    {
+      name: "Scribe Daimonomikon",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 4,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 1,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rank of Attainment + (10 - Caster's Gnosis)",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Occult",
+      ],
+      page: "Signs of Sorcery p87",
+      mana: 1,
+      description:
+        "Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "The spell's Duration is Lasting",
+          },
+        ],
+    },
+    {
+      name: "Shadow Scream",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Expression",
+        "Firearms",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p183",
+      description:
+        "Deal Lethal damage equal to Potency. Can hit targets in Twilight.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Damage is aggravated",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can destroy Essence divide Potency between regular and Essence damage",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Target gains Open Condition",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Can hit target on the other side of the Gauntlet",
+          },
+        ],
+    },
+    {
+      name: "Shape Spirit",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Crafts",
+        "Medicine",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p184",
+      description:
+        "Change a Spirit with a number of effects equal to Potency: Change nature, Redistribute Attribute dots, Heal one Lethal corpus, Redefine and redistribute Influences, Add/remove/replace one Manifestation, Add/remove/replace one Numen, Rewrite Ban or Bane. In addition can also change the Spirit's size, shape and appearance but no bigger than the spell's Scale factor. Traits must stay within Rank-derived maximums. Change revert at the end of spell duration.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Heal aggravated damage",
+          },
+        ],
+    },
+    {
+      name: "Twilit Body",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Subterfuge",
+        "Survival",
+      ],
+      page: "Mage: Awakening p184",
+      description:
+        "Turn yourself(and whatever you're wearing) into Spirit-attuned ephemera, and thus in Twilight.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "can become immaterial even in realms where Twilight doesn't normally exist",
+          },
+        ],
+    },
+    {
+      name: "World Walker",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Gauntlet Strength",
+      roteSkills: [
+        "Athletics",
+        "Persuasion",
+        "Survival",
+      ],
+      page: "Mage: Awakening p184",
+      description:
+        "Bring subject across the Gauntlet, no portal necessary.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Give conjured Spirit Materialized Condition",
+          },
+        ],
+    },
+    {
+      name: "Annihilate Spirit",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Rank",
+      roteSkills: [
+        "Intimidation",
+        "Science",
+        "Weaponry",
+      ],
+      page: "Mage: Awakening p184",
+      description:
+        "Utterly destroy a Spirit. The Spirit may spend an Essence to roll Power + Finesse in a Clash of Wills to prevent this. But if the spell succeeds the Spirit is destroyed even if it still has Essence it won't go into hibernation the Spirit is simply gone. Cannot affect Spirits above Rank 5.",
+    },
+    {
+      name: "Birth Spirit",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Medicine",
+        "Expression",
+      ],
+      page: "Mage: Awakening p184",
+      description:
+        "Create a Rank 1 Spirit.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "Create a Rank 2 Spirit",
+          },
+        ],
+    },
+    {
+      name: "Create Locus",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      withstand:
+        "Gauntlet Strength",
+      roteSkills: [
+        "Crafts",
+        "Empathy",
+        "Survival",
+      ],
+      page: "Mage: Awakening p184",
+      description:
+        "Create a Locus at a location with the Resonant Condition.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The Locus generates Essence equal to Potency per day",
+          },
+        ],
+    },
+    {
+      name: "Essence Fountain",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Empathy",
+        "Expression",
+        "Occult",
+      ],
+      page: "Mage: Awakening p185",
+      description:
+        "Create Essence equal to Potency. The Essence has a Resonance of your choosing, as long as you have encountered it before.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Flavor the Essence with multiple Resonances",
+          },
+        ],
+    },
+    {
+      name: "Spirit Manse",
+      primaryArcana:
+        {
+          arcana:
+            "Spirit",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Expression",
+        "Survival",
+      ],
+      page: "Mage: Awakening p185",
+      description:
+        "Create a place in the Shadow for yourself and gain the Safe Place Merit with rating equal to Potency.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "You may create an Iris between this place and the material world and may give it a key. But the spell becomes Withstood by Gauntlet Strength",
+          },
+        ],
+    },
+    {
+      name: "Divination",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Empathy",
+        "Investigation",
+      ],
+      page: "Mage: Awakening p186",
+      description:
+        "Ask a general question regarding the future with an answer of 'Yes', 'No' or 'Irrelevant'.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The questions asked can be more specific and the answer gives more information",
+          },
+        ],
+    },
+    {
+      name: "Green Light/Red Light",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 1,
+        },
+      practice:
+        "Compelling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Computer",
+        "Larceny",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p187",
+      description:
+        "Cast Positively: Anything that can help the subject achieve their objective faster will happen at the exact moment to do so.<br>Cast Negatively: Anything that can delay the target will happen at the exact moment to do so.",
+    },
+    {
+      name: "Momentary Flux",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 1,
+        },
+      practice:
+        "Knowing",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Investigation",
+        "Streetwise",
+        "Survival",
+      ],
+      page: "Mage: Awakening p187",
+      description:
+        "The Mage can determine if the subject will prove beneficial or baneful in the future. When acting on the information gained, the Mage can add the spell's potency to their Initiative.",
+    },
+    {
+      name: "Perfect Timing",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 1,
+        },
+      practice:
+        "Unveiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Empathy",
+        "Socialize",
+        "Streetwise",
+      ],
+      page: "Mage: Awakening p187",
+      description:
+        "The subject can spend a turn during the spell's duration on planning, and, in doing so, can add the spell's Potency to their next instant action.",
+    },
+    {
+      name: "Choose the Thread",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Occult",
+        "Science",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p187",
+      description:
+        "You may roll twice for your next mundane dice roll. Then choose which takes effect.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "May affect rolls for spellcasting and other supernatural powers",
+          },
+        ],
+    },
+    {
+      name: "Constant Presence",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Persuasion",
+        "Survival",
+      ],
+      page: "Mage: Awakening p187",
+      description:
+        "Preserve yourself against alterations to the timeline. Any alterations that would change you provoke a Clash of Wills. If you win the world will still be altered but you will not be.",
+    },
+    {
+      name: "Hung Spell",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Crafts",
+        "Occult",
+        "Expression",
+      ],
+      page: "Mage: Awakening p188",
+      description:
+        "The subject of this spell must be a mage. The subject may then spend a Mana to 'hang' his spell. Hung Spell may hold up to a Potency in number of spells these spells still counts against the caster's spell control. Any hanged spells will not have their Durations expire but won't take effect yet either. When Hung Spell ceases all the hanged spells immediately take effect according to their own Durations and effects..",
+    },
+    {
+      name: "Shield of Chronos",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 2,
+        },
+      practice:
+        "Veiling",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Academics",
+        "Stealth",
+        "Subterfuge",
+      ],
+      page: "Mage: Awakening p188",
+      description:
+        "Anybody trying to view the subject through time, either by looking at the presently shielded subject's future or into a past when the subject was shielded. Provokes a Clash of Wills.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Instead of simply preventing Time magic from seeing the subject. You may show a false series of events that the magic 'discovers'. If powers would seek to pierce the illusion anyway this provokes a Clash of Wills",
+          },
+        ],
+    },
+    {
+      name: "Tipping the Hourglass",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 2,
+        },
+      practice:
+        "Ruling",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Athletics",
+        "Crafts",
+        "Investigation",
+      ],
+      page: "Mage: Awakening p188",
+      description:
+        "Add or subtract Potency from a subjects Initiative. Subjects who have already taken an action this turn need to wait until the next turn to take advantage of their new Initiative.",
+    },
+    {
+      name: "Veil of Moments",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 2,
+        },
+      practice:
+        "Shielding",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Medicine",
+        "Investigation Subterfuge",
+      ],
+      page: "Mage: Awakening p188",
+      description:
+        "Protect a subject from Time's effects. The subject will not bleed out form wounds, poison, toxins and the progression of disease are stalled. New Conditions and Tilts cannot be imposed on the subject. Supernatural powers that would anyway provoke a Clash of Wills. Downsides of the spell: you no longer heal naturally while under the spell's effect. Healing through Pattern Restoration and Life magic will still work. Willpower and Mana cannot be restored and Experiences cannot be spend. The subjects ceases aging..",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "may ignore Persistent Conditions. Time spend under this spell does not count toward any time necessary for Conditions to lapse",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "may heal naturally",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "may regain Willpower",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "may regain Mana",
+          },
+        ],
+    },
+    {
+      name: "Acceleration",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Drive",
+        "Stealth",
+      ],
+      page: "Mage: Awakening p189",
+      description:
+        "Speed up a subjects movements. Multiply speed by Potency, apply Defense against firearms and take the first action in a turn (unless you choose to delay it). You also apply Potency to Defense buy only when dodging.",
+    },
+    {
+      name: "Chronos' Curse",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Academics",
+        "Occult",
+        "Intimidation",
+      ],
+      page: "Mage: Awakening p190",
+      description:
+        "Slow a subject down. This reduces their Defense by Potency and divides their Speed by Potency, rounding down. Subject go last in a turn.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "The subject loses all Defense against attacks",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Multiply the time per roll of extended actions by Potency. This does not effect the ritaul casting times of mages",
+          },
+        ],
+    },
+    {
+      name: "Shifting Sands",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 3,
+        },
+      practice:
+        "Fraying",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Occult",
+        "Survival",
+      ],
+      page: "Mage: Awakening p190",
+      description:
+        "The subject goes back in time a number of turns equal to Potency. Any injuries and Conditions obtained or Mana and Willpower spend in the reversed turns do not change back and stay as they are. Any spells cast in the reversed time are canceled. Once the subject catches up to the present, any changes made become Lasting.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+                multiple: true,
+              },
+            ],
+            effect:
+              "Travel back a full scene per Reach added",
+          },
+        ],
+    },
+    {
+      name: "Temporal Summoning",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 3,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Investigation",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p190",
+      description:
+        "Return the subject to an younger version of itself. Buildings can be restored and injuries healed. Once the spell ends any changed made revert back to normal. Any injuries and Conditions obtained while this spell was active carry over to the subjects present self. Limits of Spell includes not being able to bring the dead back and a vampire returned to 'Childhood' becomes a vampiric child.",
+    },
+    {
+      name: "Time Limit",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 3,
+        },
+      secondaryArcana:
+        {
+          arcana:
+            "Prime",
+          level: 2,
+        },
+      practice:
+        "Weaving",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Expression",
+        "Science",
+        "Survival",
+      ],
+      page: "Signs of Sorcery p71",
+      description:
+        "The Caster instills a time limit on the effects of an imbued spell as she relinquishes it for one week per dot of Potency. This applies to one person each use so a new user can make the item work again but only for the time limit.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "The spell's time limit is increased to one month per Potency",
+          },
+        ],
+    },
+    {
+      name: "Weight of Years",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 3,
+        },
+      practice:
+        "Perfecting",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Crafts",
+        "Intimidation",
+        "Medicine",
+      ],
+      page: "Mage: Awakening p191",
+      description:
+        "An attack spell. Deal Bashing damage equal to Potency. If used on objects or structures. Apply Potency directly as damage to Structure and reduce Durability by 1 for every 2 points of Structure lost.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "For living subjects the spell also reduces Athletics by Potency",
+          },
+        ],
+    },
+    {
+      name: "Present as Past",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Empathy",
+        "Investigation",
+        "Streetwise",
+      ],
+      page: "Mage: Awakening p191",
+      description:
+        "The subject gains the following benefits. In combat you can require that all affected characters declare their action for that turn. You do not need to declare your own and can act anywhere in the Initiative order that you want. This trumps all supernatural powers except those from the Time Arcanum, these cause a Clash of Wills. In social situations this spell removes a number of Doors equal to Potency from the subject or adds Doors to yourself when the subject performs Social maneuvering against you.",
+    },
+    {
+      name: "Prophecy",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Expression",
+        "Investigation",
+      ],
+      page: "Mage: Awakening p191",
+      description:
+        "This spell works like 'Divination' except that you can now ask 'what if?' questions. You can ask a number of question equal to Potency.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "By applying this spell to Social interaction you may reduce a number of Doors equal to Potency",
+          },
+        ],
+    },
+    {
+      name: "Rend Lifespan",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 4,
+        },
+      practice:
+        "Unraveling",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Athletics",
+        "Medicine",
+        "Intimidation",
+      ],
+      page: "Mage: Awakening p191",
+      description:
+        "An attack spell. Deal Lethal damage equal to Potency.",
+    },
+    {
+      name: "Rewrite History",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Resolve",
+      roteSkills: [
+        "Expression",
+        "Investigation",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p191",
+      description:
+        "Change the subject's timeline as though different choices were made. Without Temporal Sympathy only recent decisions can be rewritten. Once the spell ends the person instantly reverts to the original timeline. Memories of the time under this spell will seem hazy, distant and dreamlike but the subject will remember the time at least to some extent. Supernatural creatures are not normally affected by this spell.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Reassign a number of the subject's Skill or Merit dot equal to Potency. These can not exceed the subject's maximum",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 1,
+              },
+            ],
+            effect:
+              "Reassign a number of the subject's Attributes equal to Potency. These may no exceed the subject's natural maximum or below the character creation priorities of Primary, Secondary and Tertiary",
+          },
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+            ],
+            effect:
+              "This spell can affect supernatural creatures. And may revert them back to before they acquired their supernatural template",
+          },
+        ],
+    },
+    {
+      name: "Temporal Stutter",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 4,
+        },
+      practice:
+        "Patterning",
+      primaryFactor:
+        "Potency",
+      withstand:
+        "Stamina",
+      roteSkills: [
+        "Intimidation",
+        "Science",
+        "Survival",
+      ],
+      page: "Mage: Awakening p192",
+      description:
+        "Throw a subject forward in time. The subject vanishes from the world and won't reappear until the spell expires. If, while reappearing, something new now occupies the space the subject used to inhabit apply the Knocked Down Tilt to whichever of the two has the least Size.",
+    },
+    {
+      name: "Blink of an Eye",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Crafts",
+        "Occult",
+      ],
+      page: "Mage: Awakening p192",
+      description:
+        "This spell turns the next extended action into a instant action. A number of rolls for the extended action may be made in this turn equal to Potency. This spell does not affect ritual casting time for mages.",
+      additionalEffects:
+        [
+          {
+            cost: [
+              {
+                type: "Reach",
+                value: 2,
+              },
+              {
+                type: "Mana",
+                value: 1,
+              },
+            ],
+            effect:
+              "This spell can affect spellcasting times. Increase the effective Gnosis of a mage equal to Potency for calculating ritual casting times only. For every point over Gnosis 10 reduce the interval by one turn",
+          },
+        ],
+    },
+    {
+      name: "Corridors of Time",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 5,
+        },
+      practice:
+        "Unmaking",
+      primaryFactor:
+        "Potency",
+      roteSkills: [
+        "Academics",
+        "Investigation",
+        "Persuasion",
+      ],
+      page: "Mage: Awakening p192",
+      description:
+        "The Subject inhabits their own Past self and is able to Change History. Subject arrives at the Location they were in at the time chosen and is free to make different decisions. Can be viewed under active Time mage sight. Once the mage has 'Caught up' to the present or the spells duration factor is up the changes made to History become Lasting.",
+    },
+    {
+      name: "Temporal Pocket",
+      primaryArcana:
+        {
+          arcana:
+            "Time",
+          level: 5,
+        },
+      practice:
+        "Making",
+      primaryFactor:
+        "Duration",
+      roteSkills: [
+        "Occult",
+        "Science",
+        "Stealth",
+      ],
+      page: "Mage: Awakening p192",
+      description:
+        "Grant the subject extra time. The entire world around the subject freezes. The subject may do move and touch things freely. But physically moving, consuming or injuring anything ends the spell at the completion of such an action.",
+    },
+  ]

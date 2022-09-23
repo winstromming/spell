@@ -1,256 +1,301 @@
 <template>
-  <n-config-provider :theme-overrides="{ common: { fontWeightStrong: '600' } }">
-    <n-layout
-      static
-      embedded
-      content-style="padding: 30px; padding-bottom: 100px; max-width: 600px; margin: 0 auto"
-    >
-      <n-space vertical>
-        <!-- Caster -->
-        <Card title="Caster" :summary="casterSummary">
-          <template #content>
-            <n-space vertical>
-              <n-table striped class="s-table">
-                <thead>
-                  <tr>
-                    <th>Gnosis</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <n-rate clearable :count="10" v-model:value="caster.gnosis">
-                        <n-icon>
-                          <EllipseOutline />
-                        </n-icon>
-                      </n-rate>
-                    </td>
-                  </tr>
-                </tbody>
-              </n-table>
-              <n-table striped class="s-table">
-                <thead>
-                  <tr>
-                    <th width="40">Arcana</th>
-                    <th width="35"></th>
-                    <th>Level</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(item, name) of caster.arcana" :key="name">
-                    <td>
-                      <n-text>{{ name }}</n-text>
-                    </td>
-                    <td>
-                      <n-switch size="small" v-model:value="item.ruling" />
-                    </td>
-                    <td>
-                      <n-rate clearable :count="5" v-model:value="item.level">
-                        <n-icon>
-                          <EllipseOutline />
-                        </n-icon>
-                      </n-rate>
-                    </td>
-                  </tr>
-                </tbody>
-              </n-table>
-            </n-space>
-          </template>
-        </Card>
-        <!-- Warning if the caster has not been configured -->
-        <n-alert type="info" v-if="hasConfiguredCaster === false">
-          You must configure your caster (gnosis, arcana) before choosing a spell.
-        </n-alert>
-        <!-- Spell -->
-        <Card title="Spell" :summary="spellSummary" v-if="hasConfiguredCaster">
-          <template #content>
-            <n-space vertical>
-              <n-select
-                filterable
-                placeholder="What spell are you casting?"
-                :value="spell.name"
-                @update-value="chooseSpell"
-                :options="chooseSpellOptions"
-              />
-            </n-space>
-          </template>
-          <template #footer v-if="spell.name">
-            <n-space vertical>
-              <n-text italic depth="2" v-html="spell.description" />
-              <n-text italic depth="2" v-for="(item, index) of spell.reachEffects" :key="index">
-                <b>+{{ item.reach }} Reach:</b> {{ item.effect }}
-              </n-text>
-              <n-text italic depth="2">
-                <b style="text-transform: capitalize">{{ spell.primaryFactor }}</b> is the primary
-                factor for this spell and is boosted up to the caster's {{ spell.arcana }} rating
-                without incurring a penalty.
-              </n-text>
-            </n-space>
-          </template>
-        </Card>
-        <!-- Method -->
-        <Card title="Method" :summary="methodSummary" v-if="canCastSpell">
-          <template #content>
-            <n-space vertical>
-              <n-space>
-                <n-switch size="small" v-model:value="spell.isPraxis" @change="setRote(false)" />
-                <n-text strong style="vertical-align: middle; line-height: 14px">Praxis</n-text>
-              </n-space>
-              <n-space>
-                <n-switch size="small" v-model:value="spell.isRote" @change="setPraxis(false)" />
-                <n-text strong style="vertical-align: middle; line-height: 14px"> Rote </n-text>
-                <n-rate v-if="spell.isRote" clearable :count="10" v-model:value="spell.roteSkill">
+  <n-config-provider :theme="theme" :theme-overrides="{ common: { fontWeightStrong: '600' } }">
+    <n-layout static embedded content-style="padding: 30px; padding-bottom: 100px; max-width: 600px; margin: 0 auto">
+      <n-tabs default-value="caster" size="large" animated>
+        <template #suffix>
+          <n-switch v-model:value="light" @update:value="setLight" />
+        </template>
+        <n-tab-pane name="caster" tab="Caster">
+          <n-space vertical>
+            <!-- Gnosis -->
+            <Card title="Gnosis" :summary="gnosisSummary">
+              <template #content>
+                <n-rate clearable :count="10" v-model:value="caster.gnosis">
                   <n-icon>
                     <EllipseOutline />
                   </n-icon>
                 </n-rate>
-              </n-space>
-              <n-space>
-                <n-switch size="small" v-model:value="spell.spendWillpower" />
-                <n-text strong>Spend willpower (+3 dice)</n-text>
-              </n-space>
-            </n-space>
-          </template>
-          <template #footer>
-            Bonus spellcasting dice widget goes here<br />
-            Number of active other spells widget goes here
-          </template>
-        </Card>
-        <!-- Warning if this spell cannot be cast -->
-        <n-alert type="warning" v-if="spell.name && isSpellArcanaTooHigh">
-          You need {{ spell.arcana }} {{ dots(spell.level) }} to cast this spell
-        </n-alert>
-        <!-- Potency -->
-        <Card title="Potency" collapsed :summary="potencySummary" v-if="canCastSpell">
-          <template #content>
-            <n-select v-model:value="spell.factors.potency" :options="potencyOptions" />
-          </template>
-          <template #footer> Advanced Potency grants an additional -2 to Withstand. </template>
-        </Card>
-        <!-- Duration -->
-        <Card title="Duration" collapsed :summary="durationSummary" v-if="canCastSpell">
-          <template #content>
-            <n-select v-model:value="spell.factors.duration" :options="durationOptions" />
-          </template>
-          <template #footer v-if="spell.factors.duration === 'a6'">
-            Indefinite duration requires +1 Reach and +1 Mana
-          </template>
-        </Card>
-        <!-- Casting Time -->
-        <Card title="Casting Time" collapsed :summary="castingTimeSummary" v-if="canCastSpell">
-          <template #content>
-            <n-select v-model:value="spell.factors.castingTime" :options="castingTimeOptions" />
-          </template>
-          <template #footer v-if="isAdvanced('castingTime')">
-            Using more than one Yantra (or High Speech) will increase this time.
-          </template>
-        </Card>
-        <!-- Range -->
-        <Card title="Range" collapsed :summary="rangeSummary" v-if="canCastSpell">
-          <template #content>
-            <n-select v-model:value="spell.factors.range" :options="rangeOptions" />
-          </template>
-        </Card>
-        <!-- Scale -->
-        <Card title="Scale" collapsed :summary="scaleSummary" v-if="canCastSpell">
-          <template #content>
-            <n-select v-model:value="spell.factors.scale" :options="scaleOptions" />
-          </template>
-          <template #footer>
-            Advanced Scale doubles the number of subjects and adds 5 size per additional -2 dice
-            penalty.
-          </template>
-        </Card>
-        <!-- Yantras -->
-        <Card title="Yantras" collapsed :summary="yantrasSummary" v-if="canCastSpell">
-          <template #content>
-            <n-space vertical>
-              <n-table
-                v-for="(group, name) of {
-                  Locations: locationYantraOptions,
-                  Actions: actionYantraOptions,
-                  Tools: toolYantraOptions,
-                }"
-                :key="name"
-                striped
-              >
-                <thead>
-                  <tr>
-                    <th>{{ name }}</th>
-                    <th width="80"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="yantra in group" :key="yantra.yantraKey">
-                    <td>
-                      <n-text strong>{{ yantra.name }} (+{{ yantra.bonus }})</n-text><br />
-                      <n-text v-html="yantra.desc" />
-                    </td>
-                    <td v-if="hasYantra(yantra.yantraKey) === true">
-                      <n-button
-                        block
-                        secondary
-                        type="error"
-                        @click="deleteYantra(yantra.yantraKey)"
-                      >
-                        Remove
-                      </n-button>
-                    </td>
-                    <td v-if="hasYantra(yantra.yantraKey) === false">
-                      <n-tooltip
-                        :trigger="
-                          !!yantra.disabledWarning || numYantras === maxYantras ? 'hover' : 'manual'
-                        "
-                      >
-                        <template #trigger>
-                          <n-button
-                            block
-                            secondary
-                            :type="
+              </template>
+            </Card>
+            <!-- Arcana -->
+            <Card title="Arcana" :summary="arcanaSummary">
+              <template #content>
+                <n-table striped :bordered="false" class="s-table" style="margin-left: -8px; width: calc(100% + 16px)">
+                  <tbody>
+                    <tr v-for="(item, name) of caster.arcana" :key="name">
+                      <td width="50">
+                        <n-text>{{ name }}</n-text>
+                      </td>
+                      <td width="20">
+                        <n-switch size="small" v-model:value="item.ruling" />
+                      </td>
+                      <td>
+                        <n-rate clearable :count="5" v-model:value="item.level">
+                          <n-icon>
+                            <EllipseOutline />
+                          </n-icon>
+                        </n-rate>
+                      </td>
+                    </tr>
+                  </tbody>
+                </n-table>
+              </template>
+            </Card>
+          </n-space>
+        </n-tab-pane>
+        <n-tab-pane name="spell" tab="Spell" :disabled="hasConfiguredCaster === false">
+          <n-space vertical>
+            <!-- Spell -->
+            <Card title="Spell" :summary="spellSummary" v-if="hasConfiguredCaster">
+              <template #content>
+                <n-space vertical size="large">
+                  <n-select filterable placeholder="What spell are you casting?" v-model:value="spell.name" @update:value="chooseSpell" :options="chooseSpellOptions" />
+                  <n-text v-if="spell.name" italic depth="2">({{ spell.page }}) {{ spell.description }}</n-text>
+                  <n-alert type="warning" v-if="spell.name && isSpellArcanaTooHigh">
+                    <n-text>You don't have the arcana required for this spell</n-text>
+                  </n-alert>
+                </n-space>
+              </template>
+              <template #footer>
+                <n-grid v-if="spell.name" :cols="4">
+                  <n-grid-item>
+                    <n-text> <b>Practice</b><br />{{ spell.practice }} </n-text>
+                  </n-grid-item>
+                  <n-grid-item>
+                    <n-text> <b>Factor</b><br />{{ spell.primaryFactor }} </n-text>
+                  </n-grid-item>
+                  <n-grid-item :span="2">
+                    <n-text> <b>Rote Skills</b><br />{{  spell.roteSkills.join(", ") }}</n-text>
+                  </n-grid-item>
+                </n-grid>
+              </template>
+            </Card>
+            <!-- Effects -->
+            <Card title="Effects" :summary="effectsSummary" v-if="canCastSpell">
+              <template #content>
+                <n-space vertical>
+                  <n-table bordered striped class="e-table" style="margin-left: -5px; width: calc(100% + 10px)">
+                    <tbody>
+                      <tr>
+                        <td width="20">
+                          <n-switch size="small" v-model:value="spell.isPraxis" @update:value="setRote(false)" />
+                        </td>
+                        <td width="140">
+                          <b>Cast as Praxis</b>
+                        </td>
+                        <td colspan="2"></td>
+                      </tr>
+                      <tr>
+                        <td width="20">
+                          <n-switch size="small" v-model:value="spell.isRote" @update:value="setPraxis(false)" />
+                        </td>
+                        <td width="140">
+                          <b>Cast as Rote</b>
+                          <b v-if="spell.isRote"> (+{{ spell.roteSkill }})</b>
+                        </td>
+                        <td>
+                          <n-slider v-if="spell.isRote" :tooltip="false" :min="0" :max="10" v-model:value="spell.roteSkill" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="20">
+                          <n-switch size="small" v-model:value="spell.spendWillpower" />
+                        </td>
+                        <td width="140">
+                          <b>Spend Willpower</b>
+                        </td>
+                        <td colspan="2">Gain +3 dice</td>
+                      </tr>
+                    </tbody>
+                  </n-table>
+                  <n-table v-if="spell.additionalEffects" bordered striped class="e-table" style="margin-left: -5px; width: calc(100% + 10px)">
+                    <tbody>
+                      <tr v-for="(item, index) of spell.additionalEffects" :key="index">
+                        <td v-if="item.cost" width="20">
+                          <n-switch size="small" :disabled="isEffectRestricted(item)" :value="isEffectAdded(item)" @update:value="toggleEffect(item)" />
+                        </td>
+                        <td v-if="item.cost" width="140">
+                          <b>{{ item.cost.map(c => `+${c.value} ${c.type}`).join(", ")}}</b>
+                        </td>
+                        <td :colspan="item.cost ? 1 : 3">
+                          <b v-if="item.requirement">({{ item.requirement.map(v => `${v.arcana} ${v.value}`).join(", ") }}):</b>
+                          {{ item.effect }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </n-table>
+                </n-space>
+              </template>
+            </Card>
+            <!-- Method -->
+            <Card title="Conditions" collapsed :summary="conditionsSummary" v-if="canCastSpell">
+              <template #content>
+                <n-space vertical size="large">
+                  <n-space vertical size="large">
+                    <n-text strong>Bonus spellcasting dice</n-text>
+                    <n-slider placement="right" :min="0" :max="10" v-model:value="conditions.bonusDice" />
+                  </n-space>
+                  <n-space vertical size="large">
+                    <n-text strong>Spells currently active</n-text>
+                    <n-slider placement="right" :min="0" :max="10" v-model:value="conditions.activeSpells" />
+                  </n-space>
+                  <n-space vertical size="large">
+                    <n-text strong>Withstand rating of subject</n-text>
+                    <n-slider placement="right" :min="0" :max="10" v-model:value="conditions.subjectWithstand" />
+                  </n-space>
+                </n-space>
+              </template>
+              <template #footer v-if="conditionsSummary !== 'None'">
+                <n-space vertical>
+                  <n-text v-if="conditions.bonusDice > 0"><b>Bonus:</b> Can come from Fate magic, Merits, Artefacts, or the Storyteller.</n-text>
+                  <n-text v-if="conditions.activeSpells > 0"><b>Spells:</b> Maintaining more spells than the caster's Gnosis adds Reach.</n-text>
+                  <n-text v-if="conditions.subjectWithstand > 0"><b>Withstand:</b> Potency must exceed this rating for the spell to take effect.</n-text>
+                </n-space>
+              </template>
+            </Card>
+            <!-- Potency -->
+            <Card title="Potency" collapsed :summary="potencySummary" v-if="canCastSpell">
+              <template #content>
+                <n-select v-model:value="spell.factors.potency" :options="potencyOptions" />
+              </template>
+              <template #footer> Advanced Potency grants an additional -2 to Withstand. </template>
+            </Card>
+            <!-- Duration -->
+            <Card title="Duration" collapsed :summary="durationSummary" v-if="canCastSpell">
+              <template #content>
+                <n-select v-model:value="spell.factors.duration" :options="durationOptions" />
+              </template>
+              <template #footer v-if="spell.factors.duration === 'a6'"> Indefinite duration requires +1 Reach and +1 Mana </template>
+            </Card>
+            <!-- Casting Time -->
+            <Card title="Casting Time" collapsed :summary="castingTimeSummary" v-if="canCastSpell">
+              <template #content>
+                <n-select v-model:value="spell.factors.castingTime" :options="castingTimeOptions" />
+              </template>
+              <template #footer v-if="isAdvanced('castingTime')"> Using more than one Yantra (or High Speech) will increase this time. </template>
+            </Card>
+            <!-- Range -->
+            <Card title="Range" collapsed :summary="rangeSummary" v-if="canCastSpell">
+              <template #content>
+                <n-select v-model:value="spell.factors.range" :options="rangeOptions" />
+              </template>
+            </Card>
+            <!-- Scale -->
+            <Card title="Scale" collapsed :summary="scaleSummary" v-if="canCastSpell">
+              <template #content>
+                <n-select v-model:value="spell.factors.scale" :options="scaleOptions" />
+              </template>
+              <template #footer> Advanced Scale doubles the number of subjects and adds 5 size per additional -2 dice penalty. </template>
+            </Card>
+            <!-- Yantras -->
+            <Card title="Yantras" collapsed :summary="yantrasSummary" v-if="canCastSpell">
+              <template #content>
+                <n-space vertical>
+                  <n-table
+                    v-for="(group, name) of {
+                      Locations: locationYantraOptions,
+                      Actions: actionYantraOptions,
+                      Tools: toolYantraOptions,
+                    }"
+                    :key="name"
+                    striped
+                  >
+                    <thead>
+                      <tr>
+                        <th>{{ name }}</th>
+                        <th width="80"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="yantra in group" :key="yantra.yantraKey">
+                        <td>
+                          <n-text strong>{{ yantra.name }} (+{{ yantra.bonus }})</n-text><br />
+                          <n-text v-html="yantra.desc" />
+                        </td>
+                        <td v-if="hasYantra(yantra.yantraKey) === true">
+                          <n-button block secondary type="error" @click="deleteYantra(yantra.yantraKey)"> Remove </n-button>
+                        </td>
+                        <td v-if="hasYantra(yantra.yantraKey) === false">
+                          <n-tooltip
+                            :trigger="
                               !!yantra.disabledWarning || numYantras === maxYantras
-                                ? 'tertiary'
-                                : 'success'
-                            "
-                            @click="
-                              !yantra.disabledWarning && numYantras < maxYantras
-                                ? addYantraFromModal(yantra.yantraKey)
-                                : undefined
+                                ? 'hover'
+                                : 'manual'
                             "
                           >
-                            Add
-                          </n-button>
-                        </template>
-                        <span v-if="numYantras === maxYantras">
-                          You cannot have more than {{ maxYantras }} yantras
-                        </span>
-                        <span v-if="numYantras !== maxYantras">
-                          {{ yantra.disabledWarning }}
-                        </span>
-                      </n-tooltip>
-                    </td>
-                  </tr>
-                </tbody>
-              </n-table>
-            </n-space>
-          </template>
-          <template #footer>
-            Gnosis {{ caster.gnosis }} allows the use of {{ maxYantras }} yantras.
-          </template>
-        </Card>
-      </n-space>
+                            <template #trigger>
+                              <n-button
+                                block
+                                secondary
+                                :type="
+                                  !!yantra.disabledWarning || numYantras === maxYantras
+                                    ? 'tertiary'
+                                    : 'success'
+                                "
+                                @click="
+                                  !yantra.disabledWarning && numYantras < maxYantras
+                                    ? addYantra(yantra.yantraKey)
+                                    : undefined
+                                "
+                              >
+                                Add
+                              </n-button>
+                            </template>
+                            <span v-if="numYantras === maxYantras"> You cannot have more than {{ maxYantras }} yantras </span>
+                            <span v-if="numYantras !== maxYantras">
+                              {{ yantra.disabledWarning }}
+                            </span>
+                          </n-tooltip>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </n-table>
+                </n-space>
+              </template>
+              <template #footer> Gnosis {{ caster.gnosis }} allows the use of {{ maxYantras }} yantras. </template>
+            </Card>
+          </n-space>
+        </n-tab-pane>
+        <n-tab-pane name="saved" :tab="`Saved (${saved.length})`">
+          <n-space vertical>
+            <n-card embedded v-if="saved.length === 0">
+              <n-text italic depth="3">You haven't saved any spells!</n-text>
+            </n-card>
+            <!-- Saved -->
+            <Card :title="item.name" collapsed :summary="item.castingSummary" v-for="(item, index) in saved" :key="index">
+              <template #content>
+                <n-space vertical>
+                  <n-text><b>Factors:</b> {{ item.factorSummary }}.</n-text>
+                  <n-text><b>Effects:</b> {{ item.effectSummary }}</n-text>
+                  <n-text v-if="item.yantraSummary"><b>Yantras:</b> {{ item.yantraSummary }}.</n-text>
+                </n-space>
+              </template>
+              <template #footer>
+                <n-space>
+                  <n-button @click="formatSpell(item)">Roll20</n-button>
+                  <n-button @click="copySpell(item)">Duplicate</n-button>
+                  <n-button @click="loadSpell(item)">Load</n-button>
+                  <n-button type="error" @click="removeSpell(item)">Delete</n-button>
+                </n-space>
+              </template>
+            </Card>
+          </n-space>
+        </n-tab-pane>
+      </n-tabs>
     </n-layout>
-    <n-card class="bottom">
-      <n-space horizontal size="small" v-if="canCastSpell">
-        <n-tag :bordered="false" round strong :type="usedReach > freeReach ? 'warning' : 'success'">
-          Reach {{ usedReach }}/{{ freeReach }}
-        </n-tag>
-        <n-tag :bordered="false" round strong :type="isDicePoolTooLow ? 'warning' : 'success'"
-          >Dice Pool {{ dicePool }}</n-tag
-        >
-        <n-tag :bordered="false" round strong type="success">Mana {{ totalMana }}</n-tag>
-        <n-tag v-if="hasParadox" :bordered="false" round strong type="error">
-          Paradox {{ paradoxDice }}
-        </n-tag>
+    <n-card class="bottom" v-if="canCastSpell">
+      <n-space horizontal size="small" justify="space-between">
+        <n-space size="small">
+          <n-tag :bordered="false" round strong :type="usedReach > freeReach ? 'warning' : 'success'"> Reach {{ usedReach }}/{{ freeReach }} </n-tag>
+          <n-tag :bordered="false" round strong :type="isDicePoolTooLow ? 'warning' : 'success'"> Dice Pool {{ dicePool }} </n-tag>
+          <n-tag :bordered="false" round strong type="success">Mana {{ totalMana }}</n-tag>
+          <n-tag v-if="hasParadox" :bordered="false" round strong type="error"> Paradox {{ paradoxDice }} </n-tag>
+        </n-space>
+        <n-space size="small">
+          <n-button type="info" strong @click="formatSpell(spell)">Roll20</n-button>
+          <n-button type="warning" strong @click="reset">Reset</n-button>
+          <n-button type="success" strong @click="saveSpell(spell)">Save</n-button>
+        </n-space>
       </n-space>
     </n-card>
   </n-config-provider>
@@ -259,7 +304,7 @@
 <script>
 import { clone, max, some, capitalize, findIndex, range } from "lodash"
 import { useMessage } from "naive-ui"
-import { darkTheme } from "naive-ui"
+import { darkTheme, lightTheme } from "naive-ui"
 
 import { Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline } from "@vicons/ionicons5"
 
@@ -281,89 +326,89 @@ function dots(num) {
   return Array.from({ length: num }, () => "•").join("")
 }
 
+const defaultCaster = {
+  gnosis: 0,
+  arcana: {
+    Death: { level: 0, ruling: false },
+    Fate: { level: 0, ruling: false },
+    Forces: { level: 0, ruling: false },
+    Life: { level: 0, ruling: false },
+    Matter: { level: 0, ruling: false },
+    Mind: { level: 0, ruling: false },
+    Prime: { level: 0, ruling: false },
+    Spirit: { level: 0, ruling: false },
+    Space: { level: 0, ruling: false },
+    Time: { level: 0, ruling: false },
+  },
+}
+const defaultSpell = {
+  name: undefined,
+  isRote: false,
+  isPraxis: false,
+  practice: undefined,
+  primaryFactor: undefined,
+  primaryArcana: undefined,
+  secondaryArcana: undefined,
+  description: undefined,
+  effects: [],
+  additionalEffects: [],
+  description: undefined,
+  page: undefined,
+  factors: {
+    castingTime: "s1",
+    potency: "s1",
+    range: "s1",
+    duration: "s1",
+    scale: "s1",
+  },
+  roteSkills: [],
+  roteSkill: 0,
+  spendWillpower: false,
+  extraReach: 0,
+  yantras: [],
+  yantraAlsoDedicatedTool: null,
+  attainments: {
+    conditionalDuration: false,
+    everywhere: false,
+    permanence: false,
+    sympatheticRange: false,
+    temporalSympathy: false,
+    timeInABottle: false,
+  },
+}
+const defaultConditions = {
+  subjectWithstand: 0,
+  activeSpells: 0,
+  bonusDice: 0,
+}
+const defaultParadox = {
+  inured: false,
+  previousRolls: 0,
+  sleepers: false,
+  sleeperGroupSize: "on",
+  manaSpent: 0,
+}
+
 export default {
   components: { Card, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
   setup() {
+    const message = useMessage()
     return {
       darkTheme,
-      theme: darkTheme,
+      lightTheme,
+      message: message,
+      // theme: lightTheme,
     }
   },
   data() {
     return {
-      caster: {
-        gnosis: 0,
-        arcana: {
-          Death: { level: 0, ruling: false },
-          Fate: { level: 0, ruling: false },
-          Forces: { level: 0, ruling: false },
-          Life: { level: 0, ruling: false },
-          Matter: { level: 0, ruling: false },
-          Mind: { level: 0, ruling: false },
-          Prime: { level: 0, ruling: false },
-          Spirit: { level: 0, ruling: false },
-          Space: { level: 0, ruling: false },
-          Time: { level: 0, ruling: false },
-        },
-        activeSpells: 0,
-      },
-      spell: {
-        name: undefined,
-        arcana: undefined,
-        level: undefined,
-        isRote: false,
-        isPraxis: false,
-        practice: undefined,
-        primaryFactor: undefined,
-        primaryArcana: undefined,
-        secondaryArcana: undefined,
-        suggestedRoteSkills: undefined,
-        description: undefined,
-        reachEffects: [],
-        source: undefined,
-        factors: {
-          castingTime: "s1",
-          potency: "s1",
-          range: "s1",
-          duration: "s1",
-          scale: "s1",
-        },
-        roteSkill: 0,
-        bonusDice: 0,
-        spendWillpower: false,
-        extraReach: 0,
-        yantras: [],
-        yantraAlsoDedicatedTool: null,
-        attainments: {
-          conditionalDuration: false,
-          everywhere: false,
-          permanence: false,
-          sympatheticRange: false,
-          temporalSympathy: false,
-          timeInABottle: false,
-        },
-      },
-      subject: {
-        isResisted: false,
-        withstand: 1,
-        numWithstands: 1,
-      },
-      paradox: {
-        inured: false,
-        previousRolls: 0,
-        sleepers: false,
-        sleeperGroupSize: "on",
-        manaSpent: 0,
-      },
-      showCasterModal: false,
-      showMethodModal: false,
-      showPotencyModal: false,
-      showDurationModal: false,
-      showCastingTimeModal: false,
-      showRangeModal: false,
-      showScaleModal: false,
-      showYantrasModal: false,
-      theme: darkTheme.darkTheme,
+      caster: clone(defaultCaster),
+      spell: clone(defaultSpell),
+      conditions: clone(defaultConditions),
+      paradox: clone(defaultParadox),
+      saved: [],
+      theme: lightTheme,
+      light: true,
     }
   },
   computed: {
@@ -375,13 +420,8 @@ export default {
       if (this.isSpellArcanaTooHigh === true) return false
       return true
     },
-    chooseSpellValue() {
-      const spell = this.spell
-      if (spell.name && spell.arcana && spell.level) {
-        return spell.name
-        // return `${spell.name} (${spell.arcana} ${dots(spell.level)})`
-      }
-      return undefined
+    chooseSpellLabel() {
+      return this.spell.name
     },
     chooseSpellOptions() {
       let options = []
@@ -392,11 +432,11 @@ export default {
           label: arcanaName,
           key: arcanaName,
           children: spells
-            .filter((s) => s.arcana === arcanaName)
-            .sort((a, b) => a.level < b.level)
+            .filter((s) => s.primaryArcana.arcana === arcanaName)
+            .sort((a, b) => a.primaryArcana.level - b.primaryArcana.level)
             .map((s) => {
               return {
-                label: `${dots(s.level)} ${s.name}`,
+                label: `${dots(s.primaryArcana.level)} ${s.name}`,
                 value: s,
               }
             }),
@@ -441,7 +481,7 @@ export default {
     maxCasterArcana() {
       let arcana
 
-      if (this.highestCasterArcana.includes(this.spell.arcana)) {
+      if (this.highestCasterArcana.includes(this.spell.primaryArcana.arcana)) {
         if (this.caster.gnosis >= 5) {
           arcana = 5
         } else if (this.caster.gnosis >= 3) {
@@ -462,10 +502,12 @@ export default {
       return arcana
     },
     isCasterArcanaTooHigh() {
-      return this.caster.arcana[this.spell.arcana].level > this.maxCasterArcana
+      return this.caster.arcana[this.spell.primaryArcana.arcana].level > this.maxCasterArcana
     },
     isSpellArcanaTooHigh() {
-      return this.caster.arcana[this.spell.arcana].level < this.spell.level
+      if (this.spell.primaryArcana && this.caster.arcana[this.spell.primaryArcana.arcana].level < this.spell.primaryArcana.level) return true
+      if (this.spell.secondaryArcana && this.caster.arcana[this.spell.secondaryArcana.arcana].level < this.spell.secondaryArcana.level) return true
+      return false
     },
     freeReach() {
       let arcana
@@ -473,22 +515,31 @@ export default {
       if (this.spell.isRote) {
         arcana = 5
       } else {
-        arcana = this.caster.arcana[this.spell.arcana].level
+        arcana = this.caster.arcana[this.spell.primaryArcana.arcana].level
       }
 
-      return arcana - this.spell.level + 1
+      return arcana - this.spell.primaryArcana.level + 1
     },
     usedReach() {
       let reach = 0
 
-      if (this.caster.activeSpells >= this.caster.gnosis) {
-        reach += this.caster.activeSpells - this.caster.gnosis + 1
+      if (this.conditions.activeSpells >= this.caster.gnosis) {
+        reach += this.conditions.activeSpells - this.caster.gnosis + 1
       }
 
       // check factors (advanced factor keys begin with "a")
       for (let factor of factors) {
         if (this.spell.factors[factor][0] === "a") {
           reach++
+        }
+      }
+
+      // check effects
+      for (let effect of this.spell.effects) {
+        if (effect.cost) {
+          for (let cost of effect.cost) {
+            if (cost.type === "Reach") reach += cost.value
+          }
         }
       }
 
@@ -579,7 +630,7 @@ export default {
       let penalty = durations.get(this.spell.factors.duration).penalty
 
       if (this.isPrimaryFactor("duration")) {
-        penalty -= (this.caster.arcana[this.spell.arcana].level - 1) * 2
+        penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
       }
 
       if (penalty <= 0) {
@@ -595,7 +646,7 @@ export default {
       let penalty = (this.potencyValue - 1) * 2
 
       if (this.isPrimaryFactor("potency")) {
-        penalty -= (this.caster.arcana[this.spell.arcana].level - 1) * 2
+        penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
       }
 
       if (penalty <= 0) {
@@ -606,9 +657,9 @@ export default {
     },
     dicePool() {
       // base pool
-      let pool = this.caster.gnosis + this.caster.arcana[this.spell.arcana].level
+      let pool = this.caster.gnosis + this.caster.arcana[this.spell.primaryArcana.arcana].level
 
-      pool += this.spell.bonusDice
+      pool += this.conditions.bonusDice
 
       if (this.spell.spendWillpower) {
         pool += 3
@@ -618,6 +669,9 @@ export default {
       if (!this.isAdvanced("castingTime")) {
         pool += this.spell.factors.castingTime[1] - 1
       }
+
+      // withstand
+      pool -= this.totalWithstand
 
       // potency
       pool -= this.potencyPenalty
@@ -657,11 +711,8 @@ export default {
       return capitalize(this.spell.primaryFactor)
     },
     totalWithstand() {
-      if (!this.subject.isResisted) {
-        return 0
-      }
 
-      let withstand = this.subject.withstand + this.subject.numWithstands - 1
+      let withstand = this.conditions.subjectWithstand
 
       if (this.spell.factors.potency === "a1") {
         withstand -= 2
@@ -757,11 +808,20 @@ export default {
       let mana = 0
 
       if (
-        !this.caster.isRulingArcana &&
-        this.spell.method !== "Rote" &&
-        this.spell.method !== "Praxis"
+        !this.caster.arcana[this.spell.primaryArcana.arcana].ruling &&
+        !this.spell.isRote &&
+        !this.spell.isPraxis
       ) {
         mana++
+      }
+
+      // check effects
+      for (let effect of this.spell.effects) {
+        if (effect.cost) {
+          for (let cost of effect.cost) {
+            if (cost.type === "Mana") mana += cost.value
+          }
+        }
       }
 
       if (this.spell.factors.duration === "a6") {
@@ -867,7 +927,7 @@ export default {
         let penalty = (i - 1) * 2
 
         if (this.isPrimaryFactor("potency")) {
-          penalty -= (this.caster.arcana[this.spell.arcana].level - 1) * 2
+          penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
         }
 
         if (penalty < 0) {
@@ -889,7 +949,7 @@ export default {
         let penalty = (i - 1) * 2
 
         if (this.isPrimaryFactor("potency")) {
-          penalty -= (this.caster.arcana[this.spell.arcana].level - 1) * 2
+          penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
         }
 
         if (penalty < 0) {
@@ -944,7 +1004,7 @@ export default {
           let penalty = duration.penalty
 
           if (this.isPrimaryFactor("duration")) {
-            penalty -= (this.caster.arcana[this.spell.arcana].level - 1) * 2
+            penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
           }
 
           if (penalty < 0) {
@@ -970,7 +1030,7 @@ export default {
           let penalty = duration.penalty
 
           if (this.isPrimaryFactor("duration")) {
-            penalty -= (this.caster.arcana[this.spell.arcana].level - 1) * 2
+            penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
           }
 
           if (penalty < 0) {
@@ -1067,29 +1127,44 @@ export default {
     toolYantraOptions() {
       return this.getYantraOptions("t")
     },
-    casterSummary() {
+    gnosisSummary() {
+      let summary = ""
+      if (this.caster.gnosis > 0) summary += `Gnosis ${this.caster.gnosis}`
+      if (summary.length === 0) return "None"
+      return summary
+    },
+    arcanaSummary() {
       let summary = []
-      if (this.caster.gnosis > 0) summary.push(`Gnosis ${this.caster.gnosis}`)
       for (let arcana in this.caster.arcana) {
         let level = this.caster.arcana[arcana].level
-        if (level > 0) summary.push(`(${arcana} ${dots(level)})`)
+        if (level > 0) summary.push(`${arcana} ${level}`)
       }
-      return summary.join(" ")
+      if (summary.length === 0) return "None"
+      return summary.join(", ")
+    },
+    effectsSummary() {
+      let summary = []
+      if (this.spell.isPraxis) summary.push(`Praxis`)
+      if (this.spell.isRote) summary.push(`Rote (+${this.spell.roteSkill})`)
+      if (this.spell.spendWillpower) summary.push("Willpower")
+      if (summary.length === 0) return "None"
+      return summary.join(", ")
+    },
+    conditionsSummary() {
+      let summary = []
+      if (this.conditions.bonusDice > 0) summary.push(`+${this.conditions.bonusDice} dice`)
+      if (this.conditions.activeSpells > 0) summary.push(`${this.conditions.activeSpells} active`)
+      if (this.conditions.subjectWithstand > 0) summary.push(`${this.conditions.subjectWithstand} withstand`)
+      if (summary.length === 0) return "None"
+      return summary.join(", ")
     },
     spellSummary() {
       let summary = ""
-      if (this.spell.name) summary += `${this.spell.name}`
-      if (this.spell.arcana) summary += ` (${this.spell.arcana} ${dots(this.spell.level)})`
-      return summary
-    },
-    methodSummary() {
-      let summary = ""
-      if (this.spell.isPraxis) summary += `Praxis`
-      if (this.spell.isRote) summary += `Rote (+${this.spell.roteSkill})`
-      if (this.spell.spendWillpower) {
-        if (this.spell.isPraxis || this.spell.isRote) summary += " with Willpower"
-        else summary += "Willpower"
-      }
+      if (this.spell.name) summary += `${this.spell.name} (`
+      if (this.spell.primaryArcana?.arcana) summary += `${this.spell.primaryArcana.arcana} ${this.spell.primaryArcana.level}`
+      if (this.spell.secondaryArcana?.arcana) summary += `, ${this.spell.secondaryArcana.arcana} ${this.spell.secondaryArcana.level}`
+      if (this.spell.name) summary += ")"
+      if (summary.length === 0) return "None"
       return summary
     },
     paradoxDiceSummary() {
@@ -1202,27 +1277,65 @@ export default {
       return this.spell.factors.scale
     },
   },
+  watch: {
+    caster: {
+      handler(value) {
+        localStorage.setItem("caster", JSON.stringify(value))
+      },
+      deep: true,
+    },
+    saved: {
+      handler(value) {
+        localStorage.setItem("saved", JSON.stringify(value))
+      },
+      deep: true,
+    },
+    "spell.isRote": function (newer, older) {
+      if (older === true && newer === false && this.hasYantra("a1")) {
+        this.deleteYantra("a1")
+        this.message.warning("Rote Skill Mudra removed from yantras")
+      }
+        // if (this.hasYantra("a1") && spell.isRote === true) {
+        //   setTimeout(() => {
+        //     let yantra = spell.yantras.findIndex((y) => y.yantraKey === "a1")
+        //     if (yantra.bonus !== spell.roteSkill) {
+        //       this.message.info("Rote Skill Mudra updated to +" + spell.roteSkill)
+        //       spell.yantras[yantra].bonus = spell.roteSkill
+        //     }
+        //   }, 250)
+        // }
+    },
+    "conditions.subjectWithstand": function (newer, older) {
+      let extraPotency = this.spell.factors.potency[1] - 1
+      let prefix = this.spell.factors.potency[0]
+      let minPotency = this.totalWithstand
+      let isStandard = prefix !== "a"
+
+      // Advanced Potency reduces Withstand by 2
+      if (!isStandard) minPotency -= 2
+
+      // Potency too low?
+      if (extraPotency < minPotency) {
+        this.spell.factors.potency = prefix + minPotency
+        this.message.info(`Potency (${prefix === "s" ? "Standard" : "Advanced"}) increased to ${minPotency}`)
+      }
+    },
+  },
   methods: {
+    setLight(value) {
+      if (value === false) this.theme = darkTheme
+      if (value === true) this.theme = lightTheme
+    },
     chooseSpell(spell) {
       this.spell.name = spell.name
-      this.spell.arcana = spell.arcana
-      this.spell.level = spell.level
       this.spell.practice = spell.practice
-      this.spell.primaryFactor = spell.primaryFactor
       this.spell.primaryArcana = spell.primaryArcana
       this.spell.secondaryArcana = spell.secondaryArcana
-      this.spell.suggestedRoteSkills = spell.suggestedRoteSkills
+      this.spell.primaryFactor = spell.primaryFactor
+      this.spell.roteSkills = spell.roteSkills
       this.spell.description = spell.description
-      this.spell.reachEffects = spell.reachEffects
-      this.spell.source = spell.source
-    },
-    choosePotency(potency) {
-      this.showPotencyModal = false
-      this.spell.factors.potency = potency
-    },
-    chooseDuration(duration) {
-      this.showDurationModal = false
-      this.spell.factors.duration = duration
+      this.spell.additionalEffects = spell.additionalEffects
+      this.spell.page = spell.page
     },
     dots(num) {
       return Array.from({ length: num }, () => "•").join("")
@@ -1239,32 +1352,6 @@ export default {
     setPraxis(value) {
       this.spell.isPraxis = value
     },
-    /**
-     * Called when Caster's Arcana, Potency, Primary Factor or Withstand changed
-     */
-    checkPotencyAgainstWithstand() {
-      let extraPotency = this.spell.factors.potency[1] - 1,
-        prefix = this.spell.factors.potency[0], // 's' or 'a'
-        minPotency = this.subject.isResisted ? this.totalWithstand + 1 : 0,
-        isStandard = prefix !== "a"
-
-      // Advanced Potency reduces Withstand by 2
-      if (!isStandard) {
-        minPotency -= 2
-      }
-
-      // is Potency too low?
-      if (extraPotency < minPotency) {
-        // debounce(() => {
-        //   this.spell.factors.potency = prefix + minPotency
-        //   Toast.create(
-        //     `Potency spell factor (${
-        //       prefix === "s" ? "Standard" : "Advanced"
-        //     }) automatically increased to ${minPotency}`
-        //   )
-        // })()
-      }
-    },
     checkAttainments() {
       // time in a bottle requires advanced
       if (this.spell.attainments.timeInABottle && !this.isAdvanced("castingTime")) {
@@ -1279,7 +1366,7 @@ export default {
       // permanence requires advanced
       if (
         this.spell.attainments.permanence &&
-        (this.spell.arcana !== "Matter" || !this.isAdvanced("duration"))
+        (this.spell.primaryArcana.arcana !== "Matter" || !this.isAdvanced("duration"))
       ) {
         // debounce(() => {
         //   this.spell.attainments.permanence = false
@@ -1351,7 +1438,7 @@ export default {
           // disabled?
           let disabledWarning
 
-          if (key === "a1" && this.spell.method !== "Rote") {
+          if (key === "a1" && this.spell.isRote === false) {
             disabledWarning = "Only available when casting Rotes."
           }
 
@@ -1396,21 +1483,104 @@ export default {
       let index = findIndex(this.spell.yantras, (yantra) => yantra.yantraKey === key)
       this.spell.yantras.splice(index, 1)
     },
-    addYantraFromModal(key) {
-      this.addYantra(key)
-
-      this.showYantrasModal = false
-    },
     updateYantraIsDedicatedTool(key, newValue) {
       let index = findIndex(this.spell.yantras, (yantra) => yantra.yantraKey === key)
       this.spell.yantras[index].isDedicatedTool = newValue
+    },
+    isEffectRestricted(item) {
+      let answer = false
+      if (item.requirement) {
+        item.requirement.forEach(i => {
+          if (this.caster.arcana[i.arcana].level < i.value) answer = true
+        })
+      }
+      return answer
+    },
+    isEffectAdded(item) {
+      const existing = this.spell.effects.findIndex(added => added.effect === item.effect);
+      return existing !== -1
+    },
+    // Effects
+    toggleEffect(item) {
+      if (this.isEffectAdded(item)) {
+        this.spell.effects.splice(this.spell.effects.findIndex(added => added.effect === item.effect), 1)
+      } else {
+        this.spell.effects.push(item)
+      }
+    },
+    // Spell Stuff
+    formatSpell(spell) {
+      this.message.info("Roll20 macro copied to clipboard")
+    },
+    removeSpell(spell) {
+      let index = findIndex(this.saved, (item) => item.id === spell.id)
+      this.saved.splice(index, 1)
+    },
+    copySpell(spell) {
+      let index = findIndex(this.saved, (item) => item.id === spell.id)
+      const item = clone(spell)
+      item.id = new Date().getTime()
+      this.saved.splice(index + 1, 0, item)
+      this.message.info(`${spell.name} duplicated`)
+    },
+    loadSpell(spell) {
+      this.spell = spell
+      this.message.info(`${spell.name} loaded`)
+    },
+    saveSpell(spell) {
+      const item = clone(spell)
+      const itemCastingSummary = []
+      if (item.isRote) itemCastingSummary.push("Rote")
+      if (item.isPraxis) itemCastingSummary.push("Praxis")
+      itemCastingSummary.push(`Reach ${this.usedReach}/${this.freeReach}`)
+      itemCastingSummary.push(`Dice Pool ${this.dicePool}`)
+      itemCastingSummary.push(`Mana ${this.totalMana}`)
+      itemCastingSummary.push(`Paradox ${this.paradoxDice}`)
+      const itemFactorSummary = [];
+      itemFactorSummary.push(`${this.potencySummary} potency`)
+      itemFactorSummary.push(`${this.durationSummary} duration`)
+      itemFactorSummary.push(`${this.castingTimeSummary} casting time`)
+      itemFactorSummary.push(`${this.rangeSummary} range`)
+      itemFactorSummary.push(`${this.scaleSummary}`)
+      const itemEffectSummary = item.effects.map(effect => effect.effect);
+      if (item.spendWillpower) itemEffectSummary.unshift("Spending willpower")
+      const itemYantraSummary = item.yantras.map(yantra => yantra.name);
+      item.id = new Date().getTime()
+      item.castingSummary = itemCastingSummary.join(", ")
+      item.factorSummary = itemFactorSummary.join(", ")
+      item.effectSummary = itemEffectSummary.join(" ")
+      item.yantraSummary = itemYantraSummary.join(", ")
+      this.saved.push(item)
+      this.message.success(`${spell.name} saved`)
+    },
+    reset() {
+      this.spell = clone(defaultSpell)
+      this.paradox = clone(defaultParadox)
+      this.conditions = clone(defaultConditions)
+      this.message.success("Reset the spell configuration")
     },
     log(text) {
       console.log(text)
     },
   },
   mounted() {
-    useMessage().success("Ready to use!")
+    this.message.success("Ready to use!")
+    if (localStorage.getItem("caster")) {
+      try {
+        this.caster = JSON.parse(localStorage.getItem("caster"))
+      } catch (err) {
+        console.error(err)
+        localStorage.removeItem("caster")
+      }
+    }
+    if (localStorage.getItem("saved")) {
+      try {
+        this.saved = JSON.parse(localStorage.getItem("saved"))
+      } catch (err) {
+        console.error(err)
+        localStorage.removeItem("saved")
+      }
+    }
   },
 }
 </script>
@@ -1421,6 +1591,9 @@ html {
 }
 body {
   min-height: 100%;
+}
+.n-tabs .n-tabs-pane-wrapper {
+  overflow: visible;
 }
 .n-layout {
   min-height: 100vh;
@@ -1434,6 +1607,10 @@ body {
   vertical-align: middle;
   line-height: 20px;
 }
+.e-table td {
+  vertical-align: top;
+  line-height: 18px;
+}
 .n-card {
   box-shadow: var(--n-box-shadow);
 }
@@ -1445,11 +1622,14 @@ body {
   vertical-align: middle;
 }
 .n-rate__item svg circle {
-  stroke: black;
+  stroke: var(--n-text-color);
 }
 .n-rate__item--active svg circle {
-  fill: black;
-  stroke: black;
+  fill: var(--n-text-color);
+  stroke: var(--n-text-color);
+}
+.n-tabs-nav__suffix .n-switch.n-switch--active .n-switch__rail {
+    background-color: #f2c97d;
 }
 .bottom {
   position: fixed;
