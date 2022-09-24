@@ -7,6 +7,33 @@
             <template #checked>Dark</template>
             <template #unchecked>Dark</template>
           </n-switch> -->
+
+          <n-space size="small">
+            <n-button class="btn-only-icon-when-small" title="Reset" :disabled="canCastSpell === false" size="tiny" type="warning" @click="reset">
+              <template #icon>
+                <n-icon>
+                  <ArrowUndo />
+                </n-icon>
+              </template>
+              Reset
+            </n-button>
+            <n-button class="btn-only-icon-when-small" title="Copy for Roll20" :disabled="canCastSpell === false" size="tiny" type="info" @click="copyActiveSpell()">
+              <template #icon>
+                <n-icon>
+                  <DocumentText />
+                </n-icon>
+              </template>
+              Roll20
+            </n-button>
+            <n-button class="btn-only-icon-when-small" title="Save" :disabled="canCastSpell === false" size="tiny" type="success" @click="saveActiveSpell()">
+              <template #icon>
+                <n-icon>
+                  <Bookmark />
+                </n-icon>
+              </template>
+              Save
+            </n-button>
+          </n-space>
         </template>
         <n-tab-pane name="caster" tab="Caster">
           <n-space vertical>
@@ -52,7 +79,7 @@
             <n-alert type="info" v-if="hasConfiguredCaster === false">
               <n-text>You need to configure your Gnosis and Arcana in the <b>Caster</b> tab first.</n-text>
             </n-alert>
-            <n-affix id="spellAffix" v-if="hasConfiguredCaster === true" :trigger-top="0" position="absolute" listen-to=".n-layout-scroll-container">
+            <n-affix id="spellAffix" v-if="hasConfiguredCaster === true" :trigger-top="10" position="absolute" listen-to=".n-layout-scroll-container">
               <n-card class="spellSummary">
                 <n-space align="center" justify="space-between">
                   <n-space size="small" v-if="canCastSpell">
@@ -65,29 +92,6 @@
                     <n-tag size="small" disabled :bordered="false" round strong>0/0 Reach</n-tag>
                     <n-tag size="small" disabled :bordered="false" round strong>0 Dice</n-tag>
                     <n-tag size="small" disabled :bordered="false" round strong>0 Mana</n-tag>
-                  </n-space>
-                  <n-space size="small">
-                    <n-button title="Reset" :disabled="canCastSpell === false" size="tiny" type="warning" @click="reset">
-                      <template #icon>
-                        <n-icon>
-                          <Reload />
-                        </n-icon>
-                      </template>
-                    </n-button>
-                    <n-button title="Copy for Roll20" :disabled="canCastSpell === false" size="tiny" type="info" @click="copyActiveSpell()">
-                      <template #icon>
-                        <n-icon>
-                          <Copy />
-                        </n-icon>
-                      </template>
-                    </n-button>
-                    <n-button title="Save" :disabled="canCastSpell === false" size="tiny" type="success" @click="saveActiveSpell()">
-                      <template #icon>
-                        <n-icon>
-                          <Save />
-                        </n-icon>
-                      </template>
-                    </n-button>
                   </n-space>
                 </n-space>
               </n-card>
@@ -120,7 +124,7 @@
               </template>
             </Card>
             <!-- Effects -->
-            <Card title="Effects" :summary="effectsSummary" v-if="canCastSpell">
+            <Card title="Effects" collapsed :summary="effectsSummary" v-if="canCastSpell">
               <template #content>
                 <n-space vertical>
                   <n-table bordered striped class="e-table" style="margin-left: -5px; width: calc(100% + 10px)">
@@ -352,7 +356,7 @@
                   </n-table>
                 </n-space>
               </template>
-              <template #footer> Advanced Scale doubles the number of subjects and adds 5 size per additional -2 dice penalty. </template>
+              <template #footer> Multiple witnesses do not add Paradox dice, but increase the chances of a Paradox occurring. Mana can be spent to mitigate Paradox, but is limited by Gnosis. </template>
             </Card>
           </n-space>
         </n-tab-pane>
@@ -379,27 +383,30 @@
               </template>
               <template #footer>
                 <n-space justify="space-between">
-                  <n-button title="Remove" size="tiny" type="error" @click="removeSpell(item)">
+                  <n-button class="btn-only-icon-when-small" title="Remove" size="tiny" type="error" @click="removeSpell(item)">
                     <template #icon>
                       <n-icon>
-                        <Close />
+                        <Trash />
                       </n-icon>
                     </template>
+                    Remove
                   </n-button>
                   <n-space>
-                    <n-button title="Copy for Roll20" size="tiny" type="info" @click="copySavedSpell(item)">
+                    <n-button class="btn-only-icon-when-small" title="Copy for Roll20" size="tiny" type="info" @click="copySavedSpell(item)">
                       <template #icon>
                         <n-icon>
-                          <Copy />
+                          <DocumentText />
                         </n-icon>
                       </template>
+                      Roll20
                     </n-button>
-                    <n-button title="Load" size="tiny" type="success" @click="loadSpell(item)">
+                    <n-button class="btn-only-icon-when-small" title="Edit" size="tiny" type="success" @click="loadSpell(item)">
                       <template #icon>
                         <n-icon>
-                          <Reload />
+                          <Build />
                         </n-icon>
                       </template>
+                      Edit
                     </n-button>
                   </n-space>
                 </n-space>
@@ -418,7 +425,7 @@ import { clone, max, some, capitalize, findIndex, range } from "lodash"
 import { useMessage } from "naive-ui"
 import { darkTheme, lightTheme } from "naive-ui"
 
-import { Close, Copy, Save, Reload, ChevronDown, ChevronUp, Ellipse, EllipseOutline } from "@vicons/ionicons5"
+import { Close, DocumentText, Save, Trash, Build, Bookmark, ArrowUndo, Reload, ChevronDown, ChevronUp, Ellipse, EllipseOutline } from "@vicons/ionicons5"
 
 import Card from "./Card.vue"
 
@@ -501,7 +508,7 @@ const defaultParadox = {
 }
 
 export default {
-  components: { Card, Copy, Save, Reload, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
+  components: { Card, DocumentText, Trash, Build, Bookmark, ArrowUndo, Save, Reload, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
   setup() {
     const message = useMessage()
     const container = ref(undefined)
@@ -726,7 +733,7 @@ export default {
       pool -= this.paradox.manaSpent
 
       if (pool <= 0 && mustRoll) {
-        return "[chance die]"
+        return "Chance"
       }
 
       return pool
@@ -1283,8 +1290,8 @@ export default {
     paradoxDiceSummary() {
       let summary
 
-      if (this.paradoxDice === "[chance die]") {
-        summary = "A chance die"
+      if (this.paradoxDice === "Chance") {
+        summary = "Chance"
       } else if (this.paradoxDice === 1) {
         summary = this.paradoxDice + " die"
       } else {
@@ -1293,11 +1300,11 @@ export default {
 
       if (this.paradox.sleepers > 0) {
         if (this.paradox.sleepers === 2) {
-          summary += " (with the 9-again quality)"
+          summary += " (9-again)"
         } else if (this.paradox.sleepers === 3) {
-          summary += " (with the 8-again quality)"
+          summary += " (8-again)"
         } else if (this.paradox.sleepers === 4) {
-          summary += " (with the rote quality)"
+          summary += " (as rote)"
         }
       }
 
@@ -1305,7 +1312,7 @@ export default {
     },
     dicePoolSummary() {
       if (this.dicePool < 1) {
-        return "A chance die"
+        return "Chance"
       } else if (this.dicePool == 1) {
         return `${this.dicePool} die`
       } else {
@@ -1700,12 +1707,14 @@ export default {
     },
     loadSpell(spell) {
       this.spell = spell
+      this.paradox = clone(defaultParadox)
+      this.conditions = clone(defaultConditions)
       this.message.success(`${spell.name} was loaded`)
       if (spell.conditionSummary !== "None") {
-        this.message.info(`Conditions have been reset`)
+        this.message.info(`Condition settings have been cleared`)
       }
       if (spell.tags.paradox !== 0) {
-        this.message.info(`Paradox has been reset`)
+        this.message.info(`Paradox settings has been cleared`)
       }
     },
     saveActiveSpell() {
@@ -1717,7 +1726,7 @@ export default {
       this.spell = clone(defaultSpell)
       this.paradox = clone(defaultParadox)
       this.conditions = clone(defaultConditions)
-      this.message.warning("Spell was reset")
+      this.message.warning("Spell config has been reset")
     },
     log(text) {
       console.log(text)
@@ -1839,6 +1848,8 @@ body {
   #spellAffix.n-affix.n-affix--affixed.n-affix--absolute-positioned {
     max-width: calc(100% - 20px);
   }
+  .btn-only-icon-when-small .n-button__icon { margin-right: 0; }
+  .btn-only-icon-when-small .n-button__content { display: none !important; }
 }
 .spellSummary {
   height: 45px;
