@@ -9,7 +9,7 @@
           </n-icon>
         </template>
         <n-text strong class="card-title">{{ title }}</n-text>
-        <n-text depth="3" class="card-summary">{{ summary }}</n-text>
+        <n-text depth="3" class="card-summary" editable>{{ summary }}</n-text>
       </n-button>
     </template>
     <template #default v-if="open === true">

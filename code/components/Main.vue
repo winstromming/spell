@@ -3,7 +3,6 @@
     <n-layout static embedded>
       <n-tabs default-value="spell" animated>
         <template #suffix>
-          <!-- <n-button quaternary :disabled="canCastSpell === false" size="small" type="warning" @click="reset"> Reset </n-button> -->
           <!-- <n-switch v-model:value="dark" @update:value="setDark">
             <template #checked>Dark</template>
             <template #unchecked>Dark</template>
@@ -53,19 +52,42 @@
             <n-alert type="info" v-if="hasConfiguredCaster === false">
               <n-text>You need to configure your Gnosis and Arcana in the <b>Caster</b> tab first.</n-text>
             </n-alert>
-            <n-affix id="spellAffix" v-if="hasConfiguredCaster === true" :trigger-top="10" position="absolute" listen-to=".n-layout-scroll-container">
+            <n-affix id="spellAffix" v-if="hasConfiguredCaster === true" :trigger-top="0" position="absolute" listen-to=".n-layout-scroll-container">
               <n-card class="spellSummary">
                 <n-space align="center" justify="space-between">
                   <n-space size="small" v-if="canCastSpell">
-                    <n-tag size="small" :bordered="false" round strong :type="usedReach > freeReach ? 'warning' : 'success'"> Reach {{ usedReach }}/{{ freeReach }} </n-tag>
-                    <n-tag size="small" :bordered="false" round strong :type="isDicePoolTooLow ? 'warning' : 'success'"> Dice Pool {{ dicePool }} </n-tag>
-                    <n-tag size="small" :bordered="false" round strong type="success">Mana {{ totalMana }}</n-tag>
-                    <n-tag v-if="hasParadox" size="small" :bordered="false" round strong type="error"> Paradox {{ paradoxDice }} </n-tag>
+                    <n-tag size="small" :bordered="false" round strong :type="usedReach > freeReach ? 'warning' : 'success'"> {{ usedReach }}/{{ freeReach }} Reach</n-tag>
+                    <n-tag size="small" :bordered="false" round strong :type="isDicePoolTooLow ? 'warning' : 'success'"> {{ dicePool }} Dice</n-tag>
+                    <n-tag size="small" :bordered="false" round strong type="success">{{ totalMana }} Mana</n-tag>
+                    <n-tag v-if="hasParadox" size="small" :bordered="false" round strong type="error">{{ paradoxDice }} Paradox</n-tag>
                   </n-space>
                   <n-space size="small" v-if="canCastSpell === false">
-                    <n-tag size="small" disabled :bordered="false" round strong>Reach 0/0</n-tag>
-                    <n-tag size="small" disabled :bordered="false" round strong>Dice Pool 0</n-tag>
-                    <n-tag size="small" disabled :bordered="false" round strong>Mana 0</n-tag>
+                    <n-tag size="small" disabled :bordered="false" round strong>0/0 Reach</n-tag>
+                    <n-tag size="small" disabled :bordered="false" round strong>0 Dice</n-tag>
+                    <n-tag size="small" disabled :bordered="false" round strong>0 Mana</n-tag>
+                  </n-space>
+                  <n-space size="small">
+                    <n-button title="Reset" :disabled="canCastSpell === false" size="tiny" type="warning" @click="reset">
+                      <template #icon>
+                        <n-icon>
+                          <Reload />
+                        </n-icon>
+                      </template>
+                    </n-button>
+                    <n-button title="Copy for Roll20" :disabled="canCastSpell === false" size="tiny" type="info" @click="copyActiveSpell()">
+                      <template #icon>
+                        <n-icon>
+                          <Copy />
+                        </n-icon>
+                      </template>
+                    </n-button>
+                    <n-button title="Save" :disabled="canCastSpell === false" size="tiny" type="success" @click="saveActiveSpell()">
+                      <template #icon>
+                        <n-icon>
+                          <Save />
+                        </n-icon>
+                      </template>
+                    </n-button>
                   </n-space>
                 </n-space>
               </n-card>
@@ -75,24 +97,26 @@
               <template #content>
                 <n-space vertical size="large">
                   <n-select filterable placeholder="What spell are you casting?" v-model:value="spell.name" @update:value="chooseSpell" :options="chooseSpellOptions" />
-                  <n-text v-if="spell.name" italic depth="2">{{ spell.description }} ({{ spell.page }})</n-text>
                   <n-alert type="warning" v-if="spell.name && isSpellArcanaTooHigh">
                     <n-text>You don't have the arcana required for this spell</n-text>
                   </n-alert>
                 </n-space>
               </template>
-              <template #footer>
-                <n-grid v-if="spell.name" :cols="4">
-                  <n-grid-item>
-                    <n-text> <b>Practice</b><br />{{ spell.practice }} </n-text>
-                  </n-grid-item>
-                  <n-grid-item>
-                    <n-text> <b>Factor</b><br />{{ spell.primaryFactor }} </n-text>
-                  </n-grid-item>
-                  <n-grid-item :span="2">
-                    <n-text> <b>Rote Skills</b><br />{{  spell.roteSkills.join(", ") }}</n-text>
-                  </n-grid-item>
-                </n-grid>
+              <template #footer v-if="spell.name">
+                <n-space vertical size="large">
+                  <n-text depth="3">{{ spell.description }} ({{ spell.page }})</n-text>
+                  <n-grid :cols="4">
+                    <n-grid-item>
+                      <n-text> <b>Practice</b><br />{{ spell.practice }} </n-text>
+                    </n-grid-item>
+                    <n-grid-item>
+                      <n-text> <b>Factor</b><br />{{ spell.primaryFactor }} </n-text>
+                    </n-grid-item>
+                    <n-grid-item :span="2">
+                      <n-text> <b>Rote Skills</b><br />{{  spell.roteSkills.join(", ") }}</n-text>
+                    </n-grid-item>
+                  </n-grid>
+                </n-space>
               </template>
             </Card>
             <!-- Effects -->
@@ -148,20 +172,34 @@
             <!-- Method -->
             <Card title="Conditions" collapsed :summary="conditionsSummary" v-if="canCastSpell">
               <template #content>
-                <n-space vertical size="large">
-                  <n-space vertical size="large">
-                    <n-text strong>Bonus spellcasting dice</n-text>
-                    <n-slider placement="right" :min="0" :max="10" v-model:value="conditions.bonusDice" />
-                  </n-space>
-                  <n-space vertical size="large">
-                    <n-text strong>Spells currently active</n-text>
-                    <n-slider placement="right" :min="0" :max="10" v-model:value="conditions.activeSpells" />
-                  </n-space>
-                  <n-space vertical size="large">
-                    <n-text strong>Withstand rating of subject</n-text>
-                    <n-slider placement="right" :min="0" :max="10" v-model:value="conditions.subjectWithstand" />
-                  </n-space>
-                </n-space>
+                <n-table bordered striped class="e-table" style="margin-left: -5px; width: calc(100% + 10px)">
+                  <tbody>
+                    <tr>
+                      <td colspan="3">
+                        <n-space vertical>
+                          <b>Bonus spellcasting dice (+{{conditions.bonusDice}} dice)</b>
+                          <n-slider placement="bottom" v-model:value="conditions.bonusDice" :min="0" :max="10" />
+                        </n-space>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="3">
+                        <n-space vertical>
+                          <b>Number of active spells ({{conditions.activeSpells}})</b>
+                          <n-slider placement="bottom" v-model:value="conditions.activeSpells" :min="0" :max="10" />
+                        </n-space>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="3">
+                        <n-space vertical>
+                          <b>Withstand rating of subject (+{{conditions.subjectWithstand}})</b>
+                          <n-slider placement="bottom" v-model:value="conditions.subjectWithstand" :min="0" :max="10" />
+                        </n-space>
+                      </td>
+                    </tr>
+                  </tbody>
+                </n-table>
               </template>
               <template #footer v-if="conditionsSummary !== 'None'">
                 <n-space vertical>
@@ -317,13 +355,6 @@
               <template #footer> Advanced Scale doubles the number of subjects and adds 5 size per additional -2 dice penalty. </template>
             </Card>
           </n-space>
-          <n-card id="spellOptions">
-            <n-space size="small">
-              <n-button quaternary :disabled="canCastSpell === false" size="small" type="warning" @click="reset"> Reset </n-button>
-              <n-button round :disabled="canCastSpell === false" size="small" type="info" @click="copyActiveSpell()">Roll20</n-button>
-              <n-button round :disabled="canCastSpell === false" size="small" type="success" @click="saveActiveSpell()">Save</n-button>
-            </n-space>
-          </n-card>
         </n-tab-pane>
         <n-tab-pane name="saved" :tab="`Saved (${saved.length})`">
           <n-space vertical>
@@ -331,10 +362,16 @@
               <n-text italic depth="3">No saved spells found</n-text>
             </n-card>
             <!-- Saved -->
-            <Card :title="item.name" collapsed :summary="item.castingSummary" v-for="(item, index) in saved" :key="index">
+            <Card :title="item.name" collapsed :summary="item.summary" v-for="(item, index) in saved" :key="item.id">
               <template #content>
-                <n-space vertical>
-                  <n-text><b>Casting:</b> {{ item.castingSummary }}.</n-text>
+                <n-space vertical size="large">
+                  <n-space size="small" v-if="item.tags">
+                    <n-tag v-if="item.tags.method" size="small" :bordered="false" round strong style="text-transform: capitalize">{{ item.tags.method }}</n-tag>
+                    <n-tag size="small" :bordered="false" round strong type="success">{{ item.tags.reach }} Reach</n-tag>
+                    <n-tag size="small" :bordered="false" round strong type="success"> {{ item.tags.dice }} Dice</n-tag>
+                    <n-tag size="small" :bordered="false" round strong type="success">{{ item.tags.mana }} Mana</n-tag>
+                    <n-tag v-if="item.tags.paradox" size="small" :bordered="false" round strong type="error">{{ item.tags.paradox }} Paradox</n-tag>
+                  </n-space>
                   <n-text><b>Factors:</b> {{ item.factorSummary }}.</n-text>
                   <n-text v-if="item.effectSummary"><b>Effects:</b> {{ item.effectSummary }}</n-text>
                   <n-text v-if="item.yantraSummary"><b>Yantras:</b> {{ item.yantraSummary }}.</n-text>
@@ -342,10 +379,28 @@
               </template>
               <template #footer>
                 <n-space justify="space-between">
-                  <n-button quaternary size="small" type="error" @click="removeSpell(item)"> Remove </n-button>
+                  <n-button title="Remove" size="tiny" type="error" @click="removeSpell(item)">
+                    <template #icon>
+                      <n-icon>
+                        <Close />
+                      </n-icon>
+                    </template>
+                  </n-button>
                   <n-space>
-                    <n-button size="small" type="info" @click="copySavedSpell(item)">Roll20</n-button>
-                    <n-button size="small" type="success" @click="loadSpell(item)">Load</n-button>
+                    <n-button title="Copy for Roll20" size="tiny" type="info" @click="copySavedSpell(item)">
+                      <template #icon>
+                        <n-icon>
+                          <Copy />
+                        </n-icon>
+                      </template>
+                    </n-button>
+                    <n-button title="Load" size="tiny" type="success" @click="loadSpell(item)">
+                      <template #icon>
+                        <n-icon>
+                          <Reload />
+                        </n-icon>
+                      </template>
+                    </n-button>
                   </n-space>
                 </n-space>
               </template>
@@ -363,7 +418,7 @@ import { clone, max, some, capitalize, findIndex, range } from "lodash"
 import { useMessage } from "naive-ui"
 import { darkTheme, lightTheme } from "naive-ui"
 
-import { Close, Save, Reload, ChevronDown, ChevronUp, Ellipse, EllipseOutline } from "@vicons/ionicons5"
+import { Close, Copy, Save, Reload, ChevronDown, ChevronUp, Ellipse, EllipseOutline } from "@vicons/ionicons5"
 
 import Card from "./Card.vue"
 
@@ -446,7 +501,7 @@ const defaultParadox = {
 }
 
 export default {
-  components: { Card, Save, Reload, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
+  components: { Card, Copy, Save, Reload, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
   setup() {
     const message = useMessage()
     const container = ref(undefined)
@@ -1575,10 +1630,10 @@ export default {
       const itemCastingSummary = []
       if (item.isRote) itemCastingSummary.push("Rote")
       if (item.isPraxis) itemCastingSummary.push("Praxis")
-      itemCastingSummary.push(`Reach ${this.usedReach}/${this.freeReach}`)
-      itemCastingSummary.push(`Dice Pool ${this.dicePool}`)
-      itemCastingSummary.push(`Mana ${this.totalMana}`)
-      itemCastingSummary.push(`Paradox ${this.paradoxDice}`)
+      itemCastingSummary.push(`${this.usedReach}/${this.freeReach} Reach`)
+      itemCastingSummary.push(`${this.dicePool} Dice`)
+      itemCastingSummary.push(`${this.totalMana} Mana`)
+      itemCastingSummary.push(`${this.paradoxDice} Paradox`)
       const itemFactorSummary = [];
       itemFactorSummary.push(`${this.potencySummary} potency`)
       itemFactorSummary.push(`${this.durationSummary} duration`)
@@ -1588,12 +1643,32 @@ export default {
       const itemEffectSummary = item.effects.map(effect => effect.effect);
       if (item.spendWillpower) itemEffectSummary.unshift("Willpower spent.")
       const itemYantraSummary = item.yantras.map(yantra => yantra.name);
+      const about = []
+      if (this.dicePool > 6) about.push(`easy`);
+      if (this.dicePool < 4) about.push(`hard`);
+      if (this.paradoxDice === 0) about.push(`safe`);
+      else if (typeof this.paradoxDice !== "string") about.push(`risky`);
+      if (item.factors.castingTime === "a1") about.push("quick")
+      else if (Number(item.factors.castingTime[1]) > 3) about.push("slow")
+      if (item.factors.duration[0] === "s") about.push("short")
+      if (item.factors.duration[0] === "a") about.push("long")
+      if (Number(item.factors.scale[1]) > 3) about.push("big")
+
       item.id = new Date().getTime()
+      item.tags = {
+        method: this.roteOrPraxis,
+        reach: `${this.usedReach}/${this.freeReach}`,
+        dice: this.dicePool,
+        mana: this.totalMana,
+        paradox: this.paradoxDice,
+      }
+      item.summary = about.join(", ")
       item.castingSummary = itemCastingSummary.join(", ")
       item.factorSummary = itemFactorSummary.join(", ")
       item.effectSummary = itemEffectSummary.join(" ")
       item.yantraSummary = itemYantraSummary.join(", ")
-      item.actionSummary = { text: this.dicePoolSummary, dice: this.dicePool }
+      item.conditionSummary = this.conditionsSummary
+      item.actionSummary = this.dicePoolSummary
       return item
     },
     putSpellMacroInClipboard(spell) {
@@ -1604,7 +1679,8 @@ export default {
       out.push(`{{factors=${spell.factorSummary}}}`)
       out.push(`{{effects=${spell.effectSummary || "None"}}}`)
       out.push(`{{yantras=${spell.yantraSummary || "None"}}}`)
-      out.push(`{{=[Roll ${spell.actionSummary.text} to cast](!&#13;&#91;[&#63;{Number of dice|${spell.actionSummary.dice}}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
+      if (spell.conditionSummary !== "None") out.push(`{{conditions=${spell.conditionSummary}}}`)
+      out.push(`{{=[Roll ${spell.actionSummary} to cast](!&#13;&#91;[&#63;{Number of dice|${spell.tags.dice}}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
       const text = out.join(" ");
       navigator.clipboard.writeText(text).then(() => {
         this.message.info(`${spell.name} was copied to clipboard`)
@@ -1625,6 +1701,12 @@ export default {
     loadSpell(spell) {
       this.spell = spell
       this.message.success(`${spell.name} was loaded`)
+      if (spell.conditionSummary !== "None") {
+        this.message.info(`Conditions have been reset`)
+      }
+      if (spell.tags.paradox !== 0) {
+        this.message.info(`Paradox has been reset`)
+      }
     },
     saveActiveSpell() {
       const spell = this.getSpellWithSummary(this.spell)
@@ -1685,15 +1767,6 @@ body {
 .n-layout {
   height: 100vh;
 }
-@media only screen
-  and (min-device-width: 320px)
-  and (max-device-width: 600px)
-  and (-webkit-min-device-pixel-ratio: 2)
-  and (orientation: portrait) {
-  .n-layout {
-    height: -webkit-fill-available;
-  }
-}
 .n-tabs {
   padding: 60px 10px 100px;
   max-width: 600px;
@@ -1722,6 +1795,7 @@ body {
   vertical-align: top;
 }
 .n-card {
+  border-radius: 5px;
   box-shadow: var(--n-box-shadow);
 }
 .n-card-header__extra {
