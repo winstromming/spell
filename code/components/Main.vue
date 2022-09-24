@@ -1777,9 +1777,10 @@ body {
   height: 100vh;
 }
 .n-tabs {
-  padding: 70px 10px 100px;
+  padding: 0px 10px 100px;
   max-width: 600px;
   margin: 0 auto;
+  margin-top: 20px;
 }
 .n-tabs .n-tabs-tab-pad {
   width: 5px;
