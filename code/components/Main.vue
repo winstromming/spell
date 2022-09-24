@@ -1777,7 +1777,7 @@ body {
   height: 100vh;
 }
 .n-tabs {
-  padding: 60px 10px 100px;
+  padding: 70px 10px 100px;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -1839,6 +1839,9 @@ body {
   margin-bottom: -48px;
   width: 100%;
   max-width: 580px;
+}
+.btn-only-icon-when-small {
+  height: auto !important;
 }
 @media only screen
   and (max-width: 600px) {
