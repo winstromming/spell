@@ -3,7 +3,7 @@
     <n-layout static embedded>
       <n-tabs default-value="spell" animated>
         <template #suffix>
-          <n-button quaternary :disabled="canCastSpell === false" size="small" type="warning" @click="reset"> Reset </n-button>
+          <!-- <n-button quaternary :disabled="canCastSpell === false" size="small" type="warning" @click="reset"> Reset </n-button> -->
           <!-- <n-switch v-model:value="dark" @update:value="setDark">
             <template #checked>Dark</template>
             <template #unchecked>Dark</template>
@@ -47,14 +47,31 @@
             </Card>
           </n-space>
         </n-tab-pane>
-        <n-tab-pane name="spell" tab="Spell">
+        <n-tab-pane name="spell" tab="Spell" :ref="container">
           <n-space vertical>
             <!-- Info -->
             <n-alert type="info" v-if="hasConfiguredCaster === false">
               <n-text>You need to configure your Gnosis and Arcana in the <b>Caster</b> tab first.</n-text>
             </n-alert>
+            <n-affix id="spellAffix" v-if="hasConfiguredCaster === true" :trigger-top="10" position="absolute" listen-to=".n-layout-scroll-container">
+              <n-card class="spellSummary">
+                <n-space align="center" justify="space-between">
+                  <n-space size="small" v-if="canCastSpell">
+                    <n-tag size="small" :bordered="false" round strong :type="usedReach > freeReach ? 'warning' : 'success'"> Reach {{ usedReach }}/{{ freeReach }} </n-tag>
+                    <n-tag size="small" :bordered="false" round strong :type="isDicePoolTooLow ? 'warning' : 'success'"> Dice Pool {{ dicePool }} </n-tag>
+                    <n-tag size="small" :bordered="false" round strong type="success">Mana {{ totalMana }}</n-tag>
+                    <n-tag v-if="hasParadox" size="small" :bordered="false" round strong type="error"> Paradox {{ paradoxDice }} </n-tag>
+                  </n-space>
+                  <n-space size="small" v-if="canCastSpell === false">
+                    <n-tag size="small" disabled :bordered="false" round strong>Reach 0/0</n-tag>
+                    <n-tag size="small" disabled :bordered="false" round strong>Dice Pool 0</n-tag>
+                    <n-tag size="small" disabled :bordered="false" round strong>Mana 0</n-tag>
+                  </n-space>
+                </n-space>
+              </n-card>
+            </n-affix>
             <!-- Spell -->
-            <Card title="Spell" :summary="spellSummary" v-if="hasConfiguredCaster">
+            <Card title="Spell" :summary="spellSummary" v-if="hasConfiguredCaster" style="margin-top: 48px">
               <template #content>
                 <n-space vertical size="large">
                   <n-select filterable placeholder="What spell are you casting?" v-model:value="spell.name" @update:value="chooseSpell" :options="chooseSpellOptions" />
@@ -300,6 +317,13 @@
               <template #footer> Advanced Scale doubles the number of subjects and adds 5 size per additional -2 dice penalty. </template>
             </Card>
           </n-space>
+          <n-card id="spellOptions">
+            <n-space size="small">
+              <n-button quaternary :disabled="canCastSpell === false" size="small" type="warning" @click="reset"> Reset </n-button>
+              <n-button round :disabled="canCastSpell === false" size="small" type="info" @click="copyActiveSpell()">Roll20</n-button>
+              <n-button round :disabled="canCastSpell === false" size="small" type="success" @click="saveActiveSpell()">Save</n-button>
+            </n-space>
+          </n-card>
         </n-tab-pane>
         <n-tab-pane name="saved" :tab="`Saved (${saved.length})`">
           <n-space vertical>
@@ -330,29 +354,11 @@
         </n-tab-pane>
       </n-tabs>
     </n-layout>
-    <n-card class="quick">
-      <n-space align="center" justify="space-between">
-        <n-space size="small" v-if="canCastSpell">
-          <n-tag size="small" :bordered="false" round strong :type="usedReach > freeReach ? 'warning' : 'success'"> Reach {{ usedReach }}/{{ freeReach }} </n-tag>
-          <n-tag size="small" :bordered="false" round strong :type="isDicePoolTooLow ? 'warning' : 'success'"> Dice Pool {{ dicePool }} </n-tag>
-          <n-tag size="small" :bordered="false" round strong type="success">Mana {{ totalMana }}</n-tag>
-          <n-tag v-if="hasParadox" size="small" :bordered="false" round strong type="error"> Paradox {{ paradoxDice }} </n-tag>
-        </n-space>
-        <n-space size="small" v-if="canCastSpell === false">
-          <n-tag size="small" disabled :bordered="false" round strong>Reach 0/0</n-tag>
-          <n-tag size="small" disabled :bordered="false" round strong>Dice Pool 0</n-tag>
-          <n-tag size="small" disabled :bordered="false" round strong>Mana 0</n-tag>
-        </n-space>
-        <n-space size="small" justify="end">
-          <n-button :disabled="canCastSpell === false" size="small" type="info" @click="copyActiveSpell()">Roll20</n-button>
-          <n-button :disabled="canCastSpell === false" size="small" type="success" @click="saveActiveSpell()">Save</n-button>
-        </n-space>
-      </n-space>
-    </n-card>
   </n-config-provider>
 </template>
 
 <script>
+import { ref } from "vue"
 import { clone, max, some, capitalize, findIndex, range } from "lodash"
 import { useMessage } from "naive-ui"
 import { darkTheme, lightTheme } from "naive-ui"
@@ -443,9 +449,11 @@ export default {
   components: { Card, Save, Reload, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
   setup() {
     const message = useMessage()
+    const container = ref(undefined)
     return {
       darkTheme,
       lightTheme,
+      container: container,
       message: message,
       // theme: lightTheme,
     }
@@ -1677,6 +1685,15 @@ body {
 .n-layout {
   height: 100vh;
 }
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 600px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+  .n-layout {
+    height: -webkit-fill-available;
+  }
+}
 .n-tabs {
   padding: 60px 10px 100px;
   max-width: 600px;
@@ -1731,10 +1748,44 @@ body {
   bottom: 0;
   z-index: 10;
 }
+.n-affix.n-affix--affixed.n-affix--absolute-positioned {
+  position: fixed !important;
+  z-index: 10;
+}
+#spellAffix {
+  margin-bottom: -48px;
+  width: 100%;
+  max-width: 580px;
+}
+@media only screen
+  and (max-width: 600px) {
+  #spellAffix {
+    max-width: 100%;
+  }
+  #spellAffix.n-affix.n-affix--affixed.n-affix--absolute-positioned {
+    max-width: calc(100% - 20px);
+  }
+}
+.spellSummary {
+  height: 45px;
+}
+.spellSummary .n-card__content  {
+  padding: 10px !important;
+}
 .quick .n-card__content {
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
+  padding: 10px !important;
+}
+#spellOptions {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  border-radius: 70px;
+  width: auto;
+}
+#spellOptions .n-card__content {
   padding: 10px !important;
 }
 </style>
