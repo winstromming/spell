@@ -1526,9 +1526,11 @@ export default {
       });
     },
     hasPraxis(name) {
+      if (!this.caster.praxes) return false;
       return this.caster.praxes.find((s) => s.name === name)
     },
     hasRote(name) {
+      if (!this.caster.rotes) return false;
       return this.caster.rotes.find((s) => s.name === name)
     },
     removePraxisSpell(name) {
@@ -1848,7 +1850,8 @@ export default {
     if (localStorage.getItem("caster")) {
       try {
         this.caster = JSON.parse(localStorage.getItem("caster"))
-        console.log('caster', this.caster)
+        this.caster.praxes = this.caster.praxes || []
+        this.caster.rotes = this.caster.rotes || []
       } catch (err) {
         console.error(err)
         localStorage.removeItem("caster")
