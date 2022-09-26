@@ -1891,13 +1891,14 @@ body {
 .n-layout {
   height: 100vh;
 }
+.n-layout-scroll-container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
 .n-tabs {
-  padding: 0 10px 80px;
+  padding: 0 10px;
   max-width: 600px;
   margin: 0 auto;
-}
-.n-tabs-nav {
-  padding-top: 50px;
 }
 .n-tabs .n-tabs-tab-pad {
   width: 5px;
