@@ -1,13 +1,13 @@
 <template>
   <n-config-provider :theme="theme" :theme-overrides="{ common: { fontWeightStrong: '600' } }">
     <n-layout static embedded>
+      <div style="height: 50px"></div>
       <n-tabs default-value="spell" animated>
         <template #suffix>
           <!-- <n-switch v-model:value="dark" @update:value="setDark">
             <template #checked>Dark</template>
             <template #unchecked>Dark</template>
           </n-switch> -->
-
           <n-space size="small">
             <n-button class="btn-only-icon-when-small" title="Reset" :disabled="canCastSpell === false" size="tiny" type="warning" @click="reset">
               <template #icon>
@@ -1893,7 +1893,7 @@ body {
   height: 100vh;
 }
 .n-tabs {
-  padding: 60px 10px 100px;
+  padding: 0 10px;
   max-width: 600px;
   margin: 0 auto;
 }
