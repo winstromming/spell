@@ -1667,13 +1667,32 @@ export default {
       )
     },
     customSpell(spell) {
-      this.spell = clone(defaultSpell)
+      const cloned = clone(defaultSpell)
+      this.spell = cloned
       this.spell.custom = true
       this.spell.customName = undefined
       this.spell.primaryArcana.arcana = undefined
       this.spell.primaryArcana.level = undefined
       this.spell.secondaryArcana.arcana = undefined
       this.spell.secondaryArcana.level = undefined
+      this.spell.primaryFactor = cloned.primaryFactor
+      this.spell.roteSkill = cloned.roteSkill
+      this.spell.roteSkills = cloned.roteSkills
+      this.spell.description = cloned.description
+      this.spell.additionalEffects = cloned.additionalEffects
+      this.spell.effects = []
+      this.spell.yantras = []
+      this.spell.factors = {
+        castingTime: "s1",
+        potency: "s1",
+        range: "s1",
+        duration: "s1",
+        scale: "s1",
+      }
+      this.spell.page = cloned.page
+      this.spell.isPraxis = false
+      this.spell.isRote = false
+      this.spell.roteSkill = undefined
     },
     applyCustomSpell(spell) {
       this.spell.name = this.spell.customName
@@ -1682,7 +1701,8 @@ export default {
       if (spell.name === "Creative Thaumaturgy") {
         return this.customSpell(spell)
       }
-      this.spell = clone(defaultSpell)
+      const cloned = clone(defaultSpell)
+      this.spell = cloned
       this.spell.name = spell.name
       this.spell.practice = spell.practice
       this.spell.primaryArcana.arcana = spell.primaryArcana?.arcana
@@ -1696,6 +1716,13 @@ export default {
       this.spell.additionalEffects = spell.additionalEffects
       this.spell.effects = []
       this.spell.yantras = []
+      this.spell.factors = {
+        castingTime: "s1",
+        potency: "s1",
+        range: "s1",
+        duration: "s1",
+        scale: "s1",
+      }
       this.spell.page = spell.page
 
       const hasPraxis = this.hasPraxis(spell.name)
@@ -1954,14 +1981,15 @@ export default {
       this.message.error(`${spell.name} was removed`)
     },
     loadSpell(spell) {
-      this.spell = spell
+      const cloned = clone(spell)
+      this.spell = cloned
       this.paradox = clone(defaultParadox)
       this.conditions = clone(defaultConditions)
-      this.message.success(`${spell.name} was loaded`)
-      if (spell.conditionSummary !== "None") {
+      this.message.success(`${cloned.name} was loaded`)
+      if (cloned.conditionSummary !== "None") {
         this.message.info(`Condition settings have been cleared`)
       }
-      if (spell.tags.paradox !== 0) {
+      if (cloned.tags.paradox !== 0) {
         this.message.info(`Paradox settings has been cleared`)
       }
     },
@@ -1971,7 +1999,26 @@ export default {
       this.message.success(`${spell.name} was saved`)
     },
     reset() {
-      this.spell = clone(defaultSpell)
+      const cloned = clone(defaultSpell)
+      this.spell = cloned
+      this.spell.primaryArcana.arcana = undefined
+      this.spell.primaryArcana.level = undefined
+      this.spell.secondaryArcana.arcana = undefined
+      this.spell.secondaryArcana.level = undefined
+      this.spell.primaryFactor = cloned.primaryFactor
+      this.spell.roteSkill = cloned.roteSkill
+      this.spell.roteSkills = cloned.roteSkills
+      this.spell.description = cloned.description
+      this.spell.additionalEffects = []
+      this.spell.effects = []
+      this.spell.yantras = []
+      this.spell.factors = {
+        castingTime: "s1",
+        potency: "s1",
+        range: "s1",
+        duration: "s1",
+        scale: "s1",
+      }
       this.paradox = clone(defaultParadox)
       this.conditions = clone(defaultConditions)
       this.message.warning("Spell config has been reset")
