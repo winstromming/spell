@@ -256,7 +256,7 @@
                           </n-space>
                         </td>
                       </tr>
-                      <tr v-if="spell.custom === false" v-for="(item, index) of spell.additionalEffects" :key="index">
+                      <tr v-if="spell.custom !== true" v-for="(item, index) of spell.additionalEffects" :key="index">
                         <td v-if="item.cost" width="20" style="padding-right: 0">
                           <n-switch size="small" :disabled="isEffectRestricted(item)" :value="isEffectAdded(item)" @update:value="toggleEffect(item)" />
                         </td>
