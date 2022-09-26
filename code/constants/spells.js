@@ -6243,7 +6243,17 @@ export const spells = [
             value: 2,
           },
         ],
-        effect: "Effect is Lasting(Still crumbles if all Mana is expended or absorbed).",
+        effect: "Effect is Lasting (still crumbles if all Mana is expended or absorbed).",
+      },
+      {
+        cost: [
+          {
+            type: "Mana",
+            value: 1,
+            multiple: true,
+          },
+        ],
+        effect: "If the object has capacity for more than 1 Mana then the mage may transfer additional mana into it.",
       },
     ],
   },
@@ -8697,6 +8707,28 @@ export const spells = [
           },
         ],
         effect: "The questions asked can be more specific and the answer gives more information.",
+      },
+    ],
+  },
+  {
+    name: "Postcognition",
+    primaryArcana: {
+      arcana: "Time",
+      level: 1,
+    },
+    practice: "Unveiling",
+    primaryFactor: "Potency",
+    roteSkills: ["Academics", "Empathy", "Investigation"],
+    page: "Mage: Awakening p187",
+    description: "The mage can see into the subject's past, viewing it all from a moment declared in 'real time'",
+    additonalEffects: [
+      {
+        cost: [{ type: "Reach", value: 1 }],
+        effect: "The mage can rewind, speed up, slow down and pause the vision at any given time.",
+      },
+      {
+        cost: [{ type: "Reach", value: 1 }],
+        effect: "The mage does not lose Defense when watching the vision.",
       },
     ],
   },

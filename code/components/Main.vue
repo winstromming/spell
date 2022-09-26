@@ -154,8 +154,8 @@
             <Card title="Spell" :summary="spellSummary" v-if="hasConfiguredCaster" style="margin-top: 48px">
               <template #content>
                 <n-space vertical size="large">
-                  <n-select filterable placeholder="What spell are you casting?" v-model:value="spell.name" @update:value="chooseSpell" :options="chooseSpellOptions" />
-                  <n-alert type="warning" v-if="spell.name && isSpellArcanaTooHigh">
+                  <n-select filterable placeholder="What spell are you casting?" :value="chooseSpellLabel" @update:value="chooseSpell" :options="chooseSpellOptions" />
+                  <n-alert type="warning" v-if="(spell.name || spell.custom) && isSpellArcanaTooHigh">
                     <n-text>You don't have the arcana required for this spell</n-text>
                   </n-alert>
                   <n-alert type="info" v-if="hasPraxis(spell.name)">
@@ -168,7 +168,9 @@
               </template>
               <template #footer v-if="spell.name">
                 <n-space vertical size="large">
-                  <n-text depth="3">{{ spell.description }} ({{ spell.page }})</n-text>
+                  <n-text depth="3" v-if="spell.description">
+                    {{ spell.description }} <span v-if="spell.page">({{ spell.page }})</span>
+                  </n-text>
                   <n-grid :cols="4">
                     <n-grid-item>
                       <n-text> <b>Practice</b><br />{{ spell.practice }} </n-text>
@@ -176,10 +178,44 @@
                     <n-grid-item>
                       <n-text> <b>Factor</b><br />{{ spell.primaryFactor }} </n-text>
                     </n-grid-item>
-                    <n-grid-item :span="2">
+                    <n-grid-item :span="2" v-if="spell.roteSkills.length > 0">
                       <n-text> <b>Rote Skills</b><br />{{  spell.roteSkills.join(", ") }}</n-text>
                     </n-grid-item>
                   </n-grid>
+                </n-space>
+              </template>
+              <template #footer v-if="!spell.name && spell.custom">
+                <n-space vertical size="large">
+                  <n-grid :cols="2" :x-gap="10" :y-gap="10">
+                    <n-grid-item>
+                      <n-space vertical size="small">
+                        <b>Name</b>
+                        <n-input v-model:value="spell.customName" type="text" placeholder="What is the spell named?" />
+                      </n-space>
+                    </n-grid-item>
+                    <n-grid-item>
+                      <n-space vertical size="small">
+                        <b>Arcana</b>
+                        <n-select placeholder="Choose an arcanum" filterable v-model:value="spell.primaryArcana.arcana" :options="arcanaOptions" />
+                      </n-space>
+                    </n-grid-item>
+                    <n-grid-item>
+                      <n-space vertical size="small">
+                        <b>Practice</b>
+                        <n-select placeholder="Choose a practice" filterable :value="choosePracticeValue" :options="choosePracticeOptions" @update:value="choosePractice" />
+                      </n-space>
+                    </n-grid-item>
+                    <n-grid-item>
+                      <n-space vertical size="small">
+                        <b>Factor</b>
+                        <n-select placeholder="Choose a primary factor" filterable v-model:value="spell.primaryFactor" :options="choosePrimaryFactorOptions" />
+                      </n-space>
+                    </n-grid-item>
+                  </n-grid>
+                  <n-input v-model:value="spell.description" type="textarea" placeholder="What does this spell do? Describe the effects and conditions that would apply. Entering this description is mostly useful if you are going to save the spell." />
+                  <n-space justify="end">
+                    <n-button :disabled="spell.primaryArcana.arcana == undefined || spell.practice === undefined || spell.customName === undefined || spell.customName === ''" type="success" @click="applyCustomSpell">Create this spell</n-button>
+                  </n-space>
                 </n-space>
               </template>
             </Card>
@@ -198,7 +234,29 @@
                           Gain +3 dice.
                         </td>
                       </tr>
-                      <tr v-for="(item, index) of spell.additionalEffects" :key="index">
+                      <tr v-if="spell.custom === true">
+                        <td>
+                          <n-switch size="small" :disabled="true" :value="spell.extraMana > 0" />
+                        </td>
+                        <td colspan="2">
+                          <n-space vertical>
+                            <b>+{{ spell.extraMana }} Mana for spell effects</b>
+                            <n-slider :tooltip="false" v-model:value="spell.extraMana" :min="0" :max="10" />
+                          </n-space>
+                        </td>
+                      </tr>
+                      <tr v-if="spell.custom === true">
+                        <td>
+                          <n-switch size="small" :disabled="true" :value="spell.extraReach > 0" />
+                        </td>
+                        <td colspan="2">
+                          <n-space vertical>
+                            <b>+{{ spell.extraReach }} Reach for spell effects</b>
+                            <n-slider :tooltip="false" v-model:value="spell.extraReach" :min="0" :max="10" />
+                          </n-space>
+                        </td>
+                      </tr>
+                      <tr v-if="spell.custom === false" v-for="(item, index) of spell.additionalEffects" :key="index">
                         <td v-if="item.cost" width="20" style="padding-right: 0">
                           <n-switch size="small" :disabled="isEffectRestricted(item)" :value="isEffectAdded(item)" @update:value="toggleEffect(item)" />
                         </td>
@@ -444,6 +502,7 @@ import {
   gnosisManaLimits,
   durations,
   scales,
+  practices,
   yantrasBaseData,
 } from "../constants/constants.js"
 import { spells } from "../constants/spells.js"
@@ -475,8 +534,8 @@ const defaultSpell = {
   isPraxis: false,
   practice: undefined,
   primaryFactor: undefined,
-  primaryArcana: undefined,
-  secondaryArcana: undefined,
+  primaryArcana: { arcana: undefined, level: undefined },
+  secondaryArcana: { arcana: undefined, level: undefined },
   description: undefined,
   effects: [],
   additionalEffects: [],
@@ -493,6 +552,7 @@ const defaultSpell = {
   roteSkill: 0,
   spendWillpower: false,
   extraReach: 0,
+  extraMana: 0,
   yantras: [],
   yantraAlsoDedicatedTool: null,
   attainments: {
@@ -559,10 +619,24 @@ export default {
       return true
     },
     chooseSpellLabel() {
+      if (this.spell.name === undefined && this.spell.custom) return "Creative Thaumaturgy"
+      if (this.spell.name !== undefined && this.spell.custom) return `${this.spell.name} (Custom)`
       return this.spell.name
     },
     chooseSpellOptions() {
       let options = []
+
+      options.push({
+        type: "group",
+        label: "Custom",
+        key: "custom",
+        children: [{
+          label: "Creative Thaumaturgy",
+          value: {
+            name: "Creative Thaumaturgy",
+          }
+        }]
+      })
 
       for (let arcanaName of arcanaNames) {
         options.push({
@@ -643,8 +717,8 @@ export default {
       return this.caster.arcana[this.spell.primaryArcana.arcana].level > this.maxCasterArcana
     },
     isSpellArcanaTooHigh() {
-      if (this.spell.primaryArcana && this.caster.arcana[this.spell.primaryArcana.arcana].level < this.spell.primaryArcana.level) return true
-      if (this.spell.secondaryArcana && this.caster.arcana[this.spell.secondaryArcana.arcana].level < this.spell.secondaryArcana.level) return true
+      if (this.spell.primaryArcana && this.spell.primaryArcana.arcana && this.spell.primaryArcana.level && this.caster.arcana[this.spell.primaryArcana.arcana].level < this.spell.primaryArcana.level) return true
+      if (this.spell.secondaryArcana && this.spell.secondaryArcana.arcana && this.spell.secondaryArcana.level && this.caster.arcana[this.spell.secondaryArcana.arcana].level < this.spell.secondaryArcana.level) return true
       return false
     },
     freeReach() {
@@ -964,6 +1038,8 @@ export default {
         }
       }
 
+      if (this.spell.extraMana) mana += this.spell.extraMana
+
       if (this.spell.factors.duration === "a6") {
         mana++
       }
@@ -1025,6 +1101,37 @@ export default {
         }
       }
       return null
+    },
+    arcanaOptions() {
+      let options = arcanaNames.map((arcana) => {
+        return {
+          label: arcana,
+          value: arcana,
+        }
+      });
+      return options
+    },
+    choosePracticeValue() {
+      return this.spell.practice
+    },
+    choosePracticeOptions() {
+      let options = []
+      for (let practice of practices) {
+        options.push({
+          label: `${dots(practice.level)} ${practice.name}`,
+          value: practice,
+        })
+      }
+      return options
+    },
+    choosePrimaryFactorOptions() {
+      let options = ["Duration", "Potency"].map((factor) => {
+        return {
+          label: factor,
+          value: factor,
+        }
+      });
+      return options
     },
     standardCastingTimeOptions() {
       let options = [],
@@ -1302,9 +1409,10 @@ export default {
     },
     effectsSummary() {
       let summary = []
-      if (this.spell.effects.length || this.spell.spendWillpower) summary.push(`Effects (${this.spell.effects.length + (this.spell.spendWillpower ? 1 : 0)})`)
+      if (this.spell.effects.length || this.spell.spendWillpower) summary.push(`${this.spell.effects.length + (this.spell.spendWillpower ? 1 : 0)}`)
+      if (this.spell.extraReach > 0 || this.spell.extraMana > 0) summary.push("Custom")
       if (summary.length === 0) return "None"
-      return summary.join(", ")
+      return "Effects (" + summary.join(", ") + ")"
     },
     conditionsSummary() {
       let summary = []
@@ -1317,8 +1425,8 @@ export default {
     spellSummary() {
       let summary = ""
       if (this.spell.name) summary += `${this.spell.name} (`
-      if (this.spell.primaryArcana?.arcana) summary += `${this.spell.primaryArcana.arcana} ${this.spell.primaryArcana.level}`
-      if (this.spell.secondaryArcana?.arcana) summary += `, ${this.spell.secondaryArcana.arcana} ${this.spell.secondaryArcana.level}`
+      if (this.spell.primaryArcana?.arcana && this.spell.primaryArcana?.level) summary += `${this.spell.primaryArcana.arcana} ${this.spell.primaryArcana.level}`
+      if (this.spell.secondaryArcana?.arcana && this.spell.secondaryArcana?.level) summary += `, ${this.spell.secondaryArcana.arcana} ${this.spell.secondaryArcana.level}`
       if (this.spell.name) summary += ")"
       if (summary.length === 0) return "None"
       return summary
@@ -1492,6 +1600,10 @@ export default {
       if (value === true) this.theme = darkTheme
       if (value === false) this.theme = lightTheme
     },
+    choosePractice(practice) {
+      this.spell.practice = practice.name
+      this.spell.primaryArcana.level = practice.level
+    },
     chooseYantraFromDropdown(option) {
       if (this.chooseYantraDropdown) {
         this.chooseYantraDropdown.blur()
@@ -1554,12 +1666,29 @@ export default {
         ]
       )
     },
+    customSpell(spell) {
+      this.spell = clone(defaultSpell)
+      this.spell.custom = true
+      this.spell.customName = undefined
+      this.spell.primaryArcana.arcana = undefined
+      this.spell.primaryArcana.level = undefined
+      this.spell.secondaryArcana.arcana = undefined
+      this.spell.secondaryArcana.level = undefined
+    },
+    applyCustomSpell(spell) {
+      this.spell.name = this.spell.customName
+    },
     chooseSpell(spell) {
+      if (spell.name === "Creative Thaumaturgy") {
+        return this.customSpell(spell)
+      }
       this.spell = clone(defaultSpell)
       this.spell.name = spell.name
       this.spell.practice = spell.practice
-      this.spell.primaryArcana = spell.primaryArcana
-      this.spell.secondaryArcana = spell.secondaryArcana
+      this.spell.primaryArcana.arcana = spell.primaryArcana?.arcana
+      this.spell.primaryArcana.level = spell.primaryArcana?.level
+      this.spell.secondaryArcana.arcana = spell.secondaryArcana?.arcana
+      this.spell.secondaryArcana.level = spell.secondaryArcana?.level
       this.spell.primaryFactor = spell.primaryFactor
       this.spell.roteSkill = spell.roteSkill
       this.spell.roteSkills = spell.roteSkills
@@ -1727,7 +1856,12 @@ export default {
       let answer = false
       if (item.requirement) {
         item.requirement.forEach(i => {
-          if (this.caster.arcana[i.arcana].level < i.value) answer = true
+          if (i.arcana) {
+            if (this.caster.arcana[i.arcana].level < i.value) answer = true
+          }
+          if (i.practice) {
+            if (this.spell.practice !== i.practice) answer = true
+          }
         })
       }
       return answer
@@ -1762,6 +1896,7 @@ export default {
       itemFactorSummary.push(`${this.scaleSummary}`)
       const itemEffectSummary = item.effects.map(effect => effect.effect);
       if (item.spendWillpower) itemEffectSummary.unshift("Willpower spent.")
+      if (item.custom) itemEffectSummary.push(`${item.description} (Creative Thaumaturgy, ${item.practice})`)
       const itemYantraSummary = item.yantras.map(yantra => yantra.name);
       const about = []
       if (this.dicePool > 6) about.push(`easy`);

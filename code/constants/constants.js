@@ -42,6 +42,22 @@ export const baseCastingTimes = new Map([
 
 export const factors = ["castingTime", "duration", "potency", "range", "scale"]
 
+export const practices = [
+  { name: "Knowing", level: 1, desc: "Gain knowledge and understanding of phenomena." },
+  { name: "Compelling", level: 1, desc: "Elementary manipulation of phenomena, enough to activate and/or impart direction." },
+  { name: "Unveiling", level: 1, desc: "Gain sensory perception of phenomena" },
+  { name: "Ruling", level: 2, desc: "Exert elementary command and control over phenomena" },
+  { name: "Veiling", level: 2, desc: "Conceal, camouflage or hide phenomena from scrutiny" },
+  { name: "Shielding", level: 2, desc: "Protect a target against attacks by providing points of Armor." },
+  { name: "Weaving", level: 3, desc: "Alter the capabilities or functions of phenomena" },
+  { name: "Fraying", level: 3, desc: "Injure a target" },
+  { name: "Perfecting", level: 3, desc: "Fortify, bolster or improve phenomena" },
+  { name: "Patterning", level: 4, desc: "Transform phenomena into a related phenomena or shapes, or replace capabilities or functions with different ones." },
+  { name: "Unraveling", level: 4, desc: "Significantly injure a target" },
+  { name: "Making", level: 5, desc: "Create Phenomena" },
+  { name: "Unmaking", level: 5, desc: "Destroy or mutilate a target" },
+]
+
 export const gnosisManaLimits = {
   1: 10,
   2: 11,
