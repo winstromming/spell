@@ -1,7 +1,6 @@
 <template>
   <n-config-provider :theme="theme" :theme-overrides="{ common: { fontWeightStrong: '600' } }">
     <n-layout static embedded>
-      <div style="height: 50px"></div>
       <n-tabs default-value="spell" animated>
         <template #suffix>
           <!-- <n-switch v-model:value="dark" @update:value="setDark">
@@ -1893,9 +1892,12 @@ body {
   height: 100vh;
 }
 .n-tabs {
-  padding: 0 10px;
+  padding: 0 10px 80px;
   max-width: 600px;
   margin: 0 auto;
+}
+.n-tabs-nav {
+  padding-top: 50px;
 }
 .n-tabs .n-tabs-tab-pad {
   width: 5px;

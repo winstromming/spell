@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "licence": "CC-BY-1.0",
   "scripts": {
-    "build": "parcel build --dist-dir docs",
+    "build": "rm -rf docs && parcel build --dist-dir docs",
     "watch": "parcel --dist-dir .parcel-server"
   },
   "dependencies": {
