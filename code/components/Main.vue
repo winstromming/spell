@@ -47,6 +47,61 @@
                 </n-rate>
               </template>
             </Card>
+            <!-- Praxes -->
+            <Card title="Praxes" :summary="casterPraxesSummary">
+              <template #content>
+                <n-space vertical>
+                  <n-table v-if="caster.praxes.length > 0" striped class="s-table">
+                    <tbody>
+                      <tr v-for="item in caster.praxes" :key="item.name">
+                        <td>{{ item.name }}</td>
+                        <td width="20">
+                          <n-button size="tiny" type="error" @click="removePraxisSpell(item.name)">
+                            <template #icon>
+                              <n-icon>
+                                <Close />
+                              </n-icon>
+                            </template>
+                          </n-button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </n-table>
+                  <n-select ref="choosePraxisDropdown" filterable :value="choosePraxisValue" placeholder="Choose spell to add" @update:value="(v) => choosePraxisFromDropdown(v)" :options="chooseSpellOptions" />
+                </n-space>
+              </template>
+            </Card>
+            <!-- Rotes -->
+            <Card title="Rotes" :summary="casterRotesSummary">
+              <template #content>
+                <n-space vertical class="s-table">
+                  <n-table v-if="caster.rotes.length > 0" striped class="s-table">
+                    <tbody>
+                      <tr v-for="item in caster.rotes" :key="item.name">
+                        <td>{{ item.name}}</td>
+                        <td width="50">
+                          <n-rate clearable :count="5" v-model:value="item.skill">
+                            <n-icon>
+                              <EllipseOutline />
+                            </n-icon>
+                          </n-rate>
+                        </td>
+                        <td width="20">
+                          <n-button size="tiny" type="error" @click="removeRoteSpell(item.name)">
+                            <template #icon>
+                              <n-icon>
+                                <Close />
+                              </n-icon>
+                            </template>
+                          </n-button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </n-table>
+                  <n-select ref="chooseRoteDropdown" filterable :value="chooseRoteValue" placeholder="Choose spell to add" @update:value="(v) => chooseRoteFromDropdown(v)" :options="chooseSpellOptions" />
+                </n-space>
+              </template>
+            </Card>
             <!-- Arcana -->
             <Card title="Arcana" :summary="arcanaSummary">
               <template #content>
@@ -104,6 +159,12 @@
                   <n-alert type="warning" v-if="spell.name && isSpellArcanaTooHigh">
                     <n-text>You don't have the arcana required for this spell</n-text>
                   </n-alert>
+                  <n-alert type="info" v-if="hasPraxis(spell.name)">
+                    <n-text>{{ spell.name }} is one of your Praxes.</n-text>
+                  </n-alert>
+                  <n-alert type="info" v-if="hasRote(spell.name)">
+                    <n-text>{{ spell.name }} is one of your Rotes (+{{ hasRote(spell.name).skill }} bonus).</n-text>
+                  </n-alert>
                 </n-space>
               </template>
               <template #footer v-if="spell.name">
@@ -127,28 +188,8 @@
             <Card title="Effects" collapsed :summary="effectsSummary" v-if="canCastSpell">
               <template #content>
                 <n-space vertical>
-                  <n-table bordered striped class="e-table" style="margin-left: -5px; width: calc(100% + 10px)">
+                  <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
                     <tbody>
-                      <tr>
-                        <td width="20" style="padding-right: 0">
-                          <n-switch size="small" v-model:value="spell.isPraxis" @update:value="setRote(false)" />
-                        </td>
-                        <td width="150">
-                          <b>Cast as Praxis</b>
-                        </td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td width="20" style="padding-right: 0">
-                          <n-switch size="small" v-model:value="spell.isRote" @update:value="setPraxis(false)" />
-                        </td>
-                        <td width="150" colspan="2">
-                          <b>Cast as Rote</b>
-                          <b v-if="spell.isRote"> (+{{ spell.roteSkill }} Skill)</b>
-                          <br />
-                          <n-slider v-if="spell.isRote" :tooltip="false" :min="0" :max="10" v-model:value="spell.roteSkill" />
-                        </td>
-                      </tr>
                       <tr>
                         <td width="20" style="padding-right: 0">
                           <n-switch size="small" v-model:value="spell.spendWillpower" />
@@ -176,7 +217,7 @@
             <!-- Method -->
             <Card title="Conditions" collapsed :summary="conditionsSummary" v-if="canCastSpell">
               <template #content>
-                <n-table bordered striped class="e-table" style="margin-left: -5px; width: calc(100% + 10px)">
+                <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
                   <tbody>
                     <tr>
                       <td colspan="3">
@@ -251,65 +292,32 @@
             <Card title="Yantras" collapsed :summary="yantrasSummary" v-if="canCastSpell">
               <template #content>
                 <n-space vertical>
-                  <n-table
-                    v-for="(group, name) of {
-                      Locations: locationYantraOptions,
-                      Actions: actionYantraOptions,
-                      Tools: toolYantraOptions,
-                    }"
-                    :key="name"
-                    striped
-                  >
-                    <thead>
-                      <tr>
-                        <th>{{ name }}</th>
-                        <th width="80"></th>
-                      </tr>
-                    </thead>
+                  <n-table striped v-if="spell.yantras.length > 0">
                     <tbody>
-                      <tr v-for="yantra in group" :key="yantra.yantraKey">
+                      <tr v-for="yantra, index in spell.yantras" :key="index">
                         <td>
-                          <n-text strong>{{ yantra.name }} (+{{ yantra.bonus }})</n-text><br />
-                          <n-text v-html="yantra.desc" />
+                          <n-space vertical size="small">
+                            <n-text strong>{{ yantra.label }}</n-text>
+                            <n-text>{{ yantra.desc }}</n-text>
+                            <n-space size="small" v-if="yantra.yantraKey === 't2' || yantra.yantraKey === 't3'">
+                              <n-switch size="small" v-model:value="yantra.isDedicatedTool" @update:value="(v) => updateYantraIsDedicatedTool(yantra.yantraKey, v)" />
+                              <n-text>This is your Dedicated Tool</n-text>
+                            </n-space>
+                          </n-space>
                         </td>
-                        <td v-if="hasYantra(yantra.yantraKey) === true">
-                          <n-button block secondary type="error" @click="deleteYantra(yantra.yantraKey)"> Remove </n-button>
-                        </td>
-                        <td v-if="hasYantra(yantra.yantraKey) === false">
-                          <n-tooltip
-                            :trigger="
-                              !!yantra.disabledWarning || numYantras === maxYantras
-                                ? 'hover'
-                                : 'manual'
-                            "
-                          >
-                            <template #trigger>
-                              <n-button
-                                block
-                                secondary
-                                :type="
-                                  !!yantra.disabledWarning || numYantras === maxYantras
-                                    ? 'tertiary'
-                                    : 'success'
-                                "
-                                @click="
-                                  !yantra.disabledWarning && numYantras < maxYantras
-                                    ? addYantra(yantra.yantraKey)
-                                    : undefined
-                                "
-                              >
-                                Add
-                              </n-button>
+                        <td width="20" valign="top" style="vertical-align: top">
+                          <n-button size="small" type="error" @click="deleteYantra(yantra.yantraKey)">
+                            <template #icon>
+                              <n-icon>
+                                <Close />
+                              </n-icon>
                             </template>
-                            <span v-if="numYantras === maxYantras"> You cannot have more than {{ maxYantras }} yantras </span>
-                            <span v-if="numYantras !== maxYantras">
-                              {{ yantra.disabledWarning }}
-                            </span>
-                          </n-tooltip>
+                          </n-button>
                         </td>
                       </tr>
                     </tbody>
                   </n-table>
+                  <n-select ref="chooseYantraDropdown" :options="yantraOptions" :value="chooseYantraValue" :render-label="renderYantraLabel" filterable @update:value="chooseYantraFromDropdown" />
                 </n-space>
               </template>
               <template #footer> Gnosis {{ caster.gnosis }} allows the use of {{ maxYantras }} yantras. </template>
@@ -318,7 +326,7 @@
             <Card title="Paradox" collapsed :summary="paradoxSummary" v-if="canCastSpell">
               <template #content>
                 <n-space vertical>
-                  <n-table bordered striped class="e-table" style="margin-left: -5px; width: calc(100% + 10px)">
+                  <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
                     <tbody>
                       <tr>
                         <td width="20" style="padding-right: 0">
@@ -420,7 +428,7 @@
 </template>
 
 <script>
-import { ref } from "vue"
+import { ref, h } from "vue"
 import { clone, max, some, capitalize, findIndex, range } from "lodash"
 import { useMessage } from "naive-ui"
 import { darkTheme, lightTheme } from "naive-ui"
@@ -459,6 +467,8 @@ const defaultCaster = {
     Space: { level: 0, ruling: false },
     Time: { level: 0, ruling: false },
   },
+  praxes: [],
+  rotes: [],
 }
 const defaultSpell = {
   name: undefined,
@@ -512,11 +522,17 @@ export default {
   setup() {
     const message = useMessage()
     const container = ref(undefined)
+    const chooseYantraDropdown = ref(undefined)
+    const choosePraxisDropdown = ref(undefined)
+    const chooseRoteDropdown = ref(undefined)
     return {
       darkTheme,
       lightTheme,
       container: container,
       message: message,
+      chooseYantraDropdown,
+      choosePraxisDropdown,
+      chooseRoteDropdown,
       // theme: lightTheme,
     }
   },
@@ -529,6 +545,9 @@ export default {
       saved: [],
       theme: lightTheme,
       dark: false,
+      chooseYantraValue: null,
+      choosePraxisValue: null,
+      chooseRoteValue: null,
     }
   },
   computed: {
@@ -735,6 +754,7 @@ export default {
       if (pool <= 0 && mustRoll) {
         return "Chance"
       }
+      if (pool < 0) return 0
 
       return pool
     },
@@ -874,6 +894,7 @@ export default {
 
           expandedYantra.yantraKey = Array.isArray(yantraBaseData.bonus) ? key + "_" + bonus : key // key is a reserved property in Vue so we use "yantraKey"
           expandedYantra.bonus = bonus
+          expandedYantra.value = expandedYantra.yantraKey
           expandedYantra.label = `${yantraBaseData.name} (+${bonus} ${
             bonus === 1 ? "die" : "dice"
           })`
@@ -906,14 +927,14 @@ export default {
       // setter (bool)
       set(isUsed) {
         if (isUsed) {
+          console.log('set is used')
           if (this.isDedicatedToolYantraUsed) {
-            // debounce(() => {
-            //   Toast.create("A Dedicated Tool is already selected")
-            // })()
+            console.log('but warn')
+            this.message.warning("Dedicated Tool is already being used")
           }
-
           this.spell.yantras.push(this.yantras.get("t1"))
         } else {
+          console.log('delete t1?')
           this.deleteYantra("t1")
 
           for (let key of this.spell.yantras) {
@@ -1247,6 +1268,24 @@ export default {
     toolYantraOptions() {
       return this.getYantraOptions("t")
     },
+    yantraOptions() {
+      return [
+        { type: "group", label: "Locations", key: "locations", children: this.locationYantraOptions },
+        { type: "group", label: "Actions", key: "actions", children: this.actionYantraOptions },
+        { type: "group", label: "Tools", key: "tools", children: this.toolYantraOptions },
+      ]
+    },
+    casterPraxesSummary() {
+      let summary = this.caster.praxes.map(p => p.name);
+      if (summary.length === 0) return "None"
+      return summary.join(", ")
+    },
+    casterRotesSummary() {
+      let summary = this.caster.rotes.map(p => p.name);
+      if (summary.length === 0) return "None"
+      if (summary.length === 1) return "1 Spell"
+      return `${summary.length} Spells`
+    },
     gnosisSummary() {
       let summary = ""
       if (this.caster.gnosis > 0) summary += `Gnosis ${this.caster.gnosis}`
@@ -1264,8 +1303,6 @@ export default {
     },
     effectsSummary() {
       let summary = []
-      if (this.spell.isPraxis) summary.push(`Praxis`)
-      if (this.spell.isRote) summary.push(`Rote (+${this.spell.roteSkill})`)
       if (this.spell.effects.length || this.spell.spendWillpower) summary.push(`Effects (${this.spell.effects.length + (this.spell.spendWillpower ? 1 : 0)})`)
       if (summary.length === 0) return "None"
       return summary.join(", ")
@@ -1403,6 +1440,7 @@ export default {
   watch: {
     caster: {
       handler(value) {
+        console.log('value', value)
         localStorage.setItem("caster", JSON.stringify(value))
       },
       deep: true,
@@ -1455,18 +1493,91 @@ export default {
       if (value === true) this.theme = darkTheme
       if (value === false) this.theme = lightTheme
     },
+    chooseYantraFromDropdown(option) {
+      if (this.chooseYantraDropdown) {
+        this.chooseYantraDropdown.blur()
+        this.chooseYantraValue = null
+      }
+      this.addYantra(option)
+    },
+    choosePraxisFromDropdown(option) {
+      if (this.choosePraxisDropdown) {
+        this.choosePraxisDropdown.blur()
+        this.choosePraxisValue = null
+      }
+      this.caster.praxes = this.caster.praxes || []
+      this.caster.praxes.push({
+        name: option.name,
+        arcana: option.primaryArcana.arcana,
+        level: option.primaryArcana.level,
+      });
+    },
+    chooseRoteFromDropdown(option) {
+      if (this.chooseRoteDropdown) {
+        this.chooseRoteDropdown.blur()
+        this.chooseRoteValue = null
+      }
+      this.caster.rotes = this.caster.rotes || []
+      this.caster.rotes.push({
+        name: option.name,
+        arcana: option.primaryArcana.arcana,
+        level: option.primaryArcana.level,
+        skill: 0,
+      });
+    },
+    hasPraxis(name) {
+      return this.caster.praxes.find((s) => s.name === name)
+    },
+    hasRote(name) {
+      return this.caster.rotes.find((s) => s.name === name)
+    },
+    removePraxisSpell(name) {
+      let index = this.caster.praxes.findIndex((s) => s.name === name);
+      if (index !== -1) this.caster.praxes.splice(index, 1);
+    },
+    removeRoteSpell(name) {
+      let index = this.caster.rotes.findIndex((s) => s.name === name);
+      if (index !== -1) this.caster.rotes.splice(index, 1);
+    },
+    renderYantraLabel(option) {
+      if (option.type === "group") return option.label
+      return h(
+        'div',
+        {
+          style: { padding: '4px 0' },
+        },
+        [
+          h('b', option.label),
+          h('br'),
+          option.disabledWarning || option.desc,
+        ]
+      )
+    },
     chooseSpell(spell) {
+      this.spell = clone(defaultSpell)
       this.spell.name = spell.name
       this.spell.practice = spell.practice
       this.spell.primaryArcana = spell.primaryArcana
       this.spell.secondaryArcana = spell.secondaryArcana
       this.spell.primaryFactor = spell.primaryFactor
+      this.spell.roteSkill = spell.roteSkill
       this.spell.roteSkills = spell.roteSkills
       this.spell.description = spell.description
       this.spell.additionalEffects = spell.additionalEffects
       this.spell.effects = []
       this.spell.yantras = []
       this.spell.page = spell.page
+
+      const hasPraxis = this.hasPraxis(spell.name)
+      if (hasPraxis) {
+        this.spell.isPraxis = true
+      }
+
+      const hasRote = this.hasRote(spell.name)
+      if (hasRote) {
+        this.spell.isRote = true
+        this.spell.roteSkill = hasRote.skill
+      }
     },
     dots(num) {
       return Array.from({ length: num }, () => "•").join("")
@@ -1582,10 +1693,11 @@ export default {
           }
 
           if (key === "t1" && this.isDedicatedToolYantraUsed) {
-            disabledWarning = "A Dedicated Tool is already being used."
+            disabledWarning = "Dedicated Tool is already being used."
           }
 
           yantra.disabledWarning = disabledWarning
+          yantra.disabled = !!disabledWarning
 
           // add to options
           options.push(yantra)
@@ -1736,6 +1848,7 @@ export default {
     if (localStorage.getItem("caster")) {
       try {
         this.caster = JSON.parse(localStorage.getItem("caster"))
+        console.log('caster', this.caster)
       } catch (err) {
         console.error(err)
         localStorage.removeItem("caster")
@@ -1777,10 +1890,9 @@ body {
   height: 100vh;
 }
 .n-tabs {
-  padding: 0px 10px 100px;
+  padding: 60px 10px 100px;
   max-width: 600px;
   margin: 0 auto;
-  margin-top: 20px;
 }
 .n-tabs .n-tabs-tab-pad {
   width: 5px;
@@ -1795,14 +1907,10 @@ body {
 }
 .s-table td {
   vertical-align: middle;
-  line-height: 20px;
-}
-.e-table td {
-  vertical-align: top;
   line-height: 19px;
 }
-.e-table td .n-switch {
-  vertical-align: top;
+.s-table td .n-switch {
+  vertical-align: middle;
 }
 .n-card {
   border-radius: 5px;

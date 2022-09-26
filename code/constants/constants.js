@@ -1,15 +1,4 @@
-export const arcanaNames = [
-  "Death",
-  "Fate",
-  "Forces",
-  "Life",
-  "Matter",
-  "Mind",
-  "Prime",
-  "Spirit",
-  "Space",
-  "Time",
-]
+export const arcanaNames = ["Death", "Fate", "Forces", "Life", "Matter", "Mind", "Prime", "Spirit", "Space", "Time"]
 
 export const castingMethods = ["Normal", "Rote", "Praxis"]
 
@@ -429,7 +418,7 @@ export const yantrasBaseData = new Map([
     "t1",
     {
       name: "Dedicated Tool",
-      desc: "An item that synchronizes with her Nimbus and that feeds in to her understanding of magic. Reduces Paradox by 2 dice.",
+      desc: "Tool which synchronizes with the mage's Nimbus. Reduces Paradox by 2 dice.",
       bonus: 0,
       unique: true,
     },
@@ -438,7 +427,7 @@ export const yantrasBaseData = new Map([
     "t2",
     {
       name: "Path Tool",
-      desc: "Tools which align closely to her Path. See p.121 for examples.",
+      desc: "Tools which aligns closely to the mage's Path.",
       bonus: 1,
       unique: false,
     },
@@ -447,7 +436,7 @@ export const yantrasBaseData = new Map([
     "t3",
     {
       name: "Order Tool",
-      desc: "Tools which draw upon an Order’s symbols rather than those of the Supernal world directly, focusing magic in a way that matches their teachings.",
+      desc: "Tools which draw upon an Order's symbols and teachings.",
       bonus: 1,
       unique: false,
     },
@@ -456,7 +445,7 @@ export const yantrasBaseData = new Map([
     "t4",
     {
       name: "Material Sympathy",
-      desc: "An item sympathetically linked to the subject <i>as they are now</i>. At least one sympathetic tool is required for sympathetic casting. Does not grant a bonus when used with Sympathetic Range or Temporal Sympathy Attainments.",
+      desc: "An item sympathetically linked to the subject as they are now. At least one sympathetic tool is required for sympathetic casting. Does not grant a bonus when used with Sympathetic Range or Temporal Sympathy Attainments.",
       bonus: 2,
       unique: false,
     },
@@ -465,7 +454,7 @@ export const yantrasBaseData = new Map([
     "t5",
     {
       name: "Representational Sympathy",
-      desc: "An item sympathetically linked to the subject <i>as they were previously</i>. At least one sympathetic tool is required for sympathetic casting. Does not grant a bonus when used with Sympathetic Range or Temporal Sympathy Attainments.",
+      desc: "An item sympathetically linked to the subject as they were previously. At least one sympathetic tool is required for sympathetic casting. Does not grant a bonus when used with Sympathetic Range or Temporal Sympathy Attainments.",
       bonus: 1,
       unique: false,
     },
@@ -483,7 +472,7 @@ export const yantrasBaseData = new Map([
     "t7",
     {
       name: "Sacrament",
-      desc: "An object symbolic of the spell that the mage destroys during casting.",
+      desc: "An object symbolic of the spell destroyed during casting.",
       bonus: 1,
       unique: false,
     },
@@ -510,7 +499,7 @@ export const yantrasBaseData = new Map([
     "t10",
     {
       name: "Persona",
-      desc: "A persona Yantra keys in to the mage’s Shadow Name and Cabal Theme Merits.",
+      desc: "Uses the mage's Shadow Name and Cabal Theme Merits.",
       bonus: [1, 4],
       unique: true,
     },
