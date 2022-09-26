@@ -271,46 +271,6 @@
                 </n-space>
               </template>
             </Card>
-            <!-- Method -->
-            <Card title="Conditions" collapsed :summary="conditionsSummary" v-if="canCastSpell">
-              <template #content>
-                <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
-                  <tbody>
-                    <tr>
-                      <td colspan="3">
-                        <n-space vertical>
-                          <b>Bonus spellcasting dice (+{{conditions.bonusDice}} dice)</b>
-                          <n-slider placement="bottom" v-model:value="conditions.bonusDice" :min="0" :max="10" />
-                        </n-space>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="3">
-                        <n-space vertical>
-                          <b>Number of active spells ({{conditions.activeSpells}})</b>
-                          <n-slider placement="bottom" v-model:value="conditions.activeSpells" :min="0" :max="10" />
-                        </n-space>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="3">
-                        <n-space vertical>
-                          <b>Withstand rating of subject (+{{conditions.subjectWithstand}})</b>
-                          <n-slider placement="bottom" v-model:value="conditions.subjectWithstand" :min="0" :max="10" />
-                        </n-space>
-                      </td>
-                    </tr>
-                  </tbody>
-                </n-table>
-              </template>
-              <template #footer v-if="conditionsSummary !== 'None'">
-                <n-space vertical>
-                  <n-text v-if="conditions.bonusDice > 0"><b>Bonus:</b> Can come from Fate magic, Merits, Artefacts, or the Storyteller.</n-text>
-                  <n-text v-if="conditions.activeSpells > 0"><b>Spells:</b> Maintaining more spells than the caster's Gnosis adds Reach.</n-text>
-                  <n-text v-if="conditions.subjectWithstand > 0"><b>Withstand:</b> Potency must exceed this rating for the spell to take effect.</n-text>
-                </n-space>
-              </template>
-            </Card>
             <!-- Potency -->
             <Card title="Potency" collapsed :summary="potencySummary" v-if="canCastSpell">
               <template #content>
@@ -422,6 +382,46 @@
                 </n-space>
               </template>
               <template #footer> Multiple witnesses do not add Paradox dice, but increase the chances of a Paradox occurring. Mana can be spent to mitigate Paradox, but is limited by Gnosis. </template>
+            </Card>
+            <!-- Conditions -->
+            <Card title="Conditions" collapsed :summary="conditionsSummary" v-if="canCastSpell">
+              <template #content>
+                <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
+                  <tbody>
+                    <tr>
+                      <td colspan="3">
+                        <n-space vertical>
+                          <b>Bonus spellcasting dice (+{{conditions.bonusDice}} dice)</b>
+                          <n-slider placement="bottom" v-model:value="conditions.bonusDice" :min="0" :max="10" />
+                        </n-space>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="3">
+                        <n-space vertical>
+                          <b>Number of active spells ({{conditions.activeSpells}})</b>
+                          <n-slider placement="bottom" v-model:value="conditions.activeSpells" :min="0" :max="10" />
+                        </n-space>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="3">
+                        <n-space vertical>
+                          <b>Withstand rating of subject (+{{conditions.subjectWithstand}})</b>
+                          <n-slider placement="bottom" v-model:value="conditions.subjectWithstand" :min="0" :max="10" />
+                        </n-space>
+                      </td>
+                    </tr>
+                  </tbody>
+                </n-table>
+              </template>
+              <template #footer v-if="conditionsSummary !== 'None'">
+                <n-space vertical>
+                  <n-text v-if="conditions.bonusDice > 0"><b>Bonus:</b> Can come from Fate magic, Merits, Artefacts, or the Storyteller.</n-text>
+                  <n-text v-if="conditions.activeSpells > 0"><b>Spells:</b> Maintaining more spells than the caster's Gnosis adds Reach.</n-text>
+                  <n-text v-if="conditions.subjectWithstand > 0"><b>Withstand:</b> Potency must exceed this rating for the spell to take effect.</n-text>
+                </n-space>
+              </template>
             </Card>
           </n-space>
         </n-tab-pane>
@@ -1410,7 +1410,9 @@ export default {
     effectsSummary() {
       let summary = []
       if (this.spell.effects.length || this.spell.spendWillpower) summary.push(`${this.spell.effects.length + (this.spell.spendWillpower ? 1 : 0)}`)
-      if (this.spell.extraReach > 0 || this.spell.extraMana > 0) summary.push("Custom")
+      if (this.spell.custom) {
+        if (this.spell.extraReach > 0 || this.spell.extraMana > 0) summary.push("Custom")
+      }
       if (summary.length === 0) return "None"
       return "Effects (" + summary.join(", ") + ")"
     },

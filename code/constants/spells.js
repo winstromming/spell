@@ -779,7 +779,7 @@ export const spells = [
     withstand: "Total Arcanum dots of Rote + Rank",
     roteSkills: ["Crafts", "Intimidation", "Occult"],
     page: "Signs of Sorcery p86",
-    mana: 1,
+    extraMana: 1,
     description:
       "The Mage binds a Ghost to a grimoire, writing its essence into the vessel's pattern. This doesn't host the Ghost's numina or influences. The Grimoire gains the Open and Resonant Conditions. When cast the spell is increased by the Ghost's Rank for Primary Factor however the Ghost has a chance to escape with a Clash of Wills to the caster. When someone memorizes a Rote the Ghost has a chance to possess them using a Clash of Wills. This spell is a Wisdom Sin against Understanding.",
   },
@@ -819,7 +819,7 @@ export const spells = [
     withstand: "Rank of Attainment + (10 - Caster's Gnosis)",
     roteSkills: ["Crafts", "Expression", "Occult"],
     page: "Signs of Sorcery p87",
-    mana: 1,
+    extraMana: 1,
     description:
       "Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
     additionalEffects: [
@@ -1409,7 +1409,7 @@ export const spells = [
     primaryFactor: "Duration",
     roteSkills: ["Athletics", "Crafts", "Occult"],
     page: "Mage: Awakening p137",
-    mana: 1,
+    extraMana: 1,
     description: "Gain the rote quality.",
     additionalEffects: [
       {
@@ -1539,7 +1539,7 @@ export const spells = [
     withstand: "Rank of Attainment + (10 - Caster's Gnosis)",
     roteSkills: ["Crafts", "Expression", "Occult"],
     page: "Signs of Sorcery p87",
-    mana: 1,
+    extraMana: 1,
     description:
       "Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
     additionalEffects: [
@@ -2145,7 +2145,7 @@ export const spells = [
     primaryFactor: "Duration",
     roteSkills: ["Expression", "Larceny", "Science"],
     page: "Signs of Sorcery p69",
-    mana: 1,
+    extraMana: 1,
     description:
       "Primes an object with the potential for activation to hold a spell. Once the object is primed a mage may spend a Mana to cast any other spell on the object which doesn't activate until appropriate force is applied to the object. May store spells up to Potency which won't take affect until either the controlling mage cancels this spell, the duration ends or the correct force is applied to the object.",
   },
@@ -3133,7 +3133,7 @@ export const spells = [
     primaryFactor: "Duration",
     roteSkills: ["Athletics", "Medicine", "Survival"],
     page: "Mage: Awakening p152",
-    mana: 1,
+    extraMana: 1,
     description: "Restore lost organs or limbs.",
   },
   {
@@ -3652,7 +3652,7 @@ export const spells = [
     primaryFactor: "Duration",
     roteSkills: ["Crafts", "Persuasion", "Science"],
     page: "Signs of Sorcery p61",
-    mana: 1,
+    extraMana: 1,
     description: "The mage takes an ordinary metal (iron, gold, silver, mercury, copper, tin or lead) and transmutes it into its perfected metal.",
     additionalEffects: [
       {
@@ -3736,7 +3736,7 @@ export const spells = [
     primaryFactor: "Duration",
     roteSkills: ["Crafts", "Medicine", "Subterfuge"],
     page: "Signs of Sorcery p70",
-    mana: 1,
+    extraMana: 1,
     description:
       "Magically alters an ingested item, making it act as a storage vessel for another spell. Once the Ingested item has been primed for holding a mage may spend a Mana to cast any other spell on the item if it uses touch/self range. The cast spell doesn't take affect until the item is ingested. May store spells up to level of Potency which don't activate until either Spell Potion is canceled, the Duration ends or the food is injested.",
   },
@@ -3841,7 +3841,7 @@ export const spells = [
     primaryFactor: "Duration",
     roteSkills: ["Crafts", "Expression", "Persuasion"],
     page: "Signs of Sorcery p62",
-    mana: 1,
+    extraMana: 1,
     description: "Combine perfected metals into a single metal called Dumanium. The object is Durability 1 and holds 1 point of Mana. Weapons made from Dumanium can spend Mana to deal aggravated Damage for a single attack.",
     additionalEffects: [
       {
@@ -3865,7 +3865,7 @@ export const spells = [
     primaryFactor: "Duration",
     roteSkills: ["Crafts", "Occult", "Science"],
     page: "Signs of Sorcery p62",
-    mana: 1,
+    extraMana: 1,
     description: "Combine perfected metals into a single metal that scavenges Mana called Sophis. The object is Durability 1 and can hold 1 Mana. Potency increases this 1 for 1 for Durability and Mana.",
     additionalEffects: [
       {
@@ -3889,7 +3889,7 @@ export const spells = [
     primaryFactor: "Duration",
     roteSkills: ["Crafts", "Occult", "Survival"],
     page: "Signs of Sorcery p62",
-    mana: 1,
+    extraMana: 1,
     description: "Combine perfected metals to create Thaumium, The object is Durability 1 and holds 1 point of Mana which it spends to shield against Magic.",
     additionalEffects: [
       {
@@ -4366,7 +4366,7 @@ export const spells = [
     primaryFactor: "Duration",
     roteSkills: ["Empathy", "Stealth", "Subterfuge"],
     page: "Mage: Awakening p160",
-    mana: 1,
+    extraMana: 1,
     description: "The Mage hides the Subject's Psychic Presence which Prevents people form remembering their presence or looking their way. Active attempts to do so with supernatural abilities (Including active Mage sight) provoke a Clash of Wills.",
   },
   {
@@ -4608,7 +4608,7 @@ export const spells = [
     withstand: "Total Arcanum dots used in rote",
     roteSkills: ["Crafts", "Expression", "Occult"],
     page: "Signs of Sorcery p85",
-    mana: 1,
+    extraMana: 1,
     description: "Scribe a Rote within ones own Oneiros, these can be cast from the Grimoire without needing to meditate to the Astral.",
     additionalEffects: [
       {
@@ -5035,7 +5035,7 @@ export const spells = [
     withstand: "Total Arcanum dots of Rote + Rank",
     roteSkills: ["Crafts", "Intimidation", "Occult"],
     page: "Signs of Sorcery p86",
-    mana: 1,
+    extraMana: 1,
     description:
       "The Mage binds a Goetia to a grimoire, writing its essence into the vessel's pattern. This doesn't host the Goetia's numina or influences nor does it have an essence pool. The Grimoire gains the Open and Resonant Conditions. When cast the spell is increased by the Goetia Rank for Primary Factor however the Goetia has a chance to escape with a Clash of Wills to the caster. When someone memorizes a Rote the Goetia has a chance to possess them using a Clash of Wills. This spell is a Wisdom Sin against Understanding.",
   },
@@ -5235,7 +5235,7 @@ export const spells = [
     withstand: "Rank of Attainment + (10 - Caster's Gnosis)",
     roteSkills: ["Crafts", "Expression", "Occult"],
     page: "Signs of Sorcery p87",
-    mana: 1,
+    extraMana: 1,
     description:
       "Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
     additionalEffects: [
@@ -5866,7 +5866,7 @@ export const spells = [
     primaryFactor: "Potency",
     roteSkills: ["Crafts", "Investigation", "Occult"],
     page: "Signs of Sorcery p84",
-    mana: 1,
+    extraMana: 1,
     description: "The mage copies one whole grimoire into two or more disparate parts that individually mean nothing. Only someone with all parts may use the rotes within the Grimoire.",
     additionalEffects: [
       {
@@ -6059,7 +6059,7 @@ export const spells = [
     primaryFactor: "Duration",
     roteSkills: ["Craft", "Expression", "Science"],
     page: "Signs of Sorcery p28",
-    mana: 1,
+    extraMana: 1,
     description: "This spell enchants a Camera, video recorder or similar device and allows it to record Supernal Energies allowing a mage to study the recordings using Active and Focused mage sight.",
     additionalEffects: [
       {
@@ -6223,7 +6223,7 @@ export const spells = [
     primaryFactor: "Potency",
     roteSkills: ["Academics", "Crafts", "Expression"],
     page: "Mage: Awakening p169",
-    mana: 1,
+    extraMana: 1,
     description:
       " Create a simple Tass object or tool of Size 5 or less from Mana. Durability is 1 and contains one Mana. Potency may be allocated to the following effects: Increase Durability by +1, Increase Mana capacity by +1, If a tool add +1 equipment bonus though each use of the tool now uses one up Mana. When all Mana is used up the object crumbles. If the spell expires any unused Mana will be lost.",
     additionalEffects: [
@@ -6268,7 +6268,7 @@ export const spells = [
     withstand: "Resolve",
     roteSkills: ["Intimidation", "Occult", "Subterfuge"],
     page: "Signs of Sorcery p72",
-    mana: 1,
+    extraMana: 1,
     description: "This spell alters the imbument process, creating an item that will always target the user. The subject of the spell must be a mage.",
   },
   {
@@ -6309,7 +6309,7 @@ export const spells = [
     withstand: "Rotes Total Arcanum dots +1",
     roteSkills: ["Crafts", "Expression", "Occult"],
     page: "Signs of Sorcery p84",
-    mana: 1,
+    extraMana: 1,
     description:
       "Like 'Scribe Grimoire' this spell gives physical form to a single rote's symbols using a Grimoire that has had its contents erased, scrubbed, scribbled out, painted over or otherwise made unreadable. The Storyteller chooses one Arcanum when the character casts this spell. Whenever a character later casts the rote from the completed Grimoire, it acts as though it incorporated dots of the chosen Arcanum equal to this spell’s Potency, creating unpredictable blended effects.",
     additionalEffects: [
@@ -6356,7 +6356,7 @@ export const spells = [
     withstand: "Stamina",
     roteSkills: ["Expression", "Occult", "Subterfuge"],
     page: "Signs of Sorcery p72",
-    mana: 1,
+    extraMana: 1,
     description:
       "This spell alters the imbument process resulting in an item that siphons its users Mana. When under this spell when Imbuing an item you may set a Mana capacity to the item, instead of imbuing it with that much Mana it steals it from its user. When someone goes to activate the spell it will steal mana equal to capacity, should it attempt to take more than its capacity the leftover Mana dissipates into the atmosphere. If the user doesn't have enough Mana it deals Bashing damage for each Mana it cannot siphon.",
   },
@@ -6642,7 +6642,7 @@ export const spells = [
     withstand: "Rank of Attainment + (10 - Caster's Gnosis)",
     roteSkills: ["Crafts", "Expression", "Occult"],
     page: "Signs of Sorcery p87",
-    mana: 1,
+    extraMana: 1,
     description:
       "Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
     additionalEffects: [
@@ -8408,7 +8408,7 @@ export const spells = [
     withstand: "Total Arcanum dots of Rote + Rank",
     roteSkills: ["Crafts", "Intimidation", "Occult"],
     page: "Signs of Sorcery p86",
-    mana: 1,
+    extraMana: 1,
     description:
       "The Mage binds a spirit to a grimoire, writing its essence into the vessel's pattern. This doesn't host the Spirits numina or influences nor does it have an essence pool. The Grimoire gains the Open and Resonant Conditions. When cast the spell is increased by the Spirits Rank for Primary Factor however the Spirit has a chance to escape with a Clash of Wills to the caster. When someone memorizes a Rote the Spirit has a chance to possess them using a CLash of Wills. This spell is a Wisdom Sin against Understanding.",
   },
@@ -8427,7 +8427,7 @@ export const spells = [
     withstand: "Rank of Attainment + (10 - Caster's Gnosis)",
     roteSkills: ["Crafts", "Expression", "Occult"],
     page: "Signs of Sorcery p87",
-    mana: 1,
+    extraMana: 1,
     description:
       "Scribe a Daimonomikon for the Mage's Legacy. A Mage must be of Gnosis 2 or above to cast this. Anyone initiated into a Legacy via a Daimonomikon must spend 1 Arcane Experience and if used to learn more Legacy Attainments must use the Experience cost listed for learning without a tutor. These serve as a sympathetic Yantra worth +2 Dice for members of the inscribed Legacy.",
     additionalEffects: [
