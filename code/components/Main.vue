@@ -1968,14 +1968,14 @@ export default {
       itemCastingSummary.push(`${this.totalMana} Mana`)
       itemCastingSummary.push(`${this.paradoxDice} Paradox`)
       const itemFactorSummary = [];
-      itemFactorSummary.push(`${this.potencySummary} potency`)
-      itemFactorSummary.push(`${this.durationSummary} duration`)
-      itemFactorSummary.push(`${this.castingTimeSummary} casting time`)
-      itemFactorSummary.push(`${this.rangeSummary} range`)
-      itemFactorSummary.push(`${this.scaleSummary}`)
+      itemFactorSummary.push(`${this.potencySummary.toLowerCase()} potency`)
+      itemFactorSummary.push(`${this.durationSummary.toLowerCase()} duration`)
+      itemFactorSummary.push(`${this.castingTimeSummary.toLowerCase()} casting time`)
+      itemFactorSummary.push(`${this.rangeSummary.toLowerCase()} range`)
+      itemFactorSummary.push(`${this.scaleSummary.toLowerCase()}`)
       const itemEffectSummary = item.effects.map(effect => effect.effect);
       if (item.spendWillpower) itemEffectSummary.unshift("Willpower spent")
-      if (item.changePrimaryFactor) itemEffectSummary.push("Changed primary factor.")
+      if (item.commonEffects.changePrimaryFactor) itemEffectSummary.push("Changed primary factor.")
       if (this.conditions.activeSpells >= this.caster.gnosis) itemEffectSummary.push("Casting above active limit.")
       if (item.custom) itemEffectSummary.push(`${item.description} (Creative Thaumaturgy, ${item.practice})`)
       const itemYantraSummary = item.yantras.map(yantra => yantra.name);
