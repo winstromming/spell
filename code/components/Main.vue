@@ -225,15 +225,6 @@
                 <n-space vertical>
                   <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
                     <tbody>
-                      <tr>
-                        <td width="20" style="padding-right: 0">
-                          <n-switch size="small" v-model:value="spell.spendWillpower" />
-                        </td>
-                        <td width="150" colspan="2">
-                          <b>+1 Willpower:</b><br />
-                          Gain +3 dice.
-                        </td>
-                      </tr>
                       <tr v-if="spell.custom === true">
                         <td>
                           <n-switch size="small" :disabled="true" :value="spell.extraMana > 0" />
@@ -255,6 +246,18 @@
                             <n-slider :tooltip="false" v-model:value="spell.extraReach" :min="0" :max="10" />
                           </n-space>
                         </td>
+                      </tr>
+                      <tr>
+                        <td width="20" style="padding-right: 0">
+                          <n-switch size="small" v-model:value="spell.spendWillpower" />
+                        </td>
+                        <td width="150" colspan="2"><b>+1 Willpower:</b><br />Gain +3 spellcasting dice.</td>
+                      </tr>
+                      <tr>
+                        <td width="20" style="padding-right: 0">
+                          <n-switch size="small" v-model:value="spell.commonEffects.changePrimaryFactor" />
+                        </td>
+                        <td colspan="2"><b>+1 Reach:</b><br />Change the primary factor.</td>
                       </tr>
                       <tr v-if="spell.custom !== true" v-for="(item, index) of spell.additionalEffects" :key="index">
                         <td v-if="item.cost" width="20" style="padding-right: 0">
@@ -283,7 +286,7 @@
               <template #content>
                 <n-select v-model:value="spell.factors.duration" :options="durationOptions" />
               </template>
-              <template #footer v-if="spell.factors.duration === 'a6'"> Indefinite duration requires +1 Reach and +1 Mana </template>
+              <template #footer v-if="spell.factors.duration === 'a6'"> Indefinite duration requires +1 Reach and +1 Mana above the normal amount.</template>
             </Card>
             <!-- Casting Time -->
             <Card title="Casting Time" collapsed :summary="castingTimeSummary" v-if="canCastSpell">
@@ -297,6 +300,7 @@
               <template #content>
                 <n-select v-model:value="spell.factors.range" :options="rangeOptions" />
               </template>
+              <template #footer v-if="spell.factors.range === 'a2'"> Remote Viewing range requires +1 Reach above the normal amount.</template>
             </Card>
             <!-- Scale -->
             <Card title="Scale" collapsed :summary="scaleSummary" v-if="canCastSpell">
@@ -418,7 +422,7 @@
               <template #footer v-if="conditionsSummary !== 'None'">
                 <n-space vertical>
                   <n-text v-if="conditions.bonusDice > 0"><b>Bonus:</b> Can come from Fate magic, Merits, Artefacts, or the Storyteller.</n-text>
-                  <n-text v-if="conditions.activeSpells > 0"><b>Spells:</b> Maintaining more spells than the caster's Gnosis adds Reach.</n-text>
+                  <n-text v-if="conditions.activeSpells > 0"><b>Spells:</b> Maintaining more spells than the caster's Gnosis adds +1 Reach for each spell over the limit.</n-text>
                   <n-text v-if="conditions.subjectWithstand > 0"><b>Withstand:</b> Potency must exceed this rating for the spell to take effect.</n-text>
                 </n-space>
               </template>
@@ -539,6 +543,9 @@ const defaultSpell = {
   description: undefined,
   effects: [],
   additionalEffects: [],
+  commonEffects: {
+    changePrimaryFactor: false,
+  },
   description: undefined,
   page: undefined,
   factors: {
@@ -755,9 +762,19 @@ export default {
         }
       }
 
-      // indefinite duration costs 1 reach
-      if (!this.isPrimaryFactor("Duration") && this.spell.factors.duration === "a6") {
-        reach++
+      // check for common effects
+      if (this.spell.commonEffects.changePrimaryFactor) {
+        reach += 1
+      }
+
+      // remote viewing range costs 1 additional reach
+      if (this.spell.factors.range === "a2") {
+        reach += 1
+      }
+
+      // indefinite duration costs 1 additional reach
+      if (this.spell.factors.duration === "a6") {
+        reach += 1
       }
 
       // spell-specific extra reach
@@ -1233,13 +1250,16 @@ export default {
         type: "group",
         label: "Standard",
         key: "standard",
-        children: [{ value: "s1", label: "Touch/Aimed" }],
+        children: [{ value: "s1", label: "Touch" }],
       })
       options.push({
         type: "group",
         label: "Advanced",
         key: "advanced",
-        children: [{ value: "a1", label: "Sensory" }],
+        children: [
+          { value: "a1", label: "Sensory" },
+          { value: "a2", label: "Remote" },
+        ],
       })
       return options
     },
@@ -1492,7 +1512,7 @@ export default {
     },
     rangeSummary() {
       if (this.spell.factors.range === "s1") {
-        return "Touch/aimed"
+        return "Touch"
       } else if (
         this.spell.attainments.sympatheticRange ||
         this.spell.attainments.temporalSympathy
@@ -1509,7 +1529,8 @@ export default {
 
         return range.join(" and ")
       } else {
-        return "Sensory"
+        if (this.spell.factors.range === "a1") return "Sensory"
+        if (this.spell.factors.range === "a2") return "Remote"
       }
     },
     scaleSummary() {
@@ -1580,6 +1601,13 @@ export default {
         //     }
         //   }, 250)
         // }
+    },
+    "spell.commonEffects.changePrimaryFactor": function (newer, older) {
+      const current = this.spell.primaryFactor
+      if (newer === true && current === "Potency") this.spell.primaryFactor = "Duration"
+      if (newer === true && current === "Duration") this.spell.primaryFactor = "Potency"
+      if (newer === false && current === "Duration") this.spell.primaryFactor = "Potency"
+      if (newer === false && current === "Potency") this.spell.primaryFactor = "Duration"
     },
     "conditions.subjectWithstand": function (newer, older) {
       let extraPotency = this.spell.factors.potency[1] - 1
@@ -1737,6 +1765,28 @@ export default {
         this.spell.isRote = true
         this.spell.roteSkill = hasRote.skill
       }
+    },
+    addCommonReachEffects() {
+      let effects = []
+      effects.push({
+        cost: [{ type: "Reach", value: 1 }],
+        effect: "Change the primary factor"
+      });
+      effects.push({
+        cost: [{ type: "Reach", value: 1 }],
+        requirement: [{ factor: "Range", value: "a1" }],
+        effect: "Change the range to remote viewing"
+      });
+      effects.push({
+        cost: [{ type: "Reach", value: 1 }],
+        requirement: [{ factor: "Range", value: "a1" }],
+        effect: "Change the active spells limit"
+      });
+      effects.push({
+        cost: [{ type: "Reach", value: 1 }, { type: "Mana", value: 1 }],
+        requirement: [{ factor: "Duration", value: "a" }],
+        effect: "Change the duration to indefinite"
+      });
     },
     dots(num) {
       return Array.from({ length: num }, () => "•").join("")
@@ -1924,11 +1974,13 @@ export default {
       itemFactorSummary.push(`${this.rangeSummary} range`)
       itemFactorSummary.push(`${this.scaleSummary}`)
       const itemEffectSummary = item.effects.map(effect => effect.effect);
-      if (item.spendWillpower) itemEffectSummary.unshift("Willpower spent.")
+      if (item.spendWillpower) itemEffectSummary.unshift("Willpower spent")
+      if (item.changePrimaryFactor) itemEffectSummary.push("Changed primary factor.")
+      if (this.conditions.activeSpells >= this.caster.gnosis) itemEffectSummary.push("Casting above active limit.")
       if (item.custom) itemEffectSummary.push(`${item.description} (Creative Thaumaturgy, ${item.practice})`)
       const itemYantraSummary = item.yantras.map(yantra => yantra.name);
       const about = []
-      if (this.dicePool > 6) about.push(`easy`);
+      if (this.dicePool > 7) about.push(`easy`);
       if (this.dicePool < 4) about.push(`hard`);
       if (this.paradoxDice === 0) about.push(`safe`);
       else if (typeof this.paradoxDice !== "string") about.push(`risky`);
@@ -1937,6 +1989,7 @@ export default {
       if (item.factors.duration[0] === "s") about.push("short")
       if (item.factors.duration[0] === "a") about.push("long")
       if (Number(item.factors.scale[1]) > 3) about.push("big")
+      if (this.usedReach > 4) about.push("complex")
 
       item.id = new Date().getTime()
       item.tags = {

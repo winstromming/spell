@@ -108,51 +108,9 @@ export const durations = new Map([
     },
   ],
   [
-    "s6",
-    {
-      time: "20 turns",
-      penalty: 10,
-    },
-  ],
-  [
-    "s7",
-    {
-      time: "30 turns",
-      penalty: 12,
-    },
-  ],
-  [
-    "s8",
-    {
-      time: "40 turns",
-      penalty: 14,
-    },
-  ],
-  [
-    "s9",
-    {
-      time: "50 turns",
-      penalty: 16,
-    },
-  ],
-  [
-    "s10",
-    {
-      time: "60 turns",
-      penalty: 18,
-    },
-  ],
-  [
-    "s11",
-    {
-      time: "70 turns",
-      penalty: 20,
-    },
-  ],
-  [
     "a1",
     {
-      time: "1 scene/hour",
+      time: "1 hour",
       penalty: 0,
     },
   ],
@@ -187,7 +145,7 @@ export const durations = new Map([
   [
     "a6",
     {
-      time: "Indefinite",
+      time: "Indefinitely",
       penalty: 10,
     },
   ],
@@ -199,7 +157,7 @@ export const scales = new Map([
     {
       number: 1,
       size: "5",
-      area: "Arms reach",
+      area: "within reach",
       penalty: 0,
     },
   ],
@@ -226,7 +184,7 @@ export const scales = new Map([
     {
       number: 8,
       size: "8",
-      area: "Several rooms",
+      area: "several rooms",
       penalty: 6,
     },
   ],
@@ -244,35 +202,8 @@ export const scales = new Map([
     {
       number: 32,
       size: "10",
-      area: "small house",
+      area: "large house",
       penalty: 10,
-    },
-  ],
-  [
-    "s7",
-    {
-      number: 64,
-      size: "11",
-      area: "small house",
-      penalty: 12,
-    },
-  ],
-  [
-    "s8",
-    {
-      number: 128,
-      size: "12",
-      area: "small house",
-      penalty: 14,
-    },
-  ],
-  [
-    "s9",
-    {
-      number: 256,
-      size: "13",
-      area: "small house",
-      penalty: 16,
     },
   ],
   [
@@ -327,33 +258,6 @@ export const scales = new Map([
       size: "30",
       area: "small neighborhood",
       penalty: 10,
-    },
-  ],
-  [
-    "a7",
-    {
-      number: "320",
-      size: "35",
-      area: "small neighborhood",
-      penalty: 12,
-    },
-  ],
-  [
-    "a8",
-    {
-      number: "640",
-      size: "40",
-      area: "small neighborhood",
-      penalty: 14,
-    },
-  ],
-  [
-    "a9",
-    {
-      number: "1280",
-      size: "45",
-      area: "small neighborhood",
-      penalty: 16,
     },
   ],
 ])
