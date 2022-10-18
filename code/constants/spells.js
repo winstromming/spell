@@ -138,6 +138,47 @@ export const spells = [
     ],
   },
   {
+    name: "Transient Review",
+    primaryArcana: {
+      arcana: "Death",
+      level: 1,
+    },
+    practice: "Knowing",
+    primaryFactor: "Duration",
+    roteSkills: ["Medicine", "Crafts", "Investigation"],
+    page: "N/A",
+    description: "The mage gains an understanding of how long the subject has existed in its current state, its manner and rate of decay, including any currently contributing factors.",
+    additionalEffects: [
+      {
+        cost: [
+          {
+            type: "Reach",
+            value: 1,
+          },
+        ],
+        effect: "If the mage inflicts damage to the subject during the duration, reduce Durability by an amount equal to Potency.",
+      },
+      {
+        cost: [
+          {
+            type: "Reach",
+            value: 1,
+          },
+        ],
+        effect: "Dice rolls to inflict damage to the subject during the duration gain the 9-again quality.",
+      },
+      {
+        cost: [
+          {
+            type: "Reach",
+            value: 2,
+          },
+        ],
+        effect: "Dice rolls to inflict damage to the subject during the duration gain the 8-again quality.",
+      },
+    ],
+  },
+  {
     name: "Corpse Mask",
     primaryArcana: {
       arcana: "Death",

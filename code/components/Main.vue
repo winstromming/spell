@@ -1974,7 +1974,7 @@ export default {
       itemFactorSummary.push(`${this.rangeSummary.toLowerCase()} range`)
       itemFactorSummary.push(`${this.scaleSummary.toLowerCase()}`)
       const itemEffectSummary = item.effects.map(effect => effect.effect);
-      if (item.spendWillpower) itemEffectSummary.unshift("Willpower spent")
+      if (item.spendWillpower) itemEffectSummary.unshift("Willpower spent.")
       if (item.commonEffects.changePrimaryFactor) itemEffectSummary.push("Changed primary factor.")
       if (this.conditions.activeSpells >= this.caster.gnosis) itemEffectSummary.push("Casting above active limit.")
       if (item.custom) itemEffectSummary.push(`${item.description} (Creative Thaumaturgy, ${item.practice})`)
