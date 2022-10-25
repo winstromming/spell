@@ -2038,6 +2038,10 @@ export default {
     loadSpell(spell) {
       const cloned = clone(spell)
       this.spell = cloned
+      this.spell.primaryArcana.arcana = spell.primaryArcana.arcana;
+      this.spell.primaryArcana.level = spell.primaryArcana.level;
+      this.spell.secondaryArcana.arcana = spell.secondaryArcana.arcana;
+      this.spell.secondaryArcana.level = spell.secondaryArcana.level;
       this.paradox = clone(defaultParadox)
       this.conditions = clone(defaultConditions)
       this.message.success(`${cloned.name} was loaded`)
