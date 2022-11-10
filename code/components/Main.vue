@@ -435,7 +435,7 @@
               <n-text italic depth="3">No saved spells found</n-text>
             </n-card>
             <!-- Saved -->
-            <Card :title="item.name" collapsed :summary="item.summary" v-for="(item, index) in saved" :key="item.id">
+            <Card :title="item.name" collapsed :summary="item.summary" v-for="(item) in saved" :key="item.id">
               <template #content>
                 <n-space vertical size="large">
                   <n-space size="small" v-if="item.tags">
@@ -446,7 +446,7 @@
                     <n-tag v-if="item.tags.paradox" size="small" :bordered="false" round strong type="error">{{ item.tags.paradox }} Paradox</n-tag>
                   </n-space>
                   <n-text><b>Factors:</b> {{ item.factorSummary }}.</n-text>
-                  <n-text v-if="item.effectSummary"><b>Effects:</b> {{ item.effectSummary }}</n-text>
+                  <n-text v-if="item.effectSummary"><b>Extra:</b> {{ item.effectSummary }}</n-text>
                   <n-text v-if="item.yantraSummary"><b>Yantras:</b> {{ item.yantraSummary }}.</n-text>
                 </n-space>
               </template>
@@ -1977,7 +1977,7 @@ export default {
       if (item.spendWillpower) itemEffectSummary.unshift("Willpower spent.")
       if (item.commonEffects.changePrimaryFactor) itemEffectSummary.push("Changed primary factor.")
       if (this.conditions.activeSpells >= this.caster.gnosis) itemEffectSummary.push("Casting above active limit.")
-      if (item.custom) itemEffectSummary.push(`${item.description} (Creative Thaumaturgy, ${item.practice})`)
+      if (item.custom) item.page = "Creative, " + item.practice
       const itemYantraSummary = item.yantras.map(yantra => yantra.name);
       const about = []
       if (this.dicePool > 7) about.push(`easy`);
@@ -2012,9 +2012,10 @@ export default {
       const out = [];
       out.push("&{template:default}");
       out.push(`{{name=**${spell.name}** (${spell.primaryArcana.arcana} ${Array.from({ length: spell.primaryArcana.level }, v => "&bull;").join("")})}}`)
+      out.push(`{{summary=${spell.description}${spell.page ? "\n(" + spell.page + ")" : ""}}}`)
       out.push(`{{casting=${spell.castingSummary}}}`)
       out.push(`{{factors=${spell.factorSummary}}}`)
-      out.push(`{{effects=${spell.effectSummary || "None"}}}`)
+      out.push(`{{extras=${spell.effectSummary || "None"}}}`)
       out.push(`{{yantras=${spell.yantraSummary || "None"}}}`)
       if (spell.conditionSummary !== "None") out.push(`{{conditions=${spell.conditionSummary}}}`)
       out.push(`{{=[Roll ${spell.actionSummary} to cast](!&#13;&#91;[&#63;{Number of dice|${spell.tags.dice}}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
@@ -2037,13 +2038,13 @@ export default {
     },
     loadSpell(spell) {
       const cloned = clone(spell)
-      this.spell = cloned
+      this.spell = { ...cloned }
       this.spell.primaryArcana.arcana = spell.primaryArcana.arcana;
       this.spell.primaryArcana.level = spell.primaryArcana.level;
       this.spell.secondaryArcana.arcana = spell.secondaryArcana.arcana;
       this.spell.secondaryArcana.level = spell.secondaryArcana.level;
-      this.paradox = clone(defaultParadox)
-      this.conditions = clone(defaultConditions)
+      this.paradox = { ...clone(defaultParadox) }
+      this.conditions = { ...clone(defaultConditions) }
       this.message.success(`${cloned.name} was loaded`)
       if (cloned.conditionSummary !== "None") {
         this.message.info(`Condition settings have been cleared`)
@@ -2059,7 +2060,7 @@ export default {
     },
     reset() {
       const cloned = clone(defaultSpell)
-      this.spell = cloned
+      this.spell = { ...cloned }
       this.spell.primaryArcana.arcana = undefined
       this.spell.primaryArcana.level = undefined
       this.spell.secondaryArcana.arcana = undefined
@@ -2078,8 +2079,8 @@ export default {
         duration: "s1",
         scale: "s1",
       }
-      this.paradox = clone(defaultParadox)
-      this.conditions = clone(defaultConditions)
+      this.paradox = { ...clone(defaultParadox) }
+      this.conditions = { ...clone(defaultConditions) }
       this.message.warning("Spell config has been reset")
     },
     log(text) {
