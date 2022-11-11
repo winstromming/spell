@@ -169,7 +169,7 @@
               <template #footer v-if="spell.name">
                 <n-space vertical size="large">
                   <n-text depth="3" v-if="spell.description">
-                    {{ spell.description }} <span v-if="spell.page">({{ spell.page }})</span>
+                    {{ spell.description }} <span v-if="spell.page"><br />({{ spell.page }})</span>
                   </n-text>
                   <n-grid :cols="4">
                     <n-grid-item>
@@ -2012,7 +2012,7 @@ export default {
       const out = [];
       out.push("&{template:default}");
       out.push(`{{name=**${spell.name}** (${spell.primaryArcana.arcana} ${Array.from({ length: spell.primaryArcana.level }, v => "&bull;").join("")})}}`)
-      out.push(`{{summary=${spell.description}${spell.page ? "\n(" + spell.page + ")" : ""}}}`)
+      out.push(`{{summary=${spell.description}\n(${spell.page})}}`)
       out.push(`{{casting=${spell.castingSummary}}}`)
       out.push(`{{factors=${spell.factorSummary}}}`)
       out.push(`{{extras=${spell.effectSummary || "None"}}}`)
