@@ -479,16 +479,20 @@
               <n-text>You don't have any saved spells</n-text>
             </n-alert>
             <!-- Saved -->
-            <Card v-if="hasConfiguredCaster" :title="item.name" collapsed :summary="item.summary" v-for="(item) in saved" :key="item.id">
+            <Card v-if="hasConfiguredCaster" :title="item.name" collapsed :summary="getCastingSummaryFor(item)" v-for="(item) in saved" :key="item.id">
+              <template #tags>
+                <n-space :size="5">
+                  <n-tag v-if="getRoteOrPraxisFor(item) === 'praxis'" size="small" :bordered="false" round strong style="text-transform: capitalize"> Praxis </n-tag>
+                  <n-tag v-if="getRoteOrPraxisFor(item) === 'rote'" size="small" :bordered="false" round strong style="text-transform: capitalize"> Rote </n-tag>
+                  <n-tag size="small" :bordered="false" round strong :type="getUsedReachFor(item) > getFreeReachFor(item) ? 'warning' : 'success'"> {{getUsedReachFor(item)}}/{{getFreeReachFor(item)}} Reach </n-tag>
+                  <n-tag size="small" :bordered="false" round strong type="success"> {{getDicePoolFor(item)}} Dice </n-tag>
+                  <n-tag size="small" :bordered="false" round strong type="success"> {{getTotalManaFor(item)}} Mana </n-tag>
+                  <n-tag size="small" :bordered="false" round strong type="error"> {{getParadoxDiceFor(item)}} Paradox </n-tag>
+                </n-space>
+              </template>
               <template #content>
                 <n-space vertical size="large">
-                  <n-space size="small">
-                    <n-tag size="small" :bordered="false" round strong :type="getUsedReachFor(item) > getFreeReachFor(item) ? 'warning' : 'success'">{{getUsedReachFor(item)}}/{{getFreeReachFor(item)}} Reach</n-tag>
-                    <n-tag size="small" :bordered="false" round strong type="success">{{getDicePoolFor(item)}} Dice</n-tag>
-                    <n-tag size="small" :bordered="false" round strong type="success">{{getTotalManaFor(item)}} Mana</n-tag>
-                    <n-tag size="small" :bordered="false" round strong type="error">{{getParadoxDiceFor(item)}} Paradox</n-tag>
-                    <n-tag v-if="getRoteOrPraxisFor(item)" size="small" :bordered="false" round strong style="text-transform: capitalize">{{getRoteOrPraxisFor(item)}}</n-tag>
-                  </n-space>
+                  <n-text v-if="getCastingSummaryFor(item)"><b>Casting:</b> {{getCastingSummaryFor(item)}}.</n-text>
                   <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{getFactorsSummaryFor(item)}}.</n-text>
                   <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{getEffectsSummaryFor(item)}}</n-text>
                   <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{getYantrasSummaryFor(item)}}.</n-text>
@@ -538,7 +542,7 @@ import { clone, max, some, capitalize, findIndex, range } from "lodash"
 import { useMessage } from "naive-ui"
 import { darkTheme, lightTheme } from "naive-ui"
 
-import { Close, DocumentText, Save, Trash, Build, Bookmark, ArrowUndo, Reload, ChevronDown, ChevronUp, Ellipse, EllipseOutline } from "@vicons/ionicons5"
+import { Flash, Sparkles, BatteryCharging, Settings, Dice, Flame, Skull, Close, DocumentText, DocumentTextOutline, Save, Trash, Build, Bookmark, ArrowUndo, Reload, ChevronDown, ChevronUp, Ellipse, EllipseOutline } from "@vicons/ionicons5"
 
 import Card from "./Card.vue"
 
@@ -653,7 +657,7 @@ const defaultParadox = {
 }
 
 export default {
-  components: { Card, DocumentText, Trash, Build, Bookmark, ArrowUndo, Save, Reload, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
+  components: { Card, DocumentText, DocumentTextOutline, Sparkles, Settings, BatteryCharging, Flash, Dice, Flame, Skull, Trash, Build, Bookmark, ArrowUndo, Save, Reload, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
   setup() {
     const message = useMessage()
     const container = ref(undefined)
@@ -1429,7 +1433,7 @@ export default {
       let summary = []
       let method = this.getRoteOrPraxisFor(spell)
       if (method === "rote") summary.push("Rote")
-      if (method === "praxis}") summary.push("Praxis")
+      if (method === "praxis") summary.push("Praxis")
       summary.push(`${this.getUsedReachFor(spell)}/${this.getFreeReachFor(spell)} Reach`)
       summary.push(`${this.getDicePoolFor(spell)} Dice`)
       summary.push(`${this.getTotalManaFor(spell)} Mana`)
