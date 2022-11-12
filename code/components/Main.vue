@@ -1787,8 +1787,6 @@ export default {
       return this.caster.rotes.find((s) => s.name === name)
     },
     removeCaster(id) {
-      console.log('removing id:', id)
-      console.log("casters contains ids:", this.casters.map(c => c.id).join(","))
       let index = this.casters.findIndex((s) => s.id === id)
       if (index !== -1) {
         const name = this.casters[index].name
@@ -1796,14 +1794,6 @@ export default {
         this.message.error(`${name} was removed`)
         this.caster = null
       }
-      // if (this.casters[index - 1]) this.chooseCaster(this.casters[index - 1])
-      // else if (this.casters[index]) this.chooseCaster(this.casters[index])
-      // else this.caster = null
-      // else {
-      //   let clone = clone(defaultCaster)
-      //   clone.id = new Date().getTime()
-      //   this.chooseCaster(clone)
-      // }
     },
     removePraxisSpell(name) {
       let index = this.caster.praxes.findIndex((s) => s.name === name)
@@ -2225,6 +2215,8 @@ export default {
         if (caster) {
           this.caster = caster
           this.caster.id = this.caster.id || new Date().getTime()
+          this.caster.name = this.caster.name || "You"
+          this.caster.type = this.caster.type || "Cabal"
           this.caster.praxes = this.caster.praxes || []
           this.caster.rotes = this.caster.rotes || []
         }
@@ -2237,10 +2229,6 @@ export default {
       try {
         const casters = JSON.parse(localStorage.getItem("casters"))
         this.casters = casters
-        // if (localStorage.getItem("caster") && this.casters.length === 0) {
-        //   console.log("push extra")
-        //   this.casters.push(this.caster)
-        // }
       } catch (err) {
         console.error(err)
         localStorage.removeItem("casters")
