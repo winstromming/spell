@@ -1,6 +1,6 @@
 <template>
   <n-card size="small" class="card">
-    <template #header>
+    <template #header v-if="title && title.length > 0">
       <n-button size="large" text block @click="open = !open">
         <template #icon>
           <n-icon>

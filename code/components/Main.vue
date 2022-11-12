@@ -3,41 +3,53 @@
     <n-layout static embedded>
       <n-tabs default-value="spell" animated>
         <template #suffix>
-          <!-- <n-switch v-model:value="dark" @update:value="setDark">
-            <template #checked>Dark</template>
-            <template #unchecked>Dark</template>
-          </n-switch> -->
-          <n-space size="small">
-            <n-button class="btn-only-icon-when-small" title="Reset" :disabled="canCastSpell === false" size="tiny" type="warning" @click="reset">
-              <template #icon>
-                <n-icon>
-                  <ArrowUndo />
-                </n-icon>
-              </template>
-              Reset
-            </n-button>
-            <n-button class="btn-only-icon-when-small" title="Copy for Roll20" :disabled="canCastSpell === false" size="tiny" type="info" @click="copyActiveSpell()">
-              <template #icon>
-                <n-icon>
-                  <DocumentText />
-                </n-icon>
-              </template>
-              Roll20
-            </n-button>
-            <n-button class="btn-only-icon-when-small" title="Save" :disabled="canCastSpell === false" size="tiny" type="success" @click="saveActiveSpell()">
-              <template #icon>
-                <n-icon>
-                  <Bookmark />
-                </n-icon>
-              </template>
-              Save
-            </n-button>
-          </n-space>
+          <n-select ref="chooseCasterDropdown" :value="chooseCasterValue" filterable placeholder="Choose character to edit" @update:value="chooseCaster" :options="chooseCasterOptions">
+            <template #action>
+              <n-button @click="createCaster" type="success" text>Create a new character</n-button>
+            </template>
+          </n-select>
         </template>
         <n-tab-pane name="caster" tab="Caster">
           <n-space vertical>
+            <!-- Info -->
+            <n-alert type="warning" v-if="caster === undefined || caster === null">
+              <n-text>You don't have a character selected</n-text>
+            </n-alert>
+            <!-- Caster -->
+            <Card title="" v-if="caster">
+              <template #content>
+                <n-space vertical size="large">
+                  <n-grid :cols="2" :x-gap="10" :y-gap="10">
+                    <n-grid-item>
+                      <n-space vertical size="small">
+                        <b>Name</b>
+                        <n-input v-model:value="caster.name" type="text" placeholder="eg. Merlin" />
+                      </n-space>
+                    </n-grid-item>
+                    <n-grid-item>
+                      <n-space vertical size="small">
+                        <b>Category</b>
+                        <n-input v-model:value="caster.type" type="text" placeholder="eg. Cabal" />
+                      </n-space>
+                    </n-grid-item>
+                  </n-grid>
+                </n-space>
+              </template>
+              <template #footer>
+                <n-space justify="space-between">
+                  <n-button strong text type="error" @click="removeCaster(caster.id)">
+                    <template #icon>
+                      <n-icon>
+                        <Trash />
+                      </n-icon>
+                    </template>
+                    Delete
+                  </n-button>
+                </n-space>
+              </template>
+            </Card>
             <!-- Gnosis -->
-            <Card title="Gnosis" :summary="gnosisSummary">
+            <Card title="Gnosis" :summary="gnosisSummary" v-if="caster">
               <template #content>
                 <n-rate clearable :count="10" v-model:value="caster.gnosis">
                   <n-icon>
@@ -47,7 +59,7 @@
               </template>
             </Card>
             <!-- Praxes -->
-            <Card title="Praxes" :summary="casterPraxesSummary">
+            <Card title="Praxes" :summary="casterPraxesSummary" v-if="caster">
               <template #content>
                 <n-space vertical>
                   <n-table v-if="caster.praxes.length > 0" striped class="s-table">
@@ -71,7 +83,7 @@
               </template>
             </Card>
             <!-- Rotes -->
-            <Card title="Rotes" :summary="casterRotesSummary">
+            <Card title="Rotes" :summary="casterRotesSummary" v-if="caster">
               <template #content>
                 <n-space vertical class="s-table">
                   <n-table v-if="caster.rotes.length > 0" striped class="s-table">
@@ -102,7 +114,7 @@
               </template>
             </Card>
             <!-- Arcana -->
-            <Card title="Arcana" :summary="arcanaSummary">
+            <Card title="Arcana" :summary="arcanaSummary" v-if="caster">
               <template #content>
                 <n-table striped :bordered="false" class="s-table" style="margin-left: -8px; width: calc(100% + 16px)">
                   <tbody>
@@ -130,8 +142,9 @@
         <n-tab-pane name="spell" tab="Spell" :ref="container">
           <n-space vertical>
             <!-- Info -->
-            <n-alert type="info" v-if="hasConfiguredCaster === false">
-              <n-text>You need to configure your Gnosis and Arcana in the <b>Caster</b> tab first.</n-text>
+            <n-alert type="warning" v-if="hasConfiguredCaster === false">
+              <n-text v-if="caster === undefined || caster === null">You don't have a character selected</n-text>
+              <n-text v-else>You haven't set Gnosis and Arcana for this character</n-text>
             </n-alert>
             <n-affix id="spellAffix" v-if="hasConfiguredCaster === true" :trigger-top="10" position="absolute" listen-to=".n-layout-scroll-container">
               <n-card class="spellSummary">
@@ -146,6 +159,32 @@
                     <n-tag size="small" disabled :bordered="false" round strong>0/0 Reach</n-tag>
                     <n-tag size="small" disabled :bordered="false" round strong>0 Dice</n-tag>
                     <n-tag size="small" disabled :bordered="false" round strong>0 Mana</n-tag>
+                  </n-space>
+                  <n-space size="small">
+                    <n-button class="btn-only-icon-when-small" title="Reset" :disabled="canCastSpell === false" size="tiny" type="warning" @click="reset">
+                      <template #icon>
+                        <n-icon>
+                          <ArrowUndo />
+                        </n-icon>
+                      </template>
+                      Reset
+                    </n-button>
+                    <n-button class="btn-only-icon-when-small" title="Copy for Roll20" :disabled="canCastSpell === false" size="tiny" type="info" @click="copyActiveSpell()">
+                      <template #icon>
+                        <n-icon>
+                          <DocumentText />
+                        </n-icon>
+                      </template>
+                      Roll20
+                    </n-button>
+                    <n-button class="btn-only-icon-when-small" title="Save" :disabled="canCastSpell === false" size="tiny" type="success" @click="saveActiveSpell()">
+                      <template #icon>
+                        <n-icon>
+                          <Bookmark />
+                        </n-icon>
+                      </template>
+                      Save
+                    </n-button>
                   </n-space>
                 </n-space>
               </n-card>
@@ -431,11 +470,16 @@
         </n-tab-pane>
         <n-tab-pane name="saved" :tab="`Saved (${saved.length})`">
           <n-space vertical>
-            <n-card embedded v-if="saved.length === 0">
-              <n-text italic depth="3">No saved spells found</n-text>
-            </n-card>
+            <!-- Info -->
+            <n-alert type="warning" v-if="hasConfiguredCaster === false">
+              <n-text v-if="caster === undefined || caster === null">You don't have a character selected</n-text>
+              <n-text v-if="caster !== undefined && caster !== null">You haven't set Gnosis and Arcana for this character</n-text>
+            </n-alert>
+            <n-alert type="info" v-if="saved.length === 0">
+              <n-text>You don't have any saved spells</n-text>
+            </n-alert>
             <!-- Saved -->
-            <Card :title="item.name" collapsed :summary="item.summary" v-for="(item) in saved" :key="item.id">
+            <Card v-if="hasConfiguredCaster" :title="item.name" collapsed :summary="item.summary" v-for="(item) in saved" :key="item.id">
               <template #content>
                 <n-space vertical size="large">
                   <n-space size="small" v-if="item.tags">
@@ -516,6 +560,9 @@ function dots(num) {
 }
 
 const defaultCaster = {
+  id: 0,
+  name: "Character",
+  type: "Uncategorised",
   gnosis: 0,
   arcana: {
     Death: { level: 0, ruling: false },
@@ -588,6 +635,8 @@ export default {
   setup() {
     const message = useMessage()
     const container = ref(undefined)
+    const createCasterButton = ref(undefined)
+    const chooseCasterDropdown = ref(undefined)
     const chooseYantraDropdown = ref(undefined)
     const choosePraxisDropdown = ref(undefined)
     const chooseRoteDropdown = ref(undefined)
@@ -596,6 +645,7 @@ export default {
       lightTheme,
       container: container,
       message: message,
+      chooseCasterDropdown,
       chooseYantraDropdown,
       choosePraxisDropdown,
       chooseRoteDropdown,
@@ -604,13 +654,15 @@ export default {
   },
   data() {
     return {
-      caster: clone(defaultCaster),
+      caster: null,
+      casters: [],
       spell: clone(defaultSpell),
       conditions: clone(defaultConditions),
       paradox: clone(defaultParadox),
       saved: [],
       theme: lightTheme,
       dark: false,
+      // chooseCasterValue: null,
       chooseYantraValue: null,
       choosePraxisValue: null,
       chooseRoteValue: null,
@@ -618,12 +670,43 @@ export default {
   },
   computed: {
     hasConfiguredCaster() {
+      if (!this.caster) return false
       return this.caster.gnosis > 0 && this.highestCasterArcana.length > 0
     },
     canCastSpell() {
       if (this.spell.name === undefined) return false
       if (this.isSpellArcanaTooHigh === true) return false
       return true
+    },
+    chooseCasterValue() {
+      if (!this.caster) return null
+      return this.caster.name
+    },
+    chooseCasterOptions() {
+      let options = []
+      let types = []
+
+      for (let caster of this.casters) {
+        if (types.includes(caster.type) === false) types.push(caster.type)
+      }
+
+      for (let type of types) {
+        options.push({
+          type: "group",
+          label: type,
+          key: type,
+          children: this.casters
+            .filter((c) => c.type === type)
+            .map((c) => {
+              return {
+                label: c.name,
+                value: c,
+              }
+            }),
+        })
+      }
+
+      return options
     },
     chooseSpellLabel() {
       if (this.spell.name === undefined && this.spell.custom) return "Creative Thaumaturgy"
@@ -1570,8 +1653,16 @@ export default {
   watch: {
     caster: {
       handler(value) {
-        console.log('value', value)
         localStorage.setItem("caster", JSON.stringify(value))
+        if (value && value.id && this.casters.find(c => c.id === value.id) === undefined) {
+          this.casters.push(value)
+        }
+      },
+      deep: true,
+    },
+    casters: {
+      handler(value) {
+        localStorage.setItem("casters", JSON.stringify(value))
       },
       deep: true,
     },
@@ -1634,6 +1725,27 @@ export default {
       this.spell.practice = practice.name
       this.spell.primaryArcana.level = practice.level
     },
+    createCaster() {
+      console.log('create caster')
+      if (this.chooseCasterDropdown) {
+        this.chooseCasterDropdown.blur()
+        this.chooseCasterDropdown.show = false
+        // this.chooseCasterValue = caster
+      }
+      let caster = { ...clone(defaultCaster), id: new Date().getTime() }
+      this.caster = caster
+      this.caster.rotes = []
+      this.caster.praxes = []
+    },
+    chooseCaster(caster) {
+      if (this.chooseCasterDropdown) {
+        this.chooseCasterDropdown.blur()
+        // this.chooseCasterValue = null
+      }
+      this.caster = caster
+      this.caster.rotes = caster.rotes
+      this.caster.praxes = caster.praxes
+    },
     chooseYantraFromDropdown(option) {
       if (this.chooseYantraDropdown) {
         this.chooseYantraDropdown.blur()
@@ -1674,13 +1786,32 @@ export default {
       if (!this.caster.rotes) return false;
       return this.caster.rotes.find((s) => s.name === name)
     },
+    removeCaster(id) {
+      console.log('removing id:', id)
+      console.log("casters contains ids:", this.casters.map(c => c.id).join(","))
+      let index = this.casters.findIndex((s) => s.id === id)
+      if (index !== -1) {
+        const name = this.casters[index].name
+        this.casters.splice(index, 1)
+        this.message.error(`${name} was removed`)
+        this.caster = null
+      }
+      // if (this.casters[index - 1]) this.chooseCaster(this.casters[index - 1])
+      // else if (this.casters[index]) this.chooseCaster(this.casters[index])
+      // else this.caster = null
+      // else {
+      //   let clone = clone(defaultCaster)
+      //   clone.id = new Date().getTime()
+      //   this.chooseCaster(clone)
+      // }
+    },
     removePraxisSpell(name) {
-      let index = this.caster.praxes.findIndex((s) => s.name === name);
-      if (index !== -1) this.caster.praxes.splice(index, 1);
+      let index = this.caster.praxes.findIndex((s) => s.name === name)
+      if (index !== -1) this.caster.praxes.splice(index, 1)
     },
     removeRoteSpell(name) {
-      let index = this.caster.rotes.findIndex((s) => s.name === name);
-      if (index !== -1) this.caster.rotes.splice(index, 1);
+      let index = this.caster.rotes.findIndex((s) => s.name === name)
+      if (index !== -1) this.caster.rotes.splice(index, 1)
     },
     renderYantraLabel(option) {
       if (option.type === "group") return option.label
@@ -2090,12 +2221,29 @@ export default {
   mounted() {
     if (localStorage.getItem("caster")) {
       try {
-        this.caster = JSON.parse(localStorage.getItem("caster"))
-        this.caster.praxes = this.caster.praxes || []
-        this.caster.rotes = this.caster.rotes || []
+        let caster = JSON.parse(localStorage.getItem("caster"))
+        if (caster) {
+          this.caster = caster
+          this.caster.id = this.caster.id || new Date().getTime()
+          this.caster.praxes = this.caster.praxes || []
+          this.caster.rotes = this.caster.rotes || []
+        }
       } catch (err) {
         console.error(err)
         localStorage.removeItem("caster")
+      }
+    }
+    if (localStorage.getItem("casters")) {
+      try {
+        const casters = JSON.parse(localStorage.getItem("casters"))
+        this.casters = casters
+        // if (localStorage.getItem("caster") && this.casters.length === 0) {
+        //   console.log("push extra")
+        //   this.casters.push(this.caster)
+        // }
+      } catch (err) {
+        console.error(err)
+        localStorage.removeItem("casters")
       }
     }
     if (localStorage.getItem("saved")) {
