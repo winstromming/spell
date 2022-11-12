@@ -43,7 +43,7 @@
                         <Trash />
                       </n-icon>
                     </template>
-                    Delete
+                    Delete this character
                   </n-button>
                 </n-space>
               </template>
