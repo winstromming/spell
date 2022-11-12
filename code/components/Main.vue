@@ -489,9 +489,9 @@
                     <n-tag size="small" :bordered="false" round strong type="error">{{getParadoxDiceFor(item)}} Paradox</n-tag>
                     <n-tag v-if="getRoteOrPraxisFor(item)" size="small" :bordered="false" round strong style="text-transform: capitalize">{{getRoteOrPraxisFor(item)}}</n-tag>
                   </n-space>
-                  <n-text><b>Factors:</b> {{ item.factorSummary }}.</n-text>
-                  <n-text v-if="item.effectSummary"><b>Extra:</b> {{ item.effectSummary }}</n-text>
-                  <n-text v-if="item.yantraSummary"><b>Yantras:</b> {{ item.yantraSummary }}.</n-text>
+                  <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{getFactorsSummaryFor(item)}}.</n-text>
+                  <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{getEffectsSummaryFor(item)}}</n-text>
+                  <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{getYantrasSummaryFor(item)}}.</n-text>
                 </n-space>
               </template>
               <template #footer>
@@ -553,7 +553,28 @@ import {
   practices,
   yantrasBaseData,
 } from "../constants/constants.js"
-import { getRoteOrPraxis, getUsedReach, getFreeReach, getTotalMana, getWithstand, getPotencyPenalty, getDurationPenalty, getDicePool, getParadoxDice } from "../constants/methods"
+import {
+  getRoteOrPraxis,
+  getUsedReach,
+  getFreeReach,
+  getTotalMana,
+  getWithstand,
+  getYantras,
+  getPotencyPenalty,
+  getDurationPenalty,
+  getBaseCastingTime,
+  getDicePool,
+  getParadoxDice,
+  getPotencySummary,
+  getDurationSummary,
+  getCastingTimeSummary,
+  getRangeSummary,
+  getScaleSummary,
+  getYantrasSummary,
+  getDicePoolSummary,
+  getParadoxSummary,
+  getConditionsSummary,
+} from "../constants/methods"
 import { spells } from "../constants/spells.js"
 
 function dots(num) {
@@ -838,9 +859,6 @@ export default {
     durationPenalty() {
       return getDurationPenalty(this.caster, this.spell)
     },
-    potencyValue() {
-      return this.spell.factors.potency.substr(1)
-    },
     potencyPenalty() {
       return getPotencyPenalty(this.caster, this.spell)
     },
@@ -872,55 +890,10 @@ export default {
       return getWithstand(this.spell, this.conditions)
     },
     yantras() {
-      let expandedYantras = new Map()
-
-      for (let [key, yantraBaseData] of yantrasBaseData) {
-        // bonus can contain a single number or a range. Arrayify.
-        let bonuses
-        if (Array.isArray(yantraBaseData.bonus)) {
-          bonuses = range(yantraBaseData.bonus[0], yantraBaseData.bonus[1] + 1)
-        } else {
-          bonuses = [yantraBaseData.bonus]
-        }
-
-        bonuses.forEach((bonus) => {
-          let expandedYantra = clone(yantraBaseData)
-
-          /*
-           * Bonus
-           */
-
-          // rote skill mudra: bonus = skill dots
-          if (key === "a1" && this.spell.isRote) {
-            bonus = this.spell.roteSkill
-          }
-
-          // sympathetic yantras don't give a bonus to sympathetic or temporal spells
-          if (
-            ["t4", "t5"].includes(key) &&
-            (this.spell.attainments.sympatheticRange || this.spell.attainments.temporalSympathy)
-          ) {
-            bonus = 0
-          }
-
-          expandedYantra.yantraKey = Array.isArray(yantraBaseData.bonus) ? key + "_" + bonus : key // key is a reserved property in Vue so we use "yantraKey"
-          expandedYantra.bonus = bonus
-          expandedYantra.value = expandedYantra.yantraKey
-          expandedYantra.label = `${yantraBaseData.name} (+${bonus} ${
-            bonus === 1 ? "die" : "dice"
-          })`
-          expandedYantra.isDedicatedTool = false
-          expandedYantras.set(expandedYantra.yantraKey, expandedYantra)
-        })
-      }
-
-      return expandedYantras
+      return getYantras(this.caster, this.spell)
     },
     maxYantras() {
       return Math.ceil(this.caster.gnosis / 2) + 1
-    },
-    numYantras() {
-      return this.spell.yantras.length
     },
     isConcentrationMantraAllowed() {
       return this.isPrimaryFactor("Duration") || this.spell.factors.duration !== "s1"
@@ -986,12 +959,7 @@ export default {
       return !this.isDicePoolTooLow && !this.isSympatheticYantraMissing
     },
     baseCastingTime() {
-      for (let [key, value] of baseCastingTimes) {
-        if (this.caster.gnosis >= key) {
-          return value
-        }
-      }
-      return null
+      return getBaseCastingTime(this.caster)
     },
     arcanaOptions() {
       let options = arcanaNames.map((arcana) => {
@@ -1311,12 +1279,7 @@ export default {
       return "Effects (" + summary.join(", ") + ")"
     },
     conditionsSummary() {
-      let summary = []
-      if (this.conditions.bonusDice > 0) summary.push(`+${this.conditions.bonusDice} dice`)
-      if (this.conditions.activeSpells > 0) summary.push(`${this.conditions.activeSpells} active`)
-      if (this.conditions.subjectWithstand > 0) summary.push(`${this.conditions.subjectWithstand} withstand`)
-      if (summary.length === 0) return "None"
-      return summary.join(", ")
+      return getConditionsSummary(this.conditions)
     },
     spellSummary() {
       let summary = ""
@@ -1327,118 +1290,29 @@ export default {
       if (summary.length === 0) return "None"
       return summary
     },
-    paradoxDiceSummary() {
-      let summary
-
-      if (this.paradoxDice === "Chance") {
-        summary = "Chance"
-      } else if (this.paradoxDice === 1) {
-        summary = this.paradoxDice + " die"
-      } else {
-        summary = this.paradoxDice + " dice"
-      }
-
-      if (this.paradox.sleepers > 0) {
-        if (this.paradox.sleepers === 2) {
-          summary += " (9-again)"
-        } else if (this.paradox.sleepers === 3) {
-          summary += " (8-again)"
-        } else if (this.paradox.sleepers === 4) {
-          summary += " (as rote)"
-        }
-      }
-
-      return summary
-    },
     dicePoolSummary() {
-      if (this.dicePool < 1) {
-        return "Chance"
-      } else if (this.dicePool == 1) {
-        return `${this.dicePool} die`
-      } else {
-        return `${this.dicePool} dice`
-      }
+      return getDicePoolSummary(this.caster, this.spell)
     },
     castingTimeSummary() {
-      // standard
-      if (this.spell.factors.castingTime[0] === "s") {
-        let increment = this.baseCastingTime.increment * this.spell.factors.castingTime[1],
-          unit = this.baseCastingTime.unit + (increment !== 1 ? "s" : "")
-
-        return increment + " " + unit
-      }
-      // advanced
-      else {
-        let turns = this.numYantras <= 1 ? 1 : this.numYantras
-
-        if (this.hasYantra("a3")) {
-          turns = turns == 1 ? 2 : turns
-        }
-
-        return `${turns} turn${turns !== 1 ? "s" : ""}`
-      }
+      return getCastingTimeSummary(this.caster, this.spell)
     },
     durationSummary() {
-      return durations.get(this.spell.factors.duration).time
+      return getDurationSummary(this.caster, this.spell)
     },
     potencySummary() {
-      return this.potencyValue
+      return getPotencySummary(this.caster, this.spell)
     },
     rangeSummary() {
-      if (this.spell.factors.range === "s1") {
-        return "Touch"
-      } else if (
-        this.spell.attainments.sympatheticRange ||
-        this.spell.attainments.temporalSympathy
-      ) {
-        let range = []
-
-        if (this.spell.attainments.sympatheticRange) {
-          range.push("Sympathetic")
-        }
-
-        if (this.spell.attainments.temporalSympathy) {
-          range.push("Temporal Sympathetic")
-        }
-
-        return range.join(" and ")
-      } else {
-        if (this.spell.factors.range === "a1") return "Sensory"
-        if (this.spell.factors.range === "a2") return "Remote"
-      }
+      return getRangeSummary(this.caster, this.spell)
     },
     scaleSummary() {
-      let scale = scales.get(this.spell.factors.scale)
-      return scale ? `${scale.number} subjects or ${scale.area.toLowerCase()}` : ""
-    },
-    scalePenalty() {
-      let scale = scales.get(this.spell.factors.scale)
-      return scale ? scale.penalty : ""
+      return getScaleSummary(this.caster, this.spell)
     },
     paradoxSummary() {
-      return this.paradoxDiceSummary
+      return getParadoxSummary(this.caster, this.spell, this.conditions, this.paradox)
     },
     yantrasSummary() {
-      let yantrasNames = []
-
-      for (let yantra of this.spell.yantras) {
-        yantrasNames.push(this.yantras.get(yantra.yantraKey).name)
-      }
-      if (yantrasNames.length === 0) return "None"
-
-      return yantrasNames.join(", ")
-    },
-    factorCastingTime() {
-      return this.spell.factors.castingTime
-    },
-    factorDuration() {
-      return this.spell.factors.duration
-    },
-    factorRange() {
-      return this.spell.factors.range
-    },
-    factorScale() {
-      return this.spell.factors.scale
+      return getYantrasSummary(this.caster, this.spell)
     },
   },
   watch: {
@@ -1529,6 +1403,61 @@ export default {
     },
     getRoteOrPraxisFor(spell) {
       return getRoteOrPraxis(this.caster, spell)
+    },
+    getDicePoolSummaryFor(spell) {
+      return getDicePoolSummary(this.caster, spell, this.conditions)
+    },
+    getCastingTimeSummaryFor(spell) {
+      return getCastingTimeSummary(this.caster, spell)
+    },
+    getDurationSummaryFor(spell) {
+      return getDurationSummary(this.caster, spell)
+    },
+    getPotencySummaryFor(spell) {
+      return getPotencySummary(this.caster, spell)
+    },
+    getRangeSummaryFor(spell) {
+      return getRangeSummary(this.caster, spell)
+    },
+    getScaleSummaryFor(spell) {
+      return getScaleSummary(this.caster, spell)
+    },
+    getParadoxSummaryFor(spell) {
+      return getParadoxSummary(this.caster, spell, this.conditions, this.paradox)
+    },
+    getCastingSummaryFor(spell) {
+      let summary = []
+      let method = this.getRoteOrPraxisFor(spell)
+      if (method === "rote") summary.push("Rote")
+      if (method === "praxis}") summary.push("Praxis")
+      summary.push(`${this.getUsedReachFor(spell)}/${this.getFreeReachFor(spell)} Reach`)
+      summary.push(`${this.getDicePoolFor(spell)} Dice`)
+      summary.push(`${this.getTotalManaFor(spell)} Mana`)
+      summary.push(`${this.getParadoxDiceFor(spell)} Paradox`)
+      return summary.join(", ")
+    },
+    getFactorsSummaryFor(spell) {
+      let summary = []
+      summary.push(`${this.getPotencySummaryFor(spell).toLowerCase()} potency`)
+      summary.push(`${this.getDurationSummaryFor(spell).toLowerCase()} duration`)
+      summary.push(`${this.getCastingTimeSummaryFor(spell).toLowerCase()} casting time`)
+      summary.push(`${this.getRangeSummaryFor(spell).toLowerCase()} range`)
+      summary.push(`${this.getScaleSummaryFor(spell).toLowerCase()}`)
+      return summary.join(", ")
+    },
+    getConditionsSummaryFor(spell) {
+      return getConditionsSummary(this.conditions)
+    },
+    getEffectsSummaryFor(spell) {
+      let summary = spell.effects.map(effect => effect.effect)
+      if (spell.spendWillpower) summary.unshift("Willpower spent.")
+      if (spell.commonEffects.changePrimaryFactor) summary.push("Changed primary factor.")
+      if (this.conditions.activeSpells >= this.caster.gnosis) summary.push("Casting above active limit.")
+      if (spell.custom) spell.page = "Creative, " + spell.practice
+      return summary.join(" ")
+    },
+    getYantrasSummaryFor(spell) {
+      return getYantrasSummary(this.caster, spell)
     },
     choosePractice(practice) {
       this.spell.practice = practice.name
@@ -1886,71 +1815,23 @@ export default {
         this.spell.effects.push(item)
       }
     },
-    // Spell Stuff
-    getSpellWithSummary(spell) {
-      const item = clone(spell)
-      const itemCastingSummary = []
-      if (item.isRote) itemCastingSummary.push("Rote")
-      if (item.isPraxis) itemCastingSummary.push("Praxis")
-      itemCastingSummary.push(`${this.usedReach}/${this.freeReach} Reach`)
-      itemCastingSummary.push(`${this.dicePool} Dice`)
-      itemCastingSummary.push(`${this.totalMana} Mana`)
-      itemCastingSummary.push(`${this.paradoxDice} Paradox`)
-      const itemFactorSummary = [];
-      itemFactorSummary.push(`${this.potencySummary.toLowerCase()} potency`)
-      itemFactorSummary.push(`${this.durationSummary.toLowerCase()} duration`)
-      itemFactorSummary.push(`${this.castingTimeSummary.toLowerCase()} casting time`)
-      itemFactorSummary.push(`${this.rangeSummary.toLowerCase()} range`)
-      itemFactorSummary.push(`${this.scaleSummary.toLowerCase()}`)
-      const itemEffectSummary = item.effects.map(effect => effect.effect);
-      if (item.spendWillpower) itemEffectSummary.unshift("Willpower spent.")
-      if (item.commonEffects.changePrimaryFactor) itemEffectSummary.push("Changed primary factor.")
-      if (this.conditions.activeSpells >= this.caster.gnosis) itemEffectSummary.push("Casting above active limit.")
-      if (item.custom) item.page = "Creative, " + item.practice
-      const itemYantraSummary = item.yantras.map(yantra => yantra.name);
-      const about = []
-      if (item.factors.castingTime[0] === "s") about.push("ritual")
-      if (item.factors.castingTime[0] === "a") about.push("quick")
-      if (item.factors.duration[0] === "s") about.push("short")
-      if (item.factors.duration[0] === "a") about.push("long")
-      if (Number(item.factors.scale[1]) > 3) about.push("big")
-      else about.push("small")
-
-      item.id = new Date().getTime()
-      item.tags = {
-        method: this.roteOrPraxis,
-        reach: `${this.usedReach}/${this.freeReach}`,
-        dice: this.dicePool,
-        mana: this.totalMana,
-        paradox: this.paradoxDice,
-      }
-      item.summary = about.join(", ")
-      item.castingSummary = itemCastingSummary.join(", ")
-      item.factorSummary = itemFactorSummary.join(", ")
-      item.effectSummary = itemEffectSummary.join(" ")
-      item.yantraSummary = itemYantraSummary.join(", ")
-      item.conditionSummary = this.conditionsSummary
-      item.actionSummary = this.dicePoolSummary
-      return item
-    },
     putSpellMacroInClipboard(spell) {
       const out = [];
       out.push("&{template:default}");
       out.push(`{{name=**${spell.name}** (${spell.primaryArcana.arcana} ${Array.from({ length: spell.primaryArcana.level }, v => "&bull;").join("")})}}`)
       out.push(`{{summary=${spell.description}\n(${spell.page})}}`)
-      out.push(`{{casting=${spell.castingSummary}}}`)
-      out.push(`{{factors=${spell.factorSummary}}}`)
-      out.push(`{{extras=${spell.effectSummary || "None"}}}`)
-      out.push(`{{yantras=${spell.yantraSummary || "None"}}}`)
-      if (spell.conditionSummary !== "None") out.push(`{{conditions=${spell.conditionSummary}}}`)
-      out.push(`{{=[Roll ${spell.actionSummary} to cast](!&#13;&#91;[&#63;{Number of dice|${spell.tags.dice}}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
+      out.push(`{{casting=${this.getCastingSummaryFor(spell)}}}`)
+      out.push(`{{factors=${this.getFactorsSummaryFor(spell)}}}`)
+      out.push(`{{extras=${this.getEffectsSummaryFor(spell) || "None"}}}`)
+      out.push(`{{yantras=${this.getYantrasSummaryFor(spell) || "None"}}}`)
+      if (this.getConditionsSummaryFor(spell) !== "None") out.push(`{{conditions=${this.getConditionsSummaryFor(spell)}}}`)
+      out.push(`{{=[Roll ${this.getDicePoolSummaryFor(spell)} to cast](!&#13;&#91;[&#63;{Number of dice|${this.getDicePoolFor(spell)}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
       const text = out.join(" ");
       navigator.clipboard.writeText(text).then(() => {
         this.message.info(`${spell.name} was copied to clipboard`)
       });
     },
     copyActiveSpell() {
-      const spell = this.getSpellWithSummary(this.spell)
       this.putSpellMacroInClipboard(spell)
     },
     copySavedSpell(spell) {
@@ -1979,7 +1860,7 @@ export default {
       }
     },
     saveActiveSpell() {
-      const spell = this.getSpellWithSummary(this.spell)
+      const spell = clone(this.spell)// this.getSpellWithSummary(this.spell)
       this.saved.push(spell)
       this.message.success(`${spell.name} was saved`)
     },
