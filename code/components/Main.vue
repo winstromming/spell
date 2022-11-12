@@ -2101,16 +2101,12 @@ export default {
       if (item.custom) item.page = "Creative, " + item.practice
       const itemYantraSummary = item.yantras.map(yantra => yantra.name);
       const about = []
-      if (this.dicePool > 7) about.push(`easy`);
-      if (this.dicePool < 4) about.push(`hard`);
-      if (this.paradoxDice === 0) about.push(`safe`);
-      else if (typeof this.paradoxDice !== "string") about.push(`risky`);
-      if (item.factors.castingTime === "a1") about.push("quick")
-      else if (Number(item.factors.castingTime[1]) > 3) about.push("slow")
+      if (item.factors.castingTime[0] === "s") about.push("ritual")
+      if (item.factors.castingTime[0] === "a") about.push("quick")
       if (item.factors.duration[0] === "s") about.push("short")
       if (item.factors.duration[0] === "a") about.push("long")
       if (Number(item.factors.scale[1]) > 3) about.push("big")
-      if (this.usedReach > 4) about.push("complex")
+      else about.push("small")
 
       item.id = new Date().getTime()
       item.tags = {
