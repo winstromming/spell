@@ -482,12 +482,12 @@
             <Card v-if="hasConfiguredCaster" :title="item.name" collapsed :summary="item.summary" v-for="(item) in saved" :key="item.id">
               <template #content>
                 <n-space vertical size="large">
-                  <n-space size="small" v-if="item.tags">
-                    <n-tag v-if="item.tags.method" size="small" :bordered="false" round strong style="text-transform: capitalize">{{ item.tags.method }}</n-tag>
-                    <n-tag size="small" :bordered="false" round strong type="success">{{ item.tags.reach }} Reach</n-tag>
-                    <n-tag size="small" :bordered="false" round strong type="success"> {{ item.tags.dice }} Dice</n-tag>
-                    <n-tag size="small" :bordered="false" round strong type="success">{{ item.tags.mana }} Mana</n-tag>
-                    <n-tag v-if="item.tags.paradox" size="small" :bordered="false" round strong type="error">{{ item.tags.paradox }} Paradox</n-tag>
+                  <n-space size="small">
+                    <n-tag size="small" :bordered="false" round strong :type="getUsedReachFor(item) > getFreeReachFor(item) ? 'warning' : 'success'">{{getUsedReachFor(item)}}/{{getFreeReachFor(item)}} Reach</n-tag>
+                    <n-tag size="small" :bordered="false" round strong type="success">{{getDicePoolFor(item)}} Dice</n-tag>
+                    <n-tag size="small" :bordered="false" round strong type="success">{{getTotalManaFor(item)}} Mana</n-tag>
+                    <n-tag size="small" :bordered="false" round strong type="error">{{getParadoxDiceFor(item)}} Paradox</n-tag>
+                    <n-tag v-if="getRoteOrPraxisFor(item)" size="small" :bordered="false" round strong style="text-transform: capitalize">{{getRoteOrPraxisFor(item)}}</n-tag>
                   </n-space>
                   <n-text><b>Factors:</b> {{ item.factorSummary }}.</n-text>
                   <n-text v-if="item.effectSummary"><b>Extra:</b> {{ item.effectSummary }}</n-text>
@@ -553,6 +553,7 @@ import {
   practices,
   yantrasBaseData,
 } from "../constants/constants.js"
+import { getRoteOrPraxis, getUsedReach, getFreeReach, getTotalMana, getWithstand, getPotencyPenalty, getDurationPenalty, getDicePool, getParadoxDice } from "../constants/methods"
 import { spells } from "../constants/spells.js"
 
 function dots(num) {
@@ -812,124 +813,19 @@ export default {
       return false
     },
     freeReach() {
-      let arcana
-
-      if (this.spell.isRote) {
-        arcana = 5
-      } else {
-        arcana = this.caster.arcana[this.spell.primaryArcana.arcana].level
-      }
-
-      return arcana - this.spell.primaryArcana.level + 1
+      return getFreeReach(this.caster, this.spell)
     },
     usedReach() {
-      let reach = 0
-
-      if (this.conditions.activeSpells >= this.caster.gnosis) {
-        reach += this.conditions.activeSpells - this.caster.gnosis + 1
-      }
-
-      // check factors (advanced factor keys begin with "a")
-      for (let factor of factors) {
-        if (this.spell.factors[factor][0] === "a") {
-          reach++
-        }
-      }
-
-      // check effects
-      for (let effect of this.spell.effects) {
-        if (effect.cost) {
-          for (let cost of effect.cost) {
-            if (cost.type === "Reach") reach += cost.value
-          }
-        }
-      }
-
-      // check for common effects
-      if (this.spell.commonEffects.changePrimaryFactor) {
-        reach += 1
-      }
-
-      // remote viewing range costs 1 additional reach
-      if (this.spell.factors.range === "a2") {
-        reach += 1
-      }
-
-      // indefinite duration costs 1 additional reach
-      if (this.spell.factors.duration === "a6") {
-        reach += 1
-      }
-
-      // spell-specific extra reach
-      reach += this.spell.extraReach
-
-      if (this.spell.attainments.permanence) {
-        reach--
-      }
-
-      if (this.spell.attainments.timeInABottle) {
-        reach--
-      }
-
-      if (this.spell.attainments.everywhere) {
-        reach--
-      }
-
-      return reach
+      return getUsedReach(this.caster, this.spell, this.conditions)
     },
     roteOrPraxis() {
-      if (this.spell.isRote) {
-        return "rote"
-      } else if (this.spell.isPraxis) {
-        return "praxis"
-      } else {
-        return null
-      }
+      return getRoteOrPraxis(this.caster, this.spell)
     },
     baseParadoxDice() {
       return Math.ceil(this.caster.gnosis / 2)
     },
     paradoxDice() {
-      let pool, mustRoll
-
-      pool = 0
-      mustRoll = false
-
-      if (this.usedReach > this.freeReach) {
-        pool += (this.freeReach - this.usedReach) * -1
-        mustRoll = true
-      }
-
-      // gnosis multiplies paradox from additional reach
-      pool *= this.baseParadoxDice
-
-      if (this.paradox.inured) {
-        pool += 2
-        mustRoll = true
-      }
-
-      if (this.paradox.previous > 0) {
-        pool += this.paradox.previous
-        mustRoll = true
-      }
-
-      if (this.paradox.sleepers > 0) {
-        pool++
-        mustRoll = true
-      }
-
-      if (this.isDedicatedToolYantraUsed) {
-        pool -= 2
-      }
-
-      pool -= this.paradox.manaSpent
-
-      if (pool <= 0 && mustRoll) {
-        return "Chance"
-      }
-      if (pool < 0) return 0
-
-      return pool
+      return getParadoxDice(this.caster, this.spell, this.conditions, this.paradox)
     },
     hasParadox() {
       return (
@@ -940,67 +836,16 @@ export default {
       )
     },
     durationPenalty() {
-      let penalty = durations.get(this.spell.factors.duration).penalty
-
-      if (this.isPrimaryFactor("Duration")) {
-        penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
-      }
-
-      if (penalty <= 0) {
-        penalty = 0
-      }
-
-      return penalty
+      return getDurationPenalty(this.caster, this.spell)
     },
     potencyValue() {
       return this.spell.factors.potency.substr(1)
     },
     potencyPenalty() {
-      let penalty = (this.potencyValue - 1) * 2
-
-      if (this.isPrimaryFactor("Potency")) {
-        penalty -= (this.caster.arcana[this.spell.primaryArcana.arcana].level - 1) * 2
-      }
-
-      if (penalty <= 0) {
-        penalty = 0
-      }
-
-      return penalty
+      return getPotencyPenalty(this.caster, this.spell)
     },
     dicePool() {
-      // base pool
-      let pool = this.caster.gnosis + this.caster.arcana[this.spell.primaryArcana.arcana].level
-
-      pool += this.conditions.bonusDice
-
-      if (this.spell.spendWillpower) {
-        pool += 3
-      }
-
-      // casting time
-      if (!this.isAdvanced("castingTime")) {
-        pool += this.spell.factors.castingTime[1] - 1
-      }
-
-      // withstand
-      pool -= this.totalWithstand
-
-      // potency
-      pool -= this.potencyPenalty
-
-      // duration
-      pool -= this.durationPenalty
-
-      // scale
-      pool -= scales.get(this.spell.factors.scale).penalty
-
-      // yantras
-      this.spell.yantras.forEach((yantra) => {
-        pool += yantra.bonus
-      })
-
-      return pool
+      return getDicePool(this.caster, this.spell, this.conditions)
     },
     isDicePoolTooLow() {
       return this.dicePool < 1
@@ -1024,14 +869,7 @@ export default {
       return capitalize(this.spell.primaryFactor)
     },
     totalWithstand() {
-
-      let withstand = this.conditions.subjectWithstand
-
-      if (this.spell.factors.potency === "a1") {
-        withstand -= 2
-      }
-
-      return withstand
+      return getWithstand(this.spell, this.conditions)
     },
     yantras() {
       let expandedYantras = new Map()
@@ -1119,54 +957,7 @@ export default {
       },
     },
     totalMana() {
-      let mana = 0
-
-      if (
-        !this.caster.arcana[this.spell.primaryArcana.arcana].ruling &&
-        !this.spell.isRote &&
-        !this.spell.isPraxis
-      ) {
-        mana++
-      }
-
-      // check effects
-      for (let effect of this.spell.effects) {
-        if (effect.cost) {
-          for (let cost of effect.cost) {
-            if (cost.type === "Mana") mana += cost.value
-          }
-        }
-      }
-
-      if (this.spell.extraMana) mana += this.spell.extraMana
-
-      if (this.spell.factors.duration === "a6") {
-        mana++
-      }
-
-      if (this.spell.attainments.permanence) {
-        mana++
-      }
-
-      if (this.spell.attainments.timeInABottle) {
-        mana++
-      }
-
-      if (this.spell.attainments.sympatheticRange) {
-        mana++
-      }
-
-      if (this.spell.attainments.temporalSympathy) {
-        mana++
-      }
-
-      if (this.spell.attainments.everywhere) {
-        mana++
-      }
-
-      mana += this.paradox.manaSpent
-
-      return mana
+      return getTotalMana(this.caster, this.spell, this.paradox)
     },
     maxMana() {
       return gnosisManaLimits[this.caster.gnosis]
@@ -1721,12 +1512,29 @@ export default {
       if (value === true) this.theme = darkTheme
       if (value === false) this.theme = lightTheme
     },
+    getFreeReachFor(spell) {
+      return getFreeReach(this.caster, spell)
+    },
+    getUsedReachFor(spell) {
+      return getUsedReach(this.caster, spell, this.conditions)
+    },
+    getTotalManaFor(spell) {
+      return getTotalMana(this.caster, spell, this.paradox)
+    },
+    getDicePoolFor(spell) {
+      return getDicePool(this.caster, spell, this.conditions)
+    },
+    getParadoxDiceFor(spell) {
+      return getParadoxDice(this.caster, spell, this.conditions, this.paradox)
+    },
+    getRoteOrPraxisFor(spell) {
+      return getRoteOrPraxis(this.caster, spell)
+    },
     choosePractice(practice) {
       this.spell.practice = practice.name
       this.spell.primaryArcana.level = practice.level
     },
     createCaster() {
-      console.log('create caster')
       if (this.chooseCasterDropdown) {
         this.chooseCasterDropdown.blur()
         this.chooseCasterDropdown.show = false
