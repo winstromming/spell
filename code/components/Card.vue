@@ -12,6 +12,9 @@
         <n-text v-if="summary" depth="3" class="card-summary" editable>{{ summary }}</n-text>
       </n-button>
     </template>
+    <template #header-extra>
+      <slot name="header"></slot>
+    </template>
     <template #default v-if="open === true">
       <slot name="content"></slot>
     </template>
@@ -39,20 +42,20 @@ export default {
 </script>
 
 <style>
-.card .n-card-header {
+.card > .n-card-header {
   padding: 0;
 }
-.card .n-card-header__main .n-button {
+.card > .n-card-header .n-card-header__main .n-button {
   padding: var(--n-padding-top) var(--n-padding-left);
 }
-.card .n-card-header .n-button__content {
+.card > .n-card-header .n-button__content {
   flex: 1;
   width: 100px;
 }
-.card .n-card-header .n-button__content .card-title {
+.card > .n-card-header .n-button__content .card-title {
   padding-right: var(--n-padding-left);
 }
-.card .n-card-header .n-button__content .card-summary {
+.card > .n-card-header .n-button__content .card-summary {
   flex: 1;
   align-items: flex-end;
   justify-content: flex-end;

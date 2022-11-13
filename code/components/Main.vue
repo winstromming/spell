@@ -9,14 +9,14 @@
             </template>
           </n-select>
         </template>
-        <n-tab-pane name="caster" tab="Caster">
+        <n-tab-pane name="caster" :tab="casterTabSummary">
           <n-space vertical>
             <!-- Info -->
             <n-alert type="warning" v-if="caster === undefined || caster === null">
               <n-text>You don't have a character selected</n-text>
             </n-alert>
             <!-- Caster -->
-            <Card title="" v-if="caster">
+            <Card title="Character" :summary="caster.name" v-if="caster">
               <template #content>
                 <n-space vertical size="large">
                   <n-grid :cols="2" :x-gap="10" :y-gap="10">
@@ -139,6 +139,60 @@
             </Card>
           </n-space>
         </n-tab-pane>
+        <n-tab-pane name="scene" :tab="sceneTabSummary">
+          <n-space vertical v-if="caster">
+            <!-- Active -->
+            <n-alert type="info" v-if="caster.active.length === 0">
+              <n-text> You don't have any active spells. </n-text>
+            </n-alert>
+            <Card collapsed :title="item.name" :summary="getCreatedTimeAgo(item.id)" v-for="(item) in caster.active" :key="item.id">
+              <template #content>
+                <n-space vertical size="small">
+                  <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{getFactorsSummaryFor(item)}}.</n-text>
+                  <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{getEffectsSummaryFor(item)}}</n-text>
+                  <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{getYantrasSummaryFor(item)}}.</n-text>
+                </n-space>
+              </template>
+              <template #footer>
+                <n-button text strong class="btn-only-icon-when-small" title="Stop" size="small" type="error" @click="uncastSpell(item)">
+                  <template #icon>
+                    <n-icon>
+                      <Ban />
+                    </n-icon>
+                  </template>
+                  Remove
+                </n-button>
+              </template>
+            </Card>
+            <!-- Paradox -->
+            <Card title="Paradox" :summary="`${caster.paradox} previous paradox, ${['No', 'Few', 'Some', 'Many', 'Crowd of'][scene.witnesses]} witnesses`">
+              <template #content>
+                <n-space vertical>
+                  <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
+                    <tbody>
+                      <tr>
+                        <td colspan="3">
+                          <n-space vertical>
+                            <b>Number of previous paradox rolls ({{caster.paradox}})</b>
+                            <n-slider placement="bottom" v-model:value="caster.paradox" :min="0" :max="10" />
+                          </n-space>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="3">
+                          <n-space vertical>
+                            <b>Number of sleeper witnesses ({{ ['None', 'One', 'Some', 'Many', 'Crowd'][scene.witnesses] }})</b>
+                            <n-slider placement="bottom" v-model:value="scene.witnesses" :min="0" :max="4" />
+                          </n-space>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </n-table>
+                </n-space>
+              </template>
+            </Card>
+          </n-space>
+        </n-tab-pane>
         <n-tab-pane name="spell" tab="Spell" :ref="container">
           <n-space vertical>
             <!-- Info -->
@@ -161,23 +215,31 @@
                     <n-tag size="small" disabled :bordered="false" round strong>0 Mana</n-tag>
                   </n-space>
                   <n-space size="small">
-                    <n-button class="btn-only-icon-when-small" title="Reset" :disabled="canCastSpell === false" size="tiny" type="warning" @click="reset">
+                    <n-button class="btn-only-icon-when-small" title="Reset" :disabled="canCastSpell === false" size="tiny" type="error" @click="reset">
                       <template #icon>
                         <n-icon>
-                          <ArrowUndo />
+                          <Trash />
                         </n-icon>
                       </template>
                       Reset
                     </n-button>
-                    <n-button class="btn-only-icon-when-small" title="Copy for Roll20" :disabled="canCastSpell === false" size="tiny" type="info" @click="copyActiveSpell()">
+                    <n-button class="btn-only-icon-when-small" title="Cast" :disabled="canCastSpell === false" size="tiny" type="warning" @click="castSpell(spell)">
+                      <template #icon>
+                        <n-icon>
+                          <Flash />
+                        </n-icon>
+                      </template>
+                      Cast
+                    </n-button>
+                    <n-button class="btn-only-icon-when-small" title="Copy for Roll20" :disabled="canCastSpell === false" size="tiny" type="info" @click="copySpell(spellspell)">
                       <template #icon>
                         <n-icon>
                           <DocumentText />
                         </n-icon>
                       </template>
-                      Roll20
+                      Copy
                     </n-button>
-                    <n-button class="btn-only-icon-when-small" title="Save" :disabled="canCastSpell === false" size="tiny" type="success" @click="saveActiveSpell()">
+                    <n-button class="btn-only-icon-when-small" title="Save" :disabled="canCastSpell === false" size="tiny" type="success" @click="saveSpell(spell)">
                       <template #icon>
                         <n-icon>
                           <Bookmark />
@@ -382,90 +444,6 @@
               </template>
               <template #footer> Gnosis {{ caster.gnosis }} allows the use of {{ maxYantras }} yantras. </template>
             </Card>
-            <!-- Paradox -->
-            <Card title="Paradox" collapsed :summary="paradoxSummary" v-if="canCastSpell">
-              <template #content>
-                <n-space vertical>
-                  <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
-                    <tbody>
-                      <tr>
-                        <td width="20" style="padding-right: 0">
-                          <n-switch size="small" v-model:value="paradox.inured" />
-                        </td>
-                        <td colspan="2">
-                          <b>Mage is inured?</b>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="3">
-                          <n-space vertical>
-                            <b>Previous paradox rolls? ({{paradox.previous}})</b>
-                            <n-slider placement="bottom" v-model:value="paradox.previous" :min="0" :max="10" />
-                          </n-space>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="3">
-                          <n-space vertical>
-                            <b>Sleeper witnesses? ({{ ['None', 'One', 'Some', 'Many', 'Crowd'][paradox.sleepers] }})</b>
-                            <n-slider placement="bottom" v-model:value="paradox.sleepers" :min="0" :max="4" />
-                          </n-space>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="3">
-                          <n-space vertical>
-                            <b>Mana spent? ({{ paradox.manaSpent }})</b>
-                            <n-slider placement="bottom" v-model:value="paradox.manaSpent" :min="0" :max="caster.gnosis" />
-                          </n-space>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </n-table>
-                </n-space>
-              </template>
-              <template #footer> Multiple witnesses do not add Paradox dice, but increase the chances of a Paradox occurring. Mana can be spent to mitigate Paradox, but is limited by Gnosis. </template>
-            </Card>
-            <!-- Conditions -->
-            <Card title="Conditions" collapsed :summary="conditionsSummary" v-if="canCastSpell">
-              <template #content>
-                <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
-                  <tbody>
-                    <tr>
-                      <td colspan="3">
-                        <n-space vertical>
-                          <b>Bonus spellcasting dice (+{{conditions.bonusDice}} dice)</b>
-                          <n-slider placement="bottom" v-model:value="conditions.bonusDice" :min="0" :max="10" />
-                        </n-space>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="3">
-                        <n-space vertical>
-                          <b>Number of active spells ({{conditions.activeSpells}})</b>
-                          <n-slider placement="bottom" v-model:value="conditions.activeSpells" :min="0" :max="10" />
-                        </n-space>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colspan="3">
-                        <n-space vertical>
-                          <b>Withstand rating of subject (+{{conditions.subjectWithstand}})</b>
-                          <n-slider placement="bottom" v-model:value="conditions.subjectWithstand" :min="0" :max="10" />
-                        </n-space>
-                      </td>
-                    </tr>
-                  </tbody>
-                </n-table>
-              </template>
-              <template #footer v-if="conditionsSummary !== 'None'">
-                <n-space vertical>
-                  <n-text v-if="conditions.bonusDice > 0"><b>Bonus:</b> Can come from Fate magic, Merits, Artefacts, or the Storyteller.</n-text>
-                  <n-text v-if="conditions.activeSpells > 0"><b>Spells:</b> Maintaining more spells than the caster's Gnosis adds +1 Reach for each spell over the limit.</n-text>
-                  <n-text v-if="conditions.subjectWithstand > 0"><b>Withstand:</b> Potency must exceed this rating for the spell to take effect.</n-text>
-                </n-space>
-              </template>
-            </Card>
           </n-space>
         </n-tab-pane>
         <n-tab-pane name="saved" :tab="`Saved (${saved.length})`">
@@ -500,7 +478,7 @@
               </template>
               <template #footer>
                 <n-space justify="space-between">
-                  <n-button class="btn-only-icon-when-small" title="Remove" size="tiny" type="error" @click="removeSpell(item)">
+                  <n-button class="btn-only-icon-when-small" title="Remove" size="tiny" type="error" @click="unsaveSpell(item)">
                     <template #icon>
                       <n-icon>
                         <Trash />
@@ -509,13 +487,21 @@
                     Remove
                   </n-button>
                   <n-space>
-                    <n-button class="btn-only-icon-when-small" title="Copy for Roll20" size="tiny" type="info" @click="copySavedSpell(item)">
+                    <n-button class="btn-only-icon-when-small" title="Cast" size="tiny" type="warning" @click="castSpell(item)">
+                      <template #icon>
+                        <n-icon>
+                          <Flash />
+                        </n-icon>
+                      </template>
+                      Cast
+                    </n-button>
+                    <n-button class="btn-only-icon-when-small" title="Copy for Roll20" size="tiny" type="info" @click="copySpell(item)">
                       <template #icon>
                         <n-icon>
                           <DocumentText />
                         </n-icon>
                       </template>
-                      Roll20
+                      Copy
                     </n-button>
                     <n-button class="btn-only-icon-when-small" title="Edit" size="tiny" type="success" @click="loadSpell(item)">
                       <template #icon>
@@ -523,7 +509,7 @@
                           <Build />
                         </n-icon>
                       </template>
-                      Edit
+                      Load
                     </n-button>
                   </n-space>
                 </n-space>
@@ -542,7 +528,7 @@ import { clone, max, some, capitalize, findIndex, range } from "lodash"
 import { useMessage } from "naive-ui"
 import { darkTheme, lightTheme } from "naive-ui"
 
-import { Flash, Sparkles, BatteryCharging, Settings, Dice, Flame, Skull, Close, DocumentText, DocumentTextOutline, Save, Trash, Build, Bookmark, ArrowUndo, Reload, ChevronDown, ChevronUp, Ellipse, EllipseOutline } from "@vicons/ionicons5"
+import { Flash, Ban, Sparkles, BatteryCharging, Settings, Dice, Flame, Skull, Close, DocumentText, DocumentTextOutline, Save, Trash, Build, Bookmark, ArrowUndo, Reload, ChevronDown, ChevronUp, Ellipse, EllipseOutline } from "@vicons/ionicons5"
 
 import Card from "./Card.vue"
 
@@ -577,7 +563,6 @@ import {
   getYantrasSummary,
   getDicePoolSummary,
   getParadoxSummary,
-  getConditionsSummary,
 } from "../constants/methods"
 import { spells } from "../constants/spells.js"
 
@@ -604,6 +589,8 @@ const defaultCaster = {
   },
   praxes: [],
   rotes: [],
+  active: [],
+  paradox: 0,
 }
 const defaultSpell = {
   name: undefined,
@@ -644,24 +631,16 @@ const defaultSpell = {
     timeInABottle: false,
   },
 }
-const defaultConditions = {
-  subjectWithstand: 0,
-  activeSpells: 0,
-  bonusDice: 0,
-}
-const defaultParadox = {
-  inured: false,
-  previous: 0,
-  sleepers: 0,
-  manaSpent: 0,
+const defaultScene = {
+  witnesses: 0,
+  withstand: 0,
 }
 
 export default {
-  components: { Card, DocumentText, DocumentTextOutline, Sparkles, Settings, BatteryCharging, Flash, Dice, Flame, Skull, Trash, Build, Bookmark, ArrowUndo, Save, Reload, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
+  components: { Card, Ban, DocumentText, DocumentTextOutline, Sparkles, Settings, BatteryCharging, Flash, Dice, Flame, Skull, Trash, Build, Bookmark, ArrowUndo, Save, Reload, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
   setup() {
     const message = useMessage()
     const container = ref(undefined)
-    const createCasterButton = ref(undefined)
     const chooseCasterDropdown = ref(undefined)
     const chooseYantraDropdown = ref(undefined)
     const choosePraxisDropdown = ref(undefined)
@@ -682,9 +661,8 @@ export default {
     return {
       caster: null,
       casters: [],
+      scene: clone(defaultScene),
       spell: clone(defaultSpell),
-      conditions: clone(defaultConditions),
-      paradox: clone(defaultParadox),
       saved: [],
       theme: lightTheme,
       dark: false,
@@ -841,7 +819,7 @@ export default {
       return getFreeReach(this.caster, this.spell)
     },
     usedReach() {
-      return getUsedReach(this.caster, this.spell, this.conditions)
+      return getUsedReach(this.caster, this.spell)
     },
     roteOrPraxis() {
       return getRoteOrPraxis(this.caster, this.spell)
@@ -850,14 +828,13 @@ export default {
       return Math.ceil(this.caster.gnosis / 2)
     },
     paradoxDice() {
-      return getParadoxDice(this.caster, this.spell, this.conditions, this.paradox)
+      return getParadoxDice(this.caster, this.spell, this.scene)
     },
     hasParadox() {
       return (
         this.usedReach > this.freeReach ||
-        this.paradox.inured ||
-        this.paradox.previous > 0 ||
-        this.paradox.sleepers > 0
+        this.caster.paradox > 0 ||
+        this.scene.witnesses > 0
       )
     },
     durationPenalty() {
@@ -867,7 +844,7 @@ export default {
       return getPotencyPenalty(this.caster, this.spell)
     },
     dicePool() {
-      return getDicePool(this.caster, this.spell, this.conditions)
+      return getDicePool(this.caster, this.spell, this.scene)
     },
     isDicePoolTooLow() {
       return this.dicePool < 1
@@ -891,7 +868,7 @@ export default {
       return capitalize(this.spell.primaryFactor)
     },
     totalWithstand() {
-      return getWithstand(this.spell, this.conditions)
+      return getWithstand(this.spell, this.scene)
     },
     yantras() {
       return getYantras(this.caster, this.spell)
@@ -934,7 +911,7 @@ export default {
       },
     },
     totalMana() {
-      return getTotalMana(this.caster, this.spell, this.paradox)
+      return getTotalMana(this.caster, this.spell)
     },
     maxMana() {
       return gnosisManaLimits[this.caster.gnosis]
@@ -1255,8 +1232,7 @@ export default {
     casterRotesSummary() {
       let summary = this.caster.rotes.map(p => p.name);
       if (summary.length === 0) return "None"
-      if (summary.length === 1) return "1 Spell"
-      return `${summary.length} Spells`
+      return summary.join(", ")
     },
     gnosisSummary() {
       let summary = ""
@@ -1282,8 +1258,12 @@ export default {
       if (summary.length === 0) return "None"
       return "Effects (" + summary.join(", ") + ")"
     },
-    conditionsSummary() {
-      return getConditionsSummary(this.conditions)
+    casterTabSummary() {
+      return "Caster"
+    },
+    sceneTabSummary() {
+      if (!this.caster) return "Active"
+      return `Active (${this.caster.active.length}/${this.caster.gnosis})`
     },
     spellSummary() {
       let summary = ""
@@ -1313,7 +1293,7 @@ export default {
       return getScaleSummary(this.caster, this.spell)
     },
     paradoxSummary() {
-      return getParadoxSummary(this.caster, this.spell, this.conditions, this.paradox)
+      return getParadoxSummary(this.caster, this.spell, this.scene)
     },
     yantrasSummary() {
       return getYantrasSummary(this.caster, this.spell)
@@ -1369,7 +1349,7 @@ export default {
       if (newer === false && current === "Duration") this.spell.primaryFactor = "Potency"
       if (newer === false && current === "Potency") this.spell.primaryFactor = "Duration"
     },
-    "conditions.subjectWithstand": function (newer, older) {
+    "scene.withstand": function (newer, older) {
       let extraPotency = this.spell.factors.potency[1] - 1
       let prefix = this.spell.factors.potency[0]
       let minPotency = this.totalWithstand
@@ -1394,22 +1374,22 @@ export default {
       return getFreeReach(this.caster, spell)
     },
     getUsedReachFor(spell) {
-      return getUsedReach(this.caster, spell, this.conditions)
+      return getUsedReach(this.caster, spell)
     },
     getTotalManaFor(spell) {
-      return getTotalMana(this.caster, spell, this.paradox)
+      return getTotalMana(this.caster, spell)
     },
     getDicePoolFor(spell) {
-      return getDicePool(this.caster, spell, this.conditions)
+      return getDicePool(this.caster, spell, this.scene)
     },
     getParadoxDiceFor(spell) {
-      return getParadoxDice(this.caster, spell, this.conditions, this.paradox)
+      return getParadoxDice(this.caster, spell, this.scene)
     },
     getRoteOrPraxisFor(spell) {
       return getRoteOrPraxis(this.caster, spell)
     },
     getDicePoolSummaryFor(spell) {
-      return getDicePoolSummary(this.caster, spell, this.conditions)
+      return getDicePoolSummary(this.caster, spell, this.scene)
     },
     getCastingTimeSummaryFor(spell) {
       return getCastingTimeSummary(this.caster, spell)
@@ -1427,7 +1407,7 @@ export default {
       return getScaleSummary(this.caster, spell)
     },
     getParadoxSummaryFor(spell) {
-      return getParadoxSummary(this.caster, spell, this.conditions, this.paradox)
+      return getParadoxSummary(this.caster, spell, this.scene)
     },
     getCastingSummaryFor(spell) {
       let summary = []
@@ -1449,19 +1429,31 @@ export default {
       summary.push(`${this.getScaleSummaryFor(spell).toLowerCase()}`)
       return summary.join(", ")
     },
-    getConditionsSummaryFor(spell) {
-      return getConditionsSummary(this.conditions)
-    },
     getEffectsSummaryFor(spell) {
       let summary = spell.effects.map(effect => effect.effect)
       if (spell.spendWillpower) summary.unshift("Willpower spent.")
       if (spell.commonEffects.changePrimaryFactor) summary.push("Changed primary factor.")
-      if (this.conditions.activeSpells >= this.caster.gnosis) summary.push("Casting above active limit.")
+      if (this.caster.active >= this.caster.gnosis) summary.push("Casting spells above active limit.")
       if (spell.custom) spell.page = "Creative, " + spell.practice
       return summary.join(" ")
     },
     getYantrasSummaryFor(spell) {
       return getYantrasSummary(this.caster, spell)
+    },
+    getCreatedTimeAgo(id) {
+
+      const date = new Date(id);
+      const now = new Date();
+
+      const difference = parseInt((now - date) / (1000 * 60 * 60 * 24), 10)
+      const relative = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+
+      const day = relative.format(0 - difference, "day")
+      let hours = date.getHours();
+      let mins = date.getMinutes();
+      if (mins < 10) mins = `0${mins}`
+
+      return `${day} at ${hours}:${mins}`
     },
     choosePractice(practice) {
       this.spell.practice = practice.name
@@ -1819,7 +1811,7 @@ export default {
         this.spell.effects.push(item)
       }
     },
-    putSpellMacroInClipboard(spell) {
+    copySpell(spell) {
       const out = [];
       out.push("&{template:default}");
       out.push(`{{name=**${spell.name}** (${spell.primaryArcana.arcana} ${Array.from({ length: spell.primaryArcana.level }, v => "&bull;").join("")})}}`)
@@ -1828,23 +1820,11 @@ export default {
       out.push(`{{factors=${this.getFactorsSummaryFor(spell)}}}`)
       out.push(`{{extras=${this.getEffectsSummaryFor(spell) || "None"}}}`)
       out.push(`{{yantras=${this.getYantrasSummaryFor(spell) || "None"}}}`)
-      if (this.getConditionsSummaryFor(spell) !== "None") out.push(`{{conditions=${this.getConditionsSummaryFor(spell)}}}`)
       out.push(`{{=[Roll ${this.getDicePoolSummaryFor(spell)} to cast](!&#13;&#91;[&#63;{Number of dice|${this.getDicePoolFor(spell)}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
       const text = out.join(" ");
       navigator.clipboard.writeText(text).then(() => {
         this.message.info(`${spell.name} was copied to clipboard`)
       });
-    },
-    copyActiveSpell() {
-      this.putSpellMacroInClipboard(spell)
-    },
-    copySavedSpell(spell) {
-      this.putSpellMacroInClipboard(spell)
-    },
-    removeSpell(spell) {
-      let index = findIndex(this.saved, (item) => item.id === spell.id)
-      this.saved.splice(index, 1)
-      this.message.error(`${spell.name} was removed`)
     },
     loadSpell(spell) {
       const cloned = clone(spell)
@@ -1853,20 +1833,29 @@ export default {
       this.spell.primaryArcana.level = spell.primaryArcana.level;
       this.spell.secondaryArcana.arcana = spell.secondaryArcana.arcana;
       this.spell.secondaryArcana.level = spell.secondaryArcana.level;
-      this.paradox = { ...clone(defaultParadox) }
-      this.conditions = { ...clone(defaultConditions) }
       this.message.success(`${cloned.name} was loaded`)
-      if (cloned.conditionSummary !== "None") {
-        this.message.info(`Condition settings have been cleared`)
-      }
-      if (cloned.tags.paradox !== 0) {
-        this.message.info(`Paradox settings has been cleared`)
-      }
     },
-    saveActiveSpell() {
-      const spell = clone(this.spell)// this.getSpellWithSummary(this.spell)
-      this.saved.push(spell)
-      this.message.success(`${spell.name} was saved`)
+    castSpell(spell) {
+      const cloned = clone(spell)
+      cloned.id = cloned.id || new Date().getTime()
+      this.caster.active.push(cloned)
+      this.message.warning(`${cloned.name} was added to active spells`)
+    },
+    uncastSpell(spell) {
+      let index = findIndex(this.caster.active, (item) => item.id === spell.id)
+      this.caster.active.splice(index, 1)
+      this.message.error(`${spell.name} was removed from active spells`)
+    },
+    saveSpell(spell) {
+      const cloned = clone(spell)
+      cloned.id = cloned.id || new Date().getTime()
+      this.saved.push(cloned)
+      this.message.success(`${cloned.name} was saved`)
+    },
+    unsaveSpell(spell) {
+      let index = findIndex(this.saved, (item) => item.id === spell.id)
+      this.saved.splice(index, 1)
+      this.message.error(`${spell.name} was removed`)
     },
     reset() {
       const cloned = clone(defaultSpell)
@@ -1889,8 +1878,6 @@ export default {
         duration: "s1",
         scale: "s1",
       }
-      this.paradox = { ...clone(defaultParadox) }
-      this.conditions = { ...clone(defaultConditions) }
       this.message.warning("Spell config has been reset")
     },
     log(text) {
@@ -1908,6 +1895,8 @@ export default {
           this.caster.type = this.caster.type || "Cabal"
           this.caster.praxes = this.caster.praxes || []
           this.caster.rotes = this.caster.rotes || []
+          this.caster.active = this.caster.active || []
+          this.caster.paradox = this.caster.paradox || 0
         }
       } catch (err) {
         console.error(err)
@@ -1960,7 +1949,7 @@ body {
 }
 .n-tabs {
   padding: 0 10px;
-  max-width: 600px;
+  max-width: 660px;
   margin: 80px auto;
 }
 .n-tabs .n-tabs-tab-pad {
@@ -2016,13 +2005,13 @@ body {
 #spellAffix {
   margin-bottom: -48px;
   width: 100%;
-  max-width: 580px;
+  max-width: 640px;
 }
 .btn-only-icon-when-small {
   height: auto !important;
 }
 @media only screen
-  and (max-width: 600px) {
+  and (max-width: 660px) {
   #spellAffix {
     max-width: 100%;
   }
@@ -2039,7 +2028,7 @@ body {
   padding: 10px !important;
 }
 .quick .n-card__content {
-  max-width: 600px;
+  max-width: 660px;
   width: 100%;
   margin: 0 auto;
   padding: 10px !important;

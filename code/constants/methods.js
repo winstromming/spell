@@ -50,10 +50,10 @@ export const getFreeReach = (caster, spell) => {
   return arcana - spell.primaryArcana.level + 1
 }
 
-export const getUsedReach = (caster, spell, conditions) => {
+export const getUsedReach = (caster, spell) => {
   let reach = 0
-  if (conditions.activeSpells >= caster.gnosis) {
-    reach += conditions.activeSpells - caster.gnosis + 1
+  if (caster.active.length >= caster.gnosis) {
+    reach += caster.active.length - caster.gnosis + 1
   }
   // check factors (advanced factor keys begin with "a")
   for (let factor in spell.factors) {
@@ -82,7 +82,7 @@ export const getUsedReach = (caster, spell, conditions) => {
   return reach
 }
 
-export const getTotalMana = (caster, spell, paradox) => {
+export const getTotalMana = (caster, spell) => {
   let mana = 0
   let type = getRoteOrPraxis(caster, spell)
   // check ruling, rote, praix
@@ -102,7 +102,6 @@ export const getTotalMana = (caster, spell, paradox) => {
   if (spell.attainments.sympatheticRange) mana++
   if (spell.attainments.temporalSympathy) mana++
   if (spell.attainments.everywhere) mana++
-  mana += paradox.manaSpent
   return mana
 }
 
@@ -115,8 +114,8 @@ export const getBaseCastingTime = (caster) => {
   return null
 }
 
-export const getWithstand = (spell, conditions) => {
-  let withstand = conditions.subjectWithstand
+export const getWithstand = (spell, scene) => {
+  let withstand = scene.withstand
   if (spell.factors.potency === "a1") withstand -= 2
   return withstand
 }
@@ -143,17 +142,16 @@ export const getDurationPenalty = (caster, spell) => {
   return penalty
 }
 
-export const getDicePool = (caster, spell, conditions) => {
+export const getDicePool = (caster, spell, scene) => {
   // base pool
   let pool = caster.gnosis + caster.arcana[spell.primaryArcana.arcana].level
-  pool += conditions.bonusDice
   if (spell.spendWillpower) pool += 3
   // casting time
   if (spell.factors["castingTime"][0] !== "a") {
     pool += spell.factors.castingTime[1] - 1
   }
   // withstand
-  pool -= getWithstand(spell, conditions)
+  pool -= getWithstand(spell, scene)
   // potency
   pool -= getPotencyPenalty(caster, spell)
   // duration
@@ -167,11 +165,15 @@ export const getDicePool = (caster, spell, conditions) => {
   return pool
 }
 
-export const getParadoxDice = (caster, spell, conditions, paradox) => {
+export const getParadoxDice = (caster, spell, scene) => {
   let pool = 0,
-    mustRoll = false
-  const usedReach = getUsedReach(caster, spell, conditions)
-  const freeReach = getFreeReach(caster, spell)
+    mustRoll = false,
+    usedReach = 0,
+    freeReach = 0
+  if (spell.name || spell.custom) {
+    usedReach = getUsedReach(caster, spell, scene)
+    freeReach = getFreeReach(caster, spell)
+  }
   // check reach
   if (usedReach > freeReach) {
     pool += (freeReach - usedReach) * -1
@@ -179,20 +181,19 @@ export const getParadoxDice = (caster, spell, conditions, paradox) => {
   }
   // gnosis multiplies paradox from additional reach
   pool *= Math.ceil(caster.gnosis / 2)
-  if (paradox.inured) {
-    pool += 2
+  // if (paradox.inured) {
+  //   pool += 2
+  //   mustRoll = true
+  // }
+  if (caster.paradox > 0) {
+    pool += caster.paradox
     mustRoll = true
   }
-  if (paradox.previous > 0) {
-    pool += paradox.previous
-    mustRoll = true
-  }
-  if (paradox.sleepers > 0) {
+  if (scene.witnesses > 0) {
     pool++
     mustRoll = true
   }
   if (some(spell.yantras, ["isDedicatedTool", true])) pool -= 2
-  pool -= paradox.manaSpent
   if (pool <= 0 && mustRoll) return "Chance"
   if (pool < 0) return 0
   return pool
@@ -255,8 +256,8 @@ export const getYantrasSummary = (caster, spell) => {
   return yantrasNames.join(", ")
 }
 
-export const getDicePoolSummary = (caster, spell, conditions) => {
-  let dice = getDicePool(caster, spell, conditions)
+export const getDicePoolSummary = (caster, spell, scene) => {
+  let dice = getDicePool(caster, spell, scene)
   if (dice < 1) {
     return "Chance"
   } else if (dice == 1) {
@@ -266,9 +267,9 @@ export const getDicePoolSummary = (caster, spell, conditions) => {
   }
 }
 
-export const getParadoxSummary = (caster, spell, conditions, paradox) => {
+export const getParadoxSummary = (caster, spell, scene) => {
   let summary
-  let dice = getParadoxDice(caster, spell, conditions, paradox)
+  let dice = getParadoxDice(caster, spell, scene)
   if (dice === "Chance") {
     summary = "Chance"
   } else if (dice === 1) {
@@ -276,23 +277,14 @@ export const getParadoxSummary = (caster, spell, conditions, paradox) => {
   } else {
     summary = dice + " dice"
   }
-  if (paradox.sleepers > 0) {
-    if (paradox.sleepers === 2) {
+  if (scene.witnesses > 0) {
+    if (scene.witnesses === 2) {
       summary += " (9-again)"
-    } else if (paradox.sleepers === 3) {
+    } else if (scene.witnesses === 3) {
       summary += " (8-again)"
-    } else if (paradox.sleepers === 4) {
+    } else if (scene.witnesses === 4) {
       summary += " (as rote)"
     }
   }
   return summary
-}
-
-export const getConditionsSummary = (conditions) => {
-  let summary = []
-  if (conditions.bonusDice > 0) summary.push(`+${conditions.bonusDice} dice`)
-  if (conditions.activeSpells > 0) summary.push(`${conditions.activeSpells} active`)
-  if (conditions.subjectWithstand > 0) summary.push(`${conditions.subjectWithstand} withstand`)
-  if (summary.length === 0) return "None"
-  return summary.join(", ")
 }
