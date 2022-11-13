@@ -16,7 +16,7 @@
               <n-text>You don't have a character selected</n-text>
             </n-alert>
             <!-- Caster -->
-            <Card title="Character" :summary="caster.name" v-if="caster">
+            <Card title="Character" collapsed :summary="caster.name" v-if="caster">
               <template #content>
                 <n-space vertical size="large">
                   <n-grid :cols="2" :x-gap="10" :y-gap="10">
@@ -141,10 +141,15 @@
         </n-tab-pane>
         <n-tab-pane name="scene" :tab="sceneTabSummary">
           <n-space vertical v-if="caster">
-            <!-- Active -->
+            <!-- Info -->
+            <n-alert type="warning" v-if="hasConfiguredCaster === false">
+              <n-text v-if="caster === undefined || caster === null">You don't have a character selected</n-text>
+              <n-text v-else>You haven't set Gnosis and Arcana for this character</n-text>
+            </n-alert>
             <n-alert type="info" v-if="caster.active.length === 0">
               <n-text> You don't have any active spells. </n-text>
             </n-alert>
+            <!-- Active -->
             <Card collapsed :title="item.name" :summary="getCreatedTimeAgo(item.id)" v-for="(item) in caster.active" :key="item.id">
               <template #content>
                 <n-space vertical size="small">
@@ -1263,7 +1268,7 @@ export default {
     },
     sceneTabSummary() {
       if (!this.caster) return "Active"
-      return `Active (${this.caster.active.length}/${this.caster.gnosis})`
+      return `Active (${this.caster.active.length}/${this.caster.gnosis || 0})`
     },
     spellSummary() {
       let summary = ""
@@ -1462,13 +1467,21 @@ export default {
     createCaster() {
       if (this.chooseCasterDropdown) {
         this.chooseCasterDropdown.blur()
-        this.chooseCasterDropdown.show = false
         // this.chooseCasterValue = caster
       }
-      let caster = { ...clone(defaultCaster), id: new Date().getTime() }
+      let caster = {
+        ...clone(defaultCaster),
+        id: new Date().getTime(),
+        rotes: [],
+        praxes: [],
+        active: [],
+        paradox: 0,
+      }
       this.caster = caster
-      this.caster.rotes = []
-      this.caster.praxes = []
+      this.caster.rotes = caster.rotes
+      this.caster.praxes = caster.praxes
+      this.caster.active = caster.active
+      this.caster.paradox = caster.paradox
     },
     chooseCaster(caster) {
       if (this.chooseCasterDropdown) {
@@ -1476,8 +1489,10 @@ export default {
         // this.chooseCasterValue = null
       }
       this.caster = caster
-      this.caster.rotes = caster.rotes
-      this.caster.praxes = caster.praxes
+      this.caster.rotes = caster.rotes || []
+      this.caster.praxes = caster.praxes || []
+      this.caster.active = caster.active || []
+      this.caster.paradox = caster.paradox || 0
     },
     chooseYantraFromDropdown(option) {
       if (this.chooseYantraDropdown) {
