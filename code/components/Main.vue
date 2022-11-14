@@ -1,203 +1,19 @@
 <template>
   <n-config-provider :theme="theme" :theme-overrides="{ common: { fontWeightStrong: '600' } }">
     <n-layout static embedded>
-      <n-tabs default-value="spell" animated>
-        <template #suffix>
-          <n-select ref="chooseCasterDropdown" :value="chooseCasterValue" filterable placeholder="Choose character to edit" @update:value="chooseCaster" :options="chooseCasterOptions">
-            <template #action>
-              <n-button @click="createCaster" type="success" text>Create a new character</n-button>
-            </template>
-          </n-select>
+      <n-tabs default-value="spell" animated type="segment">
+        <template #prefix>
+          <n-dropdown trigger="click" placement="bottom-start" :show-arrow="true" @select="chooseCharacter" :options="chooseCharacterDropdownOptions">
+            <n-button secondary strong>
+              <template #icon>
+                <n-icon>
+                  <PersonCircleOutline />
+                </n-icon>
+              </template>
+              {{ caster ? caster.name : "Choose Character"}}
+            </n-button>
+          </n-dropdown>
         </template>
-        <n-tab-pane name="caster" :tab="casterTabSummary">
-          <n-space vertical>
-            <!-- Info -->
-            <n-alert type="warning" v-if="caster === undefined || caster === null">
-              <n-text>You don't have a character selected</n-text>
-            </n-alert>
-            <!-- Caster -->
-            <Card title="Character" collapsed :summary="caster.name" v-if="caster">
-              <template #content>
-                <n-space vertical size="large">
-                  <n-grid :cols="2" :x-gap="10" :y-gap="10">
-                    <n-grid-item>
-                      <n-space vertical size="small">
-                        <b>Name</b>
-                        <n-input v-model:value="caster.name" type="text" placeholder="eg. Merlin" />
-                      </n-space>
-                    </n-grid-item>
-                    <n-grid-item>
-                      <n-space vertical size="small">
-                        <b>Category</b>
-                        <n-input v-model:value="caster.type" type="text" placeholder="eg. Cabal" />
-                      </n-space>
-                    </n-grid-item>
-                  </n-grid>
-                </n-space>
-              </template>
-              <template #footer>
-                <n-space justify="space-between">
-                  <n-button strong text type="error" @click="removeCaster(caster.id)">
-                    <template #icon>
-                      <n-icon>
-                        <Trash />
-                      </n-icon>
-                    </template>
-                    Delete this character
-                  </n-button>
-                </n-space>
-              </template>
-            </Card>
-            <!-- Gnosis -->
-            <Card title="Gnosis" :summary="gnosisSummary" v-if="caster">
-              <template #content>
-                <n-rate clearable :count="10" v-model:value="caster.gnosis">
-                  <n-icon>
-                    <EllipseOutline />
-                  </n-icon>
-                </n-rate>
-              </template>
-            </Card>
-            <!-- Praxes -->
-            <Card title="Praxes" :summary="casterPraxesSummary" v-if="caster">
-              <template #content>
-                <n-space vertical>
-                  <n-table v-if="caster.praxes.length > 0" striped class="s-table">
-                    <tbody>
-                      <tr v-for="item in caster.praxes" :key="item.name">
-                        <td>{{ item.name }}</td>
-                        <td width="20">
-                          <n-button size="tiny" type="error" @click="removePraxisSpell(item.name)">
-                            <template #icon>
-                              <n-icon>
-                                <Close />
-                              </n-icon>
-                            </template>
-                          </n-button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </n-table>
-                  <n-select ref="choosePraxisDropdown" filterable :value="choosePraxisValue" placeholder="Choose spell to add" @update:value="(v) => choosePraxisFromDropdown(v)" :options="chooseSpellOptions" />
-                </n-space>
-              </template>
-            </Card>
-            <!-- Rotes -->
-            <Card title="Rotes" :summary="casterRotesSummary" v-if="caster">
-              <template #content>
-                <n-space vertical class="s-table">
-                  <n-table v-if="caster.rotes.length > 0" striped class="s-table">
-                    <tbody>
-                      <tr v-for="item in caster.rotes" :key="item.name">
-                        <td>{{ item.name}}</td>
-                        <td width="50">
-                          <n-rate clearable :count="5" v-model:value="item.skill">
-                            <n-icon>
-                              <EllipseOutline />
-                            </n-icon>
-                          </n-rate>
-                        </td>
-                        <td width="20">
-                          <n-button size="tiny" type="error" @click="removeRoteSpell(item.name)">
-                            <template #icon>
-                              <n-icon>
-                                <Close />
-                              </n-icon>
-                            </template>
-                          </n-button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </n-table>
-                  <n-select ref="chooseRoteDropdown" filterable :value="chooseRoteValue" placeholder="Choose spell to add" @update:value="(v) => chooseRoteFromDropdown(v)" :options="chooseSpellOptions" />
-                </n-space>
-              </template>
-            </Card>
-            <!-- Arcana -->
-            <Card title="Arcana" :summary="arcanaSummary" v-if="caster">
-              <template #content>
-                <n-table striped :bordered="false" class="s-table" style="margin-left: -8px; width: calc(100% + 16px)">
-                  <tbody>
-                    <tr v-for="(item, name) of caster.arcana" :key="name">
-                      <td width="50">
-                        <n-text>{{ name }}</n-text>
-                      </td>
-                      <td width="20">
-                        <n-switch size="small" v-model:value="item.ruling" />
-                      </td>
-                      <td>
-                        <n-rate clearable :count="5" v-model:value="item.level">
-                          <n-icon>
-                            <EllipseOutline />
-                          </n-icon>
-                        </n-rate>
-                      </td>
-                    </tr>
-                  </tbody>
-                </n-table>
-              </template>
-            </Card>
-          </n-space>
-        </n-tab-pane>
-        <n-tab-pane name="scene" :tab="sceneTabSummary">
-          <n-space vertical v-if="caster">
-            <!-- Info -->
-            <n-alert type="warning" v-if="hasConfiguredCaster === false">
-              <n-text v-if="caster === undefined || caster === null">You don't have a character selected</n-text>
-              <n-text v-else>You haven't set Gnosis and Arcana for this character</n-text>
-            </n-alert>
-            <n-alert type="info" v-if="caster.active.length === 0">
-              <n-text> You don't have any active spells. </n-text>
-            </n-alert>
-            <!-- Active -->
-            <Card collapsed :title="item.name" :summary="getCreatedTimeAgo(item.id)" v-for="(item) in caster.active" :key="item.id">
-              <template #content>
-                <n-space vertical size="small">
-                  <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{getFactorsSummaryFor(item)}}.</n-text>
-                  <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{getEffectsSummaryFor(item)}}</n-text>
-                  <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{getYantrasSummaryFor(item)}}.</n-text>
-                </n-space>
-              </template>
-              <template #footer>
-                <n-button text strong class="btn-only-icon-when-small" title="Stop" size="small" type="error" @click="uncastSpell(item)">
-                  <template #icon>
-                    <n-icon>
-                      <Ban />
-                    </n-icon>
-                  </template>
-                  Remove
-                </n-button>
-              </template>
-            </Card>
-            <!-- Paradox -->
-            <Card title="Paradox" :summary="`${caster.paradox} previous paradox, ${['No', 'Few', 'Some', 'Many', 'Crowd of'][scene.witnesses]} witnesses`">
-              <template #content>
-                <n-space vertical>
-                  <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
-                    <tbody>
-                      <tr>
-                        <td colspan="3">
-                          <n-space vertical>
-                            <b>Number of previous paradox rolls ({{caster.paradox}})</b>
-                            <n-slider placement="bottom" v-model:value="caster.paradox" :min="0" :max="10" />
-                          </n-space>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="3">
-                          <n-space vertical>
-                            <b>Number of sleeper witnesses ({{ ['None', 'One', 'Some', 'Many', 'Crowd'][scene.witnesses] }})</b>
-                            <n-slider placement="bottom" v-model:value="scene.witnesses" :min="0" :max="4" />
-                          </n-space>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </n-table>
-                </n-space>
-              </template>
-            </Card>
-          </n-space>
-        </n-tab-pane>
         <n-tab-pane name="spell" tab="Spell" :ref="container">
           <n-space vertical>
             <!-- Info -->
@@ -451,6 +267,65 @@
             </Card>
           </n-space>
         </n-tab-pane>
+        <n-tab-pane name="scene" :tab="sceneTabSummary">
+          <n-space vertical>
+            <!-- Info -->
+            <n-alert type="warning" v-if="hasConfiguredCaster === false">
+              <n-text v-if="caster === undefined || caster === null">You don't have a character selected</n-text>
+              <n-text v-else>You haven't set Gnosis and Arcana for this character</n-text>
+            </n-alert>
+            <n-alert type="info" v-if="hasConfiguredCaster === true && caster.active.length === 0">
+              <n-text> You don't have any active spells. </n-text>
+            </n-alert>
+            <!-- Active -->
+            <Card v-if="hasConfiguredCaster === true" collapsed :title="item.name" :summary="getCreatedTimeAgo(item.id)" v-for="(item) in caster.active" :key="item.id">
+              <template #content>
+                <n-space vertical size="small">
+                  <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{getFactorsSummaryFor(item)}}.</n-text>
+                  <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{getEffectsSummaryFor(item)}}</n-text>
+                  <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{getYantrasSummaryFor(item)}}.</n-text>
+                </n-space>
+              </template>
+              <template #footer>
+                <n-button text strong class="btn-only-icon-when-small" title="Stop" size="small" type="error" @click="uncastSpell(item)">
+                  <template #icon>
+                    <n-icon>
+                      <Ban />
+                    </n-icon>
+                  </template>
+                  Remove
+                </n-button>
+              </template>
+            </Card>
+            <!-- Paradox -->
+            <Card v-if="hasConfiguredCaster === true" title="Paradox" :summary="`${caster.paradox} previous paradox, ${['No', 'Few', 'Some', 'Many', 'Crowd of'][scene.witnesses]} witnesses`">
+              <template #content>
+                <n-space vertical>
+                  <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
+                    <tbody>
+                      <tr>
+                        <td colspan="3">
+                          <n-space vertical>
+                            <b>Number of previous paradox rolls ({{caster.paradox}})</b>
+                            <n-slider placement="bottom" v-model:value="caster.paradox" :min="0" :max="10" />
+                          </n-space>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="3">
+                          <n-space vertical>
+                            <b>Number of sleeper witnesses ({{ ['None', 'One', 'Some', 'Many', 'Crowd'][scene.witnesses] }})</b>
+                            <n-slider placement="bottom" v-model:value="scene.witnesses" :min="0" :max="4" />
+                          </n-space>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </n-table>
+                </n-space>
+              </template>
+            </Card>
+          </n-space>
+        </n-tab-pane>
         <n-tab-pane name="saved" :tab="`Saved (${saved.length})`">
           <n-space vertical>
             <!-- Info -->
@@ -458,7 +333,7 @@
               <n-text v-if="caster === undefined || caster === null">You don't have a character selected</n-text>
               <n-text v-if="caster !== undefined && caster !== null">You haven't set Gnosis and Arcana for this character</n-text>
             </n-alert>
-            <n-alert type="info" v-if="saved.length === 0">
+            <n-alert type="info" v-if="hasConfiguredCaster === true && saved.length === 0">
               <n-text>You don't have any saved spells</n-text>
             </n-alert>
             <!-- Saved -->
@@ -524,16 +399,202 @@
         </n-tab-pane>
       </n-tabs>
     </n-layout>
+    <n-modal v-model:show="showEditCharacterModal" preset="card" title="Edit Character" :bordered="false" style="max-width: 650px; max-height: 650px; position: fixed; right: 50px; bottom: 50px; left: 50px; top: 50px;">
+      <template #header v-if="caster">
+        <n-space>
+          <n-input style="max-width: 232px" v-model:value="caster.name" type="text" placeholder="eg. Merlin">
+            <template #prefix>
+              <n-text strong>Name:</n-text>
+            </template>
+          </n-input>
+          <n-input style="max-width: 232px" v-model:value="caster.type" type="text" placeholder="eg. Cabal">
+            <template #prefix>
+              <n-text strong>Category:</n-text>
+            </template>
+          </n-input>
+        </n-space>
+      </template>
+      <template #footer v-if="caster">
+        <n-button strong text type="error" @click="removeCaster(caster.id)">
+          <template #icon>
+            <n-icon>
+              <Trash />
+            </n-icon>
+          </template>
+          Delete this character
+        </n-button>
+      </template>
+      <n-grid x-gap="12" :cols="10" v-if="caster">
+        <!-- Left Column -->
+        <n-gi :span="4">
+          <n-space vertical size="large">
+            <!-- Gnosis -->
+            <n-table striped bordered size="small">
+              <thead>
+                <tr>
+                  <th>Gnosis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <n-rate size="small" clearable :count="10" v-model:value="caster.gnosis">
+                      <n-icon>
+                        <EllipseOutline />
+                      </n-icon>
+                    </n-rate>
+                  </td>
+                </tr>
+              </tbody>
+            </n-table>
+            <!-- Arcana -->
+            <n-table striped bordered size="small">
+              <thead>
+                <tr>
+                  <th colspan="3">Arcana</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, name) of caster.arcana" :key="name">
+                  <td width="20">
+                    <n-switch size="small" v-model:value="item.ruling" />
+                  </td>
+                  <td width="76">
+                    <n-text>{{ name }}</n-text>
+                  </td>
+                  <td align="right">
+                    <n-rate size="small" clearable :count="5" v-model:value="item.level">
+                      <n-icon>
+                        <EllipseOutline />
+                      </n-icon>
+                    </n-rate>
+                  </td>
+                </tr>
+              </tbody>
+            </n-table>
+          </n-space>
+        </n-gi>
+        <!-- Right Column -->
+        <n-gi :span="6">
+          <n-space vertical size="large">
+            <!-- Praxes-->
+            <n-space vertical size="small">
+              <n-table striped bordered size="small">
+                <thead>
+                  <tr>
+                    <th colspan="2">Praxes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-if="caster.praxes.length === 0">
+                    <td colspan="2">
+                      <n-text depth="3">No spells added</n-text>
+                    </td>
+                  </tr>
+                  <tr v-for="item in caster.praxes" :key="item.name">
+                    <td width="15">
+                      <n-button quaternary size="tiny" type="error" @click="removePraxisSpell(item.name)">
+                        <template #icon>
+                          <n-icon>
+                            <Trash />
+                          </n-icon>
+                        </template>
+                      </n-button>
+                    </td>
+                    <td>
+                      <n-ellipsis :tooltip="false" style="max-width: 260px">
+                        <n-text>{{ item.name }}</n-text>
+                      </n-ellipsis>
+                    </td>
+                  </tr>
+                </tbody>
+              </n-table>
+              <n-select ref="choosePraxisDropdown" filterable :value="choosePraxisValue" placeholder="Choose praxis to add" @update:value="(v) => choosePraxisFromDropdown(v)" :options="chooseSpellOptions" />
+            </n-space>
+            <!-- Rotes -->
+            <n-space vertical size="small">
+              <n-table striped bordered size="small">
+                <thead>
+                  <tr>
+                    <th colspan="3">Rotes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-if="caster.rotes.length === 0">
+                    <td colspan="2">
+                      <n-text depth="3">No spells added</n-text>
+                    </td>
+                  </tr>
+                  <tr v-for="item in caster.rotes" :key="item.name">
+                    <td width="15">
+                      <n-button quaternary size="tiny" type="error" @click="removeRoteSpell(item.name)">
+                        <template #icon>
+                          <n-icon>
+                            <Trash />
+                          </n-icon>
+                        </template>
+                      </n-button>
+                    </td>
+                    <td>
+                      <n-ellipsis :tooltip="false" style="max-width: 180px">
+                        <n-text>{{ item.name }}</n-text>
+                      </n-ellipsis>
+                    </td>
+                    <td width="50">
+                      <n-rate size="small" clearable :count="5" v-model:value="item.skill">
+                        <n-icon>
+                          <EllipseOutline />
+                        </n-icon>
+                      </n-rate>
+                    </td>
+                  </tr>
+                </tbody>
+              </n-table>
+              <n-select ref="chooseRoteDropdown" filterable :value="chooseRoteValue" placeholder="Choose rote to add" @update:value="(v) => chooseRoteFromDropdown(v)" :options="chooseSpellOptions" />
+            </n-space>
+          </n-space>
+        </n-gi>
+      </n-grid>
+    </n-modal>
   </n-config-provider>
 </template>
 
 <script>
 import { ref, h } from "vue"
 import { clone, max, some, capitalize, findIndex, range } from "lodash"
-import { useMessage } from "naive-ui"
+import { useMessage, NIcon } from "naive-ui"
 import { darkTheme, lightTheme } from "naive-ui"
 
-import { Flash, Ban, Sparkles, BatteryCharging, Settings, Dice, Flame, Skull, Close, DocumentText, DocumentTextOutline, Save, Trash, Build, Bookmark, ArrowUndo, Reload, ChevronDown, ChevronUp, Ellipse, EllipseOutline } from "@vicons/ionicons5"
+import {
+  Flash,
+  Ban,
+  Create,
+  People,
+  PeopleCircleOutline,
+  Person,
+  PersonCircleOutline,
+  Sparkles,
+  BatteryCharging,
+  SettingsSharp,
+  Dice,
+  Flame,
+  Skull,
+  Close,
+  Add,
+  AddCircleOutline,
+  DocumentText,
+  DocumentTextOutline,
+  Save,
+  Trash,
+  Build,
+  Bookmark,
+  ArrowUndo,
+  Reload,
+  ChevronDown,
+  ChevronUp,
+  Ellipse,
+  EllipseOutline
+} from "@vicons/ionicons5"
 
 import Card from "./Card.vue"
 
@@ -642,7 +703,37 @@ const defaultScene = {
 }
 
 export default {
-  components: { Card, Ban, DocumentText, DocumentTextOutline, Sparkles, Settings, BatteryCharging, Flash, Dice, Flame, Skull, Trash, Build, Bookmark, ArrowUndo, Save, Reload, Close, ChevronDown, ChevronUp, Ellipse, EllipseOutline },
+  components: {
+    Card,
+    Ban,
+    SettingsSharp,
+    People,
+    PeopleCircleOutline,
+    Person,
+    Add,
+    AddCircleOutline,
+    PersonCircleOutline,
+    DocumentText,
+    DocumentTextOutline,
+    Sparkles,
+    BatteryCharging,
+    Flash,
+    Dice,
+    Flame,
+    Skull,
+    Trash,
+    Create,
+    Build,
+    Bookmark,
+    ArrowUndo,
+    Save,
+    Reload,
+    Close,
+    ChevronDown,
+    ChevronUp,
+    Ellipse,
+    EllipseOutline,
+  },
   setup() {
     const message = useMessage()
     const container = ref(undefined)
@@ -650,11 +741,13 @@ export default {
     const chooseYantraDropdown = ref(undefined)
     const choosePraxisDropdown = ref(undefined)
     const chooseRoteDropdown = ref(undefined)
+    // const showEditCharacterModal = ref(false)
     return {
       darkTheme,
       lightTheme,
       container: container,
       message: message,
+      // showEditCharacterModal,
       chooseCasterDropdown,
       chooseYantraDropdown,
       choosePraxisDropdown,
@@ -672,6 +765,7 @@ export default {
       theme: lightTheme,
       dark: false,
       // chooseCasterValue: null,
+      showEditCharacterModal: false,
       chooseYantraValue: null,
       choosePraxisValue: null,
       chooseRoteValue: null,
@@ -687,11 +781,8 @@ export default {
       if (this.isSpellArcanaTooHigh === true) return false
       return true
     },
-    chooseCasterValue() {
-      if (!this.caster) return null
-      return this.caster.name
-    },
-    chooseCasterOptions() {
+    chooseCharacterDropdownOptions() {
+
       let options = []
       let types = []
 
@@ -699,23 +790,62 @@ export default {
         if (types.includes(caster.type) === false) types.push(caster.type)
       }
 
+      if (this.caster) {
+        options.push({
+          label: "Edit character",
+          key: "edit",
+          icon() {
+            return h(NIcon, null, {
+              default: () => h(SettingsSharp)
+            })
+          },
+        });
+        options.push({
+          key: "d1",
+          type: "divider",
+        })
+      }
+
+
       for (let type of types) {
         options.push({
-          type: "group",
           label: type,
           key: type,
+          icon() {
+            return h(NIcon, null, {
+              default: () => h(People)
+            })
+          },
           children: this.casters
             .filter((c) => c.type === type)
             .map((c) => {
               return {
                 label: c.name,
-                value: c,
+                key: c.id,
+                disabled: this.caster && this.caster.id === c.id,
               }
             }),
         })
       }
 
+      options.push({
+        key: "d2",
+        type: "divider",
+      })
+
+      options.push({
+        label: "New character",
+        key: "create",
+        icon() {
+          return h(NIcon, null, {
+            default: () => h(AddCircleOutline)
+          })
+        },
+      });
+
       return options
+
+
     },
     chooseSpellLabel() {
       if (this.spell.name === undefined && this.spell.custom) return "Creative Thaumaturgy"
@@ -1267,6 +1397,7 @@ export default {
       return "Caster"
     },
     sceneTabSummary() {
+      console.log("caster", this.caster)
       if (!this.caster) return "Active"
       return `Active (${this.caster.active.length}/${this.caster.gnosis || 0})`
     },
@@ -1464,30 +1595,20 @@ export default {
       this.spell.practice = practice.name
       this.spell.primaryArcana.level = practice.level
     },
-    createCaster() {
-      if (this.chooseCasterDropdown) {
-        this.chooseCasterDropdown.blur()
-        // this.chooseCasterValue = caster
-      }
-      let caster = {
-        ...clone(defaultCaster),
-        id: new Date().getTime(),
-        rotes: [],
-        praxes: [],
-        active: [],
-        paradox: 0,
-      }
-      this.caster = caster
-      this.caster.rotes = caster.rotes
-      this.caster.praxes = caster.praxes
-      this.caster.active = caster.active
-      this.caster.paradox = caster.paradox
+    chooseCharacter(id) {
+      if (id === "edit") return this.editCharacter();
+      if (id === "create") return this.createCharacter()
+      const caster = this.casters.find(c => c.id === id)
+      this.setCaster(caster)
     },
-    chooseCaster(caster) {
-      if (this.chooseCasterDropdown) {
-        this.chooseCasterDropdown.blur()
-        // this.chooseCasterValue = null
-      }
+    editCharacter() {
+      this.showEditCharacterModal = true
+    },
+    createCharacter() {
+      const caster = { ...clone(defaultCaster), id: new Date().getTime() }
+      this.setCaster(caster)
+    },
+    setCaster(caster) {
       this.caster = caster
       this.caster.rotes = caster.rotes || []
       this.caster.praxes = caster.praxes || []
@@ -1535,12 +1656,13 @@ export default {
       return this.caster.rotes.find((s) => s.name === name)
     },
     removeCaster(id) {
+      this.showEditCharacterModal = false
+      this.caster = null
       let index = this.casters.findIndex((s) => s.id === id)
       if (index !== -1) {
         const name = this.casters[index].name
         this.casters.splice(index, 1)
         this.message.error(`${name} was removed`)
-        this.caster = null
       }
     },
     removePraxisSpell(name) {
@@ -1903,8 +2025,10 @@ export default {
     if (localStorage.getItem("caster")) {
       try {
         let caster = JSON.parse(localStorage.getItem("caster"))
+        console.log("we are loading!", caster)
         if (caster) {
           this.caster = caster
+          console.log("loaded caster", caster)
           this.caster.id = this.caster.id || new Date().getTime()
           this.caster.name = this.caster.name || "You"
           this.caster.type = this.caster.type || "Cabal"
@@ -1955,23 +2079,19 @@ html {
 body {
   height: 100%;
   overflow: hidden;
+  background-color: rgb(247, 247, 250);
+}
+.n-tabs .n-tabs-nav {
+  overflow: visible;
+  padding: 20px;
 }
 .n-tabs .n-tabs-pane-wrapper {
   overflow: visible;
+  padding: 0 20px 20px;
 }
 .n-layout {
   height: 100vh;
-}
-.n-tabs {
-  padding: 0 10px;
-  max-width: 660px;
-  margin: 80px auto;
-}
-.n-tabs .n-tabs-tab-pad {
-  width: 5px;
-}
-.n-tabs .n-tabs-tab {
-  padding: 10px;
+  background-color: rgb(247, 247, 250);
 }
 .s-modal {
   min-width: 400px;
@@ -2003,9 +2123,6 @@ body {
   fill: var(--n-text-color);
   stroke: var(--n-text-color);
 }
-.n-tabs-nav__suffix .n-switch.n-switch--active .n-switch__rail {
-    /* background-color: #f2c97d; */
-}
 .quick {
   position: fixed;
   left: 0;
@@ -2020,7 +2137,7 @@ body {
 #spellAffix {
   margin-bottom: -48px;
   width: 100%;
-  max-width: 640px;
+  /* max-width: 640px; */
 }
 .btn-only-icon-when-small {
   height: auto !important;
