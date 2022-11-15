@@ -2025,7 +2025,7 @@ export default {
       out.push(`{{factors=${this.getFactorsSummaryFor(spell)}}}`)
       out.push(`{{extras=${this.getEffectsSummaryFor(spell) || "None"}}}`)
       out.push(`{{yantras=${this.getYantrasSummaryFor(spell) || "None"}}}`)
-      out.push(`{{=[Roll ${this.getDicePoolSummaryFor(spell)} to cast](!&#13;&#91;[&#63;{Number of dice|${this.getDicePoolFor(spell)}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
+      out.push(`{{=[Roll ${this.getDicePoolSummaryFor(spell)} to cast](!&#13;&#91;[&#63;{Number of dice|${this.getDicePoolFor(spell)}}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
       const text = out.join(" ");
       navigator.clipboard.writeText(text).then(() => {
         this.message.info(`${spell.name} was copied`)
