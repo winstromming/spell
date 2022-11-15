@@ -55,7 +55,7 @@
                     </template>
                     Cast
                   </n-button>
-                  <n-button class="btn-only-icon-when-small" title="Copy for Roll20" :disabled="canCastSpell === false" size="tiny" type="info" @click="copySpell(spellspell)">
+                  <n-button class="btn-only-icon-when-small" title="Copy for Roll20" :disabled="canCastSpell === false" size="tiny" type="info" @click="copySpell(spell)">
                     <template #icon>
                       <n-icon>
                         <DocumentText />
