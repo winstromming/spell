@@ -3,7 +3,17 @@
     <n-layout position="absolute" embed style="height: 100%">
       <n-layout-header bordered style="height: 50px">
         <n-space :size="0" align="center">
-          <n-menu v-model:value="tab" mode="horizontal" @update:value="chooseMenuOption" :options="menuOptions" />
+          <n-dropdown trigger="click" @select="chooseCharacter" :options="characterOptions">
+            <n-button quaternary>
+              <template #icon>
+                <n-icon>
+                  <PersonCircleOutline />
+                </n-icon>
+              </template>
+              {{ caster ? caster.name : "Choose"}}
+            </n-button>
+          </n-dropdown>
+          <n-menu :dropdown-props="{ trigger: 'manual' }" v-model:value="tab" mode="horizontal" :options="menuOptions" />
         </n-space>
       </n-layout-header>
       <n-layout embedded content-style="padding: 12px;" v-if="tab === 'spell'" position="absolute" style="top: 50px; bottom: 0">
@@ -719,6 +729,9 @@ const defaultScene = {
   witnesses: 0,
   withstand: 0,
 }
+const menuOptionsDropdownProps = {
+  trigger: "click"
+}
 
 export default {
   components: {
@@ -801,8 +814,7 @@ export default {
       if (this.isSpellArcanaTooHigh === true) return false
       return true
     },
-    menuOptions() {
-      let options = []
+    characterOptions() {
       let dropdown = []
       let types = []
 
@@ -863,12 +875,17 @@ export default {
         },
       });
 
-      options.push({
-        label: this.caster ? this.caster.name : "Choose",
-        key: 'character',
-        icon() { return h(NIcon, null, { default: () => h(PersonCircleOutline) }) },
-        children: dropdown,
-      })
+      return dropdown
+    },
+    menuOptions() {
+      let options = []
+
+      // options.push({
+      //   label: this.caster ? this.caster.name : "Choose",
+      //   key: 'character',
+      //   icon() { return h(NIcon, null, { default: () => h(PersonCircleOutline) }) },
+      //   children: dropdown,
+      // })
 
       options.push({
         label: "Spell",
@@ -1535,16 +1552,6 @@ export default {
     },
   },
   methods: {
-    chooseMenuOption(key) {
-      if (key === "edit") {
-        this.showEditCharacterModal = true
-        this.tab = 'spell';
-        return
-      }
-      if (["spell", "active", "saved"].includes(key) === false) {
-        this.chooseCharacter(key)
-      }
-    },
     returnToSpellTab() {
       this.tab = 'spell'
     },
@@ -1642,13 +1649,16 @@ export default {
       this.spell.primaryArcana.level = practice.level
     },
     chooseCharacter(id) {
-      let caster
-      if (id === "create") {
+      if (id === "edit") {
+        this.showEditCharacterModal = true
+      } else if (id === "create") {
+        let caster
         caster = { ...clone(defaultCaster), id: new Date().getTime() }
         this.setCaster(caster)
         this.tab = 'spell'
         this.showEditCharacterModal = true
       } else {
+        let caster
         caster = this.casters.find(c => c.id === id)
         this.setCaster(caster)
         this.tab = 'spell'
@@ -2126,7 +2136,7 @@ html {
 body {
   height: 100%;
   overflow: hidden;
-  background-color: rgb(247, 247, 250);
+  background-color: white;
 }
 .n-card {
   border-radius: 5px;
