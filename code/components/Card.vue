@@ -1,12 +1,14 @@
 <template>
   <n-card size="small" class="card">
     <template #header v-if="title && title.length > 0">
-      <n-button size="large" text block @click="open = !open">
+      <n-button size="large" text block @click="!icon ? open = !open : undefined">
         <template #icon>
-          <n-icon>
-            <ChevronUp v-if="open == true" />
-            <ChevronDown v-if="open === false" />
-          </n-icon>
+          <slot name="icon">
+            <n-icon>
+              <ChevronUp v-if="open == true" />
+              <ChevronDown v-if="open === false" />
+            </n-icon>
+          </slot>
         </template>
         <n-text strong class="card-title">{{ title }}</n-text>
         <n-text v-if="summary" depth="3" class="card-summary" editable>{{ summary }}</n-text>
@@ -29,7 +31,7 @@ import { ChevronDown, ChevronUp } from "@vicons/ionicons5"
 
 export default {
   components: { ChevronDown, ChevronUp },
-  props: ["title", "summary", "collapsed"],
+  props: ["title", "summary", "collapsed", "icon"],
   data() {
     return {
       open: true,

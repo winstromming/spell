@@ -16,7 +16,7 @@
           <n-menu :dropdown-props="{ trigger: 'manual' }" v-model:value="tab" mode="horizontal" :options="menuOptions" />
         </n-space>
       </n-layout-header>
-      <n-layout embedded content-style="padding: 12px;" v-if="tab === 'spell'" position="absolute" style="top: 50px; bottom: 0">
+      <n-layout embedded content-style="padding: 12px;" v-if="tab === 'cast'" position="absolute" style="top: 50px; bottom: 0">
         <n-space vertical>
           <!-- Info -->
           <n-alert type="warning" v-if="hasConfiguredCaster === false">
@@ -269,40 +269,8 @@
             </template>
             <template #footer> Gnosis {{ caster.gnosis }} allows the use of {{ maxYantras }} yantras. </template>
           </Card>
-        </n-space>
-      </n-layout>
-      <n-layout embedded content-style="padding: 12px;" v-if="tab === 'active'" position="absolute" style="top: 50px; bottom: 0">
-        <n-space vertical>
-          <!-- Info -->
-          <n-alert type="warning" v-if="hasConfiguredCaster === false">
-            <n-text v-if="caster === undefined || caster === null">You don't have a character selected</n-text>
-            <n-text v-else>You haven't set Gnosis and Arcana for this character</n-text>
-          </n-alert>
-          <n-alert type="info" v-if="hasConfiguredCaster === true && caster.active.length === 0">
-            <n-text> You don't have any active spells. </n-text>
-          </n-alert>
-          <!-- Active -->
-          <Card v-if="hasConfiguredCaster === true" collapsed :title="item.name" :summary="getCreatedTimeAgo(item.id)" v-for="(item) in caster.active" :key="item.id">
-            <template #content>
-              <n-space vertical size="small">
-                <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{getFactorsSummaryFor(item)}}.</n-text>
-                <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{getEffectsSummaryFor(item)}}</n-text>
-                <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{getYantrasSummaryFor(item)}}.</n-text>
-              </n-space>
-            </template>
-            <template #footer>
-              <n-button text strong class="btn-only-icon-when-small" title="Stop" size="small" type="error" @click="uncastSpell(item)">
-                <template #icon>
-                  <n-icon>
-                    <Ban />
-                  </n-icon>
-                </template>
-                Remove
-              </n-button>
-            </template>
-          </Card>
           <!-- Paradox -->
-          <Card v-if="hasConfiguredCaster === true" title="Paradox" :summary="`${caster.paradox} previous paradox, ${['No', 'Few', 'Some', 'Many', 'Crowd of'][scene.witnesses]} witnesses`">
+          <Card collapsed v-if="hasConfiguredCaster === true" title="Paradox" :summary="`${caster.paradox} previous paradox, ${['No', 'Few', 'Some', 'Many', 'Crowd of'][scene.witnesses]} witnesses`">
             <template #content>
               <n-space vertical>
                 <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
@@ -330,72 +298,117 @@
           </Card>
         </n-space>
       </n-layout>
-      <n-layout embedded content-style="padding: 12px;" v-if="tab === 'saved'" position="absolute" style="top: 50px; bottom: 0">
+      <n-layout embedded content-style="padding: 12px;" v-if="tab === 'spells'" position="absolute" style="top: 50px; bottom: 0">
         <n-space vertical>
           <!-- Info -->
           <n-alert type="warning" v-if="hasConfiguredCaster === false">
             <n-text v-if="caster === undefined || caster === null">You don't have a character selected</n-text>
             <n-text v-if="caster !== undefined && caster !== null">You haven't set Gnosis and Arcana for this character</n-text>
           </n-alert>
-          <n-alert type="info" v-if="hasConfiguredCaster === true && saved.length === 0">
-            <n-text>You don't have any saved spells</n-text>
-          </n-alert>
-          <!-- Saved -->
-          <Card v-if="hasConfiguredCaster" :title="item.name" collapsed :summary="getCastingSummaryFor(item)" v-for="(item) in saved" :key="item.id">
-            <template #tags>
-              <n-space :size="5">
-                <n-tag v-if="getRoteOrPraxisFor(item) === 'praxis'" size="small" :bordered="false" round strong style="text-transform: capitalize"> Praxis </n-tag>
-                <n-tag v-if="getRoteOrPraxisFor(item) === 'rote'" size="small" :bordered="false" round strong style="text-transform: capitalize"> Rote </n-tag>
-                <n-tag size="small" :bordered="false" round strong :type="getUsedReachFor(item) > getFreeReachFor(item) ? 'warning' : 'success'"> {{getUsedReachFor(item)}}/{{getFreeReachFor(item)}} Reach </n-tag>
-                <n-tag size="small" :bordered="false" round strong type="success"> {{getDicePoolFor(item)}} Dice </n-tag>
-                <n-tag size="small" :bordered="false" round strong type="success"> {{getTotalManaFor(item)}} Mana </n-tag>
-                <n-tag size="small" :bordered="false" round strong type="error"> {{getParadoxDiceFor(item)}} Paradox </n-tag>
-              </n-space>
+          <!-- Active -->
+          <Card v-if="hasConfiguredCaster === true" :icon="true" title="Active" :summary="`(${ caster.active.length }/${ caster.gnosis })`">
+            <template #icon>
+              <n-icon color="black">
+                <FlashOutline />
+              </n-icon>
             </template>
             <template #content>
-              <n-space vertical size="large">
-                <n-text v-if="getCastingSummaryFor(item)"><b>Casting:</b> {{getCastingSummaryFor(item)}}.</n-text>
-                <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{getFactorsSummaryFor(item)}}.</n-text>
-                <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{getEffectsSummaryFor(item)}}</n-text>
-                <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{getYantrasSummaryFor(item)}}.</n-text>
+              <n-space vertical>
+                <n-alert type="info" v-if="caster.active.length === 0">
+                  <n-text>You don't have any active spells</n-text>
+                </n-alert>
+                <Card collapsed :title="item.name" :summary="getCreatedTimeAgo(item.id)" v-for="(item) in caster.active" :key="item.id">
+                  <template #content>
+                    <n-space vertical size="small">
+                      <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{getFactorsSummaryFor(item)}}.</n-text>
+                      <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{getEffectsSummaryFor(item)}}</n-text>
+                      <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{getYantrasSummaryFor(item)}}.</n-text>
+                    </n-space>
+                  </template>
+                  <template #footer>
+                    <n-button text strong class="btn-only-icon-when-small" title="Stop" size="small" type="error" @click="uncastSpell(item)">
+                      <template #icon>
+                        <n-icon>
+                          <Ban />
+                        </n-icon>
+                      </template>
+                      Stop
+                    </n-button>
+                  </template>
+                </Card>
               </n-space>
             </template>
-            <template #footer>
-              <n-space justify="space-between">
-                <n-button class="btn-only-icon-when-small" title="Remove" size="tiny" type="error" @click="unsaveSpell(item)">
-                  <template #icon>
-                    <n-icon>
-                      <Trash />
-                    </n-icon>
+          </Card>
+          <!-- Saved -->
+          <Card v-if="hasConfiguredCaster === true" :icon="true" title="Saved" :summary="`(${ saved.length })`">
+            <template #icon>
+              <n-icon color="black">
+                <BookmarkOutline />
+              </n-icon>
+            </template>
+            <template #content>
+              <n-space vertical>
+                <n-alert type="info" v-if="saved.length === 0">
+                  <n-text>You don't have any saved spells</n-text>
+                </n-alert>
+                <Card :title="item.name" collapsed :summary="getCastingSummaryFor(item)" v-for="(item) in saved" :key="item.id">
+                  <template #tags>
+                    <n-space :size="5">
+                      <n-tag v-if="getRoteOrPraxisFor(item) === 'praxis'" size="small" :bordered="false" round strong style="text-transform: capitalize"> Praxis </n-tag>
+                      <n-tag v-if="getRoteOrPraxisFor(item) === 'rote'" size="small" :bordered="false" round strong style="text-transform: capitalize"> Rote </n-tag>
+                      <n-tag size="small" :bordered="false" round strong :type="getUsedReachFor(item) > getFreeReachFor(item) ? 'warning' : 'success'"> {{getUsedReachFor(item)}}/{{getFreeReachFor(item)}} Reach </n-tag>
+                      <n-tag size="small" :bordered="false" round strong type="success"> {{getDicePoolFor(item)}} Dice </n-tag>
+                      <n-tag size="small" :bordered="false" round strong type="success"> {{getTotalManaFor(item)}} Mana </n-tag>
+                      <n-tag size="small" :bordered="false" round strong type="error"> {{getParadoxDiceFor(item)}} Paradox </n-tag>
+                    </n-space>
                   </template>
-                  Remove
-                </n-button>
-                <n-space>
-                  <n-button class="btn-only-icon-when-small" title="Cast" size="tiny" type="warning" @click="castSpell(item)">
-                    <template #icon>
-                      <n-icon>
-                        <Flash />
-                      </n-icon>
-                    </template>
-                    Cast
-                  </n-button>
-                  <n-button class="btn-only-icon-when-small" title="Copy for Roll20" size="tiny" type="info" @click="copySpell(item)">
-                    <template #icon>
-                      <n-icon>
-                        <DocumentText />
-                      </n-icon>
-                    </template>
-                    Copy
-                  </n-button>
-                  <n-button class="btn-only-icon-when-small" title="Edit" size="tiny" type="success" @click="loadSpell(item)">
-                    <template #icon>
-                      <n-icon>
-                        <Build />
-                      </n-icon>
-                    </template>
-                    Load
-                  </n-button>
-                </n-space>
+                  <template #content>
+                    <n-space vertical size="large">
+                      <n-text v-if="getCastingSummaryFor(item)"><b>Casting:</b> {{getCastingSummaryFor(item)}}.</n-text>
+                      <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{getFactorsSummaryFor(item)}}.</n-text>
+                      <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{getEffectsSummaryFor(item)}}</n-text>
+                      <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{getYantrasSummaryFor(item)}}.</n-text>
+                    </n-space>
+                  </template>
+                  <template #footer>
+                    <n-space justify="space-between">
+                      <n-button class="btn-only-icon-when-small" title="Remove" size="tiny" type="error" @click="unsaveSpell(item)">
+                        <template #icon>
+                          <n-icon>
+                            <Trash />
+                          </n-icon>
+                        </template>
+                        Remove
+                      </n-button>
+                      <n-space>
+                        <n-button class="btn-only-icon-when-small" title="Cast" size="tiny" type="warning" @click="castSpell(item)">
+                          <template #icon>
+                            <n-icon>
+                              <Flash />
+                            </n-icon>
+                          </template>
+                          Cast
+                        </n-button>
+                        <n-button class="btn-only-icon-when-small" title="Copy for Roll20" size="tiny" type="info" @click="copySpell(item)">
+                          <template #icon>
+                            <n-icon>
+                              <DocumentText />
+                            </n-icon>
+                          </template>
+                          Copy
+                        </n-button>
+                        <n-button class="btn-only-icon-when-small" title="Edit" size="tiny" type="success" @click="loadSpell(item)">
+                          <template #icon>
+                            <n-icon>
+                              <Build />
+                            </n-icon>
+                          </template>
+                          Load
+                        </n-button>
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
               </n-space>
             </template>
           </Card>
@@ -595,6 +608,7 @@ import { darkTheme, lightTheme } from "naive-ui"
 
 import {
   Flash,
+  FlashOutline,
   Ban,
   Create,
   People,
@@ -616,6 +630,7 @@ import {
   Trash,
   Build,
   Bookmark,
+  BookmarkOutline,
   ArrowUndo,
   Reload,
   ChevronDown,
@@ -729,9 +744,6 @@ const defaultScene = {
   witnesses: 0,
   withstand: 0,
 }
-const menuOptionsDropdownProps = {
-  trigger: "click"
-}
 
 export default {
   components: {
@@ -749,6 +761,7 @@ export default {
     Sparkles,
     BatteryCharging,
     Flash,
+    FlashOutline,
     Dice,
     Flame,
     Skull,
@@ -756,6 +769,7 @@ export default {
     Create,
     Build,
     Bookmark,
+    BookmarkOutline,
     ArrowUndo,
     Save,
     Reload,
@@ -888,16 +902,12 @@ export default {
       // })
 
       options.push({
-        label: "Spell",
-        key: 'spell',
+        label: "Cast",
+        key: 'cast',
       })
       options.push({
-        label: `Active (${this.caster?.active?.length || 0}/${this.caster?.gnosis || 0})`,
-        key: 'active',
-      })
-      options.push({
-        label: `Saved (${this.saved.length})`,
-        key: 'saved',
+        label: `Spells (${this.caster?.active?.length || 0}/${this.caster?.gnosis || 0})`,
+        key: 'spells',
       })
 
       return options
@@ -1553,7 +1563,7 @@ export default {
   },
   methods: {
     returnToSpellTab() {
-      this.tab = 'spell'
+      this.tab = 'cast'
     },
     setDark(value) {
       if (value === true) this.theme = darkTheme
@@ -1634,15 +1644,17 @@ export default {
       const date = new Date(id);
       const now = new Date();
 
-      const difference = parseInt((now - date) / (1000 * 60 * 60 * 24), 10)
+      let difference = parseInt((now - date) / (1000 * 60 * 60 * 24), 10)
       const relative = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+
+      if (date.getDate() === now.getDate()) difference = 0
 
       const day = relative.format(0 - difference, "day")
       let hours = date.getHours();
       let mins = date.getMinutes();
       if (mins < 10) mins = `0${mins}`
 
-      return `${day} at ${hours}:${mins}`
+      return `cast ${day} at ${hours}:${mins}`.toLowerCase()
     },
     choosePractice(practice) {
       this.spell.practice = practice.name
@@ -1655,13 +1667,13 @@ export default {
         let caster
         caster = { ...clone(defaultCaster), id: new Date().getTime() }
         this.setCaster(caster)
-        this.tab = 'spell'
+        this.tab = 'cast'
         this.showEditCharacterModal = true
       } else {
         let caster
         caster = this.casters.find(c => c.id === id)
         this.setCaster(caster)
-        this.tab = 'spell'
+        this.tab = 'cast'
       }
     },
     setCaster(caster) {
@@ -2030,14 +2042,14 @@ export default {
     },
     castSpell(spell) {
       const cloned = clone(spell)
-      cloned.id = cloned.id || new Date().getTime()
+      cloned.id = new Date().getTime()
       this.caster.active.push(cloned)
       this.message.warning(`${cloned.name} was cast`)
     },
     uncastSpell(spell) {
       let index = findIndex(this.caster.active, (item) => item.id === spell.id)
       this.caster.active.splice(index, 1)
-      this.message.error(`${spell.name} was dropped`)
+      this.message.error(`${spell.name} was stopped`)
     },
     saveSpell(spell) {
       const cloned = clone(spell)
