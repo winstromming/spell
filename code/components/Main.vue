@@ -782,7 +782,7 @@ export default {
   setup() {
     const message = useMessage()
     const container = ref(undefined)
-    const tab = ref("spell")
+    const tab = ref("cast")
     const chooseCasterDropdown = ref(undefined)
     const chooseYantraDropdown = ref(undefined)
     const choosePraxisDropdown = ref(undefined)
