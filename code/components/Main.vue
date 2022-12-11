@@ -602,7 +602,7 @@
 
 <script>
 import { ref, h } from "vue"
-import { clone, max, some, capitalize, findIndex, range } from "lodash"
+import { clone, max, some, capitalize, findIndex, range, cloneDeep } from "lodash"
 import { useMessage, NIcon } from "naive-ui"
 import { darkTheme, lightTheme } from "naive-ui"
 
@@ -681,7 +681,7 @@ function dots(num) {
 
 const defaultCaster = {
   id: 0,
-  name: "Character",
+  name: "New Character",
   type: "Uncategorised",
   gnosis: 0,
   arcana: {
@@ -806,8 +806,8 @@ export default {
     return {
       caster: null,
       casters: [],
-      scene: clone(defaultScene),
-      spell: clone(defaultSpell),
+      scene: cloneDeep(defaultScene),
+      spell: cloneDeep(defaultSpell),
       saved: [],
       theme: lightTheme,
       dark: false,
@@ -1665,7 +1665,7 @@ export default {
         this.showEditCharacterModal = true
       } else if (id === "create") {
         let caster
-        caster = { ...clone(defaultCaster), id: new Date().getTime() }
+        caster = { ...cloneDeep(defaultCaster), id: new Date().getTime() }
         this.setCaster(caster)
         this.tab = 'cast'
         this.showEditCharacterModal = true
@@ -1756,7 +1756,7 @@ export default {
       )
     },
     customSpell(spell) {
-      const cloned = clone(defaultSpell)
+      const cloned = cloneDeep(defaultSpell)
       this.spell = cloned
       this.spell.custom = true
       this.spell.customName = undefined
@@ -1790,7 +1790,7 @@ export default {
       if (spell.name === "Creative Thaumaturgy") {
         return this.customSpell(spell)
       }
-      const cloned = clone(defaultSpell)
+      const cloned = cloneDeep(defaultSpell)
       this.spell = cloned
       this.spell.name = spell.name
       this.spell.practice = spell.practice
@@ -2032,7 +2032,7 @@ export default {
       });
     },
     loadSpell(spell) {
-      const cloned = clone(spell)
+      const cloned = cloneDeep(spell)
       this.spell = { ...cloned }
       this.spell.primaryArcana.arcana = spell.primaryArcana.arcana;
       this.spell.primaryArcana.level = spell.primaryArcana.level;
@@ -2041,7 +2041,7 @@ export default {
       this.message.success(`${cloned.name} was loaded`)
     },
     castSpell(spell) {
-      const cloned = clone(spell)
+      const cloned = cloneDeep(spell)
       cloned.id = new Date().getTime()
       this.caster.active.push(cloned)
       this.message.warning(`${cloned.name} was cast`)
@@ -2052,7 +2052,7 @@ export default {
       this.message.error(`${spell.name} was stopped`)
     },
     saveSpell(spell) {
-      const cloned = clone(spell)
+      const cloned = cloneDeep(spell)
       cloned.id = cloned.id || new Date().getTime()
       this.saved.push(cloned)
       this.message.success(`${cloned.name} was saved`)
@@ -2063,7 +2063,7 @@ export default {
       this.message.error(`${spell.name} was removed`)
     },
     reset() {
-      const cloned = clone(defaultSpell)
+      const cloned = cloneDeep(defaultSpell)
       this.spell = { ...cloned }
       this.spell.primaryArcana.arcana = undefined
       this.spell.primaryArcana.level = undefined
