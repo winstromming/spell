@@ -271,7 +271,7 @@ export const yantrasBaseData = new Map([
     "l1",
     {
       name: "Demesne",
-      desc: "A prepared ritual space with a soul stone",
+      desc: "A prepared ritual space with a Soul Stone.",
       bonus: 2,
       unique: true,
     },
@@ -300,7 +300,7 @@ export const yantrasBaseData = new Map([
     "a1",
     {
       name: "Rote Skill Mudra",
-      desc: "Uses skill dots as a bonus. The character must be free to make whatever mnemonic gestures are used to recall the Rote.",
+      desc: "Uses skill dots as a bonus. Must be free to make the mnemonic gestures.",
       bonus: 0,
       unique: true,
     },
@@ -309,7 +309,7 @@ export const yantrasBaseData = new Map([
     "a2",
     {
       name: "Concentration",
-      desc: "Duration must be greater than a turn. If the mage is hurt or takes a non-reflexive action while the spell is active, it ends immediately.",
+      desc: "Duration must be greater than a turn. Ends if you are hurt or take non-reflexive actions.",
       bonus: 2,
       unique: true,
     },
@@ -327,7 +327,7 @@ export const yantrasBaseData = new Map([
     "a4",
     {
       name: "Runes",
-      desc: "The subject is marked with runes. Ritual casting only. If anything damages or disrupts the runes while the spell is active, it ends immediately.",
+      desc: "Must be cast as ritual. Ends if runes on the subject are damaged or disrupted.",
       bonus: 2,
       unique: true,
     },
@@ -338,16 +338,16 @@ export const yantrasBaseData = new Map([
     "t1",
     {
       name: "Dedicated Tool",
-      desc: "Tool which synchronizes with the mage's Nimbus. Reduces Paradox by 2 dice.",
+      desc: "Tool which synchronizes with your Nimbus.",
       bonus: 0,
-      unique: true,
+      unique: false,
     },
   ],
   [
     "t2",
     {
       name: "Path Tool",
-      desc: "Tools which aligns closely to the mage's Path.",
+      desc: "Tool which aligns closely with your Path.",
       bonus: 1,
       unique: false,
     },
@@ -356,7 +356,7 @@ export const yantrasBaseData = new Map([
     "t3",
     {
       name: "Order Tool",
-      desc: "Tools which draw upon an Order's symbols and teachings.",
+      desc: "Tool which uses symbols and teachings of your Order.",
       bonus: 1,
       unique: false,
     },
@@ -364,32 +364,71 @@ export const yantrasBaseData = new Map([
   [
     "t4",
     {
-      name: "Material Sympathy",
-      desc: "An item sympathetically linked to the subject as they are now. At least one sympathetic tool is required for sympathetic casting. Does not grant a bonus when used with Sympathetic Range or Temporal Sympathy Attainments.",
+      name: "Perfected Tool",
+      desc: "Tool which contains a Perfected Metal suited to the spell.",
       bonus: 2,
       unique: false,
     },
   ],
+  // Soul Stones
   [
-    "t5",
+    "s1",
     {
-      name: "Representational Sympathy",
-      desc: "An item sympathetically linked to the subject as they were previously. At least one sympathetic tool is required for sympathetic casting. Does not grant a bonus when used with Sympathetic Range or Temporal Sympathy Attainments.",
-      bonus: 1,
-      unique: false,
-    },
-  ],
-  [
-    "t6",
-    {
-      name: "Symbolic Sympathy",
-      desc: "An indirect representation of the subject. At least one sympathetic tool is required for sympathetic casting.",
+      name: "Soul Stone",
+      desc: "Object which embodies your Gnosis.",
       bonus: 0,
       unique: false,
     },
   ],
   [
-    "t7",
+    "s2",
+    {
+      name: "Soul Stone",
+      desc: "Object which embodies another mage's Gnosis.",
+      bonus: 2,
+      unique: false,
+    },
+  ],
+  [
+    "s3",
+    {
+      name: "Soul Stone",
+      desc: "Object which embodies another mage's higher Gnosis.",
+      bonus: 3,
+      unique: false,
+    },
+  ],
+  // Sympathy
+  [
+    "y1",
+    {
+      name: "Symbolic Sympathy",
+      desc: "An indirect representation of the subject.",
+      bonus: 0,
+      unique: false,
+    },
+  ],
+  [
+    "y2",
+    {
+      name: "Representational Sympathy",
+      desc: "An item sympathetically linked to the subject as they were previously.",
+      bonus: 1,
+      unique: false,
+    },
+  ],
+  [
+    "y3",
+    {
+      name: "Material Sympathy",
+      desc: "An item sympathetically linked to the subject as they are now.",
+      bonus: 2,
+      unique: false,
+    },
+  ],
+  // Sacrement
+  [
+    "c1",
     {
       name: "Sacrament",
       desc: "An object symbolic of the spell destroyed during casting.",
@@ -398,7 +437,7 @@ export const yantrasBaseData = new Map([
     },
   ],
   [
-    "t8",
+    "c2",
     {
       name: "Rare Sacrament",
       desc: "A sacrament which requires significant effort to acquire.",
@@ -407,7 +446,7 @@ export const yantrasBaseData = new Map([
     },
   ],
   [
-    "t9",
+    "c3",
     {
       name: "Otherworldly Sacrament",
       desc: "A sacrament from somewhere other than the material realm.",
@@ -415,11 +454,12 @@ export const yantrasBaseData = new Map([
       unique: false,
     },
   ],
+  // Persona
   [
-    "t10",
+    "p1",
     {
       name: "Persona",
-      desc: "Uses the mage's Shadow Name and Cabal Theme Merits.",
+      desc: "Uses your Shadow Name and/or Cabal Theme merits.",
       bonus: [1, 4],
       unique: true,
     },

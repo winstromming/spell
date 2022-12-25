@@ -239,27 +239,26 @@
           <Card title="Yantras" collapsed :summary="yantrasSummary" v-if="canCastSpell">
             <template #content>
               <n-space vertical>
-                <n-table striped v-if="spell.yantras.length > 0">
+                <n-table striped bordered v-if="spell.yantras.length > 0">
                   <tbody>
                     <tr v-for="yantra, index in spell.yantras" :key="index">
                       <td>
-                        <n-space vertical size="small">
-                          <n-text strong>{{ yantra.label }}</n-text>
-                          <n-text>{{ yantra.desc }}</n-text>
-                          <n-space size="small" v-if="yantra.yantraKey === 't2' || yantra.yantraKey === 't3'">
-                            <n-switch size="small" v-model:value="yantra.isDedicatedTool" @update:value="(v) => updateYantraIsDedicatedTool(yantra.yantraKey, v)" />
-                            <n-text>This is your Dedicated Tool</n-text>
+                        <n-space justify="space-between">
+                          <n-space align="center">
+                            <n-button size="tiny" type="error" @click="deleteYantra(yantra.yantraKey)">
+                              <template #icon>
+                                <n-icon>
+                                  <Trash />
+                                </n-icon>
+                              </template>
+                            </n-button>
+                            <n-text>
+                              <n-text strong>{{ yantra.name }}</n-text>
+                              <n-text depth="3">{{ yantra.label.replace(yantra.name, "") }}</n-text>
+                            </n-text>
                           </n-space>
+                          <n-switch size="small" v-model:value="yantra.isDedicatedTool" @update:value="(v) => updateYantraIsDedicatedTool(yantra.yantraKey, v)" />
                         </n-space>
-                      </td>
-                      <td width="20" valign="top" style="vertical-align: top">
-                        <n-button size="small" type="error" @click="deleteYantra(yantra.yantraKey)">
-                          <template #icon>
-                            <n-icon>
-                              <Close />
-                            </n-icon>
-                          </template>
-                        </n-button>
                       </td>
                     </tr>
                   </tbody>
@@ -267,7 +266,15 @@
                 <n-select ref="chooseYantraDropdown" :options="yantraOptions" :value="chooseYantraValue" :render-label="renderYantraLabel" filterable @update:value="chooseYantraFromDropdown" />
               </n-space>
             </template>
-            <template #footer> Gnosis {{ caster.gnosis }} allows the use of {{ maxYantras }} yantras. </template>
+            <template #footer>
+              <n-space vertical>
+                <n-text>Gnosis {{ caster.gnosis }} allows the use of {{ maxYantras }} yantras.</n-text>
+                <n-text italic v-if="hasDedicatedSoulStone">Using a Dedicated Soul Stone provide -3 Paradox, but you cannot contain Paradox.</n-text>
+                <n-text italic v-if="hasDedicatedBothTools">Using two Dedicated Tools provides -3 Paradox and Chance cancellation.</n-text>
+                <n-text italic v-if="hasBroadDedication">Broad Dedication (merit) is required to dedicate yantras which aren't magical tools.</n-text>
+                <n-text italic v-if="hasProfligateDedication">Profligate Dedication (merit) is required to dedicate more than two magical tools.</n-text>
+              </n-space>
+            </template>
           </Card>
           <!-- Paradox -->
           <Card collapsed v-if="hasConfiguredCaster === true" title="Paradox" :summary="`${caster.paradox} previous paradox, ${['No', 'Few', 'Some', 'Many', 'Crowd of'][scene.witnesses]} witnesses`">
@@ -602,7 +609,7 @@
 
 <script>
 import { ref, h } from "vue"
-import { clone, max, some, capitalize, findIndex, range, cloneDeep } from "lodash"
+import { clone, max, some, includes, capitalize, findIndex, range, cloneDeep } from "lodash"
 import { useMessage, NIcon } from "naive-ui"
 import { darkTheme, lightTheme } from "naive-ui"
 
@@ -1107,6 +1114,18 @@ export default {
         }
       },
     },
+    hasDedicatedSoulStone() {
+      return some(this.spell.yantras, (y) => y.isDedicatedTool && y.yantraKey[0] === "s");
+    },
+    hasDedicatedBothTools() {
+      return this.spell.yantras.filter(y => y.isDedicatedTool).length > 1;
+    },
+    hasBroadDedication() {
+      return some(this.spell.yantras, (y) => y.isDedicatedTool && y.yantraKey[0] !== "s" && y.yantraKey[0] !== "t");
+    },
+    hasProfligateDedication() {
+      return this.spell.yantras.filter(y => y.isDedicatedTool).length > 2;
+    },
     totalMana() {
       return getTotalMana(this.caster, this.spell)
     },
@@ -1128,9 +1147,9 @@ export default {
     isSympatheticYantraMissing() {
       return (
         (this.spell.attainments.sympatheticRange || this.spell.attainments.temporalSympathy) &&
-        !this.hasYantra("t3") &&
-        !this.hasYantra("t4") &&
-        !this.hasYantra("t5")
+        !this.hasYantra("y1") &&
+        !this.hasYantra("y2") &&
+        !this.hasYantra("y3")
       )
     },
     isCastable() {
@@ -1414,11 +1433,27 @@ export default {
     toolYantraOptions() {
       return this.getYantraOptions("t")
     },
+    soulstoneYantraOptions() {
+      return this.getYantraOptions("s")
+    },
+    sympathyYantraOptions() {
+      return this.getYantraOptions("y")
+    },
+    sacramentYantraOptions() {
+      return this.getYantraOptions("c")
+    },
+    personaYantraOptions() {
+      return this.getYantraOptions("p")
+    },
     yantraOptions() {
       return [
         { type: "group", label: "Locations", key: "locations", children: this.locationYantraOptions },
         { type: "group", label: "Actions", key: "actions", children: this.actionYantraOptions },
         { type: "group", label: "Tools", key: "tools", children: this.toolYantraOptions },
+        { type: "group", label: "Soul Stones", key: "soulstones", children: this.soulstoneYantraOptions },
+        { type: "group", label: "Sympathy", key: "sympathy", children: this.sympathyYantraOptions },
+        { type: "group", label: "Sacrament", key: "sacrament", children: this.sacramentYantraOptions },
+        { type: "group", label: "Persona", key: "persona", children: this.personaYantraOptions },
       ]
     },
     casterPraxesSummary() {
@@ -1944,7 +1979,6 @@ export default {
 
       for (let [key, yantra] of this.yantras) {
         if (key[0] === prefix) {
-          // 'l', 'a', or 't'
           // disabled?
           let disabledWarning
 
@@ -1960,9 +1994,9 @@ export default {
             disabledWarning = "Only one of this Yantra may be used."
           }
 
-          if (key === "t1" && this.isDedicatedToolYantraUsed) {
-            disabledWarning = "Dedicated Tool is already being used."
-          }
+          // if (key === "t1" && this.isDedicatedToolYantraUsed) {
+          //   disabledWarning = "Dedicated Tool is already being used."
+          // }
 
           yantra.disabledWarning = disabledWarning
           yantra.disabled = !!disabledWarning

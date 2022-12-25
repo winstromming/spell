@@ -1,4 +1,4 @@
-import { some, clone, range } from "lodash"
+import { some, clone, range, filter } from "lodash"
 import { arcanaNames, baseCastingTimes, castingMethods, factors, gnosisManaLimits, durations, scales, practices, yantrasBaseData } from "./constants.js"
 
 export const getRoteOrPraxis = (caster, spell) => {
@@ -25,7 +25,7 @@ export const getYantras = (caster, spell) => {
         bonus = spell.roteSkill
       }
       // sympathetic yantras don't give a bonus to sympathetic or temporal spells
-      if (["t4", "t5"].includes(key) && (spell.attainments.sympatheticRange || spell.attainments.temporalSympathy)) {
+      if (["y1", "y2", "y3"].includes(key) && (spell.attainments.sympatheticRange || spell.attainments.temporalSympathy)) {
         bonus = 0
       }
       expandedYantra.yantraKey = Array.isArray(yantraBaseData.bonus) ? key + "_" + bonus : key // key is a reserved property in Vue so we use "yantraKey"
@@ -150,18 +150,24 @@ export const getDicePool = (caster, spell, scene) => {
   if (spell.factors["castingTime"][0] !== "a") {
     pool += spell.factors.castingTime[1] - 1
   }
+  let penalties = 0
+  let bonus = 0
   // withstand
-  pool -= getWithstand(spell, scene)
+  penalties += getWithstand(spell, scene)
   // potency
-  pool -= getPotencyPenalty(caster, spell)
+  penalties += getPotencyPenalty(caster, spell)
   // duration
-  pool -= getDurationPenalty(caster, spell)
+  penalties += getDurationPenalty(caster, spell)
   // scale
-  pool -= scales.get(spell.factors.scale).penalty
+  penalties += scales.get(spell.factors.scale).penalty
   // yantras
   spell.yantras.forEach((yantra) => {
-    pool += yantra.bonus
+    bonus += yantra.bonus
   })
+  // maximum yantra bonus after penalties is 5
+  bonus = bonus - penalties
+  if (bonus > 5) bonus = 5
+  pool += bonus
   return pool
 }
 
@@ -193,7 +199,15 @@ export const getParadoxDice = (caster, spell, scene) => {
     pool++
     mustRoll = true
   }
-  if (some(spell.yantras, ["isDedicatedTool", true])) pool -= 2
+  let dedicated = filter(spell.yantras, ["isDedicatedTool", true])
+  if (dedicated.length === 1) {
+    if (dedicated[0].yantraKey[0] === "s") pool -= 3
+    if (dedicated[0].yantraKey[0] !== "s") pool -= 2
+  }
+  if (dedicated.length > 1) {
+    pool -= 3
+    mustRoll = false
+  }
   if (pool <= 0 && mustRoll) return "Chance"
   if (pool < 0) return 0
   return pool
@@ -250,7 +264,9 @@ export const getYantrasSummary = (caster, spell) => {
   let yantrasNames = []
   let yantras = getYantras(caster, spell)
   for (let yantra of spell.yantras) {
-    yantrasNames.push(yantras.get(yantra.yantraKey).name)
+    let name = yantras.get(yantra.yantraKey).name
+    if (yantra.isDedicatedTool) name = "Dedicated " + name
+    yantrasNames.push(name)
   }
   if (yantrasNames.length === 0) return "None"
   return yantrasNames.join(", ")
