@@ -212,28 +212,108 @@
             <template #content>
               <n-select v-model:value="spell.factors.duration" :options="durationOptions" />
             </template>
-            <template #footer v-if="spell.factors.duration === 'a6'"> Indefinite duration requires +1 Reach and +1 Mana above the normal amount.</template>
+            <template #footer>
+              <n-space vertical>
+                <Card>
+                  <template #content>
+                    <n-space :wrap="false">
+                      <n-switch v-model:value="spell.attainments.permanence" size="small" :disabled="caster.arcana.Matter.level < 2" />
+                      <n-space vertical size="small">
+                        <n-text strong :depth="caster.arcana.Matter.level < 2 ? '3' : '1'">Attainment: Permanence (Matter {{ dots(2) }})</n-text>
+                        <n-text :depth="caster.arcana.Matter.level < 2 ? '3' : '1'">Advanced Scale costs 1 Mana instead of 1 Reach.</n-text>
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+                <Card>
+                  <template #content>
+                    <n-space :wrap="false">
+                      <n-switch v-model:value="spell.attainments.conditionalDuration" size="small" :disabled="caster.arcana.Fate.level < 2" />
+                      <n-space vertical size="small">
+                        <n-text strong :depth="caster.arcana.Fate.level < 2 ? '3' : '1'">Attainment: Conditional Duration (Fate {{ dots(2) }})</n-text>
+                        <n-text :depth="caster.arcana.Fate.level < 2 ? '3' : '1'">Spend 1 Mana to end the spell when a condition is met, adding 1-3 levels of Duration based on the nature of the condition.</n-text>
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+              </n-space>
+            </template>
           </Card>
           <!-- Casting Time -->
           <Card title="Casting Time" collapsed :summary="castingTimeSummary" v-if="canCastSpell">
             <template #content>
               <n-select v-model:value="spell.factors.castingTime" :options="castingTimeOptions" />
             </template>
-            <template #footer v-if="isAdvanced('castingTime')"> Using more than one Yantra (or High Speech) will increase this time. </template>
+            <template #footer>
+              <n-space vertical>
+                <n-text v-if="isAdvanced('castingTime')"> Using more than one Yantra (or High Speech) will increase this time. </n-text>
+                <Card>
+                  <template #content>
+                    <n-space :wrap="false">
+                      <n-switch v-model:value="spell.attainments.timeInABottle" size="small" :disabled="caster.arcana.Time.level < 4" />
+                      <n-space vertical size="small">
+                        <n-text strong :depth="caster.arcana.Time.level < 4 ? '3' : '1'">Attainment: Time in a Bottle (Time {{ dots(4) }})</n-text>
+                        <n-text :depth="caster.arcana.Time.level < 4 ? '3' : '1'">Advanced Casting Time costs 1 Mana instead of 1 Reach.</n-text>
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+              </n-space>
+            </template>
           </Card>
           <!-- Range -->
           <Card title="Range" collapsed :summary="rangeSummary" v-if="canCastSpell">
             <template #content>
               <n-select v-model:value="spell.factors.range" :options="rangeOptions" />
             </template>
-            <template #footer v-if="spell.factors.range === 'a2'"> Remote Viewing range requires +1 Reach above the normal amount.</template>
+            <template #footer>
+              <n-space vertical>
+                <n-text v-if="spell.factors.range === 'a2'"> Remote Viewing range requires +1 Reach above the normal amount.</n-text>
+                <Card>
+                  <template #content>
+                    <n-space :wrap="false">
+                      <n-switch v-model:value="spell.attainments.sympatheticRange" size="small" :disabled="caster.arcana.Space.level < 2" />
+                      <n-space vertical size="small">
+                        <n-text strong :depth="caster.arcana.Space.level < 2 ? '3' : '1'">Attainment: Sympathetic Range (Space {{ dots(2) }})</n-text>
+                        <n-text :depth="caster.arcana.Space.level < 2 ? '3' : '1'">Subject can be beyond sensory range. Requires Advanced Range, a sympathy Yantra and costs 1 Mana.</n-text>
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+                <Card>
+                  <template #content>
+                    <n-space :wrap="false">
+                      <n-switch v-model:value="spell.attainments.temporalSympathy" size="small" :disabled="caster.arcana.Time.level < 2" />
+                      <n-space vertical size="small">
+                        <n-text strong :depth="caster.arcana.Time.level < 2 ? '3' : '1'">Attainment: Temporal Sympathy (Time {{ dots(2) }})</n-text>
+                        <n-text :depth="caster.arcana.Time.level < 2 ? '3' : '1'">Cast a spell at subject's past self. Requires Advanced Range, a sympathy Yantra and costs +1 Mana. Can only be used with Time spells that allow it or spells combined with them.</n-text>
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+              </n-space>
+            </template>
           </Card>
           <!-- Scale -->
           <Card title="Scale" collapsed :summary="scaleSummary" v-if="canCastSpell">
             <template #content>
               <n-select v-model:value="spell.factors.scale" :options="scaleOptions" />
             </template>
-            <template #footer> Advanced Scale doubles the number of subjects and adds 5 size per additional -2 dice penalty. </template>
+            <template #footer>
+              <n-space vertical>
+                <Card>
+                  <template #content>
+                    <n-space :wrap="false">
+                      <n-switch v-model:value="spell.attainments.everywhere" size="small" :disabled="caster.arcana.Space.level < 4" />
+                      <n-space vertical size="small">
+                        <n-text strong :depth="caster.arcana.Space.level < 4 ? '3' : '1'">Attainment: Everywhere (Space {{ dots(4) }})</n-text>
+                        <n-text :depth="caster.arcana.Space.level < 4 ? '3' : '1'">Advanced Scale costs 1 Mana instead of 1 Reach.</n-text>
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+              </n-space>
+            </template>
           </Card>
           <!-- Yantras -->
           <Card title="Yantras" collapsed :summary="yantrasSummary" v-if="canCastSpell">
@@ -295,6 +375,14 @@
                         <n-space vertical>
                           <b>Number of sleeper witnesses ({{ ['None', 'One', 'Some', 'Many', 'Crowd'][scene.witnesses] }})</b>
                           <n-slider placement="bottom" v-model:value="scene.witnesses" :min="0" :max="4" />
+                        </n-space>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="3">
+                        <n-space vertical>
+                          <b>Amount of Mana spent negating Paradox ({{ spell.extraMana }})</b>
+                          <n-slider placement="bottom" v-model:value="spell.extraMana" :min="0" :max="6" />
                         </n-space>
                       </td>
                     </tr>
@@ -1896,60 +1984,6 @@ export default {
     },
     setPraxis(value) {
       this.spell.isPraxis = value
-    },
-    checkAttainments() {
-      // time in a bottle requires advanced
-      if (this.spell.attainments.timeInABottle && !this.isAdvanced("castingTime")) {
-        // debounce(() => {
-        //   this.spell.attainments.timeInABottle = false
-        //   Toast.create(
-        //     "Time in a Bottle attainment requires advanced Casting Time. Deselecting attainment."
-        //   )
-        // })()
-      }
-
-      // permanence requires advanced
-      if (
-        this.spell.attainments.permanence &&
-        (this.spell.primaryArcana.arcana !== "Matter" || !this.isAdvanced("Duration"))
-      ) {
-        // debounce(() => {
-        //   this.spell.attainments.permanence = false
-        //   Toast.create(
-        //     "Permanence attainment requires advanced Duration. Deselecting attainment."
-        //   )
-        // })()
-      }
-
-      // everywhere requires advanced
-      if (this.spell.attainments.everywhere && !this.isAdvanced("scale")) {
-        // debounce(() => {
-        //   this.spell.attainments.everywhere = false
-        //   Toast.create(
-        //     "Everywhere attainment requires advanced Scale. Deselecting attainment."
-        //   )
-        // })()
-      }
-
-      // sympathy requires advanced
-      if (this.spell.attainments.sympatheticRange && !this.isAdvanced("range")) {
-        // debounce(() => {
-        //   this.spell.attainments.sympatheticRange = false
-        //   Toast.create(
-        //     "Sympathetic Range attainment requires advanced Range. Deselecting attainment."
-        //   )
-        // })()
-      }
-
-      // temporal sympathy requires advanced
-      if (this.spell.attainments.temporalSympathy && !this.isAdvanced("range")) {
-        // debounce(() => {
-        //   this.spell.attainments.temporalSympathy = false
-        //   Toast.create(
-        //     "Temporal Sympathy attainment requires advanced Range. Deselecting attainment."
-        //   )
-        // })()
-      }
     },
     isUniqueYantraUsed(key) {
       let yantra = this.yantras.get(key)

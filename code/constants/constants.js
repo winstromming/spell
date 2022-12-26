@@ -465,17 +465,3 @@ export const yantrasBaseData = new Map([
     },
   ],
 ])
-export const spells = [
-  {
-    name: "Invisibilty",
-    level: 2,
-    arcana: "Forces",
-    primaryFactor: "duration",
-  },
-  {
-    name: "Dispel",
-    level: 1,
-    arcana: "Prime",
-    primaryFactor: "potency",
-  },
-]

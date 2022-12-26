@@ -79,6 +79,7 @@ export const getUsedReach = (caster, spell) => {
   if (spell.attainments.permanence) reach--
   if (spell.attainments.timeInABottle) reach--
   if (spell.attainments.everywhere) reach--
+  if (reach < 0) reach = 0
   return reach
 }
 
@@ -98,6 +99,7 @@ export const getTotalMana = (caster, spell) => {
   if (spell.extraMana) mana += spell.extraMana
   if (spell.factors.duration === "a6") mana++
   if (spell.attainments.permanence) mana++
+  if (spell.attainments.conditionalDuration) mana++
   if (spell.attainments.timeInABottle) mana++
   if (spell.attainments.sympatheticRange) mana++
   if (spell.attainments.temporalSympathy) mana++
@@ -199,6 +201,9 @@ export const getParadoxDice = (caster, spell, scene) => {
     pool++
     mustRoll = true
   }
+  // extra mana spent
+  pool -= spell.extraMana
+  // dedicated tools
   let dedicated = filter(spell.yantras, ["isDedicatedTool", true])
   if (dedicated.length === 1) {
     if (dedicated[0].yantraKey[0] === "s") pool -= 3
@@ -218,7 +223,12 @@ export const getPotencySummary = (caster, spell) => {
 }
 
 export const getDurationSummary = (caster, spell) => {
-  return durations.get(spell.factors.duration).time
+  let output = durations.get(spell.factors.duration).time
+  let attainments = []
+  if (spell.attainments.permanence) attainments.push("Permanence")
+  if (spell.attainments.conditionalDuration) attainments.push("Conditional")
+  if (attainments.length) output += ` (${attainments.join(", ")})`
+  return output
 }
 
 export const getCastingTimeSummary = (caster, spell) => {
@@ -227,13 +237,17 @@ export const getCastingTimeSummary = (caster, spell) => {
   if (spell.factors.castingTime[0] === "s") {
     let increment = time.increment * spell.factors.castingTime[1]
     let unit = time.unit + (increment !== 1 ? "s" : "")
-    return increment + " " + unit
+    let output = increment + " " + unit
+    if (spell.attainments.timeInABottle) output += " (Time in a Bottle)"
+    return output
   }
   // advanced
   else {
     let turns = spell.yantras.length <= 1 ? 1 : spell.yantras.length
     if (some(spell.yantras, ["yantraKey", "a3"])) turns = turns == 1 ? 2 : turns
-    return `${turns} turn${turns !== 1 ? "s" : ""}`
+    let output = `${turns} turn${turns !== 1 ? "s" : ""}`
+    if (spell.attainments.timeInABottle) output += " (Time in a Bottle)"
+    return output
   }
 }
 
@@ -257,7 +271,9 @@ export const getRangeSummary = (caster, spell) => {
 
 export const getScaleSummary = (caster, spell) => {
   let scale = scales.get(spell.factors.scale)
-  return scale ? `${scale.number} subjects or ${scale.area.toLowerCase()}` : ""
+  let output = scale ? `${scale.number} subjects or ${scale.area.toLowerCase()}` : ""
+  if (spell.attainments.everywhere) output += " (Everywhere)"
+  return output
 }
 
 export const getYantrasSummary = (caster, spell) => {

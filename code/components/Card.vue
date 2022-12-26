@@ -44,6 +44,7 @@ export default {
 </script>
 
 <style>
+.card[data-disabled] { opacity: 0.7 }
 .card > .n-card-header {
   padding: 0;
 }
