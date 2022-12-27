@@ -219,7 +219,10 @@ export const getParadoxDice = (caster, spell, scene) => {
 }
 
 export const getPotencySummary = (caster, spell) => {
-  return spell.factors.potency.substr(1)
+  let output = spell.factors.potency.substr(1)
+  output += " potency"
+  if (spell.factors.potency[0] === "a") output += " (-2 Withstand)"
+  return output
 }
 
 export const getDurationSummary = (caster, spell) => {
@@ -227,6 +230,7 @@ export const getDurationSummary = (caster, spell) => {
   let attainments = []
   if (spell.attainments.permanence) attainments.push("Permanence")
   if (spell.attainments.conditionalDuration) attainments.push("Conditional")
+  output += " duration"
   if (attainments.length) output += ` (${attainments.join(", ")})`
   return output
 }
@@ -238,6 +242,7 @@ export const getCastingTimeSummary = (caster, spell) => {
     let increment = time.increment * spell.factors.castingTime[1]
     let unit = time.unit + (increment !== 1 ? "s" : "")
     let output = increment + " " + unit
+    output += " casting time"
     if (spell.attainments.timeInABottle) output += " (Time in a Bottle)"
     return output
   }
@@ -246,14 +251,16 @@ export const getCastingTimeSummary = (caster, spell) => {
     let turns = spell.yantras.length <= 1 ? 1 : spell.yantras.length
     if (some(spell.yantras, ["yantraKey", "a3"])) turns = turns == 1 ? 2 : turns
     let output = `${turns} turn${turns !== 1 ? "s" : ""}`
+    output += " casting time"
     if (spell.attainments.timeInABottle) output += " (Time in a Bottle)"
     return output
   }
 }
 
 export const getRangeSummary = (caster, spell) => {
+  let output
   if (spell.factors.range === "s1") {
-    return "Touch"
+    output = "Touch"
   } else if (spell.attainments.sympatheticRange || spell.attainments.temporalSympathy) {
     let range = []
     if (spell.attainments.sympatheticRange) {
@@ -262,11 +269,13 @@ export const getRangeSummary = (caster, spell) => {
     if (spell.attainments.temporalSympathy) {
       range.push("Temporal Sympathetic")
     }
-    return range.join(" and ")
+    output = range.join(" and ")
   } else {
-    if (spell.factors.range === "a1") return "Sensory"
-    if (spell.factors.range === "a2") return "Remote"
+    if (spell.factors.range === "a1") output = "Sensory"
+    if (spell.factors.range === "a2") output = "Remote"
   }
+  output += " range"
+  return output
 }
 
 export const getScaleSummary = (caster, spell) => {
@@ -320,4 +329,14 @@ export const getParadoxSummary = (caster, spell, scene) => {
     }
   }
   return summary
+}
+
+export const getFactorSummary = (caster, spell) => {
+  let standard = 0
+  let advanced = 0
+  for (let factor in spell.factors) {
+    if (spell.factors[factor][0] === "s") standard++
+    if (spell.factors[factor][0] === "a") advanced++
+  }
+  return `${standard} Standard, ${advanced} Advanced`
 }

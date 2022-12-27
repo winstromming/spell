@@ -304,8 +304,8 @@
                 </n-alert>
               </n-space>
             </template>
-            <template #footer v-if="spell.name">
-              <n-space vertical size="large">
+            <template #footer v-if="spell.name || spell.custom">
+              <n-space vertical size="large" v-if="spell.name">
                 <n-text depth="3" v-if="spell.description">
                   {{ spell.description }} <span v-if="spell.page"><br />({{ spell.page }})</span>
                 </n-text>
@@ -321,9 +321,7 @@
                   </n-grid-item>
                 </n-grid>
               </n-space>
-            </template>
-            <template #footer v-if="!spell.name && spell.custom">
-              <n-space vertical size="large">
+              <n-space vertical size="large" v-if="!spell.name && spell.custom">
                 <n-grid :cols="2" :x-gap="10" :y-gap="10">
                   <n-grid-item>
                     <n-space vertical size="small">
@@ -355,175 +353,178 @@
                   <n-button :disabled="spell.primaryArcana.arcana == undefined || spell.practice === undefined || spell.customName === undefined || spell.customName === ''" type="success" @click="applyCustomSpell">Create this spell</n-button>
                 </n-space>
               </n-space>
+              <br v-if="canCastSpell" />
+              <n-space vertical size="small" v-if="canCastSpell">
+                <Card v-if="spell.custom === true">
+                  <template #content>
+                    <n-space :wrap="false">
+                      <n-switch size="small" :disabled="true" :value="spell.extraMana > 0" />
+                      <n-space vertical :size="2">
+                        <n-text strong>+{{ spell.extraMana }} Mana for spell effects</n-text>
+                        <n-slider :tooltip="false" v-model:value="spell.extraMana" :min="0" :max="10" />
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+                <Card v-if="spell.custom === true">
+                  <template #content>
+                    <n-space :wrap="false">
+                      <n-switch size="small" :disabled="true" :value="spell.extraReach > 0" />
+                      <n-space vertical :size="2">
+                        <n-text strong>+{{ spell.extraReach }} Reach for spell effects</n-text>
+                        <n-slider :tooltip="false" v-model:value="spell.extraReach" :min="0" :max="10" />
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+                <Card>
+                  <template #content>
+                    <n-space :wrap="false">
+                      <n-switch size="small" v-model:value="spell.spendWillpower" />
+                      <n-space vertical :size="2">
+                        <n-text strong>+1 Willpower:</n-text>
+                        <n-text>Gain +3 spellcasting dice.</n-text>
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+                <Card>
+                  <template #content>
+                    <n-space :wrap="false">
+                      <n-switch size="small" v-model:value="spell.commonEffects.changePrimaryFactor" />
+                      <n-space vertical :size="2">
+                        <n-text strong>+1 Reach:</n-text>
+                        <n-text>Change the primary factor.</n-text>
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+                <Card v-if="spell.custom !== true" v-for="(item, index) of spell.additionalEffects" :key="index">
+                  <template #content v-if="item.cost">
+                    <n-space :wrap="false">
+                      <n-switch size="small" :disabled="isEffectRestricted(item)" :value="isEffectAdded(item)" @update:value="toggleEffect(item)" />
+                      <n-space vertical :size="2">
+                        <n-text strong
+                          >{{ item.cost.map(c => `+${c.value} ${c.type}`).join(", ")}}<span v-if="item.requirement"> ({{ item.requirement.map(v => `${v.arcana} ${v.value}`).join(", ") }})</span>:</n-text
+                        >
+                        <n-text>{{ item.effect }}</n-text>
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+              </n-space>
             </template>
           </Card>
-          <!-- Effects -->
-          <Card title="Effects" collapsed :summary="effectsSummary" v-if="canCastSpell">
-            <template #content>
-              <n-space vertical>
-                <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
-                  <tbody>
-                    <tr v-if="spell.custom === true">
-                      <td>
-                        <n-switch size="small" :disabled="true" :value="spell.extraMana > 0" />
-                      </td>
-                      <td colspan="2">
-                        <n-space vertical>
-                          <b>+{{ spell.extraMana }} Mana for spell effects</b>
-                          <n-slider :tooltip="false" v-model:value="spell.extraMana" :min="0" :max="10" />
+          <!-- Factors -->
+          <Card title="Factors" collapsed v-if="canCastSpell" :summary="factorSummary">
+            <template #footer>
+              <n-space vertical :size="15">
+                <!-- Potency -->
+                <n-space vertical>
+                  <n-space justify="space-between" size="small">
+                    <n-text strong>Potency:</n-text>
+                    <n-text depth="3">{{ potencySummary }}</n-text>
+                  </n-space>
+                  <n-select v-model:value="spell.factors.potency" :options="potencyOptions" />
+                </n-space>
+                <!-- Duration -->
+                <n-space vertical>
+                  <n-space justify="space-between" size="small">
+                    <n-text strong>Duration:</n-text>
+                    <n-text depth="3">{{ durationSummary }}</n-text>
+                  </n-space>
+                  <n-select v-model:value="spell.factors.duration" :options="durationOptions" />
+                  <Card v-if="caster.arcana.Matter.level < 2 === false">
+                    <template #content>
+                      <n-space :wrap="false">
+                        <n-switch v-model:value="spell.attainments.permanence" size="small" :disabled="caster.arcana.Matter.level < 2" />
+                        <n-space vertical size="small">
+                          <n-text strong :depth="caster.arcana.Matter.level < 2 ? '3' : '1'">Attainment: Permanence (Matter {{ dots(2) }})</n-text>
+                          <n-text :depth="caster.arcana.Matter.level < 2 ? '3' : '1'">Advanced Scale costs 1 Mana instead of 1 Reach.</n-text>
                         </n-space>
-                      </td>
-                    </tr>
-                    <tr v-if="spell.custom === true">
-                      <td>
-                        <n-switch size="small" :disabled="true" :value="spell.extraReach > 0" />
-                      </td>
-                      <td colspan="2">
-                        <n-space vertical>
-                          <b>+{{ spell.extraReach }} Reach for spell effects</b>
-                          <n-slider :tooltip="false" v-model:value="spell.extraReach" :min="0" :max="10" />
+                      </n-space>
+                    </template>
+                  </Card>
+                  <Card v-if="caster.arcana.Fate.level < 2 === false">
+                    <template #content>
+                      <n-space :wrap="false">
+                        <n-switch v-model:value="spell.attainments.conditionalDuration" size="small" :disabled="caster.arcana.Fate.level < 2" />
+                        <n-space vertical size="small">
+                          <n-text strong :depth="caster.arcana.Fate.level < 2 ? '3' : '1'">Attainment: Conditional Duration (Fate {{ dots(2) }})</n-text>
+                          <n-text :depth="caster.arcana.Fate.level < 2 ? '3' : '1'">Spend 1 Mana to end the spell when a condition is met, adding 1-3 levels of Duration based on the nature of the condition.</n-text>
                         </n-space>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td width="20" style="padding-right: 0">
-                        <n-switch size="small" v-model:value="spell.spendWillpower" />
-                      </td>
-                      <td width="150" colspan="2"><b>+1 Willpower:</b><br />Gain +3 spellcasting dice.</td>
-                    </tr>
-                    <tr>
-                      <td width="20" style="padding-right: 0">
-                        <n-switch size="small" v-model:value="spell.commonEffects.changePrimaryFactor" />
-                      </td>
-                      <td colspan="2"><b>+1 Reach:</b><br />Change the primary factor.</td>
-                    </tr>
-                    <tr v-if="spell.custom !== true" v-for="(item, index) of spell.additionalEffects" :key="index">
-                      <td v-if="item.cost" width="20" style="padding-right: 0">
-                        <n-switch size="small" :disabled="isEffectRestricted(item)" :value="isEffectAdded(item)" @update:value="toggleEffect(item)" />
-                      </td>
-                      <td v-if="item.cost" colspan="2">
-                        <b>{{ item.cost.map(c => `+${c.value} ${c.type}`).join(", ")}}</b
-                        ><b v-if="item.requirement"> ({{ item.requirement.map(v => `${v.arcana} ${v.value}`).join(", ") }})</b><b>:</b><br />
-                        {{ item.effect }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </n-table>
-              </n-space>
-            </template>
-          </Card>
-          <!-- Potency -->
-          <Card title="Potency" collapsed :summary="potencySummary" v-if="canCastSpell">
-            <template #content>
-              <n-select v-model:value="spell.factors.potency" :options="potencyOptions" />
-            </template>
-            <template #footer> Advanced Potency grants an additional -2 to Withstand. </template>
-          </Card>
-          <!-- Duration -->
-          <Card title="Duration" collapsed :summary="durationSummary" v-if="canCastSpell">
-            <template #content>
-              <n-select v-model:value="spell.factors.duration" :options="durationOptions" />
-            </template>
-            <template #footer>
-              <n-space vertical>
-                <Card>
-                  <template #content>
-                    <n-space :wrap="false">
-                      <n-switch v-model:value="spell.attainments.permanence" size="small" :disabled="caster.arcana.Matter.level < 2" />
-                      <n-space vertical size="small">
-                        <n-text strong :depth="caster.arcana.Matter.level < 2 ? '3' : '1'">Attainment: Permanence (Matter {{ dots(2) }})</n-text>
-                        <n-text :depth="caster.arcana.Matter.level < 2 ? '3' : '1'">Advanced Scale costs 1 Mana instead of 1 Reach.</n-text>
                       </n-space>
-                    </n-space>
-                  </template>
-                </Card>
-                <Card>
-                  <template #content>
-                    <n-space :wrap="false">
-                      <n-switch v-model:value="spell.attainments.conditionalDuration" size="small" :disabled="caster.arcana.Fate.level < 2" />
-                      <n-space vertical size="small">
-                        <n-text strong :depth="caster.arcana.Fate.level < 2 ? '3' : '1'">Attainment: Conditional Duration (Fate {{ dots(2) }})</n-text>
-                        <n-text :depth="caster.arcana.Fate.level < 2 ? '3' : '1'">Spend 1 Mana to end the spell when a condition is met, adding 1-3 levels of Duration based on the nature of the condition.</n-text>
+                    </template>
+                  </Card>
+                </n-space>
+                <!-- Casting -->
+                <n-space vertical>
+                  <n-space justify="space-between" size="small">
+                    <n-text strong>Casting time:</n-text>
+                    <n-text depth="3">{{ castingTimeSummary }}</n-text>
+                  </n-space>
+                  <n-select v-model:value="spell.factors.castingTime" :options="castingTimeOptions" />
+                  <Card v-if="caster.arcana.Time.level < 4 === false">
+                    <template #content>
+                      <n-space :wrap="false">
+                        <n-switch v-model:value="spell.attainments.timeInABottle" size="small" :disabled="caster.arcana.Time.level < 4" />
+                        <n-space vertical size="small">
+                          <n-text strong :depth="caster.arcana.Time.level < 4 ? '3' : '1'">Attainment: Time in a Bottle (Time {{ dots(4) }})</n-text>
+                          <n-text :depth="caster.arcana.Time.level < 4 ? '3' : '1'">Advanced Casting Time costs 1 Mana instead of 1 Reach.</n-text>
+                        </n-space>
                       </n-space>
-                    </n-space>
-                  </template>
-                </Card>
-              </n-space>
-            </template>
-          </Card>
-          <!-- Casting Time -->
-          <Card title="Casting Time" collapsed :summary="castingTimeSummary" v-if="canCastSpell">
-            <template #content>
-              <n-select v-model:value="spell.factors.castingTime" :options="castingTimeOptions" />
-            </template>
-            <template #footer>
-              <n-space vertical>
-                <n-text v-if="isAdvanced('castingTime')"> Using more than one Yantra (or High Speech) will increase this time. </n-text>
-                <Card>
-                  <template #content>
-                    <n-space :wrap="false">
-                      <n-switch v-model:value="spell.attainments.timeInABottle" size="small" :disabled="caster.arcana.Time.level < 4" />
-                      <n-space vertical size="small">
-                        <n-text strong :depth="caster.arcana.Time.level < 4 ? '3' : '1'">Attainment: Time in a Bottle (Time {{ dots(4) }})</n-text>
-                        <n-text :depth="caster.arcana.Time.level < 4 ? '3' : '1'">Advanced Casting Time costs 1 Mana instead of 1 Reach.</n-text>
+                    </template>
+                  </Card>
+                </n-space>
+                <!-- Range -->
+                <n-space vertical>
+                  <n-space justify="space-between" size="small">
+                    <n-text strong>Range:</n-text>
+                    <n-text depth="3">{{ rangeSummary }}</n-text>
+                  </n-space>
+                  <n-select v-model:value="spell.factors.range" :options="rangeOptions" />
+                  <Card v-if="caster.arcana.Space.level < 2 === false">
+                    <template #content>
+                      <n-space :wrap="false">
+                        <n-switch v-model:value="spell.attainments.sympatheticRange" size="small" :disabled="caster.arcana.Space.level < 2" />
+                        <n-space vertical size="small">
+                          <n-text strong :depth="caster.arcana.Space.level < 2 ? '3' : '1'">Attainment: Sympathetic Range (Space {{ dots(2) }})</n-text>
+                          <n-text :depth="caster.arcana.Space.level < 2 ? '3' : '1'">Subject can be beyond sensory range. Requires Advanced Range, a sympathy Yantra and costs 1 Mana.</n-text>
+                        </n-space>
                       </n-space>
-                    </n-space>
-                  </template>
-                </Card>
-              </n-space>
-            </template>
-          </Card>
-          <!-- Range -->
-          <Card title="Range" collapsed :summary="rangeSummary" v-if="canCastSpell">
-            <template #content>
-              <n-select v-model:value="spell.factors.range" :options="rangeOptions" />
-            </template>
-            <template #footer>
-              <n-space vertical>
-                <n-text v-if="spell.factors.range === 'a2'"> Remote Viewing range requires +1 Reach above the normal amount.</n-text>
-                <Card>
-                  <template #content>
-                    <n-space :wrap="false">
-                      <n-switch v-model:value="spell.attainments.sympatheticRange" size="small" :disabled="caster.arcana.Space.level < 2" />
-                      <n-space vertical size="small">
-                        <n-text strong :depth="caster.arcana.Space.level < 2 ? '3' : '1'">Attainment: Sympathetic Range (Space {{ dots(2) }})</n-text>
-                        <n-text :depth="caster.arcana.Space.level < 2 ? '3' : '1'">Subject can be beyond sensory range. Requires Advanced Range, a sympathy Yantra and costs 1 Mana.</n-text>
+                    </template>
+                  </Card>
+                  <Card v-if="caster.arcana.Time.level < 2 === false">
+                    <template #content>
+                      <n-space :wrap="false">
+                        <n-switch v-model:value="spell.attainments.temporalSympathy" size="small" :disabled="caster.arcana.Time.level < 2" />
+                        <n-space vertical size="small">
+                          <n-text strong :depth="caster.arcana.Time.level < 2 ? '3' : '1'">Attainment: Temporal Sympathy (Time {{ dots(2) }})</n-text>
+                          <n-text :depth="caster.arcana.Time.level < 2 ? '3' : '1'">Cast a spell at subject's past self. Requires Advanced Range, a sympathy Yantra and costs +1 Mana. Can only be used with Time spells that allow it or spells combined with them.</n-text>
+                        </n-space>
                       </n-space>
-                    </n-space>
-                  </template>
-                </Card>
-                <Card>
-                  <template #content>
-                    <n-space :wrap="false">
-                      <n-switch v-model:value="spell.attainments.temporalSympathy" size="small" :disabled="caster.arcana.Time.level < 2" />
-                      <n-space vertical size="small">
-                        <n-text strong :depth="caster.arcana.Time.level < 2 ? '3' : '1'">Attainment: Temporal Sympathy (Time {{ dots(2) }})</n-text>
-                        <n-text :depth="caster.arcana.Time.level < 2 ? '3' : '1'">Cast a spell at subject's past self. Requires Advanced Range, a sympathy Yantra and costs +1 Mana. Can only be used with Time spells that allow it or spells combined with them.</n-text>
+                    </template>
+                  </Card>
+                </n-space>
+                <!-- Scale -->
+                <n-space vertical>
+                  <n-space justify="space-between" size="small">
+                    <n-text strong>Scale:</n-text>
+                    <n-text depth="3">{{ scaleSummary }}</n-text>
+                  </n-space>
+                  <n-select v-model:value="spell.factors.scale" :options="scaleOptions" />
+                  <Card v-if="caster.arcana.Space.level < 4 === false">
+                    <template #content>
+                      <n-space :wrap="false">
+                        <n-switch v-model:value="spell.attainments.everywhere" size="small" :disabled="caster.arcana.Space.level < 4" />
+                        <n-space vertical size="small">
+                          <n-text strong :depth="caster.arcana.Space.level < 4 ? '3' : '1'">Attainment: Everywhere (Space {{ dots(4) }})</n-text>
+                          <n-text :depth="caster.arcana.Space.level < 4 ? '3' : '1'">Advanced Scale costs 1 Mana instead of 1 Reach.</n-text>
+                        </n-space>
                       </n-space>
-                    </n-space>
-                  </template>
-                </Card>
-              </n-space>
-            </template>
-          </Card>
-          <!-- Scale -->
-          <Card title="Scale" collapsed :summary="scaleSummary" v-if="canCastSpell">
-            <template #content>
-              <n-select v-model:value="spell.factors.scale" :options="scaleOptions" />
-            </template>
-            <template #footer>
-              <n-space vertical>
-                <Card>
-                  <template #content>
-                    <n-space :wrap="false">
-                      <n-switch v-model:value="spell.attainments.everywhere" size="small" :disabled="caster.arcana.Space.level < 4" />
-                      <n-space vertical size="small">
-                        <n-text strong :depth="caster.arcana.Space.level < 4 ? '3' : '1'">Attainment: Everywhere (Space {{ dots(4) }})</n-text>
-                        <n-text :depth="caster.arcana.Space.level < 4 ? '3' : '1'">Advanced Scale costs 1 Mana instead of 1 Reach.</n-text>
-                      </n-space>
-                    </n-space>
-                  </template>
-                </Card>
+                    </template>
+                  </Card>
+                </n-space>
               </n-space>
             </template>
           </Card>
@@ -798,6 +799,7 @@ import {
   getRangeSummary,
   getScaleSummary,
   getYantrasSummary,
+  getFactorSummary,
   getDicePoolSummary,
   getParadoxSummary,
 } from "../constants/methods"
@@ -1358,7 +1360,7 @@ export default {
         type: "group",
         label: "Advanced (Quick Casting)",
         key: "advanced",
-        children: [{ value: "a1", label: "1 Turn" }],
+        children: [{ value: "a1", label: "Instant" }],
       })
       return options
     },
@@ -1401,7 +1403,7 @@ export default {
 
         options.push({
           value: "a" + i,
-          label: `${i} (-${penalty} dice)`,
+          label: `${i} (-${penalty} dice and -2 Withstand)`,
         })
       }
 
@@ -1437,7 +1439,7 @@ export default {
         key: "advanced",
         children: [
           { value: "a1", label: "Sensory" },
-          { value: "a2", label: "Remote" },
+          { value: "a2", label: "Remote (+1 Reach)" },
         ],
       })
       return options
@@ -1685,6 +1687,9 @@ export default {
     yantrasSummary() {
       return getYantrasSummary(this.caster, this.spell)
     },
+    factorSummary() {
+      return getFactorSummary(this.caster, this.spell)
+    }
   },
   watch: {
     caster: {
@@ -1811,10 +1816,10 @@ export default {
     },
     getFactorsSummaryFor(spell) {
       let summary = []
-      summary.push(`${this.getPotencySummaryFor(spell).toLowerCase()} potency`)
-      summary.push(`${this.getDurationSummaryFor(spell).toLowerCase()} duration`)
-      summary.push(`${this.getCastingTimeSummaryFor(spell).toLowerCase()} casting time`)
-      summary.push(`${this.getRangeSummaryFor(spell).toLowerCase()} range`)
+      summary.push(`${this.getPotencySummaryFor(spell).toLowerCase()}`)
+      summary.push(`${this.getDurationSummaryFor(spell).toLowerCase()}`)
+      summary.push(`${this.getCastingTimeSummaryFor(spell).toLowerCase()}`)
+      summary.push(`${this.getRangeSummaryFor(spell).toLowerCase()}`)
       summary.push(`${this.getScaleSummaryFor(spell).toLowerCase()}`)
       return summary.join(", ")
     },
