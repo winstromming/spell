@@ -52,6 +52,7 @@ export const getFreeReach = (caster, spell) => {
 
 export const getUsedReach = (caster, spell) => {
   let reach = 0
+  if (spell === undefined) return reach
   if (caster.active.length >= caster.gnosis) {
     reach += caster.active.length - caster.gnosis + 1
   }
@@ -68,7 +69,7 @@ export const getUsedReach = (caster, spell) => {
     }
   }
   // check for common effects
-  if (spell.commonEffects.changePrimaryFactor) reach += 1
+  if (spell.commonEffects && spell.commonEffects.changePrimaryFactor) reach += 1
   // remote viewing range costs 1 additional reach
   if (spell.factors.range === "a2") reach += 1
   // indefinite duration costs 1 additional reach
@@ -76,9 +77,9 @@ export const getUsedReach = (caster, spell) => {
   // spell-specific extra reach
   reach += spell.extraReach
   // arcana attainments
-  if (spell.attainments.permanence) reach--
-  if (spell.attainments.timeInABottle) reach--
-  if (spell.attainments.everywhere) reach--
+  if (spell.attainments && spell.attainments.permanence) reach--
+  if (spell.attainments && spell.attainments.timeInABottle) reach--
+  if (spell.attainments && spell.attainments.everywhere) reach--
   if (reach < 0) reach = 0
   return reach
 }
