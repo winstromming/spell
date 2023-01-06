@@ -1072,21 +1072,23 @@ export default {
         }]
       })
 
-      for (let arcanaName of arcanaNames) {
-        options.push({
-          type: "group",
-          label: arcanaName,
-          key: arcanaName,
-          children: spells
-            .filter((s) => s.primaryArcana.arcana === arcanaName)
-            .sort((a, b) => a.primaryArcana.level - b.primaryArcana.level)
-            .map((s) => {
-              return {
-                label: `${dots(s.primaryArcana.level)} ${s.name}`,
-                value: s,
-              }
-            }),
-        })
+      for (let name in this.caster.arcana) {
+        if (this.caster.arcana[name].level > 0) {
+          options.push({
+            type: "group",
+            label: name,
+            key: name,
+            children: spells
+              .filter((s) => s.primaryArcana.arcana === name && s.primaryArcana.level <= this.caster.arcana[name].level)
+              .sort((a, b) => a.primaryArcana.level - b.primaryArcana.level)
+              .map((s) => {
+                return {
+                  label: `${dots(s.primaryArcana.level)} ${s.name}`,
+                  value: s,
+                }
+              }),
+          })
+        }
       }
 
       return options
