@@ -355,34 +355,12 @@
               </n-space>
               <br v-if="canCastSpell" />
               <n-space vertical size="small" v-if="canCastSpell">
-                <Card v-if="spell.custom === true">
-                  <template #content>
-                    <n-space :wrap="false">
-                      <n-switch size="small" :disabled="true" :value="spell.extraMana > 0" />
-                      <n-space vertical :size="2">
-                        <n-text strong>+{{ spell.extraMana }} Mana for spell effects</n-text>
-                        <n-slider :tooltip="false" v-model:value="spell.extraMana" :min="0" :max="10" />
-                      </n-space>
-                    </n-space>
-                  </template>
-                </Card>
-                <Card v-if="spell.custom === true">
-                  <template #content>
-                    <n-space :wrap="false">
-                      <n-switch size="small" :disabled="true" :value="spell.extraReach > 0" />
-                      <n-space vertical :size="2">
-                        <n-text strong>+{{ spell.extraReach }} Reach for spell effects</n-text>
-                        <n-slider :tooltip="false" v-model:value="spell.extraReach" :min="0" :max="10" />
-                      </n-space>
-                    </n-space>
-                  </template>
-                </Card>
                 <Card>
                   <template #content>
                     <n-space :wrap="false">
                       <n-switch size="small" v-model:value="spell.spendWillpower" />
                       <n-space vertical :size="2">
-                        <n-text strong>+1 Willpower:</n-text>
+                        <n-text strong>Spend 1 Willpower:</n-text>
                         <n-text>Gain +3 spellcasting dice.</n-text>
                       </n-space>
                     </n-space>
@@ -399,14 +377,37 @@
                     </n-space>
                   </template>
                 </Card>
-                <Card v-if="spell.custom !== true" v-for="(item, index) of spell.additionalEffects" :key="index">
-                  <template #content v-if="item.cost">
+                <Card v-if="spell.custom === true">
+                  <template #content>
                     <n-space :wrap="false">
-                      <n-switch size="small" :disabled="isEffectRestricted(item)" :value="isEffectAdded(item)" @update:value="toggleEffect(item)" />
+                      <n-switch size="small" :disabled="true" :value="spell.extraMana > 0" />
                       <n-space vertical :size="2">
-                        <n-text strong
-                          >{{ item.cost.map(c => `+${c.value} ${c.type}`).join(", ")}}<span v-if="item.requirement"> ({{ item.requirement.map(v => `${v.arcana} ${v.value}`).join(", ") }})</span>:</n-text
-                        >
+                        <n-text strong>Spend {{ spell.extraMana }} Mana for spell effects</n-text>
+                        <n-slider :tooltip="false" v-model:value="spell.extraMana" :min="0" :max="10" />
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+                <Card v-if="spell.custom === true">
+                  <template #content>
+                    <n-space :wrap="false">
+                      <n-switch size="small" :disabled="true" :value="spell.extraReach > 0" />
+                      <n-space vertical :size="2">
+                        <n-text strong>+{{ spell.extraReach }} Reach for spell effects</n-text>
+                        <n-slider :tooltip="false" v-model:value="spell.extraReach" :min="0" :max="10" />
+                      </n-space>
+                    </n-space>
+                  </template>
+                </Card>
+                <Card v-if="spell.custom !== true" v-for="(item, index) of spell.additionalEffects" :key="index">
+                  <template #content>
+                    <n-space :wrap="false">
+                      <n-switch size="small" :disabled="item.requirement ? true : isEffectRestricted(item)" :value="item.requirement ? !isEffectRestricted(item) : isEffectAdded(item)" @update:value="toggleEffect(item)" />
+                      <n-space vertical :size="2">
+                        <n-text strong>
+                          <span v-if="item.cost">{{ item.cost.map(c => `+${c.value} ${c.type}`).join(", ")}}:</span>
+                          <span v-if="item.requirement">{{ item.requirement.map(v => ` ${v.arcana} ${dots(v.value)}`).join(" and ") }}</span>
+                        </n-text>
                         <n-text>{{ item.effect }}</n-text>
                       </n-space>
                     </n-space>
