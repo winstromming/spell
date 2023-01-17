@@ -3335,7 +3335,7 @@ export const spells = [
       {
         requirement: [
           {
-            type: "Time",
+            arcana: "Time",
             value: 1,
           },
         ],
@@ -6718,7 +6718,7 @@ export const spells = [
       {
         requirement: [
           {
-            type: "Fate",
+            arcana: "Fate",
             value: 1,
           },
         ],
