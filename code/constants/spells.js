@@ -8762,7 +8762,7 @@ export const spells = [
     roteSkills: ["Academics", "Empathy", "Investigation"],
     page: "Mage: Awakening p187",
     description: "The mage can see into the subject's past, viewing it all from a moment declared in 'real time'",
-    additonalEffects: [
+    additionalEffects: [
       {
         cost: [{ type: "Reach", value: 1 }],
         effect: "The mage can rewind, speed up, slow down and pause the vision at any given time.",
