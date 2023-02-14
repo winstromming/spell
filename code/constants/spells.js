@@ -6057,6 +6057,17 @@ export const spells = [
     page: "Mage: Awakening p168",
     description:
       "All subjects of the spell can hear and understand the caster regardless of distance, noise or language barriers. Subjects feel what the mage says is true, but this effect only works on statements the mage knows are true. May remove one Door or improve impression level by one per Potency.",
+    additionalEffects: [
+      {
+        cost: [
+          {
+            type: "Reach",
+            value: 1,
+          },
+        ],
+        effect: "Listener gains the Inspired Condition or the Guilty Condition.",
+      },
+    ],
   },
   {
     name: "Aetheric Winds",
