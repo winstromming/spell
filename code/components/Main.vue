@@ -698,9 +698,13 @@
                   :key="item.id">
                   <template #content>
                     <n-space vertical size="small">
-                      <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{ getFactorsSummaryFor(item) }}.</n-text>
+                      <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{
+                        getFactorsSummaryFor(item)
+                      }}.</n-text>
                       <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{ getEffectsSummaryFor(item) }}</n-text>
-                      <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{ getYantrasSummaryFor(item) }}.</n-text>
+                      <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{
+                        getYantrasSummaryFor(item)
+                      }}.</n-text>
                     </n-space>
                   </template>
                   <template #footer>
@@ -743,7 +747,8 @@
                         {{ getUsedReachFor(item) }}/{{ getFreeReachFor(item) }} Reach </n-tag>
                       <n-tag size="small" :bordered="false" round strong type="success"> {{ getDicePoolFor(item) }} Dice
                       </n-tag>
-                      <n-tag size="small" :bordered="false" round strong type="success"> {{ getTotalManaFor(item) }} Mana
+                      <n-tag size="small" :bordered="false" round strong type="success"> {{ getTotalManaFor(item) }}
+                        Mana
                       </n-tag>
                       <n-tag size="small" :bordered="false" round strong type="error"> {{ getParadoxDiceFor(item) }}
                         Paradox </n-tag>
@@ -751,10 +756,16 @@
                   </template>
                   <template #content>
                     <n-space vertical size="large">
-                      <n-text v-if="getCastingSummaryFor(item)"><b>Casting:</b> {{ getCastingSummaryFor(item) }}.</n-text>
-                      <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{ getFactorsSummaryFor(item) }}.</n-text>
+                      <n-text v-if="getCastingSummaryFor(item)"><b>Casting:</b> {{
+                        getCastingSummaryFor(item)
+                      }}.</n-text>
+                      <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{
+                        getFactorsSummaryFor(item)
+                      }}.</n-text>
                       <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{ getEffectsSummaryFor(item) }}</n-text>
-                      <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{ getYantrasSummaryFor(item) }}.</n-text>
+                      <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{
+                        getYantrasSummaryFor(item)
+                      }}.</n-text>
                     </n-space>
                   </template>
                   <template #footer>
