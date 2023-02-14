@@ -6,6 +6,7 @@ import UI from "naive-ui"
 // import "element-plus/dist/index.css"
 import index from "./index.vue"
 
+//
 const app = createApp(index)
 // const ui = createVuestic()
 app.use(UI)

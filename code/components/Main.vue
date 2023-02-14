@@ -10,13 +10,15 @@
                   <PersonCircleOutline />
                 </n-icon>
               </template>
-              {{ caster ? caster.name : "Choose"}}
+              {{ caster? caster.name : "Choose"}}
             </n-button>
           </n-dropdown>
-          <n-menu :dropdown-props="{ trigger: 'manual' }" v-model:value="tab" mode="horizontal" :options="menuOptions" />
+          <n-menu :dropdown-props="{ trigger: 'manual' }" v-model:value="tab" mode="horizontal"
+            :options="menuOptions" />
         </n-space>
       </n-layout-header>
-      <n-layout embedded content-style="padding: 12px;" v-if="tab === 'edit'" position="absolute" style="top: 50px; bottom: 0">
+      <n-layout embedded content-style="padding: 12px;" v-if="tab === 'edit'" position="absolute"
+        style="top: 50px; bottom: 0">
         <n-grid y-gap="12" x-gap="12" :cols="10" item-responsive v-if="caster">
           <!-- Left Column -->
           <n-gi span="0:10 700:5">
@@ -117,9 +119,13 @@
                 </template>
                 <template #content>
                   <n-space vertical>
-                    <n-select ref="chooseToolDropdown" filterable :value="chooseToolValue" placeholder="Choose tool to add" @update:value="(key, item) => chooseToolFromDropdown(item)" :options="chooseToolOptions" />
+                    <n-select ref="chooseToolDropdown" filterable :value="chooseToolValue"
+                      placeholder="Choose tool to add" @update:value="(key, item) => chooseToolFromDropdown(item)"
+                      :options="chooseToolOptions" />
                     <!-- Tools -->
-                    <Card :title="item.name ? item.name : 'Tool'" collapsed :summary="item.isDedicatedTool ? `Dedicated ${item.label}` : `${item.label}`" v-for="item in caster.tools" :key="item.id">
+                    <Card :title="item.name ? item.name : 'Tool'" collapsed
+                      :summary="item.isDedicatedTool ? `Dedicated ${item.label}` : `${item.label}`"
+                      v-for="item in caster.tools" :key="item.id">
                       <template #content>
                         <n-space vertical size="small">
                           <n-input v-model:value="item.name" placeholder="Name" />
@@ -128,7 +134,8 @@
                       </template>
                       <template #footer>
                         <n-space justify="space-between">
-                          <n-button class="btn-only-icon-when-small" title="Remove" size="tiny" type="error" @click="removeToolFromCaster(item)">
+                          <n-button class="btn-only-icon-when-small" title="Remove" size="tiny" type="error"
+                            @click="removeToolFromCaster(item)">
                             <template #icon>
                               <n-icon>
                                 <Trash />
@@ -162,7 +169,9 @@
                       <tbody>
                         <tr>
                           <td colspan="2">
-                            <n-select ref="choosePraxisDropdown" filterable :value="choosePraxisValue" placeholder="Choose praxis to add" @update:value="(v) => choosePraxisFromDropdown(v)" :options="chooseSpellOptions" />
+                            <n-select ref="choosePraxisDropdown" filterable :value="choosePraxisValue"
+                              placeholder="Choose praxis to add" @update:value="(v) => choosePraxisFromDropdown(v)"
+                              :options="chooseSpellOptions" />
                           </td>
                         </tr>
                         <tr v-for="item in caster.praxes" :key="item.name">
@@ -193,7 +202,9 @@
                       <tbody>
                         <tr>
                           <td colspan="3">
-                            <n-select ref="chooseRoteDropdown" filterable :value="chooseRoteValue" placeholder="Choose rote to add" @update:value="(v) => chooseRoteFromDropdown(v)" :options="chooseSpellOptions" />
+                            <n-select ref="chooseRoteDropdown" filterable :value="chooseRoteValue"
+                              placeholder="Choose rote to add" @update:value="(v) => chooseRoteFromDropdown(v)"
+                              :options="chooseSpellOptions" />
                           </td>
                         </tr>
                         <tr v-for="item in caster.rotes" :key="item.name">
@@ -228,7 +239,8 @@
           </n-gi>
         </n-grid>
       </n-layout>
-      <n-layout embedded content-style="padding: 12px;" v-if="tab === 'cast'" position="absolute" style="top: 50px; bottom: 0">
+      <n-layout embedded content-style="padding: 12px;" v-if="tab === 'cast'" position="absolute"
+        style="top: 50px; bottom: 0">
         <n-space vertical>
           <!-- Info -->
           <n-alert type="warning" v-if="hasConfiguredCaster === false">
@@ -236,14 +248,18 @@
             <n-text v-else>You haven't set Gnosis and Arcana for this character</n-text>
           </n-alert>
           <!-- <n-affix id="spellAffix" v-if="hasConfiguredCaster === true" :trigger-top="10" position="absolute" listen-to=".n-layout-scroll-container"> -->
-          <Card v-if="hasConfiguredCaster === true" style="position: absolute; width: calc(100% - 24px); left: 12px; right: 12px; z-index: 10">
+          <Card v-if="hasConfiguredCaster === true"
+            style="position: absolute; width: calc(100% - 24px); left: 12px; right: 12px; z-index: 10">
             <template #content>
               <n-space align="center" justify="space-between">
                 <n-space size="small" v-if="canCastSpell">
-                  <n-tag size="small" :bordered="false" round strong :type="usedReach > freeReach ? 'warning' : 'success'"> {{ usedReach }}/{{ freeReach }} Reach</n-tag>
-                  <n-tag size="small" :bordered="false" round strong :type="isDicePoolTooLow ? 'warning' : 'success'"> {{ dicePool }} Dice</n-tag>
+                  <n-tag size="small" :bordered="false" round strong
+                    :type="usedReach > freeReach ? 'warning' : 'success'"> {{ usedReach }}/{{ freeReach }} Reach</n-tag>
+                  <n-tag size="small" :bordered="false" round strong :type="isDicePoolTooLow ? 'warning' : 'success'">
+                    {{ dicePool }} Dice</n-tag>
                   <n-tag size="small" :bordered="false" round strong type="success">{{ totalMana }} Mana</n-tag>
-                  <n-tag v-if="hasParadox" size="small" :bordered="false" round strong type="error">{{ paradoxDice }} Paradox</n-tag>
+                  <n-tag v-if="hasParadox" size="small" :bordered="false" round strong type="error">{{ paradoxDice }}
+                    Paradox</n-tag>
                 </n-space>
                 <n-space size="small" v-if="canCastSpell === false">
                   <n-tag size="small" disabled :bordered="false" round strong>0/0 Reach</n-tag>
@@ -251,7 +267,8 @@
                   <n-tag size="small" disabled :bordered="false" round strong>0 Mana</n-tag>
                 </n-space>
                 <n-space size="small">
-                  <n-button class="btn-only-icon-when-small" title="Reset" :disabled="canCastSpell === false" size="tiny" type="error" @click="reset">
+                  <n-button class="btn-only-icon-when-small" title="Reset" :disabled="canCastSpell === false"
+                    size="tiny" type="error" @click="reset">
                     <template #icon>
                       <n-icon>
                         <Trash />
@@ -259,7 +276,8 @@
                     </template>
                     Reset
                   </n-button>
-                  <n-button class="btn-only-icon-when-small" title="Cast" :disabled="canCastSpell === false" size="tiny" type="warning" @click="castSpell(spell)">
+                  <n-button class="btn-only-icon-when-small" title="Cast" :disabled="canCastSpell === false" size="tiny"
+                    type="warning" @click="castSpell(spell)">
                     <template #icon>
                       <n-icon>
                         <Flash />
@@ -267,7 +285,8 @@
                     </template>
                     Cast
                   </n-button>
-                  <n-button class="btn-only-icon-when-small" title="Copy for Roll20" :disabled="canCastSpell === false" size="tiny" type="info" @click="copySpell(spell)">
+                  <n-button class="btn-only-icon-when-small" title="Copy for Roll20" :disabled="canCastSpell === false"
+                    size="tiny" type="info" @click="copySpell(spell)">
                     <template #icon>
                       <n-icon>
                         <DocumentText />
@@ -275,7 +294,8 @@
                     </template>
                     Copy
                   </n-button>
-                  <n-button class="btn-only-icon-when-small" title="Save" :disabled="canCastSpell === false" size="tiny" type="success" @click="saveSpell(spell)">
+                  <n-button class="btn-only-icon-when-small" title="Save" :disabled="canCastSpell === false" size="tiny"
+                    type="success" @click="saveSpell(spell)">
                     <template #icon>
                       <n-icon>
                         <Bookmark />
@@ -292,7 +312,8 @@
           <Card title="Spell" :summary="spellSummary" v-if="hasConfiguredCaster" style="margin-top: 54px">
             <template #content>
               <n-space vertical size="large">
-                <n-select filterable placeholder="What spell are you casting?" :value="chooseSpellLabel" @update:value="chooseSpell" :options="chooseSpellOptions" />
+                <n-select filterable placeholder="What spell are you casting?" :value="chooseSpellLabel"
+                  @update:value="chooseSpell" :options="chooseSpellOptions" />
                 <n-alert type="warning" v-if="(spell.name || spell.custom) && isSpellArcanaTooHigh">
                   <n-text>You don't have the arcana required for this spell</n-text>
                 </n-alert>
@@ -317,7 +338,7 @@
                     <n-text> <b>Factor</b><br />{{ spell.primaryFactor }} </n-text>
                   </n-grid-item>
                   <n-grid-item :span="2" v-if="spell.roteSkills.length > 0">
-                    <n-text> <b>Rote Skills</b><br />{{  spell.roteSkills.join(", ") }}</n-text>
+                    <n-text> <b>Rote Skills</b><br />{{ spell.roteSkills.join(", ") }}</n-text>
                   </n-grid-item>
                 </n-grid>
               </n-space>
@@ -332,25 +353,31 @@
                   <n-grid-item>
                     <n-space vertical size="small">
                       <b>Arcana</b>
-                      <n-select placeholder="Choose an arcanum" filterable v-model:value="spell.primaryArcana.arcana" :options="arcanaOptions" />
+                      <n-select placeholder="Choose an arcanum" filterable v-model:value="spell.primaryArcana.arcana"
+                        :options="arcanaOptions" />
                     </n-space>
                   </n-grid-item>
                   <n-grid-item>
                     <n-space vertical size="small">
                       <b>Practice</b>
-                      <n-select placeholder="Choose a practice" filterable :value="choosePracticeValue" :options="choosePracticeOptions" @update:value="choosePractice" />
+                      <n-select placeholder="Choose a practice" filterable :value="choosePracticeValue"
+                        :options="choosePracticeOptions" @update:value="choosePractice" />
                     </n-space>
                   </n-grid-item>
                   <n-grid-item>
                     <n-space vertical size="small">
                       <b>Factor</b>
-                      <n-select placeholder="Choose a primary factor" filterable v-model:value="spell.primaryFactor" :options="choosePrimaryFactorOptions" />
+                      <n-select placeholder="Choose a primary factor" filterable v-model:value="spell.primaryFactor"
+                        :options="choosePrimaryFactorOptions" />
                     </n-space>
                   </n-grid-item>
                 </n-grid>
-                <n-input v-model:value="spell.description" type="textarea" placeholder="What does this spell do? Describe the effects and conditions that would apply. Entering this description is mostly useful if you are going to save the spell." />
+                <n-input v-model:value="spell.description" type="textarea"
+                  placeholder="What does this spell do? Describe the effects and conditions that would apply. Entering this description is mostly useful if you are going to save the spell." />
                 <n-space justify="end">
-                  <n-button :disabled="spell.primaryArcana.arcana == undefined || spell.practice === undefined || spell.customName === undefined || spell.customName === ''" type="success" @click="applyCustomSpell">Create this spell</n-button>
+                  <n-button
+                    :disabled="spell.primaryArcana.arcana == undefined || spell.practice === undefined || spell.customName === undefined || spell.customName === ''"
+                    type="success" @click="applyCustomSpell">Create this spell</n-button>
                 </n-space>
               </n-space>
               <br v-if="canCastSpell" />
@@ -377,6 +404,7 @@
                     </n-space>
                   </template>
                 </Card>
+                <!-- -->
                 <Card v-if="spell.custom === true">
                   <template #content>
                     <n-space :wrap="false">
@@ -402,11 +430,16 @@
                 <Card v-if="spell.custom !== true" v-for="(item, index) of spell.additionalEffects" :key="index">
                   <template #content>
                     <n-space :wrap="false">
-                      <n-switch size="small" :disabled="item.requirement ? true : isEffectRestricted(item)" :value="item.requirement ? !isEffectRestricted(item) : isEffectAdded(item)" @update:value="toggleEffect(item)" />
+                      <n-switch size="small" :disabled="item.requirement ? true : isEffectRestricted(item)"
+                        :value="item.requirement ? !isEffectRestricted(item) : isEffectAdded(item)"
+                        @update:value="toggleEffect(item)" />
                       <n-space vertical :size="2">
                         <n-text strong>
-                          <span v-if="item.cost">{{ item.cost.map(c => `+${c.value} ${c.type}`).join(", ")}}:</span>
-                          <span v-if="item.requirement">{{ item.requirement.map(v => ` ${v.arcana} ${dots(v.value)}`).join(" and ") }}</span>
+                          <span v-if="item.cost">{{ item.cost.map(c => `+${c.value} ${c.type}`).join(", ") }}:</span>
+                          <span v-if="item.requirement">{{
+                            item.requirement.map(v => ` ${v.arcana}
+                                                      ${dots(v.value)}`).join(" and ")
+                          }}</span>
                         </n-text>
                         <n-text>{{ item.effect }}</n-text>
                       </n-space>
@@ -438,10 +471,13 @@
                   <Card v-if="caster.arcana.Matter.level < 2 === false">
                     <template #content>
                       <n-space :wrap="false">
-                        <n-switch v-model:value="spell.attainments.permanence" size="small" :disabled="caster.arcana.Matter.level < 2" />
+                        <n-switch v-model:value="spell.attainments.permanence" size="small"
+                          :disabled="caster.arcana.Matter.level < 2" />
                         <n-space vertical size="small">
-                          <n-text strong :depth="caster.arcana.Matter.level < 2 ? '3' : '1'">Attainment: Permanence (Matter {{ dots(2) }})</n-text>
-                          <n-text :depth="caster.arcana.Matter.level < 2 ? '3' : '1'">Advanced Scale costs 1 Mana instead of 1 Reach.</n-text>
+                          <n-text strong :depth="caster.arcana.Matter.level < 2 ? '3' : '1'">Attainment: Permanence
+                            (Matter {{ dots(2) }})</n-text>
+                          <n-text :depth="caster.arcana.Matter.level < 2 ? '3' : '1'">Advanced Scale costs 1 Mana
+                            instead of 1 Reach.</n-text>
                         </n-space>
                       </n-space>
                     </template>
@@ -449,10 +485,14 @@
                   <Card v-if="caster.arcana.Fate.level < 2 === false">
                     <template #content>
                       <n-space :wrap="false">
-                        <n-switch v-model:value="spell.attainments.conditionalDuration" size="small" :disabled="caster.arcana.Fate.level < 2" />
+                        <n-switch v-model:value="spell.attainments.conditionalDuration" size="small"
+                          :disabled="caster.arcana.Fate.level < 2" />
                         <n-space vertical size="small">
-                          <n-text strong :depth="caster.arcana.Fate.level < 2 ? '3' : '1'">Attainment: Conditional Duration (Fate {{ dots(2) }})</n-text>
-                          <n-text :depth="caster.arcana.Fate.level < 2 ? '3' : '1'">Spend 1 Mana to end the spell when a condition is met, adding 1-3 levels of Duration based on the nature of the condition.</n-text>
+                          <n-text strong :depth="caster.arcana.Fate.level < 2 ? '3' : '1'">Attainment: Conditional
+                            Duration (Fate {{ dots(2) }})</n-text>
+                          <n-text :depth="caster.arcana.Fate.level < 2 ? '3' : '1'">Spend 1 Mana to end the spell when a
+                            condition is met, adding 1-3 levels of Duration based on the nature of the
+                            condition.</n-text>
                         </n-space>
                       </n-space>
                     </template>
@@ -468,10 +508,13 @@
                   <Card v-if="caster.arcana.Time.level < 4 === false">
                     <template #content>
                       <n-space :wrap="false">
-                        <n-switch v-model:value="spell.attainments.timeInABottle" size="small" :disabled="caster.arcana.Time.level < 4" />
+                        <n-switch v-model:value="spell.attainments.timeInABottle" size="small"
+                          :disabled="caster.arcana.Time.level < 4" />
                         <n-space vertical size="small">
-                          <n-text strong :depth="caster.arcana.Time.level < 4 ? '3' : '1'">Attainment: Time in a Bottle (Time {{ dots(4) }})</n-text>
-                          <n-text :depth="caster.arcana.Time.level < 4 ? '3' : '1'">Advanced Casting Time costs 1 Mana instead of 1 Reach.</n-text>
+                          <n-text strong :depth="caster.arcana.Time.level < 4 ? '3' : '1'">Attainment: Time in a Bottle
+                            (Time {{ dots(4) }})</n-text>
+                          <n-text :depth="caster.arcana.Time.level < 4 ? '3' : '1'">Advanced Casting Time costs 1 Mana
+                            instead of 1 Reach.</n-text>
                         </n-space>
                       </n-space>
                     </template>
@@ -487,10 +530,13 @@
                   <Card v-if="caster.arcana.Space.level < 2 === false">
                     <template #content>
                       <n-space :wrap="false">
-                        <n-switch v-model:value="spell.attainments.sympatheticRange" size="small" :disabled="caster.arcana.Space.level < 2" />
+                        <n-switch v-model:value="spell.attainments.sympatheticRange" size="small"
+                          :disabled="caster.arcana.Space.level < 2" />
                         <n-space vertical size="small">
-                          <n-text strong :depth="caster.arcana.Space.level < 2 ? '3' : '1'">Attainment: Sympathetic Range (Space {{ dots(2) }})</n-text>
-                          <n-text :depth="caster.arcana.Space.level < 2 ? '3' : '1'">Subject can be beyond sensory range. Requires Advanced Range, a sympathy Yantra and costs 1 Mana.</n-text>
+                          <n-text strong :depth="caster.arcana.Space.level < 2 ? '3' : '1'">Attainment: Sympathetic
+                            Range (Space {{ dots(2) }})</n-text>
+                          <n-text :depth="caster.arcana.Space.level < 2 ? '3' : '1'">Subject can be beyond sensory
+                            range. Requires Advanced Range, a sympathy Yantra and costs 1 Mana.</n-text>
                         </n-space>
                       </n-space>
                     </template>
@@ -498,10 +544,14 @@
                   <Card v-if="caster.arcana.Time.level < 2 === false">
                     <template #content>
                       <n-space :wrap="false">
-                        <n-switch v-model:value="spell.attainments.temporalSympathy" size="small" :disabled="caster.arcana.Time.level < 2" />
+                        <n-switch v-model:value="spell.attainments.temporalSympathy" size="small"
+                          :disabled="caster.arcana.Time.level < 2" />
                         <n-space vertical size="small">
-                          <n-text strong :depth="caster.arcana.Time.level < 2 ? '3' : '1'">Attainment: Temporal Sympathy (Time {{ dots(2) }})</n-text>
-                          <n-text :depth="caster.arcana.Time.level < 2 ? '3' : '1'">Cast a spell at subject's past self. Requires Advanced Range, a sympathy Yantra and costs +1 Mana. Can only be used with Time spells that allow it or spells combined with them.</n-text>
+                          <n-text strong :depth="caster.arcana.Time.level < 2 ? '3' : '1'">Attainment: Temporal Sympathy
+                            (Time {{ dots(2) }})</n-text>
+                          <n-text :depth="caster.arcana.Time.level < 2 ? '3' : '1'">Cast a spell at subject's past self.
+                            Requires Advanced Range, a sympathy Yantra and costs +1 Mana. Can only be used with Time
+                            spells that allow it or spells combined with them.</n-text>
                         </n-space>
                       </n-space>
                     </template>
@@ -517,10 +567,13 @@
                   <Card v-if="caster.arcana.Space.level < 4 === false">
                     <template #content>
                       <n-space :wrap="false">
-                        <n-switch v-model:value="spell.attainments.everywhere" size="small" :disabled="caster.arcana.Space.level < 4" />
+                        <n-switch v-model:value="spell.attainments.everywhere" size="small"
+                          :disabled="caster.arcana.Space.level < 4" />
                         <n-space vertical size="small">
-                          <n-text strong :depth="caster.arcana.Space.level < 4 ? '3' : '1'">Attainment: Everywhere (Space {{ dots(4) }})</n-text>
-                          <n-text :depth="caster.arcana.Space.level < 4 ? '3' : '1'">Advanced Scale costs 1 Mana instead of 1 Reach.</n-text>
+                          <n-text strong :depth="caster.arcana.Space.level < 4 ? '3' : '1'">Attainment: Everywhere
+                            (Space {{ dots(4) }})</n-text>
+                          <n-text :depth="caster.arcana.Space.level < 4 ? '3' : '1'">Advanced Scale costs 1 Mana instead
+                            of 1 Reach.</n-text>
                         </n-space>
                       </n-space>
                     </template>
@@ -547,7 +600,10 @@
                               </template>
                             </n-button>
                             <n-text>
-                              <n-text strong>{{ yantra.id ? `${yantra.name}, ${yantra.label.split("(+")[0]}` : yantra.label.split("(+")[0] }}</n-text>
+                              <n-text strong>{{
+                                yantra.id ? `${yantra.name}, ${yantra.label.split("(+")[0]}` :
+                                  yantra.label.split("(+")[0]
+                              }}</n-text>
                               <n-text depth="3">&nbsp;(+{{ yantra.label.split("(+")[1] }}</n-text>
                             </n-text>
                           </n-space>
@@ -557,22 +613,28 @@
                     </tr>
                   </tbody>
                 </n-table>
-                <n-select ref="chooseYantraDropdown" :options="yantraOptions" :value="chooseYantraValue" :render-label="renderYantraLabel" filterable @update:value="chooseYantraFromDropdown" />
+                <n-select ref="chooseYantraDropdown" :options="yantraOptions" :value="chooseYantraValue"
+                  :render-label="renderYantraLabel" filterable @update:value="chooseYantraFromDropdown" />
               </n-space>
             </template>
             <template #footer>
               <n-space vertical>
                 <n-text>Gnosis {{ caster.gnosis }} allows the use of {{ maxYantras }} yantras.</n-text>
-                <n-text italic v-if="hasDedicatedSoulStone">Using a Dedicated Soul Stone provide -3 Paradox, but you cannot contain Paradox.</n-text>
+                <n-text italic v-if="hasDedicatedSoulStone">Using a Dedicated Soul Stone provide -3 Paradox, but you
+                  cannot contain Paradox.</n-text>
                 <n-text italic v-if="hasDedicatedOneTool">Using a Dedicated Tool provides -2 Paradox.</n-text>
-                <n-text italic v-if="hasDedicatedBothTools">Using two Dedicated Tools provides -3 Paradox and Chance cancellation.</n-text>
-                <n-text italic v-if="hasBroadDedication">Broad Dedication (merit) is required to dedicate yantras which aren't magical tools.</n-text>
-                <n-text italic v-if="hasProfligateDedication">Profligate Dedication (merit) is required to dedicate more than two magical tools, but you won't get a benefit for using more than two simultaneously.</n-text>
+                <n-text italic v-if="hasDedicatedBothTools">Using two Dedicated Tools provides -3 Paradox and Chance
+                  cancellation.</n-text>
+                <n-text italic v-if="hasBroadDedication">Broad Dedication (merit) is required to dedicate yantras which
+                  aren't magical tools.</n-text>
+                <n-text italic v-if="hasProfligateDedication">Profligate Dedication (merit) is required to dedicate more
+                  than two magical tools, but you won't get a benefit for using more than two simultaneously.</n-text>
               </n-space>
             </template>
           </Card>
           <!-- Paradox -->
-          <Card collapsed v-if="hasConfiguredCaster === true" title="Paradox" :summary="`${caster.paradox} previous paradox, ${['No', 'Few', 'Some', 'Many', 'Crowd of'][scene.witnesses]} witnesses`">
+          <Card collapsed v-if="hasConfiguredCaster === true" title="Paradox"
+            :summary="`${caster.paradox} previous paradox, ${['No', 'Few', 'Some', 'Many', 'Crowd of'][scene.witnesses]} witnesses`">
             <template #content>
               <n-space vertical>
                 <n-table bordered striped class="s-table" style="margin-left: -5px; width: calc(100% + 10px)">
@@ -580,7 +642,7 @@
                     <tr>
                       <td colspan="3">
                         <n-space vertical>
-                          <b>Number of previous paradox rolls ({{caster.paradox}})</b>
+                          <b>Number of previous paradox rolls ({{ caster.paradox }})</b>
                           <n-slider placement="bottom" v-model:value="caster.paradox" :min="0" :max="10" />
                         </n-space>
                       </td>
@@ -588,7 +650,9 @@
                     <tr>
                       <td colspan="3">
                         <n-space vertical>
-                          <b>Number of sleeper witnesses ({{ ['None', 'One', 'Some', 'Many', 'Crowd'][scene.witnesses] }})</b>
+                          <b>Number of sleeper witnesses ({{
+                            ['None', 'One', 'Some', 'Many', 'Crowd'][scene.witnesses]
+                          }})</b>
                           <n-slider placement="bottom" v-model:value="scene.witnesses" :min="0" :max="4" />
                         </n-space>
                       </td>
@@ -608,15 +672,18 @@
           </Card>
         </n-space>
       </n-layout>
-      <n-layout embedded content-style="padding: 12px;" v-if="tab === 'spells'" position="absolute" style="top: 50px; bottom: 0">
+      <n-layout embedded content-style="padding: 12px;" v-if="tab === 'spells'" position="absolute"
+        style="top: 50px; bottom: 0">
         <n-space vertical>
           <!-- Info -->
           <n-alert type="warning" v-if="hasConfiguredCaster === false">
             <n-text v-if="caster === undefined || caster === null">You don't have a character selected</n-text>
-            <n-text v-if="caster !== undefined && caster !== null">You haven't set Gnosis and Arcana for this character</n-text>
+            <n-text v-if="caster !== undefined && caster !== null">You haven't set Gnosis and Arcana for this
+              character</n-text>
           </n-alert>
           <!-- Active -->
-          <Card v-if="hasConfiguredCaster === true" :icon="true" title="Active" :summary="`(${ caster.active.length }/${ caster.gnosis })`">
+          <Card v-if="hasConfiguredCaster === true" :icon="true" title="Active"
+            :summary="`(${caster.active.length}/${caster.gnosis})`">
             <template #icon>
               <n-icon color="black">
                 <FlashOutline />
@@ -627,16 +694,18 @@
                 <n-alert type="info" v-if="caster.active.length === 0">
                   <n-text>You don't have any active spells</n-text>
                 </n-alert>
-                <Card collapsed :title="item.name" :summary="getCreatedTimeAgo(item.id)" v-for="(item) in caster.active" :key="item.id">
+                <Card collapsed :title="item.name" :summary="getCreatedTimeAgo(item.id)" v-for="(item) in caster.active"
+                  :key="item.id">
                   <template #content>
                     <n-space vertical size="small">
-                      <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{getFactorsSummaryFor(item)}}.</n-text>
-                      <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{getEffectsSummaryFor(item)}}</n-text>
-                      <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{getYantrasSummaryFor(item)}}.</n-text>
+                      <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{ getFactorsSummaryFor(item) }}.</n-text>
+                      <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{ getEffectsSummaryFor(item) }}</n-text>
+                      <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{ getYantrasSummaryFor(item) }}.</n-text>
                     </n-space>
                   </template>
                   <template #footer>
-                    <n-button text strong class="btn-only-icon-when-small" title="Stop" size="small" type="error" @click="uncastSpell(item)">
+                    <n-button text strong class="btn-only-icon-when-small" title="Stop" size="small" type="error"
+                      @click="uncastSpell(item)">
                       <template #icon>
                         <n-icon>
                           <Ban />
@@ -650,7 +719,7 @@
             </template>
           </Card>
           <!-- Saved -->
-          <Card v-if="hasConfiguredCaster === true" :icon="true" title="Saved" :summary="`(${ saved.length })`">
+          <Card v-if="hasConfiguredCaster === true" :icon="true" title="Saved" :summary="`(${saved.length})`">
             <template #icon>
               <n-icon color="black">
                 <BookmarkOutline />
@@ -661,28 +730,37 @@
                 <n-alert type="info" v-if="saved.length === 0">
                   <n-text>You don't have any saved spells</n-text>
                 </n-alert>
-                <Card :title="item.name" collapsed :summary="getCastingSummaryFor(item)" v-for="(item) in saved" :key="item.id">
+                <Card :title="item.name" collapsed :summary="getCastingSummaryFor(item)" v-for="(item) in saved"
+                  :key="item.id">
                   <template #tags>
                     <n-space :size="5">
-                      <n-tag v-if="getRoteOrPraxisFor(item) === 'praxis'" size="small" :bordered="false" round strong style="text-transform: capitalize"> Praxis </n-tag>
-                      <n-tag v-if="getRoteOrPraxisFor(item) === 'rote'" size="small" :bordered="false" round strong style="text-transform: capitalize"> Rote </n-tag>
-                      <n-tag size="small" :bordered="false" round strong :type="getUsedReachFor(item) > getFreeReachFor(item) ? 'warning' : 'success'"> {{getUsedReachFor(item)}}/{{getFreeReachFor(item)}} Reach </n-tag>
-                      <n-tag size="small" :bordered="false" round strong type="success"> {{getDicePoolFor(item)}} Dice </n-tag>
-                      <n-tag size="small" :bordered="false" round strong type="success"> {{getTotalManaFor(item)}} Mana </n-tag>
-                      <n-tag size="small" :bordered="false" round strong type="error"> {{getParadoxDiceFor(item)}} Paradox </n-tag>
+                      <n-tag v-if="getRoteOrPraxisFor(item) === 'praxis'" size="small" :bordered="false" round strong
+                        style="text-transform: capitalize"> Praxis </n-tag>
+                      <n-tag v-if="getRoteOrPraxisFor(item) === 'rote'" size="small" :bordered="false" round strong
+                        style="text-transform: capitalize"> Rote </n-tag>
+                      <n-tag size="small" :bordered="false" round strong
+                        :type="getUsedReachFor(item) > getFreeReachFor(item) ? 'warning' : 'success'">
+                        {{ getUsedReachFor(item) }}/{{ getFreeReachFor(item) }} Reach </n-tag>
+                      <n-tag size="small" :bordered="false" round strong type="success"> {{ getDicePoolFor(item) }} Dice
+                      </n-tag>
+                      <n-tag size="small" :bordered="false" round strong type="success"> {{ getTotalManaFor(item) }} Mana
+                      </n-tag>
+                      <n-tag size="small" :bordered="false" round strong type="error"> {{ getParadoxDiceFor(item) }}
+                        Paradox </n-tag>
                     </n-space>
                   </template>
                   <template #content>
                     <n-space vertical size="large">
-                      <n-text v-if="getCastingSummaryFor(item)"><b>Casting:</b> {{getCastingSummaryFor(item)}}.</n-text>
-                      <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{getFactorsSummaryFor(item)}}.</n-text>
-                      <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{getEffectsSummaryFor(item)}}</n-text>
-                      <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{getYantrasSummaryFor(item)}}.</n-text>
+                      <n-text v-if="getCastingSummaryFor(item)"><b>Casting:</b> {{ getCastingSummaryFor(item) }}.</n-text>
+                      <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{ getFactorsSummaryFor(item) }}.</n-text>
+                      <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{ getEffectsSummaryFor(item) }}</n-text>
+                      <n-text v-if="getYantrasSummaryFor(item)"><b>Yantras:</b> {{ getYantrasSummaryFor(item) }}.</n-text>
                     </n-space>
                   </template>
                   <template #footer>
                     <n-space justify="space-between">
-                      <n-button class="btn-only-icon-when-small" title="Remove" size="tiny" type="error" @click="unsaveSpell(item)">
+                      <n-button class="btn-only-icon-when-small" title="Remove" size="tiny" type="error"
+                        @click="unsaveSpell(item)">
                         <template #icon>
                           <n-icon>
                             <Trash />
@@ -691,7 +769,8 @@
                         Remove
                       </n-button>
                       <n-space>
-                        <n-button class="btn-only-icon-when-small" title="Cast" size="tiny" type="warning" @click="castSpell(item)">
+                        <n-button class="btn-only-icon-when-small" title="Cast" size="tiny" type="warning"
+                          @click="castSpell(item)">
                           <template #icon>
                             <n-icon>
                               <Flash />
@@ -699,7 +778,8 @@
                           </template>
                           Cast
                         </n-button>
-                        <n-button class="btn-only-icon-when-small" title="Copy for Roll20" size="tiny" type="info" @click="copySpell(item)">
+                        <n-button class="btn-only-icon-when-small" title="Copy for Roll20" size="tiny" type="info"
+                          @click="copySpell(item)">
                           <template #icon>
                             <n-icon>
                               <DocumentText />
@@ -707,7 +787,8 @@
                           </template>
                           Copy
                         </n-button>
-                        <n-button class="btn-only-icon-when-small" title="Edit" size="tiny" type="success" @click="loadSpell(item)">
+                        <n-button class="btn-only-icon-when-small" title="Edit" size="tiny" type="success"
+                          @click="loadSpell(item)">
                           <template #icon>
                             <n-icon>
                               <Build />
@@ -894,8 +975,8 @@ export default {
     BatteryCharging,
     Flash,
     FlashOutline,
-  Library,
-  LibraryOutline,
+    Library,
+    LibraryOutline,
     Dice,
     Flame,
     Skull,
@@ -1726,15 +1807,15 @@ export default {
         this.deleteYantra("a1")
         this.message.warning("Rote Skill Mudra removed")
       }
-        // if (this.hasYantra("a1") && spell.isRote === true) {
-        //   setTimeout(() => {
-        //     let yantra = spell.yantras.findIndex((y) => y.yantraKey === "a1")
-        //     if (yantra.bonus !== spell.roteSkill) {
-        //       this.message.info("Rote Skill Mudra updated to +" + spell.roteSkill)
-        //       spell.yantras[yantra].bonus = spell.roteSkill
-        //     }
-        //   }, 250)
-        // }
+      // if (this.hasYantra("a1") && spell.isRote === true) {
+      //   setTimeout(() => {
+      //     let yantra = spell.yantras.findIndex((y) => y.yantraKey === "a1")
+      //     if (yantra.bonus !== spell.roteSkill) {
+      //       this.message.info("Rote Skill Mudra updated to +" + spell.roteSkill)
+      //       spell.yantras[yantra].bonus = spell.roteSkill
+      //     }
+      //   }, 250)
+      // }
     },
     "spell.commonEffects.changePrimaryFactor": function (newer, older) {
       const current = this.spell.primaryFactor
@@ -2298,47 +2379,62 @@ export default {
 
 <style>
 :root {
---n-item-height: 50px;
+  --n-item-height: 50px;
 }
+
 html {
   height: 100%;
 }
+
 body {
   height: 100%;
   overflow: hidden;
   background-color: white;
 }
+
 .n-card {
   border-radius: 5px;
   box-shadow: var(--n-box-shadow);
 }
+
 .n-card-header__extra {
   flex: 1;
   justify-content: flex-end;
 }
+
 .n-menu {
   --n-item-height: 50px !important;
 }
+
 .n-menu.n-menu--horizontal .n-menu-item-content {
   border-bottom: 0 !important;
   padding: 0 12px;
 }
+
 .n-rate {
   vertical-align: middle;
 }
+
 .n-rate__item svg circle {
   stroke: var(--n-text-color);
 }
+
 .n-rate__item--active svg circle {
   fill: var(--n-text-color);
   stroke: var(--n-text-color);
 }
+
 .btn-only-icon-when-small {
   height: auto !important;
 }
-@media only screen
-  and (max-width: 660px) {
-  .btn-only-icon-when-small .n-button__icon { margin-right: 0; }
-  .btn-only-icon-when-small .n-button__content { display: none !important; }
+
+@media only screen and (max-width: 660px) {
+  .btn-only-icon-when-small .n-button__icon {
+    margin-right: 0;
+  }
+
+  .btn-only-icon-when-small .n-button__content {
+    display: none !important;
+  }
 }
 </style>
