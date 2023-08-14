@@ -1,4 +1,6 @@
-export const spells = [
+import type { Spell } from "./types"
+
+export const spells: Spell[] = [
   {
     name: "Ectoplasmic Shaping",
     primaryArcana: {
@@ -838,10 +840,13 @@ export const spells = [
     description: "Grant a ghost a Manifestation condition.",
     additionalEffects: [
       {
-        requirement: {
-          Mind: 4,
-        },
-        Effect: "Spell works on Goetia",
+        requirement: [
+          {
+            arcana: "Mind",
+            value: 4,
+          },
+        ],
+        effect: "Spell works on Goetia",
       },
     ],
   },
@@ -1592,7 +1597,7 @@ export const spells = [
           },
           {
             type: "Mana",
-            level: 1,
+            value: 1,
           },
         ],
         effect: "Spell's Duration is Lasting.",
@@ -1680,7 +1685,7 @@ export const spells = [
           },
           {
             type: "Willpower",
-            level: 1,
+            value: 1,
           },
         ],
         effect: "Spend one Intercession and Willpower to cause a low-probability event to pass.",
@@ -1693,7 +1698,7 @@ export const spells = [
           },
           {
             type: "Willpower",
-            level: 1,
+            value: 1,
           },
           {
             type: "Mana",
@@ -3082,11 +3087,9 @@ export const spells = [
             type: "Reach",
             value: 1,
           },
-        ],
-        requirement: [
           {
-            arcana: "Mana",
-            level: 1,
+            type: "Mana",
+            value: 1,
           },
         ],
         effect: "Spend a point of Mana, deal aggravated damage.",
@@ -3214,9 +3217,9 @@ export const spells = [
     description: "Design and create any form of life you desire. If cast with finite duration life will disappear at the end of the spell, this may count as an Act of Hubris.",
     additionalEffects: [
       {
-        Cost: [
+        requirement: [
           {
-            type: "Mind",
+            arcana: "Mind",
             value: 5,
           },
         ],
@@ -4181,7 +4184,7 @@ export const spells = [
             value: 1,
           },
           {
-            arcana: "Mana",
+            type: "Mana",
             value: 1,
           },
         ],
@@ -5765,7 +5768,7 @@ export const spells = [
     description: "Bypass triggers to activate magical effects of Prime arcana.",
     additionalEffects: [
       {
-        requirements: [
+        requirement: [
           {
             arcana: "Mind",
             value: 1,
@@ -6186,7 +6189,7 @@ export const spells = [
         effect: "All attempts to Counterspell gain the Rote Quality.",
       },
       {
-        requirements: [
+        requirement: [
           {
             arcana: "Fate",
             value: 1,

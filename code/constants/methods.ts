@@ -1,13 +1,15 @@
 import { some, clone, range, filter } from "lodash"
-import { arcanaNames, baseCastingTimes, castingMethods, factors, gnosisManaLimits, durations, scales, practices, yantrasBaseData } from "./constants.js"
+import { arcanaNames, baseCastingTimes, castingMethods, factors, gnosisManaLimits, durations, scales, practices, yantrasBaseData } from "./constants"
+import type { Caster, Spell, Scene } from "../store/store.js"
+import type { Yantra } from "./types.js"
 
-export const getRoteOrPraxis = (caster, spell) => {
+export const getRoteOrPraxis = (caster: Caster, spell: Spell) => {
   if (caster.rotes.findIndex((r) => r.name === spell.name) !== -1) return "rote"
   if (caster.praxes.findIndex((r) => r.name === spell.name) !== -1) return "praxis"
   return null
 }
 
-export const getYantras = (caster, spell) => {
+export const getYantras = (caster: Caster, spell: Spell) => {
   let expandedYantras = new Map()
   let isRote = getRoteOrPraxis(caster, spell) === "rote"
   for (let [key, yantraBaseData] of yantrasBaseData) {
@@ -19,7 +21,7 @@ export const getYantras = (caster, spell) => {
       bonuses = [yantraBaseData.bonus]
     }
     bonuses.forEach((bonus) => {
-      let expandedYantra = clone(yantraBaseData)
+      let expandedYantra: any = clone(yantraBaseData)
       // rote skill mudra: bonus = skill dots
       if (key === "a1" && isRote) {
         bonus = spell.roteSkill
@@ -33,32 +35,34 @@ export const getYantras = (caster, spell) => {
       expandedYantra.value = expandedYantra.yantraKey
       expandedYantra.label = `${yantraBaseData.name} (+${bonus} ${bonus === 1 ? "die" : "dice"})`
       expandedYantra.isDedicatedTool = false
-      expandedYantras.set(expandedYantra.yantraKey, expandedYantra)
+      let yantra: Yantra = expandedYantra
+      expandedYantras.set(yantra.yantraKey, yantra)
     })
   }
 
   return expandedYantras
 }
 
-export const getFreeReach = (caster, spell) => {
+export const getFreeReach = (caster: Caster, spell: Spell) => {
+  if (spell === undefined || !spell.primaryArcana.arcana || !spell.primaryArcana.level) return 0
   let arcana
   if (caster.rotes.find((r) => r.name === spell.name)) {
     arcana = 5
   } else {
-    arcana = caster.arcana[spell.primaryArcana.arcana].level
+    arcana = caster.arcana[spell.primaryArcana.arcana].dots
   }
   return arcana - spell.primaryArcana.level + 1
 }
 
-export const getUsedReach = (caster, spell) => {
+export const getUsedReach = (caster: Caster, spell: Spell) => {
   let reach = 0
-  if (spell === undefined) return reach
-  if (caster.active.length >= caster.gnosis) {
-    reach += caster.active.length - caster.gnosis + 1
+  if (spell === undefined || !spell.primaryArcana.arcana || !spell.primaryArcana.level) return 0
+  if (caster.active.length >= caster.traits.Gnosis) {
+    reach += caster.active.length - caster.traits.Gnosis + 1
   }
   // check factors (advanced factor keys begin with "a")
   for (let factor in spell.factors) {
-    if (spell.factors[factor][0] === "a") reach++
+    if (spell.factors[factor as keyof Spell["factors"]][0] === "a") reach++
   }
   // check effects
   for (let effect of spell.effects) {
@@ -84,7 +88,8 @@ export const getUsedReach = (caster, spell) => {
   return reach
 }
 
-export const getTotalMana = (caster, spell) => {
+export const getTotalMana = (caster: Caster, spell: Spell) => {
+  if (spell === undefined || !spell.primaryArcana.arcana || !spell.primaryArcana.level) return 0
   let mana = 0
   let type = getRoteOrPraxis(caster, spell)
   // check ruling, rote, praix
@@ -108,25 +113,29 @@ export const getTotalMana = (caster, spell) => {
   return mana
 }
 
-export const getBaseCastingTime = (caster) => {
+export const getBaseCastingTime = (caster: Caster) => {
   for (let [key, value] of baseCastingTimes) {
-    if (caster.gnosis >= key) {
+    if (caster.traits.Gnosis >= key) {
       return value
     }
   }
-  return null
+  return {
+    increment: 3,
+    unit: "hour",
+  }
 }
 
-export const getWithstand = (spell, scene) => {
-  let withstand = scene.withstand
+export const getWithstand = (spell: Spell, scene: Scene) => {
+  let withstand = 0
   if (spell.factors.potency === "a1") withstand -= 2
   return withstand
 }
 
-export const getPotencyPenalty = (caster, spell) => {
-  let penalty = (spell.factors.potency.substr(1) - 1) * 2
+export const getPotencyPenalty = (caster: Caster, spell: Spell) => {
+  if (spell === undefined || !spell.primaryArcana.arcana || !spell.primaryArcana.level) return 0
+  let penalty = (parseInt(spell.factors.potency[1]) - 1) * 2
   if (spell.primaryFactor === "Potency") {
-    penalty -= (caster.arcana[spell.primaryArcana.arcana].level - 1) * 2
+    penalty -= (caster.arcana[spell.primaryArcana.arcana].dots - 1) * 2
   }
   if (penalty <= 0) {
     penalty = 0
@@ -134,10 +143,11 @@ export const getPotencyPenalty = (caster, spell) => {
   return penalty
 }
 
-export const getDurationPenalty = (caster, spell) => {
-  let penalty = durations.get(spell.factors.duration).penalty
+export const getDurationPenalty = (caster: Caster, spell: Spell) => {
+  if (spell === undefined || !spell.primaryArcana.arcana || !spell.primaryArcana.level) return 0
+  let penalty = durations.get(spell.factors.duration)?.penalty ?? 0
   if (spell.primaryFactor === "Duration") {
-    penalty -= (caster.arcana[spell.primaryArcana.arcana].level - 1) * 2
+    penalty -= (caster.arcana[spell.primaryArcana.arcana].dots - 1) * 2
   }
   if (penalty <= 0) {
     penalty = 0
@@ -145,13 +155,18 @@ export const getDurationPenalty = (caster, spell) => {
   return penalty
 }
 
-export const getDicePool = (caster, spell, scene) => {
+export const getScalePenalty = (caster: Caster, spell: Spell) => {
+  return scales.get(spell.factors.scale)?.penalty ?? 0
+}
+
+export const getDicePool = (caster: Caster, spell: Spell, scene: Scene) => {
+  if (spell === undefined || !spell.factors || !spell.primaryArcana.arcana || !spell.primaryArcana.level) return 0
   // base pool
-  let pool = caster.gnosis + caster.arcana[spell.primaryArcana.arcana].level
+  let pool = caster.traits.Gnosis + caster.arcana[spell.primaryArcana.arcana].dots
   if (spell.spendWillpower) pool += 3
   // casting time
   if (spell.factors["castingTime"][0] !== "a") {
-    pool += spell.factors.castingTime[1] - 1
+    pool += parseInt(spell.factors.castingTime[1]) - 1
   }
   let penalties = 0
   let bonus = 0
@@ -162,9 +177,9 @@ export const getDicePool = (caster, spell, scene) => {
   // duration
   penalties += getDurationPenalty(caster, spell)
   // scale
-  penalties += scales.get(spell.factors.scale).penalty
+  penalties += getScalePenalty(caster, spell)
   // yantras
-  spell.yantras.forEach((yantra) => {
+  spell.yantras.forEach((yantra: Yantra) => {
     bonus += yantra.bonus
   })
   // maximum yantra bonus after penalties is 5
@@ -174,13 +189,13 @@ export const getDicePool = (caster, spell, scene) => {
   return pool
 }
 
-export const getParadoxDice = (caster, spell, scene) => {
+export const getParadoxDice = (caster: Caster, spell: Spell, scene: Scene) => {
   let pool = 0,
     mustRoll = false,
     usedReach = 0,
     freeReach = 0
   if (spell.name || spell.custom) {
-    usedReach = getUsedReach(caster, spell, scene)
+    usedReach = getUsedReach(caster, spell)
     freeReach = getFreeReach(caster, spell)
   }
   // check reach
@@ -189,7 +204,7 @@ export const getParadoxDice = (caster, spell, scene) => {
     mustRoll = true
   }
   // gnosis multiplies paradox from additional reach
-  pool *= Math.ceil(caster.gnosis / 2)
+  pool *= Math.ceil(caster.traits.Gnosis / 2)
   // if (paradox.inured) {
   //   pool += 2
   //   mustRoll = true
@@ -219,15 +234,15 @@ export const getParadoxDice = (caster, spell, scene) => {
   return pool
 }
 
-export const getPotencySummary = (caster, spell) => {
-  let output = spell.factors.potency.substr(1)
+export const getPotencySummary = (caster: Caster, spell: Spell) => {
+  let output = spell.factors.potency[1]
   output += " potency"
   if (spell.factors.potency[0] === "a") output += " (-2 Withstand)"
   return output
 }
 
-export const getDurationSummary = (caster, spell) => {
-  let output = durations.get(spell.factors.duration).time
+export const getDurationSummary = (caster: Caster, spell: Spell) => {
+  let output = durations.get(spell.factors.duration)?.time ?? "1 turn"
   let attainments = []
   if (spell.attainments.permanence) attainments.push("Permanence")
   if (spell.attainments.conditionalDuration) attainments.push("Conditional")
@@ -236,11 +251,11 @@ export const getDurationSummary = (caster, spell) => {
   return output
 }
 
-export const getCastingTimeSummary = (caster, spell) => {
+export const getCastingTimeSummary = (caster: Caster, spell: Spell) => {
   let time = getBaseCastingTime(caster)
   // standard
   if (spell.factors.castingTime[0] === "s") {
-    let increment = time.increment * spell.factors.castingTime[1]
+    let increment = time.increment * parseInt(spell.factors.castingTime[1])
     let unit = time.unit + (increment !== 1 ? "s" : "")
     let output = increment + " " + unit
     output += " casting time"
@@ -258,8 +273,8 @@ export const getCastingTimeSummary = (caster, spell) => {
   }
 }
 
-export const getRangeSummary = (caster, spell) => {
-  let output
+export const getRangeSummary = (caster: Caster, spell: Spell) => {
+  let output = ""
   if (spell.factors.range === "s1") {
     output = "Touch"
   } else if (spell.attainments.sympatheticRange || spell.attainments.temporalSympathy) {
@@ -279,14 +294,14 @@ export const getRangeSummary = (caster, spell) => {
   return output
 }
 
-export const getScaleSummary = (caster, spell) => {
+export const getScaleSummary = (caster: Caster, spell: Spell) => {
   let scale = scales.get(spell.factors.scale)
   let output = scale ? `${scale.number} subjects or ${scale.area.toLowerCase()}` : ""
   if (spell.attainments.everywhere) output += " (Everywhere)"
   return output
 }
 
-export const getYantrasSummary = (caster, spell) => {
+export const getYantrasSummary = (caster: Caster, spell: Spell) => {
   let yantrasNames = []
   let yantras = getYantras(caster, spell)
   for (let yantra of spell.yantras) {
@@ -299,7 +314,7 @@ export const getYantrasSummary = (caster, spell) => {
   return yantrasNames.join(", ")
 }
 
-export const getDicePoolSummary = (caster, spell, scene) => {
+export const getDicePoolSummary = (caster: Caster, spell: Spell, scene: Scene) => {
   let dice = getDicePool(caster, spell, scene)
   if (dice < 1) {
     return "Chance"
@@ -310,7 +325,7 @@ export const getDicePoolSummary = (caster, spell, scene) => {
   }
 }
 
-export const getParadoxSummary = (caster, spell, scene) => {
+export const getParadoxSummary = (caster: Caster, spell: Spell, scene: Scene) => {
   let summary
   let dice = getParadoxDice(caster, spell, scene)
   if (dice === "Chance") {
@@ -332,12 +347,31 @@ export const getParadoxSummary = (caster, spell, scene) => {
   return summary
 }
 
-export const getFactorSummary = (caster, spell) => {
+export const getFactorSummary = (caster: Caster, spell: Spell) => {
   let standard = 0
   let advanced = 0
   for (let factor in spell.factors) {
-    if (spell.factors[factor][0] === "s") standard++
-    if (spell.factors[factor][0] === "a") advanced++
+    if (spell.factors[factor as keyof Spell["factors"]][0] === "s") standard++
+    if (spell.factors[factor as keyof Spell["factors"]][0] === "a") advanced++
   }
   return `${standard} Standard, ${advanced} Advanced`
+}
+
+export const getCastingFactorsSummary = (caster: Caster, spell: Spell) => {
+  let summary = []
+  summary.push(`${getPotencySummary(caster, spell).toLowerCase()}`)
+  summary.push(`${getDurationSummary(caster, spell).toLowerCase()}`)
+  summary.push(`${getCastingTimeSummary(caster, spell).toLowerCase()}`)
+  summary.push(`${getRangeSummary(caster, spell).toLowerCase()}`)
+  summary.push(`${getScaleSummary(caster, spell).toLowerCase()}`)
+  return summary.join(", ")
+}
+
+export const getCastingEffectsSummary = (caster: Caster, spell: Spell) => {
+  let summary = spell.effects.map((effect) => effect.effect)
+  if (spell.spendWillpower) summary.unshift("Willpower spent.")
+  if (spell.commonEffects.changePrimaryFactor) summary.push("Changed primary factor.")
+  if (caster.active.length >= caster.traits.Gnosis) summary.push("Casting spells above active limit.")
+  if (spell.custom) spell.page = "Creative, " + spell.practice
+  return summary.join(" ")
 }

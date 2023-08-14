@@ -10,16 +10,18 @@
                   <PersonCircleOutline />
                 </n-icon>
               </template>
-              {{ caster? caster.name : "Choose"}}
+              {{ caster ? caster.name : "Choose" }}
             </n-button>
           </n-dropdown>
-          <n-menu :dropdown-props="{ trigger: 'manual' }" v-model:value="tab" mode="horizontal"
-            :options="menuOptions" />
+          <n-menu :dropdown-props="{ trigger: 'manual' }" v-model:value="tab" mode="horizontal" :options="menuOptions" />
         </n-space>
       </n-layout-header>
       <n-layout embedded content-style="padding: 12px;" v-if="tab === 'edit'" position="absolute"
         style="top: 50px; bottom: 0">
         <n-grid y-gap="12" x-gap="12" :cols="10" item-responsive v-if="caster">
+          <n-gi span="10:10">
+            <Attributes :caster="caster" />
+          </n-gi>
           <!-- Left Column -->
           <n-gi span="0:10 700:5">
             <n-space vertical size="large">
@@ -267,8 +269,8 @@
                   <n-tag size="small" disabled :bordered="false" round strong>0 Mana</n-tag>
                 </n-space>
                 <n-space size="small">
-                  <n-button class="btn-only-icon-when-small" title="Reset" :disabled="canCastSpell === false"
-                    size="tiny" type="error" @click="reset">
+                  <n-button class="btn-only-icon-when-small" title="Reset" :disabled="canCastSpell === false" size="tiny"
+                    type="error" @click="reset">
                     <template #icon>
                       <n-icon>
                         <Trash />
@@ -602,7 +604,7 @@
                             <n-text>
                               <n-text strong>{{
                                 yantra.id ? `${yantra.name}, ${yantra.label.split("(+")[0]}` :
-                                  yantra.label.split("(+")[0]
+                                yantra.label.split("(+")[0]
                               }}</n-text>
                               <n-text depth="3">&nbsp;(+{{ yantra.label.split("(+")[1] }}</n-text>
                             </n-text>
@@ -863,6 +865,8 @@ import {
 
 import Card from "./Card.vue"
 
+import Attributes from "./Attributes.vue"
+
 import {
   arcanaNames,
   baseCastingTimes,
@@ -873,7 +877,7 @@ import {
   scales,
   practices,
   yantrasBaseData,
-} from "../constants/constants.js"
+} from "../constants/constants"
 import {
   getRoteOrPraxis,
   getUsedReach,
@@ -918,6 +922,55 @@ const defaultCaster = {
     Spirit: { level: 0, ruling: false },
     Space: { level: 0, ruling: false },
     Time: { level: 0, ruling: false },
+  },
+  attributes: {
+    mental: {
+      intelligence: 1,
+      wits: 1,
+      resolve: 1,
+    },
+    physical: {
+      strength: 1,
+      dexterity: 1,
+      stamina: 1,
+    },
+    social: {
+      presence: 1,
+      manipulation: 1,
+      composure: 1,
+    },
+  },
+  skills: {
+    mental: {
+      academics: { value: 0, specialisation: "", rote: false },
+      computer: { value: 0, specialisation: "", rote: false },
+      crafts: { value: 0, specialisation: "", rote: false },
+      investigation: { value: 0, specialisation: "", rote: false },
+      medicine: { value: 0, specialisation: "", rote: false },
+      occult: { value: 0, specialisation: "", rote: false },
+      politics: { value: 0, specialisation: "", rote: false },
+      science: { value: 0, specialisation: "", rote: false },
+    },
+    physical: {
+      athletics: { value: 0, specialisation: "", rote: false },
+      brawl: { value: 0, specialisation: "", rote: false },
+      drive: { value: 0, specialisation: "", rote: false },
+      firearms: { value: 0, specialisation: "", rote: false },
+      larceny: { value: 0, specialisation: "", rote: false },
+      stealth: { value: 0, specialisation: "", rote: false },
+      survival: { value: 0, specialisation: "", rote: false },
+      weaponry: { value: 0, specialisation: "", rote: false },
+    },
+    social: {
+      animals: { value: 0, specialisation: "", rote: false },
+      empathy: { value: 0, specialisation: "", rote: false },
+      expression: { value: 0, specialisation: "", rote: false },
+      intimidation: { value: 0, specialisation: "", rote: false },
+      persuasion: { value: 0, specialisation: "", rote: false },
+      socialise: { value: 0, specialisation: "", rote: false },
+      streetwise: { value: 0, specialisation: "", rote: false },
+      subterfuge: { value: 0, specialisation: "", rote: false },
+    }
   },
   praxes: [],
   rotes: [],
@@ -1004,11 +1057,12 @@ export default {
     ChevronUp,
     Ellipse,
     EllipseOutline,
+    Attributes
   },
   setup() {
     const message = useMessage()
     const container = ref(undefined)
-    const tab = ref("cast")
+    const tab = ref("edit")
     const chooseCasterDropdown = ref(undefined)
     const chooseYantraDropdown = ref(undefined)
     const choosePraxisDropdown = ref(undefined)
@@ -2351,7 +2405,11 @@ export default {
           this.caster.rotes = this.caster.rotes || []
           this.caster.tools = this.caster.tools || []
           this.caster.active = this.caster.active || []
+          this.caster.attributes = this.caster.attributes || defaultCaster.attributes
+          this.caster.skills = this.caster.skills || defaultCaster.skills
           this.caster.paradox = this.caster.paradox || 0
+
+          console.log('this.caster', caster)
         }
       } catch (err) {
         console.error(err)

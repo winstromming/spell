@@ -1,4 +1,21 @@
-export const arcanaNames = ["Death", "Fate", "Forces", "Life", "Matter", "Mind", "Prime", "Spirit", "Space", "Time"]
+import type { Level, Practice } from "./types"
+
+export const Paths = [
+  { name: "Acanthus", arcana: ["Fate", "Time"] },
+  { name: "Mastigos", arcana: ["Mind", "Space"] },
+  { name: "Moros", arcana: ["Death", "Matter"] },
+  { name: "Obrimos", arcana: ["Forces", "Prime"] },
+  { name: "Thyrsus", arcana: ["Life", "Spirit"] },
+]
+export const Orders = [
+  { name: "Adamantine Arrow", roteSkills: ["Athletics", "Intimidation", "Medicine"] },
+  { name: "Free Council", roteSkills: ["Crafts", "Persuasion", "Science"] },
+  { name: "Guardians of the Veil", roteSkills: ["Investigation", "Stealth", "Subterfuge"] },
+  { name: "Mysterium", roteSkills: ["Investigation", "Occult", "Survival"] },
+  { name: "Silver Ladder", roteSkills: ["Expression", "Persuasion", "Subterfuge"] },
+]
+
+export const arcanaNames = ["Prime", "Forces", "Fate", "Time", "Mind", "Space", "Spirit", "Life", "Death", "Matter"]
 
 export const castingMethods = ["Normal", "Rote", "Praxis"]
 
@@ -42,7 +59,7 @@ export const baseCastingTimes = new Map([
 
 export const factors = ["castingTime", "duration", "potency", "range", "scale"]
 
-export const practices = [
+export const practices: { name: Practice; level: Level; desc: string }[] = [
   { name: "Knowing", level: 1, desc: "Gain knowledge and understanding of phenomena." },
   { name: "Compelling", level: 1, desc: "Elementary manipulation of phenomena, enough to activate and/or impart direction." },
   { name: "Unveiling", level: 1, desc: "Gain sensory perception of phenomena" },
@@ -209,7 +226,7 @@ export const scales = new Map([
   [
     "a1",
     {
-      number: "5",
+      number: 5,
       size: "5",
       area: "large house",
       penalty: 0,
@@ -218,7 +235,7 @@ export const scales = new Map([
   [
     "a2",
     {
-      number: "10",
+      number: 10,
       size: "10",
       area: "small warehouse",
       penalty: 2,
@@ -227,7 +244,7 @@ export const scales = new Map([
   [
     "a3",
     {
-      number: "20",
+      number: 20,
       size: "15",
       area: "large warehouse",
       penalty: 4,
@@ -236,7 +253,7 @@ export const scales = new Map([
   [
     "a4",
     {
-      number: "40",
+      number: 40,
       size: "20",
       area: "shopping mall",
       penalty: 6,
@@ -245,7 +262,7 @@ export const scales = new Map([
   [
     "a5",
     {
-      number: "80",
+      number: 80,
       size: "25",
       area: "city block",
       penalty: 8,
@@ -254,7 +271,7 @@ export const scales = new Map([
   [
     "a6",
     {
-      number: "160",
+      number: 160,
       size: "30",
       area: "small neighborhood",
       penalty: 10,
