@@ -1,12 +1,12 @@
 <template>
   <n-space align="center" justify="space-between" class="navigation">
-    <Theme />
+    <Config />
     <Actions />
   </n-space>
 </template>
 
 <script setup lang="ts">
-import Theme from "./Theme.vue";
+import Config from "./Config.vue";
 import Actions from "./Actions.vue";
 </script>
 
