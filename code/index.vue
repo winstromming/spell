@@ -85,16 +85,16 @@ const overrides = {
 }
 
 onMounted(() => {
-  const hasCasters = JSON.parse(localStorage.getItem("casters") ?? "null")
+  const hasCasters = JSON.parse(localStorage.getItem("csp-casters") ?? "null")
   if (hasCasters) assign(casters, hasCasters)
-  const hasCaster = JSON.parse(localStorage.getItem("caster") ?? "null")
+  const hasCaster = JSON.parse(localStorage.getItem("csp-caster") ?? "null")
   if (hasCaster) assign(caster, hasCaster)
 })
 
 watch(caster, () => {
   if (caster.id === 0) caster.id = Date.now()
   const raw = cloneDeep(toRaw(caster))
-  localStorage.setItem("caster", JSON.stringify(raw));
+  localStorage.setItem("csp-caster", JSON.stringify(raw));
   const has = casters.find(c => c.id === caster.id)
   if (has) {
     assign(has, raw)
@@ -104,7 +104,7 @@ watch(caster, () => {
 })
 
 watch(casters, () => {
-  localStorage.setItem("casters", JSON.stringify(toRaw(casters)));
+  localStorage.setItem("csp-casters", JSON.stringify(toRaw(casters)));
 })
 
 </script>
