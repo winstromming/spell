@@ -9,24 +9,26 @@
       <n-select filterable :value="value" placeholder="Choose spell to add" @update:value="choose" :options="options" />
     </template>
     <template #footer v-if="caster.rotes.length > 0">
-      <Card v-for="item in caster.rotes" :key="item.name" :title="item.name" collapsed
-        :summary="`(${item.skill}) ${item.arcana} ${dots(item.level)}`">
-        <template #content>
-          <n-select v-model:value="item.skill" placeholder="Choose Rote Skill" size="small"
-            :options="item.skills.map((s) => ({ label: `${s} (+${skills[s]?.dots})`, value: s }))"
-            @update:value="chooseSkill(item.name, $event)">
-          </n-select>
-        </template>
-        <template #footer>
-          <n-button quaternary type="error" @click="remove(item.name)">
-            <template #icon>
-              <n-icon>
-                <Trash />
-              </n-icon>
-            </template>
-          </n-button>
-        </template>
-      </Card>
+      <n-space vertical>
+        <Card v-for="item in caster.rotes" :key="item.name" :title="item.name" collapsed
+          :summary="`(${item.skill || 'none'}) ${item.arcana} ${dots(item.level)}`">
+          <template #content>
+            <n-select v-model:value="item.skill" placeholder="Choose Rote Skill" size="small"
+              :options="item.skills.map((s) => ({ label: `${s} (+${skills[s]?.dots ?? 0})`, value: s }))"
+              @update:value="chooseSkill(item.name, $event)">
+            </n-select>
+          </template>
+          <template #footer>
+            <n-button quaternary type="error" @click="remove(item.name)">
+              <template #icon>
+                <n-icon>
+                  <Trash />
+                </n-icon>
+              </template>
+            </n-button>
+          </template>
+        </Card>
+      </n-space>
     </template>
   </Card>
 </template>

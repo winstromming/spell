@@ -9,18 +9,20 @@
       <n-select filterable :value="value" placeholder="Choose spell to add" @update:value="choose" :options="options" />
     </template>
     <template #footer v-if="caster.praxes.length > 0">
-      <Card :title="item.name" :summary="`${item.arcana} ${dots(item.level)}`" v-for="item in caster.praxes"
-        :key="item.name" :collapsed="true">
-        <template #footer>
-          <n-button quaternary title="Remove" size="small" type="error" @click="remove(item.name)">
-            <template #icon>
-              <n-icon>
-                <Trash />
-              </n-icon>
-            </template>
-          </n-button>
-        </template>
-      </Card>
+      <n-space vertical>
+        <Card :title="item.name" :summary="`${item.arcana} ${dots(item.level)}`" v-for="item in caster.praxes"
+          :key="item.name" :collapsed="true">
+          <template #footer>
+            <n-button quaternary title="Remove" size="small" type="error" @click="remove(item.name)">
+              <template #icon>
+                <n-icon>
+                  <Trash />
+                </n-icon>
+              </template>
+            </n-button>
+          </template>
+        </Card>
+      </n-space>
     </template>
   </Card>
 </template>

@@ -112,6 +112,9 @@ const onSaveText = () => {
   format += `Obsessions:\n`
   format += `${caster.details.obsessions.trim()}\n`
   format += `\n`
+  format += `Conditions:\n`
+  format += `  ${caster.status.conditions.map(c => c.name).join("\n  ")}\n`
+  format += `\n`
   format += `Arcana:\n`
   format += `${Object.entries(caster.arcana).filter((value) => value[1].dots > 0).map((value) => String("  " + value[0] + " " + value[1].dots)).join("\n")}`
   format += `\n`
@@ -121,7 +124,7 @@ const onSaveText = () => {
   format += `\n`
   format += `\n`
   format += `Rotes:\n`
-  format += `${caster.rotes.map((rote) => String("  " + rote.name + " (" + rote.arcana + " " + rote.level + ")")).join("\n")}`
+  format += `${caster.rotes.map((rote) => String("  " + rote.name + " (" + (rote.skill || "None") + ", " + rote.arcana + " " + rote.level + ")")).join("\n")}`
   format += `\n`
   format += `\n`
   format += `Praxes:\n`

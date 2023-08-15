@@ -73,7 +73,6 @@ import Chooser from "./components/Chooser.vue";
 import Active from "./components/Active.vue";
 import Saved from "./components/Saved.vue";
 import Notes from "./components/Notes.vue";
-import Theme from "./components/Theme.vue";
 import Navigation from "./components/Navigation.vue";
 
 import { caster, casters, theme } from "./store/store";

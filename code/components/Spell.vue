@@ -11,7 +11,8 @@
           <n-text>{{ spell.name }} is one of your Praxes.</n-text>
         </n-alert>
         <n-alert type="info" v-if="hasRote(spell.name)">
-          <n-text>{{ spell.name }} is one of your Rotes (+{{ hasRote(spell.name)?.skill }} bonus).</n-text>
+          <n-text>{{ spell.name }} is one of your Rotes (+{{ hasRote(spell.name)?.level }} bonus from {{
+            hasRote(spell.name)?.skill }}).</n-text>
         </n-alert>
       </n-space>
     </template>

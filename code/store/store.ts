@@ -214,7 +214,7 @@ export const defaultCaster = {
   skills: {
     mental: {
       Academics: { rote: false, label: "", dots: 0 },
-      Computer: { rote: false, label: "", dots: 0 },
+      Computers: { rote: false, label: "", dots: 0 },
       Crafts: { rote: false, label: "", dots: 0 },
       Investigation: { rote: false, label: "", dots: 0 },
       Medicine: { rote: false, label: "", dots: 0 },

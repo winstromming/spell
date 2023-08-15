@@ -1,6 +1,6 @@
-import type { Spell } from "./types"
+import type { Source } from "./types"
 
-export const spells: Spell[] = [
+export const spells: Source[] = [
   {
     name: "Ectoplasmic Shaping",
     primaryArcana: {
@@ -115,7 +115,7 @@ export const spells: Spell[] = [
     },
     practice: "Unveiling",
     primaryFactor: "Duration",
-    roteSkills: ["Socialize", "Expression", "Investigation"],
+    roteSkills: ["Socialise", "Expression", "Investigation"],
     page: "Mage: Awakening p128",
     description: "Sense and communicate with ghosts in Twilight. Sense anchors and determine a ghosts rank.",
     additionalEffects: [
@@ -530,7 +530,7 @@ export const spells: Spell[] = [
     practice: "Perfecting",
     primaryFactor: "Duration",
     withstand: "Rank",
-    roteSkills: ["Persuasion", "Socialize", "Occult"],
+    roteSkills: ["Persuasion", "Socialise", "Occult"],
     page: "Mage: Awakening p131",
     description: "Call a ghost in the local area to you.",
     additionalEffects: [
@@ -636,7 +636,7 @@ export const spells: Spell[] = [
     practice: "Perfecting",
     primaryFactor: "Potency",
     withstand: "Cost: One Mana(Optional)",
-    roteSkills: ["Persuasion", "Socialize", "Medicine"],
+    roteSkills: ["Persuasion", "Socialise", "Medicine"],
     page: "Mage: Awakening p131",
     description: "Can boost ghost's Attributes or heal them.",
     additionalEffects: [
@@ -835,7 +835,7 @@ export const spells: Spell[] = [
     practice: "Patterning",
     primaryFactor: "Duration",
     withstand: "Rank",
-    roteSkills: ["Craft", "Brawl", "Intimidation"],
+    roteSkills: ["Crafts", "Brawl", "Intimidation"],
     page: "Mage: Awakening p132",
     description: "Grant a ghost a Manifestation condition.",
     additionalEffects: [
@@ -1168,9 +1168,10 @@ export const spells: Spell[] = [
     practice: "Compelling",
     primaryFactor: "Potency",
     withstand: "Composure",
-    roteSkills: ["Computer", "Persuasion", "Subterfuge"],
+    roteSkills: ["Computers", "Persuasion", "Subterfuge"],
     page: "Mage: Awakening p135",
-    description: "Subject of spell receives a minor twist of fate positive or negative in 24 hours. Only hostile applications are Withstood.",
+    description:
+      "Subject of spell receives a minor blessing or curse. Choose one of three effects: exceptional successes on three success (potency number of rolls), eliminating 10-again on actions (potency number of rolls), or small twist of fate within 24 hours. Only hostile applications are Withstood.",
     additionalEffects: [
       {
         cost: [
@@ -1224,7 +1225,7 @@ export const spells: Spell[] = [
     practice: "Ruling",
     primaryFactor: "Potency",
     withstand: "Composure",
-    roteSkills: ["Intimidation", "Occult", "Socialize"],
+    roteSkills: ["Intimidation", "Occult", "Socialise"],
     page: "Mage: Awakening p136",
     description: "Subject receives a boon or hex. A hex may be withstood.",
     additionalEffects: [
@@ -1272,7 +1273,7 @@ export const spells: Spell[] = [
     },
     practice: "Ruling",
     primaryFactor: "Duration",
-    roteSkills: ["Athletics", "Socialize", "Streetwise"],
+    roteSkills: ["Athletics", "Socialise", "Streetwise"],
     page: "Mage: Awakening p136",
     description: "Suffer no untrained skill penalties when facing a situation unprepared.",
     additionalEffects: [
@@ -2173,7 +2174,7 @@ export const spells: Spell[] = [
     },
     practice: "Perfecting",
     primaryFactor: "Duration",
-    roteSkills: ["Computer", "Larceny", "Persuasion"],
+    roteSkills: ["Computers", "Larceny", "Persuasion"],
     page: "Signs of Sorcery p65",
     description: "increase or decrease a computer device's capability to process, accept and transfer data by Potency.",
   },
@@ -2201,7 +2202,7 @@ export const spells: Spell[] = [
       arcana: "Forces",
       level: 3,
     },
-    practice: "Fraying/Perfecting",
+    practice: "Perfecting",
     primaryFactor: "Duration",
     roteSkills: ["Athletics", "Science", "Survival"],
     page: "Mage: Awakening p144",
@@ -2352,7 +2353,7 @@ export const spells: Spell[] = [
       arcana: "Forces",
       level: 3,
     },
-    practice: "Fraying or Perfecting",
+    practice: "Perfecting",
     primaryFactor: "Potency",
     roteSkills: ["Athletics", "Firearms", "Science"],
     page: "Mage: Awakening p145",
@@ -2554,7 +2555,7 @@ export const spells: Spell[] = [
     },
     practice: "Knowing",
     primaryFactor: "Duration",
-    roteSkills: ["Animal Ken", "Medicine", "Survival"],
+    roteSkills: ["Animals", "Medicine", "Survival"],
     page: "Mage: Awakening p148",
     description:
       "Observe a creature and learn information like species, age, sex and overall health. A supernatural creature's species shows up as unknown unless the mage has studied it's kind before. Can discern amount of dots in physical attributes and any illnesses, injuries, Personal Tilts and Condition on target.",
@@ -2624,7 +2625,7 @@ export const spells: Spell[] = [
     },
     practice: "Unveiling",
     primaryFactor: "Duration",
-    roteSkills: ["Animal Ken", "Empathy", "Survival"],
+    roteSkills: ["Animals", "Empathy", "Survival"],
     page: "Mage: Awakening p148",
     description: "Magically speak with a specific species of animal. Animals have limited ability to understand things around them, for example a rat may refer to a cat and vampire alike as simply a 'predator'.",
     additionalEffects: [
@@ -2692,7 +2693,7 @@ export const spells: Spell[] = [
     practice: "Ruling",
     primaryFactor: "Duration",
     withstand: "Composure",
-    roteSkills: ["Animal Ken", "Intimidation", "Persuasion"],
+    roteSkills: ["Animals", "Intimidation", "Persuasion"],
     page: "Mage: Awakening p149",
     description: "Trigger a specific instinctual response in animals(includes humans). Subject suffers a Condition related to the desired instinct.",
     additionalEffects: [
@@ -2716,7 +2717,7 @@ export const spells: Spell[] = [
     practice: "Ruling",
     primaryFactor: "Duration",
     withstand: "Resolve",
-    roteSkills: ["Animal Ken", "Persuasion", "Survival"],
+    roteSkills: ["Animals", "Persuasion", "Survival"],
     page: "Mage: Awakening p149",
     description: "Create a lure or repellent that works on a specific organism. Plant and bacteria have 0 resolve for the purposes of this spell.",
     additionalEffects: [
@@ -2997,7 +2998,7 @@ export const spells: Spell[] = [
     practice: "Weaving",
     primaryFactor: "Potency",
     withstand: "Stamina",
-    roteSkills: ["Animal Ken", "Science", "Survival"],
+    roteSkills: ["Animals", "Science", "Survival"],
     page: "Mage: Awakening p150",
     description: "Give life features normally belonging to other organisms. Gills, Claws, Senses, Etc.",
     additionalEffects: [
@@ -3021,7 +3022,7 @@ export const spells: Spell[] = [
     practice: "Patterning",
     primaryFactor: "Duration",
     withstand: "Stamina",
-    roteSkills: ["Animal Ken", "Medicine", "Science"],
+    roteSkills: ["Animals", "Medicine", "Science"],
     page: "Mage: Awakening p151",
     description: "Cause a lifeform to rapidly grow, at the end of the duration the subject will return to their actual age. If the subject exceeds its natural lifespan, it will die of old age.",
     additionalEffects: [
@@ -3045,7 +3046,7 @@ export const spells: Spell[] = [
     practice: "Patterning",
     primaryFactor: "Duration",
     withstand: "Stamina",
-    roteSkills: ["Animal Ken", "Science", "Survival"],
+    roteSkills: ["Animals", "Science", "Survival"],
     page: "Mage: Awakening p151",
     description: "The mage takes complete bodily control of a subject. Difference in gait may be noticeable to those familiair with the subject. The mage's body will be inert while this spell is active.",
     additionalEffects: [
@@ -3189,7 +3190,7 @@ export const spells: Spell[] = [
     practice: "Patterning",
     primaryFactor: "Potency",
     withstand: "Stamina",
-    roteSkills: ["Animal Ken", "Science", "Survival"],
+    roteSkills: ["Animals", "Science", "Survival"],
     page: "Mage: Awakening p152",
     description: "Take on the form of another creature. Clothes and gear do not change with you. Instincts of the new form may need to be resisted with a Composure + Resolve roll.",
     additionalEffects: [
@@ -3602,7 +3603,7 @@ export const spells: Spell[] = [
     },
     practice: "Weaving",
     primaryFactor: "Potency",
-    roteSkills: ["Computer", "Science", "Subterfuge"],
+    roteSkills: ["Computers", "Science", "Subterfuge"],
     page: "Mage: Awakening p156",
     description: "Make an object more or less conductive to electricity.",
     additionalEffects: [
@@ -3623,7 +3624,7 @@ export const spells: Spell[] = [
       arcana: "Matter",
       level: 3,
     },
-    practice: "Fraying or Perfecting",
+    practice: "Perfecting",
     primaryFactor: "Potency",
     withstand: "Durability",
     roteSkills: ["Crafts", "Medicine", "Subterfuge"],
@@ -3725,7 +3726,7 @@ export const spells: Spell[] = [
       arcana: "Matter",
       level: 3,
     },
-    practice: "Fraying or Perfecting",
+    practice: "Perfecting",
     primaryFactor: "Potency",
     roteSkills: ["Crafts", "Brawl", "Medicine"],
     page: "Mage: Awakening p157",
@@ -4396,7 +4397,7 @@ export const spells: Spell[] = [
     practice: "Ruling",
     primaryFactor: "Duration",
     withstand: "Composure",
-    roteSkills: ["Crafts", "Socialize", "Subterfuge"],
+    roteSkills: ["Crafts", "Socialise", "Subterfuge"],
     page: "Mage: Awakening p160",
     description: "Raise or lower the first impression.",
   },
@@ -4558,7 +4559,7 @@ export const spells: Spell[] = [
     practice: "Ruling",
     primaryFactor: "Duration",
     withstand: "Composure",
-    roteSkills: ["Empathy", "Leadership?(awaiting Errata)", "Persuasion"],
+    roteSkills: ["Empathy", "Socialise", "Persuasion"],
     page: "Signs of Sorcery p55",
     description:
       "A Variant on Telepathy linking a Mage and his Subjects allowing him to guide them as they work in unison on a particular spell (see 'Teamwork', MtAw 2e p.119) Must have Scale to affect every other Awakened participant in Ritual. Secondary Actors in ritual add Potency to dice pool.",
@@ -4613,7 +4614,7 @@ export const spells: Spell[] = [
     practice: "Ruling",
     primaryFactor: "Potency",
     withstand: "Composure",
-    roteSkills: ["Crafts", "Empathy", "Socialize"],
+    roteSkills: ["Crafts", "Empathy", "Socialise"],
     page: "Mage: Awakening p161",
     description: "Surface thoughts of the subjects play out in the each others minds. This may grant a bonus or penalty between the subjects. A deliberate message may be send along the link.",
     additionalEffects: [
@@ -4873,7 +4874,7 @@ export const spells: Spell[] = [
     practice: "Perfecting",
     primaryFactor: "Duration",
     withstand: "Rank",
-    roteSkills: ["Persuasion", "Socialize", "Occult"],
+    roteSkills: ["Persuasion", "Socialise", "Occult"],
     page: "Mage: Awakening p162",
     description: "Call the nearest Goetia; one personally known, specified by type of Resonance, or the nearest generally.",
     additionalEffects: [
@@ -5225,7 +5226,7 @@ export const spells: Spell[] = [
     practice: "Patterning",
     primaryFactor: "Duration",
     withstand: "Resolve",
-    roteSkills: ["Academics", "Occult", "Socialize"],
+    roteSkills: ["Academics", "Occult", "Socialise"],
     page: "Mage: Awakening p164",
     description: "Astral project into Twilight or into somebody's dreams.",
     additionalEffects: [
@@ -5425,7 +5426,7 @@ export const spells: Spell[] = [
     },
     practice: "Making",
     primaryFactor: "Potency",
-    roteSkills: ["Persuasion", "Politics", "Socialize"],
+    roteSkills: ["Persuasion", "Politics", "Socialise"],
     page: "Mage: Awakening p165",
     description: "For every level of Potency, gain one dot in one of the following Merits: Allies, Contacts or Status.",
   },
@@ -5763,7 +5764,7 @@ export const spells: Spell[] = [
     },
     practice: "Compelling",
     primaryFactor: "Potency",
-    roteSkills: ["Craft", "Occult", "Persuasion"],
+    roteSkills: ["Crafts", "Occult", "Persuasion"],
     page: "Mage: Awakening p166",
     description: "Bypass triggers to activate magical effects of Prime arcana.",
     additionalEffects: [
@@ -6112,7 +6113,7 @@ export const spells: Spell[] = [
     },
     practice: "Weaving",
     primaryFactor: "Duration",
-    roteSkills: ["Craft", "Expression", "Science"],
+    roteSkills: ["Crafts", "Expression", "Science"],
     page: "Signs of Sorcery p28",
     extraMana: 1,
     description: "This spell enchants a Camera, video recorder or similar device and allows it to record Supernal Energies allowing a mage to study the recordings using Active and Focused mage sight.",
@@ -6136,7 +6137,7 @@ export const spells: Spell[] = [
     },
     practice: "Weaving",
     primaryFactor: "Potency",
-    roteSkills: ["Occult", "Politics", "Socialize"],
+    roteSkills: ["Occult", "Politics", "Socialise"],
     page: "Mage: Awakening p168",
     description: "Move Mana equal to Potency between vessels(mages, Hallows, etc). This cannot exceed Gnosis-derived the Mana per turn limit though.",
     additionalEffects: [
@@ -6171,7 +6172,7 @@ export const spells: Spell[] = [
     },
     practice: "Weaving",
     primaryFactor: "Duration",
-    roteSkills: ["Brawl", "Occult", "Socialize"],
+    roteSkills: ["Brawl", "Occult", "Socialise"],
     page: "Mage: Awakening p168",
     description: "Imagos become visible to all forms of Active Mage Sight.",
     additionalEffects: [
@@ -6450,7 +6451,7 @@ export const spells: Spell[] = [
     practice: "Patterning",
     primaryFactor: "Duration",
     withstand: "Resolve",
-    roteSkills: ["Occult", "Persuasion", "Socialize"],
+    roteSkills: ["Occult", "Persuasion", "Socialise"],
     page: "Mage: Awakening p169",
     description: "Grant a Sleeper the ability to see what a Mage sees.",
     additionalEffects: [
@@ -7295,7 +7296,7 @@ export const spells: Spell[] = [
       {
         requirement: [
           {
-            arcana: "Time ",
+            arcana: "Time",
             value: 2,
           },
         ],
@@ -7739,7 +7740,7 @@ export const spells: Spell[] = [
     },
     practice: "Unmaking",
     primaryFactor: "Duration",
-    roteSkills: ["Academics", "Larceny", "Socialize"],
+    roteSkills: ["Academics", "Larceny", "Socialise"],
     page: "Mage: Awakening p179",
     description:
       "Remove a subject from space altogether. The world adjusts for the missing space. A Quarantined house doesn't leave behind an empty space, instead the neighboring house would now find themselves adjacent. Meanwhile those within the Quarentined space will find they cannot leave. Similar to a Pocket Dimension except it still has it's own Time, Twilight, Matter and so forth.",
@@ -7819,7 +7820,7 @@ export const spells: Spell[] = [
     },
     practice: "Unveiling",
     primaryFactor: "Duration",
-    roteSkills: ["Occult", "Survival", "Socialize"],
+    roteSkills: ["Occult", "Survival", "Socialise"],
     page: "Mage: Awakening p180",
     description: "See and speak with any Spirit, be they in Twilight, slumbering in an object or possessing somebody. Can also see the conduit of any Spirit with the Reaching Manifestation.",
     additionalEffects: [
@@ -7897,7 +7898,7 @@ export const spells: Spell[] = [
     practice: "Knowing",
     primaryFactor: "Potency",
     withstand: "Rank",
-    roteSkills: ["Academics", "Brawl", "Socialize"],
+    roteSkills: ["Academics", "Brawl", "Socialise"],
     page: "Mage: Awakening p180",
     description: "Learn a number of facts about the Spirit equal to Potency: Spirit's name, Rank, Manifestations, Numina, Influences and roughly how strong these are, Ban, Bane.",
   },
@@ -7976,7 +7977,7 @@ export const spells: Spell[] = [
     },
     practice: "Shielding",
     primaryFactor: "Duration",
-    roteSkills: ["Animal Ken", "Medicine", "Stealth"],
+    roteSkills: ["Animals", "Medicine", "Stealth"],
     page: "Mage: Awakening p181",
     description: "Any Spirit Numina, Influences and Manifestations, Spirit Spells and werewolf Gifts aimed at subject provoke a Clash of Wills.",
     additionalEffects: [
@@ -8067,7 +8068,7 @@ export const spells: Spell[] = [
     },
     practice: "Ruling",
     primaryFactor: "Duration",
-    roteSkills: ["Athletics", "Computers", "Socialize"],
+    roteSkills: ["Athletics", "Computers", "Socialise"],
     page: "Mage: Awakening p181",
     description: "Shift Resonant Condition to Open Condition or vice versa.",
   },
@@ -8193,7 +8194,7 @@ export const spells: Spell[] = [
       arcana: "Spirit",
       level: 3,
     },
-    practice: "Fraying or Perfecting",
+    practice: "Perfecting",
     primaryFactor: "Potency",
     withstand: "Gauntlet Strength",
     roteSkills: ["Academics", "Expression", "Survival"],
@@ -8220,7 +8221,7 @@ export const spells: Spell[] = [
     practice: "Weaving",
     primaryFactor: "Duration",
     withstand: "Gauntlet Strength",
-    roteSkills: ["Athletics", "Medicine", "Socialize"],
+    roteSkills: ["Athletics", "Medicine", "Socialise"],
     page: "Mage: Awakening p182",
     description: "Interact physically and magically with things on the other side of the Gauntlet.",
     additionalEffects: [
@@ -8268,7 +8269,7 @@ export const spells: Spell[] = [
     practice: "Perfecting",
     primaryFactor: "Duration",
     withstand: "Rank",
-    roteSkills: ["Persuasion", "Socialize", "Occult"],
+    roteSkills: ["Persuasion", "Socialise", "Occult"],
     page: "Mage: Awakening p182",
     description: "Call a Spirit in the local area to you.",
     additionalEffects: [
@@ -8420,7 +8421,7 @@ export const spells: Spell[] = [
     },
     practice: "Patterning",
     primaryFactor: "Duration",
-    roteSkills: ["Athletics", "Expression", "Intimidate"],
+    roteSkills: ["Athletics", "Expression", "Intimidation"],
     page: "Mage: Awakening p183",
     description: "Gain the Familiar Merit for the duration of the spell. Both parties must be willing. Cannot effect Spirits above Rank 2. Can also bind a Ghost or Geotia as familiar, to do so select respective alternate spell listing.",
   },
@@ -8432,7 +8433,7 @@ export const spells: Spell[] = [
     },
     practice: "Patterning",
     primaryFactor: "Duration",
-    roteSkills: ["Athletics", "Expression", "Intimidate"],
+    roteSkills: ["Athletics", "Expression", "Intimidation"],
     page: "Mage: Awakening p183",
     description: "Gain the Familiar Merit for the duration of the spell. Both parties must be willing. Cannot effect Spirits above Rank 2.",
   },
@@ -8444,7 +8445,7 @@ export const spells: Spell[] = [
     },
     practice: "Patterning",
     primaryFactor: "Duration",
-    roteSkills: ["Athletics", "Expression", "Intimidate"],
+    roteSkills: ["Athletics", "Expression", "Intimidation"],
     page: "Mage: Awakening p183",
     description: "Gain the Familiar Merit for the duration of the spell. Both parties must be willing. Cannot effect Spirits above Rank 2.",
   },
@@ -8795,7 +8796,7 @@ export const spells: Spell[] = [
     },
     practice: "Compelling",
     primaryFactor: "Duration",
-    roteSkills: ["Computer", "Larceny", "Subterfuge"],
+    roteSkills: ["Computers", "Larceny", "Subterfuge"],
     page: "Mage: Awakening p187",
     description: "Cast Positively: Anything that can help the subject achieve their objective faster will happen at the exact moment to do so.<br>Cast Negatively: Anything that can delay the target will happen at the exact moment to do so.",
   },
@@ -8819,7 +8820,7 @@ export const spells: Spell[] = [
     },
     practice: "Unveiling",
     primaryFactor: "Duration",
-    roteSkills: ["Empathy", "Socialize", "Streetwise"],
+    roteSkills: ["Empathy", "Socialise", "Streetwise"],
     page: "Mage: Awakening p187",
     description: "The subject can spend a turn during the spell's duration on planning, and, in doing so, can add the spell's Potency to their next instant action.",
   },
@@ -8916,7 +8917,7 @@ export const spells: Spell[] = [
     },
     practice: "Shielding",
     primaryFactor: "Duration",
-    roteSkills: ["Medicine", "Investigation Subterfuge"],
+    roteSkills: ["Medicine", "Investigation", "Subterfuge"],
     page: "Mage: Awakening p188",
     description:
       "Protect a subject from Time's effects. The subject will not bleed out form wounds, poison, toxins and the progression of disease are stalled. New Conditions and Tilts cannot be imposed on the subject. Supernatural powers that would anyway provoke a Clash of Wills. Downsides of the spell: you no longer heal naturally while under the spell's effect. Healing through Pattern Restoration and Life magic will still work. Willpower and Mana cannot be restored and Experiences cannot be spend. The subjects ceases aging.",
