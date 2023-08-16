@@ -7,20 +7,26 @@
             <Navigation />
           </n-layout-header>
           <n-layout-content position="absolute" embedded style="top: 50px">
-            <n-space vertical style="padding: 24px;">
+            <n-space vertical style="padding: 24px;" :size="12">
               <n-grid y-gap="12" x-gap="12" cols="1 600:12">
                 <n-gi span="1 600:12 900:4 1300:6">
-                  <n-space vertical>
+                  <n-space vertical :size="12">
                     <Character />
                     <Attributes />
                     <Skills />
-                    <Arcana />
-                    <Merits />
+                    <n-grid y-gap="12" x-gap="12" cols="1 550:2">
+                      <n-gi>
+                        <Arcana />
+                      </n-gi>
+                      <n-gi>
+                        <Merits />
+                      </n-gi>
+                    </n-grid>
                     <Notes />
                   </n-space>
                 </n-gi>
                 <n-gi span="1 600:6 900:4 1300:3">
-                  <n-space vertical>
+                  <n-space vertical :size="12">
                     <Beats />
                     <Health />
                     <Conditions />
@@ -32,7 +38,7 @@
                   </n-space>
                 </n-gi>
                 <n-gi span="1 600:6 900:4 1300:3">
-                  <n-space vertical>
+                  <n-space vertical :size="12">
                     <Spell />
                     <Factors />
                     <Yantras />

@@ -8798,7 +8798,7 @@ export const spells: Source[] = [
     primaryFactor: "Duration",
     roteSkills: ["Computers", "Larceny", "Subterfuge"],
     page: "Mage: Awakening p187",
-    description: "Cast Positively: Anything that can help the subject achieve their objective faster will happen at the exact moment to do so.<br>Cast Negatively: Anything that can delay the target will happen at the exact moment to do so.",
+    description: "Cast Positively: Anything that can help the subject achieve their objective faster will happen at the exact moment to do so. Cast Negatively: Anything that can delay the target will happen at the exact moment to do so.",
   },
   {
     name: "Momentary Flux",
