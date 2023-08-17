@@ -13,19 +13,35 @@
         <Card v-for="item in caster.rotes" :key="item.name" :title="item.name" collapsed
           :summary="`(${item.skill || 'none'}) ${item.arcana} ${dots(item.level)}`">
           <template #content>
-            <n-select v-model:value="item.skill" placeholder="Choose Rote Skill" size="small"
-              :options="item.skills.map((s) => ({ label: `${s} (+${skills[s]?.dots ?? 0})`, value: s }))"
-              @update:value="chooseSkill(item.name, $event)">
-            </n-select>
+            <n-space vertical>
+              <n-text depth="3" italic>
+                <n-ellipsis :line-clamp="2">
+                  {{ getDescriptionForSpell(item.name) }}
+                </n-ellipsis>
+              </n-text>
+              <n-select v-model:value="item.skill" placeholder="Choose rote skill to use" size="small"
+                :options="item.skills.map((s) => ({ label: `${s} (+${skills[s]?.dots ?? 0})`, value: s }))"
+                @update:value="chooseSkill(item.name, $event)">
+              </n-select>
+            </n-space>
           </template>
           <template #footer>
-            <n-button quaternary type="error" @click="remove(item.name)">
-              <template #icon>
-                <n-icon>
-                  <Trash />
-                </n-icon>
-              </template>
-            </n-button>
+            <n-space justify="space-between">
+              <n-button quaternary type="error" @click="remove(item.name)">
+                <template #icon>
+                  <n-icon>
+                    <Trash />
+                  </n-icon>
+                </template>
+              </n-button>
+              <n-button quaternary title="Cast" size="small" type="warning" @click="load(item.name)">
+                <template #icon>
+                  <n-icon>
+                    <Flash />
+                  </n-icon>
+                </template>
+              </n-button>
+            </n-space>
           </template>
         </Card>
       </n-space>
@@ -35,13 +51,17 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { caster } from "../store/store";
+import { caster, spell } from "../store/store";
 import { spells } from "../constants/spells"
 import type { Arcana, Source, Skill } from "../constants/types"
 
-import { ClipboardOutline, Trash } from "@vicons/ionicons5"
+import { ClipboardOutline, Trash, Flash } from "@vicons/ionicons5"
 
 import Card from "../components/Card.vue"
+import { cloneDeep, merge } from "lodash";
+import { useMessage } from "naive-ui";
+
+const message = useMessage()
 
 const dots = (num: number) => Array.from({ length: num }, () => "•").join("");
 
@@ -96,4 +116,22 @@ const remove = (name: string) => {
   let index = caster.rotes.findIndex((s) => s.name === name)
   if (index !== -1) caster.rotes.splice(index, 1)
 };
+
+const getDescriptionForSpell = (name: string) => {
+  const item = spells.find((s) => s.name === name)
+  if (item) return item.description
+  return ""
+}
+
+const load = (name: string) => {
+  const item = spells.find((s) => s.name === name)
+  if (item) {
+    const cloned = cloneDeep(item)
+    spell.reset()
+    merge(spell, cloned)
+    message.warning(`${name} is ready to cast`)
+  } else {
+    message.warning(`${name} not found in spell list`)
+  }
+}
 </script>

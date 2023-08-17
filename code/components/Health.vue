@@ -87,7 +87,7 @@ import { HeartOutline, EllipsisHorizontal, SkullOutline, BandageOutline, WaterOu
 
 watch(caster, () => {
   caster.health.maximum.base = caster.traits.Size.base + (caster.traits.Size.modifier ?? 0) + caster.attributes.physical.Stamina.dots
-});
+}, { immediate: true });
 
 onMounted(() => {
   caster.health.maximum.base = caster.traits.Size.base + (caster.traits.Size.modifier ?? 0) + caster.attributes.physical.Stamina.dots

@@ -56,10 +56,9 @@
 
 <script setup lang="ts">
 
-import { watch, onMounted, toRaw } from "vue";
+import { watch, toRaw, onBeforeMount } from "vue";
 import { assign, cloneDeep } from "lodash";
 
-import Actions from "./components/Actions.vue"
 import Spell from "./components/Spell.vue"
 import Arcana from "./components/Arcana.vue"
 import Factors from "./components/Factors.vue"
@@ -75,7 +74,6 @@ import Rotes from "./components/Rotes.vue";
 import Tools from "./components/Tools.vue";
 import Conditions from "./components/Conditions.vue";
 import Merits from "./components/Merits.vue";
-import Chooser from "./components/Chooser.vue";
 import Active from "./components/Active.vue";
 import Saved from "./components/Saved.vue";
 import Notes from "./components/Notes.vue";
@@ -89,7 +87,7 @@ const overrides = {
   }
 }
 
-onMounted(() => {
+onBeforeMount(() => {
   const hasCasters = JSON.parse(localStorage.getItem("csp-casters") ?? "null")
   if (hasCasters) assign(casters, hasCasters)
   const hasCaster = JSON.parse(localStorage.getItem("csp-caster") ?? "null")

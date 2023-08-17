@@ -58,7 +58,7 @@ import { caster, spell } from "../store/store";
 import type { Caster, Spell } from "../store/store";
 import { spells } from "../constants/spells";
 import { clone, cloneDeep, findIndex, some } from "lodash";
-import type { Effect, Practice, Factor, Yantra } from "../constants/types";
+import type { Effect, Practice, Factor, Yantra, Tool } from "../constants/types";
 import { Trash, Bookmark, DocumentText, Flash } from '@vicons/ionicons5'
 
 import {
@@ -190,7 +190,14 @@ const savedYantraOptions = computed(() => {
   const options = []
 
   for (let tool of caster.tools) {
-    const cloned = clone(tool)
+    console.log("tool", tool)
+    const source: Yantra = yantras.value.get(tool.key)
+    const cloned: Yantra = clone(source)
+    cloned.isDedicatedTool = tool.dedicated
+    cloned.name = tool.name
+    cloned.desc = tool.description
+    cloned.id = tool.id
+    console.log("cloned", cloned)
     if (some(spell.yantras, ["key", cloned.id])) {
       options.push({ ...cloned, key: cloned.id, value: cloned.id, disabled: true });
     } else {

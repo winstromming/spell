@@ -64,19 +64,20 @@ const getYantraOptions = (prefix: string) => {
   for (let [key, yantraBaseData] of yantrasBaseData) {
     if (key[0] === prefix) {
       let labelkey = `${yantraBaseData.name} (+${yantraBaseData.bonus} ${yantraBaseData.bonus === 1 ? "die" : "dice"})`
-      options.push({ label: labelkey, value: yantraBaseData })
+      options.push({ label: labelkey, value: { ...yantraBaseData, key } })
     }
   }
   return options
 };
 
 const choose = (key: string, option: { label: string; value: any }) => {
-  console.log(option);
+  console.log(key, option);
   let tool: Tool = {
     name: option.value.name as string,
     type: option.label as string,
     dedicated: false,
     description: option.value.desc as string,
+    key: option.value.key,
     id: new Date().getTime(),
   };
   caster.tools.push(tool)

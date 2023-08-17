@@ -49,7 +49,7 @@ import { TicketOutline } from "@vicons/ionicons5"
 import Dots from "../components/Dots.vue";
 import Card from "../components/Card.vue";
 import { caster } from "../store/store";
-import { computed, watch } from "vue";
+import { computed, onMounted, watch } from "vue";
 
 const formatBeats = (num: number | null) => {
   return `${num ?? 0} Beats`
@@ -68,18 +68,18 @@ const parse = (input: string) => {
   return nums === '' ? null : Number(nums)
 }
 
-watch(caster.progress.mundane, () => {
+watch(() => caster.progress.mundane.Beats, () => {
   if (caster.progress.mundane.Beats === 5) {
     caster.progress.mundane.Beats -= 5
     caster.progress.mundane.Experience += 1
   }
-})
-watch(caster.progress.arcane, () => {
+}, { immediate: true })
+watch(() => caster.progress.arcane.Beats, () => {
   if (caster.progress.arcane.Beats === 5) {
     caster.progress.arcane.Beats -= 5
     caster.progress.arcane.Experience += 1
   }
-})
+}, { immediate: true })
 
 const summary = computed(() => {
   return `${caster.progress.mundane.Experience} Regular, ${caster.progress.arcane.Experience} Arcane`;

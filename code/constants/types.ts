@@ -35,6 +35,7 @@ export type Practice = "Knowing" | "Compelling" | "Unveiling" | "Ruling" | "Veil
 export type Tool = {
   name: string
   type: string
+  key: string
   description: string
   dedicated: boolean
   id: number
@@ -75,6 +76,7 @@ export type Condition = {
 export type Yantra = {
   id?: number
   name: string
+  desc: string
   bonus: number
   value: string
   label: string

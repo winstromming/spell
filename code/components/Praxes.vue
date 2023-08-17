@@ -12,14 +12,30 @@
       <n-space vertical>
         <Card :title="item.name" :summary="`${item.arcana} ${dots(item.level)}`" v-for="item in caster.praxes"
           :key="item.name" :collapsed="true">
+          <template #content>
+            <n-text depth="3" italic>
+              <n-ellipsis :line-clamp="2">
+                {{ getDescriptionForSpell(item.name) }}
+              </n-ellipsis>
+            </n-text>
+          </template>
           <template #footer>
-            <n-button quaternary title="Remove" size="small" type="error" @click="remove(item.name)">
-              <template #icon>
-                <n-icon>
-                  <Trash />
-                </n-icon>
-              </template>
-            </n-button>
+            <n-space justify="space-between">
+              <n-button quaternary title="Remove" size="small" type="error" @click="remove(item.name)">
+                <template #icon>
+                  <n-icon>
+                    <Trash />
+                  </n-icon>
+                </template>
+              </n-button>
+              <n-button quaternary title="Cast" size="small" type="warning" @click="load(item.name)">
+                <template #icon>
+                  <n-icon>
+                    <Flash />
+                  </n-icon>
+                </template>
+              </n-button>
+            </n-space>
           </template>
         </Card>
       </n-space>
@@ -29,17 +45,39 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { caster } from "../store/store";
+import { caster, spell } from "../store/store";
 import { spells } from "../constants/spells"
 import type { Arcana, Source } from "../constants/types"
 
-import { SparklesOutline, Trash } from "@vicons/ionicons5"
+import { SparklesOutline, Trash, Flash } from "@vicons/ionicons5"
 
 import Card from "../components/Card.vue"
+import { cloneDeep, merge } from "lodash";
+import { useMessage } from "naive-ui";
+
+const message = useMessage()
 
 const dots = (num: number) => Array.from({ length: num }, () => "•").join("");
 
 const value = ref(null);
+
+const getDescriptionForSpell = (name: string) => {
+  const item = spells.find((s) => s.name === name)
+  if (item) return item.description
+  return ""
+}
+
+const load = (name: string) => {
+  const item = spells.find((s) => s.name === name)
+  if (item) {
+    const cloned = cloneDeep(item)
+    spell.reset()
+    merge(spell, cloned)
+    message.warning(`${name} is ready to cast`)
+  } else {
+    message.warning(`${name} not found in spell list`)
+  }
+}
 
 const options = computed(() => {
   let options = []
