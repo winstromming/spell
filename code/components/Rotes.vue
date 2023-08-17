@@ -107,7 +107,6 @@ const choose = (option: Source) => {
 };
 
 const chooseSkill = (spell: string, skill: Skill) => {
-  console.log(spell, skill)
   let item = caster.rotes.find((s) => s.name === spell);
   if (item) item.skill = skill;
 };

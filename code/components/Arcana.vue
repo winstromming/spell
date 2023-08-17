@@ -3,8 +3,7 @@
     <template #content>
       <n-grid y-gap="0" x-gap="24" cols="1 400:2">
         <n-gi v-for="(arcana, name) in caster.arcana">
-          <Dots :name="name" :dots="arcana.dots" @update-dots="arcana.dots = $event"
-            :checked="arcana.ruling || caster.details.path?.arcana.includes(name)"
+          <Dots :name="name" :dots="arcana.dots" @update-dots="arcana.dots = $event" :checked="arcana.ruling"
             :checked-disabled="caster.details.path?.arcana.includes(name)" @update-checked="arcana.ruling = $event">
           </Dots>
         </n-gi>

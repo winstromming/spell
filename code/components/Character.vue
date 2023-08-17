@@ -45,12 +45,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import { useDialog, useMessage } from "naive-ui";
 import { caster, casters, defaultCaster } from "../store/store";
 import { Orders, Paths } from "../constants/constants"
 import Card from "../components/Card.vue"
 import { assign, cloneDeep } from "lodash";
+import type { Arcana } from "../constants/types";
 
 const dialog = useDialog()
 const message = useMessage()
@@ -72,6 +73,12 @@ const pathOptions = computed(() => {
     }
   })
 });
+
+watch(() => caster.details.path, () => {
+  for (const key in caster.arcana) {
+    caster.arcana[key as Arcana].ruling = caster.details.path?.arcana.includes(key as Arcana) ?? false
+  }
+})
 
 const create = () => {
   let created = { ...cloneDeep(defaultCaster), id: Date.now() }

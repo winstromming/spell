@@ -11,7 +11,7 @@
           <n-text>{{ spell.name }} is one of your Praxes.</n-text>
         </n-alert>
         <n-alert type="info" v-if="hasRote(spell.name)">
-          <n-text>{{ spell.name }} is one of your Rotes (+{{ hasRote(spell.name)?.level }} bonus from {{
+          <n-text>{{ spell.name }} is one of your Rotes (+{{ hasRoteSkill(spell.name) }} bonus from {{
             hasRote(spell.name)?.skill }}).</n-text>
         </n-alert>
       </n-space>
@@ -269,6 +269,9 @@ const hasPraxis = (name?: string) => {
 const hasRote = (name?: string) => {
   if (!name || !caster.rotes) return undefined;
   return caster.rotes.find((s) => s.name === name)
+}
+const hasRoteSkill = (name?: string) => {
+  return hasRote(name) ? spell.roteSkill : undefined
 }
 
 const skills = computed(() => {
