@@ -6,75 +6,77 @@
       </n-icon>
     </template>
     <template #header>
-      <n-button-group class="health">
-        <n-tooltip trigger="hover" v-for="(amount, index) of caster.health.aggravated"
-          :disabled="caster.health.lethal > 0 || index + 1 !== caster.health.aggravated">
-          <template #trigger>
-            <n-button :disabled="caster.health.lethal > 0 || index + 1 !== caster.health.aggravated" size="small"
-              @click="healDamage">
-              <template #icon>
-                <n-icon :component="SkullOutline" />
-              </template>
-            </n-button>
-          </template>
-          Heal (1 week)
-        </n-tooltip>
-        <n-tooltip trigger="hover" v-for="(amount, index) of caster.health.lethal"
-          :disabled="caster.health.bashing > 0 || index + 1 !== caster.health.lethal">
-          <template #trigger>
-            <n-button :disabled="caster.health.bashing > 0 || index + 1 !== caster.health.lethal" size="small"
-              @click="healDamage">
-              <template #icon>
-                <n-icon :component="WaterOutline" />
-              </template>
-            </n-button>
-          </template>
-          Heal (2 days)
-        </n-tooltip>
-        <n-tooltip trigger="hover" v-for="(amount, index) of caster.health.bashing"
-          :disabled="index + 1 !== caster.health.bashing">
-          <template #trigger>
-            <n-button :disabled="index + 1 !== caster.health.bashing" size="small" @click="healDamage">
-              <template #icon>
-                <n-icon :component="BandageOutline" />
-              </template>
-            </n-button>
-          </template>
-          Heal (15 mins)
-        </n-tooltip>
-        <n-button v-for="amount in remaining" disabled size="small">
+      <n-popover trigger="click" placement="top">
+        <template #trigger>
+          <n-button quaternary type="error" size="small" title="Suffer damage">
+            <template #icon>
+              <n-icon :component="EllipsisHorizontal" />
+            </template>
+          </n-button>
+        </template>
+        <n-button title="Aggravated" quaternary type="error" size="small" @click="sufferAggravated">
           <template #icon>
-            <n-icon :component="Square" style="opacity: 0" />
+            <n-icon :component="SkullOutline" />
           </template>
         </n-button>
-        <n-popover trigger="click" placement="bottom">
-          <template #trigger>
-            <n-button tertiary type="error" size="small" title="Suffer damage">
-              <template #icon>
-                <n-icon :component="EllipsisHorizontal" />
-              </template>
-            </n-button>
+        <n-button title="Lethal" quaternary type="error" size="small" @click="sufferLethal">
+          <template #icon>
+            <n-icon :component="WaterOutline" />
           </template>
-          <n-button title="Aggravated" quaternary type="error" size="small" @click="sufferAggravated">
-            <template #icon>
-              <n-icon :component="SkullOutline" />
-            </template>
-          </n-button>
-          <n-button title="Lethal" quaternary type="error" size="small" @click="sufferLethal">
-            <template #icon>
-              <n-icon :component="WaterOutline" />
-            </template>
-          </n-button>
-          <n-button title="Bashing" quaternary type="error" size="small" @click="sufferBashing">
-            <template #icon>
-              <n-icon :component="BandageOutline" />
-            </template>
-          </n-button>
-        </n-popover>
-      </n-button-group>
+        </n-button>
+        <n-button title="Bashing" quaternary type="error" size="small" @click="sufferBashing">
+          <template #icon>
+            <n-icon :component="BandageOutline" />
+          </template>
+        </n-button>
+      </n-popover>
     </template>
-    <template #footer v-if="summary">
-      <n-text v-html="summary"></n-text>
+    <template #footer>
+      <n-space vertical>
+        <n-button-group class="health">
+          <n-tooltip trigger="hover" v-for="(amount, index) of caster.health.aggravated"
+            :disabled="caster.health.lethal > 0 || index + 1 !== caster.health.aggravated">
+            <template #trigger>
+              <n-button :disabled="caster.health.lethal > 0 || index + 1 !== caster.health.aggravated" size="small"
+                @click="healDamage">
+                <template #icon>
+                  <n-icon :component="SkullOutline" />
+                </template>
+              </n-button>
+            </template>
+            Heal (1 week)
+          </n-tooltip>
+          <n-tooltip trigger="hover" v-for="(amount, index) of caster.health.lethal"
+            :disabled="caster.health.bashing > 0 || index + 1 !== caster.health.lethal">
+            <template #trigger>
+              <n-button :disabled="caster.health.bashing > 0 || index + 1 !== caster.health.lethal" size="small"
+                @click="healDamage">
+                <template #icon>
+                  <n-icon :component="WaterOutline" />
+                </template>
+              </n-button>
+            </template>
+            Heal (2 days)
+          </n-tooltip>
+          <n-tooltip trigger="hover" v-for="(amount, index) of caster.health.bashing"
+            :disabled="index + 1 !== caster.health.bashing">
+            <template #trigger>
+              <n-button :disabled="index + 1 !== caster.health.bashing" size="small" @click="healDamage">
+                <template #icon>
+                  <n-icon :component="BandageOutline" />
+                </template>
+              </n-button>
+            </template>
+            Heal (15 mins)
+          </n-tooltip>
+          <n-button v-for="amount in remaining" disabled size="small">
+            <template #icon>
+              <n-icon :component="Square" style="opacity: 0" />
+            </template>
+          </n-button>
+        </n-button-group>
+        <n-text v-if="summary" v-html="summary"></n-text>
+      </n-space>
     </template>
   </Card>
 </template>
@@ -85,12 +87,18 @@ import { caster } from "../store/store";
 import Card from "../components/Card.vue";
 import { HeartOutline, EllipsisHorizontal, SkullOutline, BandageOutline, WaterOutline, Square } from "@vicons/ionicons5"
 
+const size = computed(() => {
+  let size = caster.traits.Size.base ?? 0
+  if (caster.traits.Size.modifier && caster.traits.Size.modifier > 0) size = caster.traits.Size.modifier
+  return size
+})
+
 watch(caster, () => {
-  caster.health.maximum.base = caster.traits.Size.base + (caster.traits.Size.modifier ?? 0) + caster.attributes.physical.Stamina.dots
-}, { immediate: true });
+  caster.health.maximum.base = size.value + caster.attributes.physical.Stamina.dots
+});
 
 onMounted(() => {
-  caster.health.maximum.base = caster.traits.Size.base + (caster.traits.Size.modifier ?? 0) + caster.attributes.physical.Stamina.dots
+  caster.health.maximum.base = size.value + caster.attributes.physical.Stamina.dots
 })
 
 const remaining = computed(() => {
@@ -149,9 +157,7 @@ const sufferAggravated = () => {
 }
 
 const summary = computed(() => {
-  let maximum = caster.attributes.physical.Stamina.dots + caster.traits.Size.base + (caster.traits.Size.modifier ?? 0);
-  let remaining = caster.attributes.physical.Stamina.dots + caster.traits.Size.base + (caster.traits.Size.modifier ?? 0) - caster.health.bashing - caster.health.lethal - caster.health.aggravated;
-  let halfway = Math.floor(maximum / 2)
+  let remaining = caster.attributes.physical.Stamina.dots + size.value - caster.health.bashing - caster.health.lethal - caster.health.aggravated;
   if (caster.health.aggravated >= caster.health.maximum.base) return "You are dead.";
   if (remaining > 2) return null
   let string = [];
@@ -183,5 +189,15 @@ const summary = computed(() => {
   display: inline-flex;
   padding-left: 3px;
   padding-right: 3px;
+  border-color: var(--n-border) !important;
+}
+
+.health .n-button--disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.health .n-button--disabled .n-icon {
+  opacity: 0.25;
 }
 </style>
