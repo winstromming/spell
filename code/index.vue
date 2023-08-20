@@ -29,7 +29,6 @@
                   <n-space vertical :size="12">
                     <Beats />
                     <Health />
-                    <Power />
                     <Conditions />
                     <Praxes />
                     <Rotes />
@@ -68,7 +67,6 @@ import Paradox from "./components/Paradox.vue"
 import Character from "./components/Character.vue"
 import Attributes from "./components/Attributes.vue";
 import Skills from "./components/Skills.vue";
-import Power from "./components/Power.vue";
 import Health from "./components/Health.vue";
 import Beats from "./components/Beats.vue";
 import Praxes from "./components/Praxes.vue";

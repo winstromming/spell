@@ -75,7 +75,21 @@
             </template>
           </n-button>
         </n-button-group>
-        <n-text v-if="summary" v-html="summary"></n-text>
+        <n-grid x-gap="12" y-gap="12" :cols="2">
+          <n-gi>
+            <n-input-number v-model:value="caster.traits.Mana" :format="asMana" :parse="parse" size="small" min="0"
+              :max="mana">
+            </n-input-number>
+          </n-gi>
+          <n-gi>
+            <n-input-number v-model:value="caster.traits.Willpower" size="small" min="0" :max="willpower"
+              :format="asWillpower" :parse="parse">
+            </n-input-number>
+          </n-gi>
+        </n-grid>
+        <n-alert type="warning" v-if="summary">
+          <n-text v-html="summary" />
+        </n-alert>
       </n-space>
     </template>
   </Card>
@@ -99,6 +113,37 @@ watch(caster, () => {
 
 onMounted(() => {
   caster.health.maximum.base = size.value + caster.attributes.physical.Stamina.dots
+})
+
+const asMana = (num: number | null) => {
+  return `${num ?? 0}/${mana.value} Mana`
+}
+const asWillpower = (num: number | null) => {
+  return `${num ?? 0}/${willpower.value} Willpower`
+}
+const parse = (input: string) => {
+  const nums = input.split("/")[0].replace(/[^0-9]+/g, '').trim()
+  return nums === '' ? null : Number(nums)
+}
+
+const willpower = computed(() => {
+  return caster.attributes.mental.Resolve.dots + caster.attributes.social.Composure.dots;
+});
+
+const mana = computed(() => {
+  switch (caster.traits.Gnosis) {
+    case 0: return 0;
+    case 1: return 10;
+    case 2: return 11;
+    case 3: return 12;
+    case 4: return 13;
+    case 5: return 15;
+    case 6: return 20;
+    case 7: return 25;
+    case 8: return 30;
+    case 9: return 50;
+    case 10: return 75;
+  }
 })
 
 const remaining = computed(() => {
