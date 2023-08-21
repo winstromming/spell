@@ -99,8 +99,8 @@ const onExport = () => {
 }
 
 // ● ○
-// const d = (n: number, t: number) => Array.from({ length: n }, () => "●").concat(Array.from({ length: t - n }, () => "○")).join("")
-const d = (n: number, t: number) => `${n}`
+const d = (n: number, t: number) => Array.from({ length: n }, () => "●").concat(Array.from({ length: t - n }, () => "○")).join("")
+// const d = (n: number, t: number) => `${n}`
 
 const onSaveText = () => {
 
@@ -162,7 +162,13 @@ const onSaveText = () => {
         columns: [
           [
             { bold: true, text: "Merits:" },
-            Object.entries(caster.merits).filter((value) => value[1].dots > 0).map((value) => `${value[1].label} ${d(value[1].dots, 5)}`).join("\n")
+            Object.entries(caster.merits).filter((value) => value[1].dots > 0).map((value) => `${value[1].label} ${d(value[1].dots, 5)}`).join("\n"),
+            { text: ' ' },
+            ...Object.entries(caster.extras).filter(([key, value]) => value !== "" && key !== "attainments" && key !== "nimbus").map(([key, value]) => [
+              { text: ' ' },
+              { bold: true, text: `${key[0].toUpperCase() + key.substring(1)}:` },
+              { text: `${value}` }
+            ])
           ],
           [
             { bold: true, text: "Arcana:" },
@@ -172,16 +178,15 @@ const onSaveText = () => {
             caster.praxes.map((praxis) => `${praxis.name} (${praxis.arcana} ${d(praxis.level, praxis.level)})`).join("\n"),
             { text: ' ' },
             { bold: true, text: "Rotes:" },
-            caster.rotes.map((rote) => `${rote.name} (${rote.skill || "None"}, ${rote.arcana} ${d(rote.level, rote.level)})`).join("\n")
+            caster.rotes.map((rote) => `${rote.name} (${rote.skill || "None"}, ${rote.arcana} ${d(rote.level, rote.level)})`).join("\n"),
+            { text: ' ' },
+            { bold: true, text: "Attainments:" },
+            caster.extras.attainments || "None",
+            { bold: true, text: "Nimbus/Tilt:" },
+            caster.extras.nimbus || "None"
           ],
         ]
       },
-      { text: ' ' },
-      ...Object.entries(caster.extras).filter(([key, value]) => value !== "").map(([key, value]) => [
-        { text: ' ' },
-        { bold: true, text: `${key[0].toUpperCase() + key.substring(1)}:` },
-        { text: `${value}` }
-      ])
     ]
   }, undefined, {
     Roboto: {
