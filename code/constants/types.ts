@@ -1,4 +1,6 @@
 export type Arcana = "Death" | "Fate" | "Forces" | "Life" | "Matter" | "Mind" | "Prime" | "Space" | "Spirit" | "Time"
+export type Category = "mental" | "physical" | "social"
+export type Attribute = "Intelligence" | "Wits" | "Resolve" | "Strength" | "Dexterity" | "Stamina" | "Presence" | "Manipulation" | "Composure"
 export type Skill =
   | "Academics"
   | "Computers"

@@ -35,7 +35,7 @@
             <template #icon>
               <n-icon :component="CloudDownloadOutline" />
             </template>
-            Export (.txt)
+            Export (.pdf)
           </n-button>
           <n-upload :show-file-list="false" accept=".json" :custom-request="onImport">
             <n-button size="small" type="warning" quaternary>
@@ -55,6 +55,9 @@
   </n-modal>
 </template>
 <script setup lang="ts">
+// import { jsPDF } from "jspdf"
+import pdfmake from "pdfmake/build/pdfmake"
+import pdfunicode from "pdfmake-unicode"
 
 import { darkTheme, lightTheme, type UploadCustomRequestOptions, type UploadFileInfo } from "naive-ui"
 import { ref, toRaw, watch } from "vue";
@@ -62,6 +65,8 @@ import { theme } from "../store/store"
 import Chooser from "./Chooser.vue"
 import { computed, h } from "vue";
 import Card from "../components/Card.vue";
+
+import type { Attribute, Category, Skill } from "../constants/types"
 
 import { caster, casters, defaultCaster } from "../store/store";
 import type { Caster } from "../store/store"
@@ -130,15 +135,88 @@ const onSaveText = () => {
   format += `Praxes:\n`
   format += `${caster.praxes.map((praxis) => String("  " + praxis.name + " (" + praxis.arcana + " " + praxis.level + ")")).join("\n")}`
   format += `\n`
-  const blob = new Blob([format], { type: "application/text" })
-  const anchor = document.getElementById('dl') as HTMLAnchorElement;
-  if (anchor) {
-    anchor.download = `${caster.details.name || 'character'}.txt`
-    anchor.href = window.URL.createObjectURL(blob);
-    anchor.dataset.downloadUrl = ["application/text", anchor.download, anchor.href].join(':');
-    anchor.click()
-    message.success(`${caster.details.name || 'Character'} exported successfully`)
-  }
+
+  pdfmake.vfs = pdfunicode.pdfMake.vfs
+
+  // ● ○
+  const d = (n: number, t: number) => Array.from({ length: n }, () => "●").concat(Array.from({ length: t - n }, () => "○")).join("")
+
+  pdfmake.createPdf({
+    content: [
+      {
+        columns: [
+          [
+            { bold: true, text: `${caster.details.name || 'Character'}, ${caster.details.concept || 'Concept'}` },
+            { text: `${caster.details.path?.name || 'Path'}, ${caster.details.order?.name || 'Order'}` },
+            { text: `${caster.details.legacy ? caster.details.legacy : 'No Legacy'}` },
+            { text: `Virtue: ${caster.details.virtue || "None"}` },
+            { text: `Vice: ${caster.details.vice || "None"}` },
+          ],
+          [
+            { bold: true, text: "Experience:" },
+            `${caster.progress.mundane.Experience} Regular (${caster.progress.mundane.Beats}/5 Beats)`,
+            `${caster.progress.arcane.Experience} Arcane (${caster.progress.arcane.Beats}/5 Beats)`,
+            `Gnosis ${caster.traits.Gnosis}`,
+            `Wisdom ${caster.traits.Wisdom}`,
+          ],
+        ],
+      },
+      { text: ' ' },
+      {
+        columns: [
+          [
+            { bold: true, text: "Aspirations:" },
+            { text: caster.details.aspirations.trim() },
+          ],
+          [
+            { bold: true, text: "Obsessions:" },
+            { text: caster.details.obsessions.trim() },
+          ],
+        ]
+      },
+      { text: ' ' },
+      {
+        columns: Object.entries(caster.attributes).map(([key, value]) => {
+          return Object.entries(value).map(([key, value]) => {
+            return `${key} ${d(value.dots, 5)}`
+          }).join("\n")
+        }),
+      },
+      { text: ' ' },
+      {
+        columns: Object.entries(caster.skills).map(([key, value]) => {
+          return Object.entries(value).map(([key, value]) => {
+            return `${key}${value.label !== "" ? " (" + value.label + ")" : ""} ${d(value.dots, 5)}`
+          }).join("\n")
+        }),
+      },
+      { text: ' ' },
+      {
+        columns: [
+          [
+            { bold: true, text: "Merits:" },
+            Object.entries(caster.merits).filter((value) => value[1].dots > 0).map((value) => `${value[1].label} ${d(value[1].dots, 5)}`).join("\n")
+          ],
+          [
+            { bold: true, text: "Arcana:" },
+            Object.entries(caster.arcana).filter((value) => value[1].dots > 0).map((value) => `${value[0]} ${d(value[1].dots, 5)}`).join("\n"),
+            { text: ' ' },
+            { bold: true, text: "Praxes:" },
+            caster.praxes.map((praxis) => `${praxis.name} (${praxis.arcana} ${d(praxis.level, praxis.level)})`).join("\n"),
+            { text: ' ' },
+            { bold: true, text: "Rotes:" },
+            caster.rotes.map((rote) => `${rote.name} (${rote.skill || "None"}, ${rote.arcana} ${d(rote.level, rote.level)})`).join("\n")
+          ],
+        ]
+      },
+      { text: ' ' },
+      ...Object.entries(caster.extras).filter(([key, value]) => value !== "").map(([key, value]) => [
+        { text: ' ' },
+        { bold: true, text: `${key[0].toUpperCase() + key.substring(1)}:` },
+        { text: `${value}` }
+      ])
+    ]
+  }).download(`${caster.details.name || 'character'}.pdf`);
 }
 
 const parse = async (file: UploadFileInfo) => {

@@ -1,5 +1,5 @@
 import { reactive, computed, ref } from "vue"
-import type { Arcana, Condition, Effect, Factor, Level, Practice, Rote, Skill, Tool, Yantra } from "../constants/types"
+import type { Arcana, Attribute, Category, Condition, Effect, Factor, Level, Practice, Rote, Skill, Tool, Yantra } from "../constants/types"
 import { assign, cloneDeep, max } from "lodash"
 import { darkTheme, lightTheme } from "naive-ui"
 
@@ -191,8 +191,8 @@ export const defaultCaster = {
     weapons: "",
     resources: "",
     equipment: "",
-    attainments: "",
     nimbus: "",
+    attainments: "",
   },
   attributes: {
     mental: {
@@ -210,7 +210,7 @@ export const defaultCaster = {
       Manipulation: { dots: 1 },
       Composure: { dots: 1 },
     },
-  },
+  } as Record<Category, Record<Attribute, { dots: number }>>,
   skills: {
     mental: {
       Academics: { rote: false, label: "", dots: 0 },
@@ -242,7 +242,7 @@ export const defaultCaster = {
       Streetwise: { rote: false, label: "", dots: 0 },
       Subterfuge: { rote: false, label: "", dots: 0 },
     },
-  } as Record<"mental" | "physical" | "social", Record<Skill, SkillRecord>>,
+  } as Record<Category, Record<Skill, SkillRecord>>,
   status: {
     conditions: [] as Condition[],
     equipment: [],
