@@ -55,7 +55,6 @@
   </n-modal>
 </template>
 <script setup lang="ts">
-// import { jsPDF } from "jspdf"
 import pdfmake from "pdfmake/build/pdfmake"
 import pdfunicode from "pdfmake-unicode"
 
@@ -73,6 +72,8 @@ import type { Caster } from "../store/store"
 import { NIcon, useMessage } from "naive-ui";
 import { CloudDownloadOutline, Settings, AddCircleOutline, Person, People, Moon, Sunny, CloudUploadOutline, DocumentTextOutline } from "@vicons/ionicons5";
 import { assign, cloneDeep } from "lodash";
+
+pdfmake.vfs = pdfunicode.pdfMake.vfs
 
 const message = useMessage()
 
@@ -99,47 +100,10 @@ const onExport = () => {
   }
 }
 
+// ● ○
+const d = (n: number, t: number) => Array.from({ length: n }, () => "●").concat(Array.from({ length: t - n }, () => "○")).join("")
+
 const onSaveText = () => {
-  let format = "";
-  format += `${caster.details.name || 'Character'}, ${caster.details.concept || 'Concept'}\n`
-  format += `${caster.details.path?.name || 'Path'} (${caster.details.order?.name || 'Order'}${caster.details.legacy ? ', ' + caster.details.legacy : ''})\n`
-  format += `  ${caster.details.virtue || 'Virtue'}/${caster.details.vice || 'Vice'}\n`
-  format += `  ${caster.traits.Gnosis} Gnosis, ${caster.traits.Wisdom} Wisdom\n`
-  format += `  ${caster.traits.Willpower} Willpower, ${caster.traits.Mana} Mana\n`
-  format += `\n`
-  format += `Experience:\n`
-  format += `  ${caster.progress.mundane.Experience} Regular (${caster.progress.mundane.Beats}/5 Beats)\n`
-  format += `  ${caster.progress.arcane.Experience} Arcane (${caster.progress.arcane.Beats}/5 Beats)\n`
-  format += `\n`
-  format += `Aspirations:\n`
-  format += `${caster.details.aspirations.trim()}\n`
-  format += `\n`
-  format += `Obsessions:\n`
-  format += `${caster.details.obsessions.trim()}\n`
-  format += `\n`
-  format += `Conditions:\n`
-  format += `  ${caster.status.conditions.map(c => c.name).join("\n  ")}\n`
-  format += `\n`
-  format += `Arcana:\n`
-  format += `${Object.entries(caster.arcana).filter((value) => value[1].dots > 0).map((value) => String("  " + value[0] + " " + value[1].dots)).join("\n")}`
-  format += `\n`
-  format += `\n`
-  format += `Merits:\n`
-  format += `${Object.entries(caster.merits).filter((value) => value[1].dots > 0).map((value) => String("  " + value[1].label + " (" + value[1].dots + " dots)")).join("\n")}`
-  format += `\n`
-  format += `\n`
-  format += `Rotes:\n`
-  format += `${caster.rotes.map((rote) => String("  " + rote.name + " (" + (rote.skill || "None") + ", " + rote.arcana + " " + rote.level + ")")).join("\n")}`
-  format += `\n`
-  format += `\n`
-  format += `Praxes:\n`
-  format += `${caster.praxes.map((praxis) => String("  " + praxis.name + " (" + praxis.arcana + " " + praxis.level + ")")).join("\n")}`
-  format += `\n`
-
-  pdfmake.vfs = pdfunicode.pdfMake.vfs
-
-  // ● ○
-  const d = (n: number, t: number) => Array.from({ length: n }, () => "●").concat(Array.from({ length: t - n }, () => "○")).join("")
 
   pdfmake.createPdf({
     content: [
