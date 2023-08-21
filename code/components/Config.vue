@@ -98,7 +98,7 @@ const onExport = () => {
   }
 }
 
-// ● ○
+// ● ○ 
 const d = (n: number, t: number) => Array.from({ length: n }, () => "●").concat(Array.from({ length: t - n }, () => "○")).join("")
 // const d = (n: number, t: number) => `${n}`
 
@@ -115,16 +115,14 @@ const onSaveText = () => {
           [
             { bold: true, text: `${caster.details.name || 'Character'}, ${caster.details.concept || 'Concept'}` },
             { text: `${caster.details.path?.name || 'Path'}, ${caster.details.order?.name || 'Order'}` },
-            { text: `${caster.details.legacy ? caster.details.legacy : ' '}` },
-            { text: `Virtue: ${caster.details.virtue || "None"}` },
-            { text: `Vice: ${caster.details.vice || "None"}` },
+            { text: `${caster.details.legacy ? caster.details.legacy : 'No Legacy'}` },
+            { text: `${caster.details.virtue || "None"} (Virtue) and ${caster.details.vice || "None"} (Vice)` },
+            `Gnosis ${caster.traits.Gnosis}, Wisdom ${caster.traits.Wisdom}`,
           ],
           [
             { bold: true, text: "Experience:" },
             `${caster.progress.mundane.Experience} Regular (${caster.progress.mundane.Beats}/5 Beats)`,
             `${caster.progress.arcane.Experience} Arcane (${caster.progress.arcane.Beats}/5 Beats)`,
-            `Wisdom ${caster.traits.Wisdom}`,
-            `Gnosis ${caster.traits.Gnosis}`,
           ],
         ],
       },
@@ -163,7 +161,6 @@ const onSaveText = () => {
           [
             { bold: true, text: "Merits:" },
             Object.entries(caster.merits).filter((value) => value[1].dots > 0).map((value) => `${value[1].label} ${d(value[1].dots, 5)}`).join("\n"),
-            { text: ' ' },
             ...Object.entries(caster.extras).filter(([key, value]) => value !== "" && key !== "attainments" && key !== "nimbus").map(([key, value]) => [
               { text: ' ' },
               { bold: true, text: `${key[0].toUpperCase() + key.substring(1)}:` },
@@ -180,10 +177,11 @@ const onSaveText = () => {
             { bold: true, text: "Rotes:" },
             caster.rotes.map((rote) => `${rote.name} (${rote.skill || "None"}, ${rote.arcana} ${d(rote.level, rote.level)})`).join("\n"),
             { text: ' ' },
+            { bold: true, text: "Nimbus:" },
+            caster.extras.nimbus || "None",
+            { text: ' ' },
             { bold: true, text: "Attainments:" },
             caster.extras.attainments || "None",
-            { bold: true, text: "Nimbus/Tilt:" },
-            caster.extras.nimbus || "None"
           ],
         ]
       },
