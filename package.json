@@ -49,6 +49,12 @@
       "includeNodeModules": true
     }
   },
-  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "engines": {
+    "node": ">= 16"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "not dead"
+  ],
   "source": "code/index.html"
 }
