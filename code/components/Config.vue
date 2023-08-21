@@ -55,8 +55,9 @@
   </n-modal>
 </template>
 <script setup lang="ts">
-import * as pdfmake from "pdfmake/build/pdfmake"
-import * as pdffonts from "pdfmake/build/vfs_fonts"
+import "pdfmake/build/pdfmake"
+import pdfFonts from "pdfmake/build/vfs_fonts"
+const pdfMake = window["pdfMake"];
 
 import { darkTheme, lightTheme, type UploadCustomRequestOptions, type UploadFileInfo } from "naive-ui"
 import { ref, toRaw, watch } from "vue";
@@ -73,7 +74,7 @@ import { NIcon, useMessage } from "naive-ui";
 import { CloudDownloadOutline, Settings, AddCircleOutline, Person, People, Moon, Sunny, CloudUploadOutline, DocumentTextOutline } from "@vicons/ionicons5";
 import { assign, cloneDeep } from "lodash";
 
-(<any> pdfmake).vfs = pdffonts.pdfMake.vfs
+pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 const message = useMessage()
 
@@ -106,7 +107,7 @@ const d = (n: number, t: number) => Array.from({ length: n }, () => "●").conca
 
 const onSaveText = () => {
 
-  pdfmake.createPdf({
+  pdfMake.createPdf({
     defaultStyle: {
       font: 'arial',
       fontSize: 10,
