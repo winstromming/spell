@@ -184,12 +184,12 @@ const onSaveText = () => {
       ])
     ]
   }, undefined, {
-    // arial: {
-    //   normal: "Arial-Regular.ttf",
-    //   bold: "Arial-Medium.ttf",
-    //   italics: "Arial-Italic.ttf",
-    //   bolditalics: "Arial-MediumItalic.ttf",
-    // },
+    Roboto: {
+      normal: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
+      bold: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
+      italics: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
+      bolditalics: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+    },
   }).download(`${caster.details.name || 'character'}.pdf`);
 }
 
