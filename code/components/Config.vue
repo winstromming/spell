@@ -55,8 +55,8 @@
   </n-modal>
 </template>
 <script setup lang="ts">
-import * as pdfmake from "pdfmake/build/pdfmake.js"
-import * as pdffonts from "pdfmake/build/vfs_fonts.js"
+import * as pdfmake from "pdfmake/build/pdfmake"
+import * as pdffonts from "pdfmake/build/vfs_fonts"
 
 import { darkTheme, lightTheme, type UploadCustomRequestOptions, type UploadFileInfo } from "naive-ui"
 import { ref, toRaw, watch } from "vue";

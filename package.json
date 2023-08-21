@@ -49,9 +49,6 @@
       "includeNodeModules": true
     }
   },
-  "engines": {
-    "node": ">= 16"
-  },
   "browserslist": [
     "last 2 versions",
     "not dead"
