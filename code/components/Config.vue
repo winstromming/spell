@@ -185,10 +185,10 @@ const onSaveText = () => {
     ]
   }, undefined, {
     Roboto: {
-      normal: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
-      bold: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
-      italics: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
-      bolditalics: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+      normal: "https://winstromming.github.io/spell/Arial-Regular.ttf",
+      bold: "https://winstromming.github.io/spell/Arial-Medium.ttf",
+      italics: "https://winstromming.github.io/spell/Arial-Italic.ttf",
+      bolditalics: "https://winstromming.github.io/spell/Arial-MediumItalic.ttf",
     },
   }).download(`${caster.details.name || 'character'}.pdf`);
 }
