@@ -56,7 +56,6 @@
 </template>
 <script setup lang="ts">
 import "pdfmake/build/pdfmake"
-import pdfFonts from "pdfmake/build/vfs_fonts"
 const pdfMake = window["pdfMake"];
 
 import { darkTheme, lightTheme, type UploadCustomRequestOptions, type UploadFileInfo } from "naive-ui"
@@ -73,8 +72,6 @@ import type { Caster } from "../store/store"
 import { NIcon, useMessage } from "naive-ui";
 import { CloudDownloadOutline, Settings, AddCircleOutline, Person, People, Moon, Sunny, CloudUploadOutline, DocumentTextOutline } from "@vicons/ionicons5";
 import { assign, cloneDeep } from "lodash";
-
-pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 const message = useMessage()
 
@@ -102,14 +99,14 @@ const onExport = () => {
 }
 
 // ● ○
-const d = (n: number, t: number) => Array.from({ length: n }, () => "●").concat(Array.from({ length: t - n }, () => "○")).join("")
-// const d = (n: number, t: number) => `${n}`
+// const d = (n: number, t: number) => Array.from({ length: n }, () => "●").concat(Array.from({ length: t - n }, () => "○")).join("")
+const d = (n: number, t: number) => `${n}`
 
 const onSaveText = () => {
 
   pdfMake.createPdf({
     defaultStyle: {
-      font: 'arial',
+      // font: 'arial',
       fontSize: 10,
     },
     content: [
@@ -187,12 +184,12 @@ const onSaveText = () => {
       ])
     ]
   }, undefined, {
-    arial: {
-      normal: "Arial-Regular.ttf",
-      bold: "Arial-Medium.ttf",
-      italics: "Arial-Italic.ttf",
-      bolditalics: "Arial-MediumItalic.ttf",
-    },
+    // arial: {
+    //   normal: "Arial-Regular.ttf",
+    //   bold: "Arial-Medium.ttf",
+    //   italics: "Arial-Italic.ttf",
+    //   bolditalics: "Arial-MediumItalic.ttf",
+    // },
   }).download(`${caster.details.name || 'character'}.pdf`);
 }
 
