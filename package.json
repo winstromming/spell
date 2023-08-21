@@ -14,7 +14,6 @@
     "lodash": "^4.17.21",
     "naive-ui": "^2.34.4",
     "pdfmake": "^0.2.7",
-    "pdfmake-unicode": "^0.0.1",
     "uuid": "^9.0.0",
     "vfonts": "^0.0.3",
     "vue": "^3.2.39"

@@ -55,8 +55,8 @@
   </n-modal>
 </template>
 <script setup lang="ts">
-import pdfmake from "pdfmake/build/pdfmake"
-import pdfunicode from "pdfmake-unicode"
+import * as pdfmake from "pdfmake/build/pdfmake"
+import * as pdffonts from "pdfmake/build/vfs_fonts"
 
 import { darkTheme, lightTheme, type UploadCustomRequestOptions, type UploadFileInfo } from "naive-ui"
 import { ref, toRaw, watch } from "vue";
@@ -73,7 +73,7 @@ import { NIcon, useMessage } from "naive-ui";
 import { CloudDownloadOutline, Settings, AddCircleOutline, Person, People, Moon, Sunny, CloudUploadOutline, DocumentTextOutline } from "@vicons/ionicons5";
 import { assign, cloneDeep } from "lodash";
 
-pdfmake.vfs = pdfunicode.pdfMake.vfs
+(<any> pdfmake).vfs = pdffonts.pdfMake.vfs
 
 const message = useMessage()
 
@@ -102,17 +102,22 @@ const onExport = () => {
 
 // ● ○
 const d = (n: number, t: number) => Array.from({ length: n }, () => "●").concat(Array.from({ length: t - n }, () => "○")).join("")
+// const d = (n: number, t: number) => `${n}`
 
 const onSaveText = () => {
 
   pdfmake.createPdf({
+    defaultStyle: {
+      font: 'arial',
+      fontSize: 10,
+    },
     content: [
       {
         columns: [
           [
             { bold: true, text: `${caster.details.name || 'Character'}, ${caster.details.concept || 'Concept'}` },
             { text: `${caster.details.path?.name || 'Path'}, ${caster.details.order?.name || 'Order'}` },
-            { text: `${caster.details.legacy ? caster.details.legacy : 'No Legacy'}` },
+            { text: `${caster.details.legacy ? caster.details.legacy : ' '}` },
             { text: `Virtue: ${caster.details.virtue || "None"}` },
             { text: `Vice: ${caster.details.vice || "None"}` },
           ],
@@ -120,8 +125,8 @@ const onSaveText = () => {
             { bold: true, text: "Experience:" },
             `${caster.progress.mundane.Experience} Regular (${caster.progress.mundane.Beats}/5 Beats)`,
             `${caster.progress.arcane.Experience} Arcane (${caster.progress.arcane.Beats}/5 Beats)`,
-            `Gnosis ${caster.traits.Gnosis}`,
             `Wisdom ${caster.traits.Wisdom}`,
+            `Gnosis ${caster.traits.Gnosis}`,
           ],
         ],
       },
@@ -180,6 +185,13 @@ const onSaveText = () => {
         { text: `${value}` }
       ])
     ]
+  }, undefined, {
+    arial: {
+      normal: "Arial-Regular.ttf",
+      bold: "Arial-Medium.ttf",
+      italics: "Arial-Italic.ttf",
+      bolditalics: "Arial-MediumItalic.ttf",
+    },
   }).download(`${caster.details.name || 'character'}.pdf`);
 }
 
