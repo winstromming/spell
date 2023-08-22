@@ -127,6 +127,7 @@ const onSaveText = () => {
             `${caster.traits.Wisdom} Wisdom`,
           ],
         ],
+        columnGap: 20,
       },
       { text: ' ' },
       {
@@ -139,30 +140,52 @@ const onSaveText = () => {
             { bold: true, text: "Obsessions:" },
             { text: caster.details.obsessions.trim() },
           ],
-        ]
+        ],
+        columnGap: 20,
       },
       { text: ' ' },
+      { bold: true, text: "Attributes:" },
       {
         columns: Object.entries(caster.attributes).map(([key, value]) => {
           return Object.entries(value).map(([key, value]) => {
-            return `${key} ${d(value.dots, 5)}`
-          }).join("\n")
+            return {
+              columns: [
+                { width: "*", text: key, alignment: "left" },
+                { width: 40, text: d(value.dots, 5), fontSize: 13, margin: [0, -2, 0, 0], alignment: "right" },
+              ]
+            }
+          })
         }),
+        columnGap: 20,
       },
       { text: ' ' },
+      { bold: true, text: "Skills:" },
       {
         columns: Object.entries(caster.skills).map(([key, value]) => {
           return Object.entries(value).map(([key, value]) => {
-            return `${key}${value.label !== "" ? " (" + value.label + ")" : ""} ${d(value.dots, 5)}`
-          }).join("\n")
+            return {
+              columns: [
+                { width: "*", text: `${key}${value.label !== "" ? " (" + value.label + ")" : ""}`, alignment: "left" },
+                { width: 40, text: d(value.dots, 5), fontSize: 13, margin: [0, -2, 0, 0], alignment: "right" },
+              ]
+            }
+          })
         }),
+        columnGap: 20,
       },
       { text: ' ' },
       {
         columns: [
           [
             { bold: true, text: "Merits:" },
-            Object.entries(caster.merits).filter((value) => value[1].dots > 0).map((value) => `${value[1].label} ${d(value[1].dots, 5)}`).join("\n"),
+            Object.entries(caster.merits).filter((value) => value[1].dots > 0).map((value) => {
+              return {
+                columns: [
+                  { width: "*", text: `${value[1].label}`, alignment: "left" },
+                  { width: 40, text: d(value[1].dots, 5), fontSize: 13, margin: [0, -2, 0, 0], alignment: "right" },
+                ]
+              }
+            }),
             ...Object.entries(caster.extras).filter(([key, value]) => value !== "" && key !== "attainments" && key !== "nimbus").map(([key, value]) => [
               { text: ' ' },
               { bold: true, text: `${key[0].toUpperCase() + key.substring(1)}:` },
@@ -171,9 +194,16 @@ const onSaveText = () => {
           ],
           [
             { bold: true, text: "Arcana:" },
-            Object.entries(caster.arcana).filter((value) => value[1].dots > 0).map((value) => `${value[0]} ${d(value[1].dots, 5)}`).join("\n"),
+            Object.entries(caster.arcana).filter((value) => value[1].dots > 0).map((value) => {
+              return {
+                columns: [
+                  { width: "*", text: `${value[0]}`, alignment: "left" },
+                  { width: 40, text: d(value[1].dots, 5), fontSize: 13, margin: [0, -2, 0, 0], alignment: "right" },
+                ]
+              }
+            }),
             { text: ' ' },
-            { bold: true, text: "Praxes:" },
+            { bold: true, text: "Praxes:", background: "#eee" },
             caster.praxes.map((praxis) => `${praxis.name} (${praxis.arcana} ${d(praxis.level, praxis.level)})`).join("\n"),
             { text: ' ' },
             { bold: true, text: "Rotes:" },
@@ -188,7 +218,8 @@ const onSaveText = () => {
             { bold: true, text: "Attainments:" },
             caster.extras.attainments || "None",
           ],
-        ]
+        ],
+        columnGap: 20,
       },
     ]
   }, undefined, {
