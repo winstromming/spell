@@ -188,7 +188,6 @@ const getYantraOptions = (prefix: string) => {
 
 const savedYantraOptions = computed(() => {
   const options = []
-  console.log("caster.tools", caster.tools)
   for (let tool of caster.tools) {
     const source: Yantra = yantras.value.get(tool.key)
     const cloned: Yantra = clone(source)

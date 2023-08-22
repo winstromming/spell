@@ -357,7 +357,6 @@ const chooseSpell = (choice: Spell) => {
   }
 
   const casterHasRote = hasRote(choice.name)
-  console.log(casterHasRote, 'foo', choice)
   if (casterHasRote && casterHasRote.skill) {
     spell.isRote = true
     spell.roteSkill = skills.value[casterHasRote.skill].dots

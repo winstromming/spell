@@ -305,7 +305,6 @@ export const getYantrasSummary = (caster: Caster, spell: Spell) => {
   let yantrasNames = []
   let yantras = getYantras(caster, spell)
   for (let yantra of spell.yantras) {
-    console.log("yantra", yantra)
     let name = yantras.get(yantra.yantraKey).name
     if (yantra.isDedicatedTool) name = "Dedicated " + name
     if (yantra.id && yantra.name !== "") name = `${yantra.name} (${name})`
