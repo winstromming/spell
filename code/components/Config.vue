@@ -203,7 +203,7 @@ const onSaveText = () => {
               }
             }),
             { text: ' ' },
-            { bold: true, text: "Praxes:", background: "#eee" },
+            { bold: true, text: "Praxes:" },
             caster.praxes.map((praxis) => `${praxis.name} (${praxis.arcana} ${d(praxis.level, praxis.level)})`).join("\n"),
             { text: ' ' },
             { bold: true, text: "Rotes:" },
