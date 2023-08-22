@@ -11,7 +11,7 @@
     </template>
     <template #footer v-if="caster.tools.length > 0">
       <n-space vertical>
-        <Card :title="item.name ?? 'Tool'" collapsed :summary="item.dedicated ? `Dedicated ${item.type}` : `${item.type}`"
+        <Card :title="item.name || ' '" collapsed :summary="item.dedicated ? `Dedicated ${item.type}` : `${item.type}`"
           v-for="item in caster.tools" :key="item.id">
           <template #content>
             <n-space vertical size="small">
@@ -35,6 +35,8 @@
             </n-space>
           </template>
         </Card>
+        <n-alert type="error" v-if="profligate">{{ profligate }}</n-alert>
+        <n-alert type="error" v-if="broad">{{ broad }}</n-alert>
       </n-space>
     </template>
   </Card>
@@ -54,9 +56,22 @@ const value = ref(null);
 
 const options = computed(() => {
   return [
-    { type: "group", label: "Tools", key: "tools", children: getYantraOptions("t") },
-    { type: "group", label: "Soul Stones", key: "soulstones", children: getYantraOptions("s") },
+    { type: "group", label: "Tool", key: "tools", children: getYantraOptions("t") },
+    { type: "group", label: "Soul Stone", key: "soulstones", children: getYantraOptions("s") },
+    { type: "group", label: "Location", key: "locations", children: getYantraOptions("l") },
+    { type: "group", label: "Action", key: "actions", children: getYantraOptions("a") },
+    { type: "group", label: "Sympathy", key: "sympathys", children: getYantraOptions("y") },
+    { type: "group", label: "Sacrament", key: "sacraments", children: getYantraOptions("c") },
+    { type: "group", label: "Persona", key: "personas", children: getYantraOptions("p") },
   ];
+})
+
+const profligate = computed(() => {
+  return caster.tools.filter((t) => t.dedicated).length > 2 && Object.values(caster.merits).some(m => m.label.toLowerCase().includes("profligate dedication")) === false ? "Profligate Dedication merit required!" : null;
+})
+
+const broad = computed(() => {
+  return caster.tools.some((t) => t.dedicated && t.key[0] !== "t" && t.key[0] !== "s") && Object.values(caster.merits).some(m => m.label.toLowerCase().includes("broad dedication")) === false ? "Broad Dedication merit required!" : null;
 })
 
 const getYantraOptions = (prefix: string) => {
@@ -71,12 +86,11 @@ const getYantraOptions = (prefix: string) => {
 };
 
 const choose = (key: string, option: { label: string; value: any }) => {
-  console.log(key, option);
   let tool: Tool = {
-    name: option.value.name as string,
+    name: '',
     type: option.label as string,
     dedicated: false,
-    description: option.value.desc as string,
+    description: '',
     key: option.value.key,
     id: new Date().getTime(),
   };

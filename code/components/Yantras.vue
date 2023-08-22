@@ -17,7 +17,7 @@
                     </n-button>
                     <n-text>
                       <n-text strong>{{
-                        yantra.id ? `${yantra.name}, ${yantra.label.split("(+")[0]}` :
+                        yantra.id ? `${yantra.name !== '' ? yantra.name + ', ' : ''}${yantra.label.split("(+")[0]}` :
                         yantra.label.split("(+")[0]
                       }}</n-text>
                       <n-text depth="3">&nbsp;(+{{ yantra.label.split("(+")[1] }}</n-text>
@@ -188,16 +188,14 @@ const getYantraOptions = (prefix: string) => {
 
 const savedYantraOptions = computed(() => {
   const options = []
-
+  console.log("caster.tools", caster.tools)
   for (let tool of caster.tools) {
-    console.log("tool", tool)
     const source: Yantra = yantras.value.get(tool.key)
     const cloned: Yantra = clone(source)
     cloned.isDedicatedTool = tool.dedicated
     cloned.name = tool.name
     cloned.desc = tool.description
     cloned.id = tool.id
-    console.log("cloned", cloned)
     if (some(spell.yantras, ["key", cloned.id])) {
       options.push({ ...cloned, key: cloned.id, value: cloned.id, disabled: true });
     } else {
@@ -276,7 +274,7 @@ const renderYantraLabel = (option: SelectGroupOption) => {
       style: { padding: '4px 0' },
     },
     [
-      h('b', String(option.id ? `${option.name}, ${option.label}` : option.label)),
+      h('b', String(option.id ? `${option.name ? option.name + ', ' : ''}${option.label}` : option.label)),
       h('br'),
       String(option.disabledWarning || option.desc),
     ]

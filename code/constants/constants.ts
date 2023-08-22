@@ -316,8 +316,8 @@ export const yantrasBaseData = new Map([
   [
     "a1",
     {
-      name: "Rote Skill Mudra",
-      desc: "Uses skill dots as a bonus. Must be free to make the mnemonic gestures.",
+      name: "Mudra",
+      desc: "Uses rote skill dots as bonus. Must be free to make the mnemonic gestures.",
       bonus: 0,
       unique: true,
     },
@@ -334,8 +334,8 @@ export const yantrasBaseData = new Map([
   [
     "a3",
     {
-      name: "Mantra (High Speech)",
-      desc: "Must be spoken aloud. Cannot be used reflexively.",
+      name: "Mantra",
+      desc: "High Speech. Must be spoken aloud. Cannot be used reflexively.",
       bonus: 2,
       unique: true,
     },
