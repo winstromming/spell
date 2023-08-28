@@ -1242,6 +1242,15 @@ export const spells: Source[] = [
         cost: [
           {
             type: "Reach",
+            value: 1,
+          },
+        ],
+        effect: "Boon or hex turns 9-again to 8-again.",
+      },
+      {
+        cost: [
+          {
+            type: "Reach",
             value: 2,
           },
           {
@@ -1397,6 +1406,24 @@ export const spells: Source[] = [
           },
         ],
         effect: "Anybody who caries the item also receives a boon or a hex.",
+      },
+      {
+        cost: [
+          {
+            type: "Reach",
+            value: 2,
+          },
+        ],
+        effect: "Boon or hex can affect spellcasting rolls.",
+      },
+      {
+        cost: [
+          {
+            type: "Reach",
+            value: 1,
+          },
+        ],
+        effect: "Boon or hex turns 9-again to 8-again.",
       },
       {
         cost: [
