@@ -33,15 +33,18 @@
               v-model:value="caster.extras.equipment" />
             <n-input type="textarea" :autosize="{ minRows: 1 }" placeholder="Resources"
               v-model:value="caster.extras.resources" />
+            <n-input type="textarea" :autosize="{ minRows: 1 }" placeholder="Artifacts"
+              v-model:value="caster.extras.artifacts" />
             <n-input type="textarea" :autosize="{ minRows: 1 }" placeholder="Imbued"
               v-model:value="caster.extras.imbued" />
             <n-input type="textarea" :autosize="{ minRows: 1 }" placeholder="Enhanced"
               v-model:value="caster.extras.enhanced" />
             <n-input type="textarea" :autosize="{ minRows: 1 }" placeholder="Grimoires"
               v-model:value="caster.extras.grimoires" />
-            <n-input type="textarea" :autosize="{ minRows: 1 }" placeholder="Artifacts"
-              v-model:value="caster.extras.artifacts" />
           </n-space>
+        </n-gi>
+        <n-gi :span="2">
+          <n-input type="textarea" :autosize="{ minRows: 1 }" placeholder="Other" v-model:value="caster.extras.other" />
         </n-gi>
         <n-gi :span="2">
           <n-space vertical>

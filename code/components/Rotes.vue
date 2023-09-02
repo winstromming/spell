@@ -11,7 +11,7 @@
     <template #footer v-if="caster.rotes.length > 0">
       <n-space vertical>
         <Card v-for="item in caster.rotes" :key="item.name" :title="item.name" collapsed
-          :summary="`(${item.skill || 'none'}) ${item.arcana} ${dots(item.level)}`">
+          :summary="`${item.arcana} ${dots(item.level)}`">
           <template #content>
             <n-space vertical>
               <n-text depth="3" italic>
@@ -34,7 +34,7 @@
                   </n-icon>
                 </template>
               </n-button>
-              <n-button quaternary title="Cast" size="small" type="warning" @click="load(item.name)">
+              <n-button quaternary title="Cast" size="small" type="warning" @click="load(item)">
                 <template #icon>
                   <n-icon>
                     <Flash />
@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { caster, spell } from "../store/store";
+import { caster, spell, type Spell } from "../store/store";
 import { spells } from "../constants/spells"
 import type { Arcana, Source, Skill } from "../constants/types"
 
@@ -122,15 +122,18 @@ const getDescriptionForSpell = (name: string) => {
   return ""
 }
 
-const load = (name: string) => {
-  const item = spells.find((s) => s.name === name)
+const load = (source: typeof caster.rotes[number]) => {
+  const item = spells.find((s) => s.name === source.name)
   if (item) {
     const cloned = cloneDeep(item)
     spell.reset()
     merge(spell, cloned)
-    message.warning(`${name} is ready to cast`)
+    if (source.skill) {
+      spell.roteSkill = skills.value[source.skill].dots
+    }
+    message.warning(`${source.name} is ready to cast`)
   } else {
-    message.warning(`${name} not found in spell list`)
+    message.warning(`${source.name} not found in spell list`)
   }
 }
 </script>

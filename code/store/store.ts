@@ -191,6 +191,7 @@ export const defaultCaster = {
     weapons: "",
     resources: "",
     equipment: "",
+    other: "",
     nimbus: "",
     attainments: "",
   },
