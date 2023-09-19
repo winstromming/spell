@@ -139,7 +139,7 @@
 
 <script setup lang="ts">
 
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import Card from "../components/Card.vue";
 import { dots } from "../constants/functions";
 import { caster, spell, scene } from "../store/store";
@@ -193,6 +193,14 @@ const canCastSpell = computed(() => {
   if (spell.practice === undefined) return false
   if (isSpellArcanaTooHigh.value) return false
   return true
+})
+
+watch(() => spell.commonEffects.changePrimaryFactor, (newer) => {
+  const current = spell.primaryFactor
+  if (newer === true && current === "Potency") spell.primaryFactor = "Duration"
+  if (newer === true && current === "Duration") spell.primaryFactor = "Potency"
+  if (newer === false && current === "Duration") spell.primaryFactor = "Potency"
+  if (newer === false && current === "Potency") spell.primaryFactor = "Duration"
 })
 
 const chooseSpellOptions = computed(() => {

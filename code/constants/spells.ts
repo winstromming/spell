@@ -1328,7 +1328,7 @@ export const spells: Source[] = [
     primaryFactor: "Duration",
     roteSkills: ["Investigation", "Politics", "Subterfuge"],
     page: "Mage: Awakening p136",
-    description: "Find a particular kind of person, place or thing within 24 hours.",
+    description: "Find a particular kind of person, place or thing within 24 hours. Or temporarily gain social merits with a rating no greater than dots in Fate.",
     additionalEffects: [
       {
         cost: [

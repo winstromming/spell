@@ -29,7 +29,7 @@ export const spell = reactive({
   custom: false,
   customName: undefined,
   practice: undefined as Practice | undefined,
-  primaryFactor: undefined,
+  primaryFactor: undefined as "Duration" | "Potency" | undefined,
   primaryArcana: { arcana: undefined as Arcana | undefined, level: 0 as Level },
   secondaryArcana: { arcana: undefined as Arcana | undefined, level: 0 as Level },
   description: undefined,
