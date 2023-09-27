@@ -113,6 +113,7 @@ const paradoxDice = computed(() => {
 const resetSpell = () => {
   spell.reset();
 }
+
 const copySpell = (choice: Spell) => {
   const out = [];
   out.push("&{template:default}");
