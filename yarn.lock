@@ -850,7 +850,7 @@
 
 "@parcel/source-map@^2.0.0":
   version "2.1.1"
-  resolved "https://registry.npmjs.org/@parcel/source-map/-/source-map-2.1.1.tgz"
+  resolved "https://registry.yarnpkg.com/@parcel/source-map/-/source-map-2.1.1.tgz#fb193b82dba6dd62cc7a76b326f57bb35000a782"
   integrity sha512-Ejx1P/mj+kMjQb8/y5XxDUn4reGdr+WyKYloBljpppUy8gs42T+BNoEOuRYqDVdgPc6NxduzIDoJS9pOFfV5Ew==
   dependencies:
     detect-libc "^1.0.3"
@@ -990,7 +990,7 @@
 
 "@parcel/transformer-vue@2.7.0":
   version "2.7.0"
-  resolved "https://registry.npmjs.org/@parcel/transformer-vue/-/transformer-vue-2.7.0.tgz"
+  resolved "https://registry.yarnpkg.com/@parcel/transformer-vue/-/transformer-vue-2.7.0.tgz#39eb706f4701ad9866b70b8989d5cb604c5fa4fd"
   integrity sha512-f/hLJ3Zdvm5lOu+ldwpeKkDC3clDajapjfy5QD7Nd86TCAgWCRf3x3MRrqJLn90rZNFHrmsvUnp1rqne2XlCJw==
   dependencies:
     "@parcel/diagnostic" "2.7.0"

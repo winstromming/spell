@@ -55,7 +55,7 @@ import Card from "../components/Card.vue"
 import { spell, caster, scene } from "../store/store"
 import type { Caster, Spell } from "../store/store"
 import { Trash, Bookmark, DocumentText, Flash } from '@vicons/ionicons5'
-import { getCastingEffectsSummary, getCastingTimeSummary, getDicePool, getDicePoolSummary, getFactorSummary, getFreeReach, getParadoxDice, getTotalMana, getUsedReach, getYantrasSummary } from "../constants/methods";
+import { getCastingEffectsSummary, getCastingFactorsSummary, getCastingTimeSummary, getDicePool, getDicePoolSummary, getFactorSummary, getFreeReach, getParadoxDice, getTotalMana, getUsedReach, getYantrasSummary } from "../constants/methods";
 import { cloneDeep, max } from "lodash";
 import { useMessage } from "naive-ui";
 const message = useMessage()
@@ -119,7 +119,7 @@ const copySpell = (choice: Spell) => {
   out.push(`{{name=**${choice.name}** (${choice.primaryArcana.arcana} ${Array.from({ length: choice.primaryArcana.level }, v => "&bull;").join("")})}}`)
   out.push(`{{summary=${choice.description}\n(${choice.page})}}`)
   out.push(`{{casting=${getCastingTimeSummary(caster, choice)}}}`)
-  out.push(`{{factors=${getFactorSummary(caster, choice)}}}`)
+  out.push(`{{factors=${getCastingFactorsSummary(caster, choice)}}}`)
   out.push(`{{extras=${getCastingEffectsSummary(caster, choice) || "None"}}}`)
   out.push(`{{yantras=${getYantrasSummary(caster, choice) || "None"}}}`)
   out.push(`{{=[Roll ${getDicePoolSummary(caster, choice, scene)} to cast](!&#13;&#91;[&#63;{Number of dice|${getDicePool(caster, choice, scene)}}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
