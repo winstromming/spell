@@ -123,7 +123,7 @@ const copySpell = (choice: Spell) => {
   out.push(`{{factors=${getCastingFactorsSummary(caster, choice)}}}`)
   out.push(`{{extras=${getCastingEffectsSummary(caster, choice) || "None"}}}`)
   out.push(`{{yantras=${getYantrasSummary(caster, choice) || "None"}}}`)
-  out.push(`{{yantras=${getParadoxSummary(caster, choice, scene) || "None"}}}`)
+  out.push(`{{paradox=${getParadoxSummary(caster, choice, scene) || "None"}}}`)
   out.push(`{{=[Roll ${getDicePoolSummary(caster, choice, scene)} to cast](!&#13;&#91;[&#63;{Number of dice|${getDicePool(caster, choice, scene)}}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
   const text = out.join(" ");
   navigator.clipboard.writeText(text).then(() => {
