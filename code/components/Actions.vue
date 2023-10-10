@@ -55,7 +55,7 @@ import Card from "../components/Card.vue"
 import { spell, caster, scene } from "../store/store"
 import type { Caster, Spell } from "../store/store"
 import { Trash, Bookmark, DocumentText, Flash } from '@vicons/ionicons5'
-import { getCastingEffectsSummary, getCastingFactorsSummary, getCastingTimeSummary, getDicePool, getDicePoolSummary, getFactorSummary, getFreeReach, getParadoxDice, getTotalMana, getUsedReach, getYantrasSummary } from "../constants/methods";
+import { getCastingEffectsSummary, getCastingFactorsSummary, getCastingTimeSummary, getDicePool, getDicePoolSummary, getFactorSummary, getFreeReach, getParadoxDice, getParadoxSummary, getTotalMana, getUsedReach, getYantrasSummary } from "../constants/methods";
 import { cloneDeep, max } from "lodash";
 import { useMessage } from "naive-ui";
 const message = useMessage()
@@ -123,6 +123,7 @@ const copySpell = (choice: Spell) => {
   out.push(`{{factors=${getCastingFactorsSummary(caster, choice)}}}`)
   out.push(`{{extras=${getCastingEffectsSummary(caster, choice) || "None"}}}`)
   out.push(`{{yantras=${getYantrasSummary(caster, choice) || "None"}}}`)
+  out.push(`{{yantras=${getParadoxSummary(caster, choice, scene) || "None"}}}`)
   out.push(`{{=[Roll ${getDicePoolSummary(caster, choice, scene)} to cast](!&#13;&#91;[&#63;{Number of dice|${getDicePool(caster, choice, scene)}}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
   const text = out.join(" ");
   navigator.clipboard.writeText(text).then(() => {
@@ -139,13 +140,13 @@ const loadSpell = (choice: Spell) => {
   message.success(`${choice.name} was loaded`)
 }
 const castSpell = (choice: Spell) => {
-  const cloned = cloneDeep(spell)
+  const cloned = cloneDeep(choice)
   cloned.id = new Date().getTime()
   caster.active.push(cloned)
   message.warning(`${cloned.name} was cast`)
 }
 const saveSpell = (choice: Spell) => {
-  const cloned = cloneDeep(spell)
+  const cloned = cloneDeep(choice)
   cloned.id = cloned.id || new Date().getTime()
   caster.saved.push(cloned)
   message.success(`${cloned.name} was saved`)

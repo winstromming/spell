@@ -94,7 +94,7 @@
 
 import { cloneDeep, findIndex, merge } from "lodash";
 import Card from "../components/Card.vue"
-import { getCastingFactorsSummary, getCastingEffectsSummary, getYantrasSummary, getCastingTimeSummary, getFactorSummary, getDicePoolSummary, getDicePool, getTotalMana, getParadoxDice, getRoteOrPraxis, getUsedReach, getFreeReach, getPotencySummary, getDurationSummary, getRangeSummary, getScaleSummary } from "../constants/methods";
+import { getCastingFactorsSummary, getCastingEffectsSummary, getYantrasSummary, getCastingTimeSummary, getFactorSummary, getDicePoolSummary, getDicePool, getTotalMana, getParadoxDice, getRoteOrPraxis, getUsedReach, getFreeReach, getPotencySummary, getDurationSummary, getRangeSummary, getScaleSummary, getParadoxSummary } from "../constants/methods";
 
 import { BookmarkOutline, Build, DocumentText, Flash, Trash } from "@vicons/ionicons5";
 import { caster, spell, scene } from "../store/store";
@@ -104,7 +104,7 @@ import { useMessage } from "naive-ui";
 const message = useMessage()
 
 const unsaveSpell = (choice: Spell) => {
-  let index = findIndex(caster.saved, (choice) => choice.id === spell.id)
+  let index = findIndex(caster.saved, (c) => c.id === choice.id)
   caster.saved.splice(index, 1)
 };
 
@@ -117,6 +117,7 @@ const copySpell = (choice: Spell) => {
   out.push(`{{factors=${getFactorSummary(caster, choice)}}}`)
   out.push(`{{extras=${getCastingEffectsSummary(caster, choice) || "None"}}}`)
   out.push(`{{yantras=${getYantrasSummary(caster, choice) || "None"}}}`)
+  out.push(`{{yantras=${getParadoxSummary(caster, choice, scene) || "None"}}}`)
   out.push(`{{=[Roll ${getDicePoolSummary(caster, choice, scene)} to cast](!&#13;&#91;[&#63;{Number of dice|${getDicePool(caster, choice, scene)}}d10>8!>&#63;{Explodes on|10}]&#93; Successes)}}`);
   const text = out.join(" ");
   navigator.clipboard.writeText(text).then(() => {
@@ -130,44 +131,38 @@ const loadSpell = (choice: Spell) => {
   message.success(`${choice.name} was loaded`)
 }
 const castSpell = (choice: Spell) => {
-  const cloned = cloneDeep(spell)
+  const cloned = cloneDeep(choice)
   cloned.id = new Date().getTime()
   caster.active.push(cloned)
   message.warning(`${cloned.name} was cast`)
 }
-const saveSpell = (choice: Spell) => {
-  const cloned = cloneDeep(spell)
-  cloned.id = cloned.id || new Date().getTime()
-  caster.saved.push(cloned)
-  message.success(`${cloned.name} was saved`)
-}
 
 const getCastingSummaryFor = (choice: Spell) => {
   let summary = []
-  let method = getRoteOrPraxis(caster, spell)
+  let method = getRoteOrPraxis(caster, choice)
   if (method === "rote") summary.push("Rote")
   if (method === "praxis") summary.push("Praxis")
-  summary.push(`${getUsedReach(caster, spell)}/${getFreeReach(caster, spell)} Reach`)
-  summary.push(`${getDicePool(caster, spell, scene)} Dice`)
-  summary.push(`${getTotalMana(caster, spell)} Mana`)
-  summary.push(`${getParadoxDice(caster, spell, scene)} Paradox`)
+  summary.push(`${getUsedReach(caster, choice)}/${getFreeReach(caster, choice)} Reach`)
+  summary.push(`${getDicePool(caster, choice, scene)} Dice`)
+  summary.push(`${getTotalMana(caster, choice)} Mana`)
+  summary.push(`${getParadoxDice(caster, choice, scene)} Paradox`)
   return summary.join(", ")
 }
 const getFactorsSummaryFor = (choice: Spell) => {
   let summary = []
-  summary.push(`${getPotencySummary(caster, spell).toLowerCase()}`)
-  summary.push(`${getDurationSummary(caster, spell).toLowerCase()}`)
-  summary.push(`${getCastingTimeSummary(caster, spell).toLowerCase()}`)
-  summary.push(`${getRangeSummary(caster, spell).toLowerCase()}`)
-  summary.push(`${getScaleSummary(caster, spell).toLowerCase()}`)
+  summary.push(`${getPotencySummary(caster, choice).toLowerCase()}`)
+  summary.push(`${getDurationSummary(caster, choice).toLowerCase()}`)
+  summary.push(`${getCastingTimeSummary(caster, choice).toLowerCase()}`)
+  summary.push(`${getRangeSummary(caster, choice).toLowerCase()}`)
+  summary.push(`${getScaleSummary(caster, choice).toLowerCase()}`)
   return summary.join(", ")
 }
 const getEffectsSummaryFor = (choice: Spell) => {
-  let summary = spell.effects.map(effect => effect.effect)
-  if (spell.spendWillpower) summary.unshift("Willpower spent.")
-  if (spell.commonEffects.changePrimaryFactor) summary.push("Changed primary factor.")
+  let summary = choice.effects.map(effect => effect.effect)
+  if (choice.spendWillpower) summary.unshift("Willpower spent.")
+  if (choice.commonEffects.changePrimaryFactor) summary.push("Changed primary factor.")
   if (caster.active.length >= caster.traits.Gnosis) summary.push("Casting spells above active limit.")
-  if (spell.custom) spell.page = "Creative, " + spell.practice
+  if (choice.custom) choice.page = "Creative, " + choice.practice
   return summary.join(" ")
 }
 
