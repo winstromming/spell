@@ -1227,7 +1227,7 @@ export const spells: Source[] = [
     withstand: "Composure",
     roteSkills: ["Intimidation", "Occult", "Socialise"],
     page: "Mage: Awakening p136",
-    description: "Subject receives a boon or hex. A hex may be withstood.",
+    description: "Subject receives a boon or hex. A hex may be withstood. Number of effects equal to potency.",
     additionalEffects: [
       {
         cost: [
@@ -1245,7 +1245,7 @@ export const spells: Source[] = [
             value: 1,
           },
         ],
-        effect: "Boon or hex turns 9-again to 8-again.",
+        effect: "Boon turns 9-again to 8-again.",
       },
       {
         cost: [
@@ -1405,7 +1405,7 @@ export const spells: Source[] = [
             value: 1,
           },
         ],
-        effect: "Anybody who caries the item also receives a boon or a hex.",
+        effect: "Anybody who caries the item also receives a boon or a hex. Number of effects equal to potency.",
       },
       {
         cost: [
@@ -1423,7 +1423,7 @@ export const spells: Source[] = [
             value: 1,
           },
         ],
-        effect: "Boon or hex turns 9-again to 8-again.",
+        effect: "Boon turns 9-again to 8-again.",
       },
       {
         cost: [
@@ -1507,7 +1507,7 @@ export const spells: Source[] = [
     primaryFactor: "Duration",
     roteSkills: ["Expression", "Occult", "Politics"],
     page: "Mage: Awakening p137",
-    description: "Supernaturally enforce a vow. Adhere to the oath and the subject receives a boon, break an she suffers a hex.",
+    description: "Supernaturally enforce a vow. Adhere to the oath and the subject receives a boon, break and she suffers a hex. Number of effects equal to potency.",
     additionalEffects: [
       {
         cost: [
@@ -1517,6 +1517,24 @@ export const spells: Source[] = [
           },
         ],
         effect: "If spell control is maintained the mage is aware if the spell is a boon or a hex.",
+      },
+      {
+        cost: [
+          {
+            type: "Reach",
+            value: 2,
+          },
+        ],
+        effect: "Boon or hex can affect spellcasting rolls.",
+      },
+      {
+        cost: [
+          {
+            type: "Reach",
+            value: 1,
+          },
+        ],
+        effect: "Boon turns 9-again to 8-again.",
       },
     ],
   },
