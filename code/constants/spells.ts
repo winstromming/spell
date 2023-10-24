@@ -2721,8 +2721,8 @@ export const spells: Source[] = [
       {
         cost: [
           {
+            type: "Reach",
             value: 2,
-            type: "reach",
           },
         ],
         effect: "Half healing time for lethal damage.",
