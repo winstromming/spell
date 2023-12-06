@@ -114,10 +114,10 @@ const onSaveText = () => {
         columns: [
           [
             { bold: true, text: `${caster.details.name || 'Character'}, ${caster.details.concept || 'Concept'}` },
+            { text: [caster.details.virtue, caster.details.vice].filter(v => v !== '').join(", ") },
             { text: `${caster.details.path?.name || 'Path'}, ${caster.details.order?.name || 'Order'}` },
             { text: `${caster.details.legacy ? caster.details.legacy : 'No Legacy'}` },
-            ` `,
-            { text: [caster.details.virtue, caster.details.vice].filter(v => v !== '').join(", ") },
+            { text: `${caster.details.cabal ? caster.details.cabal : 'No Cabal'}` },
           ],
           [
             { bold: true, text: "Experience:" },
@@ -133,66 +133,30 @@ const onSaveText = () => {
       {
         columns: [
           [
-            { bold: true, text: "Aspirations:" },
-            { text: caster.details.aspirations.trim() },
-          ],
-          [
-            { bold: true, text: "Obsessions:" },
-            { text: caster.details.obsessions.trim() },
-          ],
-        ],
-        columnGap: 20,
-      },
-      { text: ' ' },
-      { bold: true, text: "Attributes:" },
-      {
-        columns: Object.entries(caster.attributes).map(([key, value]) => {
-          return Object.entries(value).map(([key, value]) => {
-            return {
-              columns: [
-                { width: "*", text: key, alignment: "left" },
-                { width: 40, text: d(value.dots, 5), fontSize: 13, margin: [0, -2, 0, 0], alignment: "right" },
-              ]
-            }
-          })
-        }),
-        columnGap: 20,
-      },
-      { text: ' ' },
-      { bold: true, text: "Skills:" },
-      {
-        columns: Object.entries(caster.skills).map(([key, value]) => {
-          return Object.entries(value).map(([key, value]) => {
-            return {
-              columns: [
-                { width: "*", text: `${key}${value.label !== "" ? " (" + value.label + ")" : ""}`, alignment: "left" },
-                { width: 40, text: d(value.dots, 5), fontSize: 13, margin: [0, -2, 0, 0], alignment: "right" },
-              ]
-            }
-          })
-        }),
-        columnGap: 20,
-      },
-      { text: ' ' },
-      {
-        columns: [
-          [
-            { bold: true, text: "Merits:" },
-            Object.entries(caster.merits).filter((value) => value[1].dots > 0).map((value) => {
-              return {
-                columns: [
-                  { width: "*", text: `${value[1].label}`, alignment: "left" },
-                  { width: 40, text: d(value[1].dots, 5), fontSize: 13, margin: [0, -2, 0, 0], alignment: "right" },
-                ]
-              }
+            { bold: true, text: "Attributes:" },
+            Object.entries(caster.attributes).map(([key, value]) => {
+              return Object.entries(value).map(([key, value]) => {
+                return {
+                  columns: [
+                    { width: "*", text: key, alignment: "left" },
+                    { width: 40, text: d(value.dots, 5), fontSize: 13, margin: [0, -2, 0, 0], alignment: "right" },
+                  ]
+                }
+              })
             }),
-            ...Object.entries(caster.extras).filter(([key, value]) => value !== "" && key !== "attainments" && key !== "nimbus").map(([key, value]) => [
-              { text: ' ' },
-              { bold: true, text: `${key[0].toUpperCase() + key.substring(1)}:` },
-              { text: `${value}` }
-            ])
-          ],
-          [
+            { text: ' ' },
+            { bold: true, text: "Skills:" },
+            Object.entries(caster.skills).map(([key, value]) => {
+              return Object.entries(value).map(([key, value]) => {
+                return {
+                  columns: [
+                    { width: "*", text: `${key}${value.label !== "" ? " (" + value.label + ")" : ""}`, alignment: "left" },
+                    { width: 40, text: d(value.dots, 5), fontSize: 13, margin: [0, -2, 0, 0], alignment: "right" },
+                  ]
+                }
+              })
+            }),
+            { text: ' ' },
             { bold: true, text: "Arcana:" },
             Object.entries(caster.arcana).filter((value) => value[1].dots > 0).map((value) => {
               return {
@@ -203,6 +167,26 @@ const onSaveText = () => {
               }
             }),
             { text: ' ' },
+            { bold: true, text: "Merits:" },
+            Object.entries(caster.merits).filter((value) => value[1].dots > 0).map((value) => {
+              return {
+                columns: [
+                  { width: "*", text: `${value[1].label}`, alignment: "left" },
+                  { width: 40, text: d(value[1].dots, 5), fontSize: 13, margin: [0, -2, 0, 0], alignment: "right" },
+                ]
+              }
+            }),
+          ],
+          [
+            { bold: true, text: "Aspirations:" },
+            { text: caster.details.aspirations.trim() },
+            { text: ' ' },
+            { bold: true, text: "Obsessions:" },
+            { text: caster.details.obsessions.trim() },
+            { text: ' ' },
+            { bold: true, text: "Conditions:" },
+            { text: caster.status.conditions.map((c) => c.name).join("\n") },
+            { text: ' ' },
             { bold: true, text: "Praxes:" },
             caster.praxes.map((praxis) => `${praxis.name} (${praxis.arcana} ${d(praxis.level, praxis.level)})`).join("\n"),
             { text: ' ' },
@@ -212,11 +196,29 @@ const onSaveText = () => {
             { bold: true, text: "Tools:" },
             caster.tools.map((tool) => tool.dedicated ? `${tool.name ? tool.name + ', ' : ''}${tool.type} (Dedicated)` : `${tool.name ? tool.name + ', ' : ''}${tool.type}`).join("\n"),
             { text: ' ' },
+            { bold: true, text: "Attainments:" },
+            caster.extras.attainments || "None",
+          ],
+        ],
+        columnGap: 20,
+        pageBreak: "after"
+      },
+      {
+        columns: [
+          [
+            ...Object.entries(caster.extras).filter(([key, value]) => value !== "" && key !== "attainments" && key !== "nimbus" && key !== "other").map(([key, value]) => [
+              { text: ' ' },
+              { bold: true, text: `${key[0].toUpperCase() + key.substring(1)}:` },
+              { text: `${value}` }
+            ])
+          ],
+          [
+            { text: ' ' },
             { bold: true, text: "Nimbus:" },
             caster.extras.nimbus || "None",
             { text: ' ' },
-            { bold: true, text: "Attainments:" },
-            caster.extras.attainments || "None",
+            { bold: true, text: "Other:" },
+            caster.extras.other || "None",
           ],
         ],
         columnGap: 20,
