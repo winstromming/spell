@@ -5588,6 +5588,7 @@ export const spells: Source[] = [
     },
     practice: "Compelling",
     primaryFactor: "Potency",
+    extraMana: 1,
     withstand: "Total Arcanum dots of all Arcana used in the spell being scribed",
     roteSkills: ["Crafts", "Expression", "Occult"],
     page: "Mage: Awakening p166, Signs of Sorcery p83",

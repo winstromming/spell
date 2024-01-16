@@ -173,6 +173,8 @@ export const defaultCaster = {
     merit7: { dots: 0, label: "" },
     merit8: { dots: 0, label: "" },
     merit9: { dots: 0, label: "" },
+    merit10: { dots: 0, label: "" },
+    merit11: { dots: 0, label: "" },
   },
   extras: {
     allies: "",
