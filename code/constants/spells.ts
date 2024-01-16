@@ -5600,6 +5600,10 @@ export const spells: Source[] = [
             type: "Reach",
             value: 1,
           },
+          {
+            type: "Mana",
+            value: 1,
+          },
         ],
         effect: "Make the Grimoire Lasting.",
       },
