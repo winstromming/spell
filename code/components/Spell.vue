@@ -348,6 +348,7 @@ const chooseSpell = (choice: Spell) => {
     duration: "s1",
     scale: "s1",
   }
+  spell.extraMana = choice.extraMana
   spell.isPraxis = false
   spell.isRote = false
   spell.page = choice.page

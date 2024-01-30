@@ -9,8 +9,8 @@
           ['None', 'Few', 'Some', 'Many', 'Crowd'][scene.witnesses]
         }})</b>
         <n-slider placement="bottom" v-model:value="scene.witnesses" :min="0" :max="4" />
-        <b>Amount of Mana spent negating Paradox ({{ spell.extraMana }})</b>
-        <n-slider placement="bottom" v-model:value="spell.extraMana" :min="0" :max="6" />
+        <b>Amount of Mana spent negating Paradox ({{ scene.negation }})</b>
+        <n-slider placement="bottom" v-model:value="scene.negation" :min="0" :max="6" />
       </n-space>
     </template>
   </Card>

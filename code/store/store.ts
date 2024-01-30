@@ -14,8 +14,10 @@ export const theme = reactive({
 
 export const scene = reactive({
   witnesses: 0,
+  negation: 0,
   reset() {
     this.witnesses = 0
+    this.negation = 0
   },
 })
 

@@ -104,7 +104,7 @@ const hasParadox = computed(() => {
 })
 
 const totalMana = computed(() => {
-  return getTotalMana(caster, spell)
+  return getTotalMana(caster, spell, scene)
 })
 
 const paradoxDice = computed(() => {

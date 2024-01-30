@@ -88,7 +88,7 @@ export const getUsedReach = (caster: Caster, spell: Spell) => {
   return reach
 }
 
-export const getTotalMana = (caster: Caster, spell: Spell) => {
+export const getTotalMana = (caster: Caster, spell: Spell, scene: Scene) => {
   if (spell === undefined || !spell.primaryArcana.arcana || !spell.primaryArcana.level) return 0
   let mana = 0
   let type = getRoteOrPraxis(caster, spell)
@@ -102,6 +102,7 @@ export const getTotalMana = (caster: Caster, spell: Spell) => {
       }
     }
   }
+  if (scene.negation) mana += scene.negation
   if (spell.extraMana) mana += spell.extraMana
   if (spell.factors.duration === "a6") mana++
   if (spell.attainments.permanence) mana++
@@ -218,7 +219,7 @@ export const getParadoxDice = (caster: Caster, spell: Spell, scene: Scene) => {
     mustRoll = true
   }
   // extra mana spent
-  pool -= spell.extraMana
+  pool -= scene.negation
   // dedicated tools
   let dedicated = filter(spell.yantras, ["isDedicatedTool", true])
   if (dedicated.length === 1) {
