@@ -3,15 +3,20 @@ import { arcanaNames, baseCastingTimes, castingMethods, factors, gnosisManaLimit
 import type { Caster, Spell, Scene } from "../store/store.js"
 import type { Yantra } from "./types.js"
 
-export const getRoteOrPraxis = (caster: Caster, spell: Spell) => {
-  if (caster.rotes.findIndex((r) => r.name === spell.name) !== -1) return "rote"
-  if (caster.praxes.findIndex((r) => r.name === spell.name) !== -1) return "praxis"
+export const getCastingType = (caster: Caster, spell: Spell) => {
+  if (caster.rotes.findIndex((r) => r.name === spell.name) !== -1) return "Rote"
+  if (caster.praxes.findIndex((r) => r.name === spell.name) !== -1) return "Praxis"
+  if (caster.grimoires.findIndex((r) => r.name === spell.name) !== -1) return "Grimoire"
   return null
+}
+
+export const getRote = (caster: Caster, spell: Spell) => {
+  return caster.rotes.find((r) => r.name === spell.name)
 }
 
 export const getYantras = (caster: Caster, spell: Spell) => {
   let expandedYantras = new Map()
-  let isRote = getRoteOrPraxis(caster, spell) === "rote"
+  let isRote = getCastingType(caster, spell) === "Rote"
   for (let [key, yantraBaseData] of yantrasBaseData) {
     // bonus can contain a single number or a range. Arrayify.
     let bonuses
@@ -23,8 +28,9 @@ export const getYantras = (caster: Caster, spell: Spell) => {
     bonuses.forEach((bonus) => {
       let expandedYantra: any = clone(yantraBaseData)
       // rote skill mudra: bonus = skill dots
-      if (key === "a1" && isRote) {
-        bonus = spell.roteSkill
+      if (key === "a1" && isRote && spell.roteSkill) {
+        let skill = caster.skills.mental[spell.roteSkill] ?? caster.skills.physical[spell.roteSkill] ?? caster.skills.social[spell.roteSkill]
+        bonus = skill.dots
       }
       // sympathetic yantras don't give a bonus to sympathetic or temporal spells
       if (["y1", "y2", "y3"].includes(key) && (spell.attainments.sympatheticRange || spell.attainments.temporalSympathy)) {
@@ -46,7 +52,8 @@ export const getYantras = (caster: Caster, spell: Spell) => {
 export const getFreeReach = (caster: Caster, spell: Spell) => {
   if (spell === undefined || !spell.primaryArcana.arcana || !spell.primaryArcana.level) return 0
   let arcana
-  if (caster.rotes.find((r) => r.name === spell.name)) {
+  let type = getCastingType(caster, spell)
+  if (type === "Rote" || type === "Grimoire") {
     arcana = 5
   } else {
     arcana = caster.arcana[spell.primaryArcana.arcana].dots
@@ -91,8 +98,8 @@ export const getUsedReach = (caster: Caster, spell: Spell) => {
 export const getTotalMana = (caster: Caster, spell: Spell, scene: Scene) => {
   if (spell === undefined || !spell.primaryArcana.arcana || !spell.primaryArcana.level) return 0
   let mana = 0
-  let type = getRoteOrPraxis(caster, spell)
-  // check ruling, rote, praix
+  let type = getCastingType(caster, spell)
+  // check ruling, rote, grimoire, praxis
   if (!caster.arcana[spell.primaryArcana.arcana].ruling && type === null) mana++
   // check effects
   for (let effect of spell.effects) {
@@ -252,11 +259,26 @@ export const getDurationSummary = (caster: Caster, spell: Spell) => {
   return output
 }
 
+export const getCastingNameSummary = (caster: Caster, spell: Spell) => {
+  return `**${spell.name}** (${spell.primaryArcana.arcana} ${Array.from({ length: spell.primaryArcana.level }, (v) => "&bull;").join("")})}}`
+}
+
+export const getCastingDescriptionSummary = (caster: Caster, spell: Spell) => {
+  let output = ""
+  let type = getCastingType(caster, spell)
+  if (type) output += `(**${type}**) `
+  output += `${spell.description}`
+  output += `\n${spell.page}`
+  return output
+}
+
 export const getCastingTimeSummary = (caster: Caster, spell: Spell) => {
   let time = getBaseCastingTime(caster)
+  let type = getCastingType(caster, spell)
   // standard
   if (spell.factors.castingTime[0] === "s") {
     let increment = time.increment * parseInt(spell.factors.castingTime[1])
+    if (type === "Grimoire") increment = increment + increment
     let unit = time.unit + (increment !== 1 ? "s" : "")
     let output = increment + " " + unit
     output += " casting time"

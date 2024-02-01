@@ -28,6 +28,7 @@ export const spell = reactive({
   name: undefined,
   isRote: false,
   isPraxis: false,
+  isGrimoire: false,
   custom: false,
   customName: undefined,
   practice: undefined as Practice | undefined,
@@ -49,7 +50,7 @@ export const spell = reactive({
     scale: "s1",
   } as Record<Factor, string>,
   roteSkills: [] as Skill[],
-  roteSkill: 0 as number,
+  roteSkill: undefined as Skill | undefined,
   spendWillpower: false,
   extraReach: 0,
   extraMana: 0,
@@ -68,6 +69,7 @@ export const spell = reactive({
     this.name = undefined
     this.isRote = false
     this.isPraxis = false
+    this.isGrimoire = false
     this.custom = false
     this.customName = undefined
     this.practice = undefined
@@ -89,7 +91,7 @@ export const spell = reactive({
       scale: "s1",
     }
     this.roteSkills = []
-    this.roteSkill = 0
+    this.roteSkill = undefined
     this.spendWillpower = false
     this.extraReach = 0
     this.extraMana = 0
@@ -175,8 +177,6 @@ export const defaultCaster = {
     merit7: { dots: 0, label: "" },
     merit8: { dots: 0, label: "" },
     merit9: { dots: 0, label: "" },
-    merit10: { dots: 0, label: "" },
-    merit11: { dots: 0, label: "" },
   },
   extras: {
     allies: "",
@@ -253,6 +253,7 @@ export const defaultCaster = {
     equipment: [],
   },
   praxes: [] as { name: string; arcana: Arcana; level: Level }[],
+  grimoires: [] as { name: string; arcana: Arcana; level: Level }[],
   rotes: [] as Rote[],
   tools: [] as Tool[],
   active: [] as Spell[],

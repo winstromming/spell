@@ -28,10 +28,10 @@
                   </n-icon>
                 </template>
               </n-button>
-              <n-button quaternary title="Cast" size="small" type="warning" @click="load(item.name)">
+              <n-button quaternary title="Prepare" size="small" type="success" @click="load(item.name)">
                 <template #icon>
                   <n-icon>
-                    <Flash />
+                    <Build />
                   </n-icon>
                 </template>
               </n-button>
@@ -49,7 +49,7 @@ import { caster, spell } from "../store/store";
 import { spells } from "../constants/spells"
 import type { Arcana, Source } from "../constants/types"
 
-import { SparklesOutline, Trash, Flash } from "@vicons/ionicons5"
+import { SparklesOutline, Trash, Build } from "@vicons/ionicons5"
 
 import Card from "../components/Card.vue"
 import { cloneDeep, merge } from "lodash";
@@ -72,8 +72,8 @@ const load = (name: string) => {
   if (item) {
     const cloned = cloneDeep(item)
     spell.reset()
-    merge(spell, cloned)
-    message.warning(`${name} is ready to cast`)
+    merge(spell, { ...cloned, isPraxis: true })
+    message.success(`${name} was prepared`)
   } else {
     message.warning(`${name} not found in spell list`)
   }

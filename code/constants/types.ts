@@ -29,7 +29,8 @@ export type Skill =
 export type Level = 1 | 2 | 3 | 4 | 5 | number
 export type Effect = {
   cost?: { type: string; value: number; multiple?: boolean }[]
-  requirement?: { arcana: Arcana; value: number }[]
+  requirement?: { arcana?: Arcana; value: number }[]
+  label?: string | boolean
   effect: string
 }
 export type Factor = "castingTime" | "potency" | "range" | "duration" | "scale"
@@ -48,6 +49,7 @@ export type Rote = {
   level: Level
   skills: Skill[]
   skill?: Skill
+  effect?: string
 }
 export type Source = {
   name: string

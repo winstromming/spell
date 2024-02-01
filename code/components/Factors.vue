@@ -171,6 +171,12 @@ const baseCastingTime = computed(() => getBaseCastingTime(caster))
 const isAdvanced = (factor: Factor) => spell.factors[factor][0] === "a"
 const isPrimaryFactor = (factor: "Duration" | "Potency") => spell.primaryFactor === factor
 
+
+const hasGrimoire = (name?: string) => {
+  if (!name || !caster.grimoires) return undefined;
+  return caster.grimoires.find((s) => s.name === name)
+}
+
 const standardCastingTimeOptions = computed(() => {
   let options = [],
     i = 0

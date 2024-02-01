@@ -7,12 +7,15 @@
         <n-alert type="warning" v-if="(spell.name || spell.custom) && isSpellArcanaTooHigh">
           <n-text>You don't have the arcana required for this spell</n-text>
         </n-alert>
-        <n-alert type="info" v-if="hasPraxis(spell.name)">
-          <n-text>{{ spell.name }} is one of your Praxes.</n-text>
+        <n-alert type="info" v-if="spell.isPraxis">
+          <n-text>{{ spell.name }} being cast as Praxis.</n-text>
         </n-alert>
-        <n-alert type="info" v-if="hasRote(spell.name)">
-          <n-text>{{ spell.name }} is one of your Rotes (+{{ hasRoteSkill(spell.name) }} bonus from {{
-            hasRote(spell.name)?.skill }}).</n-text>
+        <n-alert type="info" v-if="spell.isRote">
+          <n-text>{{ spell.name }} being cast as Rote<span v-if="spell.roteSkill"> using {{ spell.roteSkill }} (+{{
+            skills[spell.roteSkill].dots }})</span>.</n-text>
+        </n-alert>
+        <n-alert type="info" v-if="spell.isGrimoire">
+          <n-text>{{ spell.name }} being cast from Grimoire.</n-text>
         </n-alert>
       </n-space>
     </template>
@@ -120,7 +123,7 @@
                 :value="item.requirement ? !isEffectRestricted(item) : isEffectAdded(item)"
                 @update:value="toggleEffect(item)" />
               <n-space vertical :size="2">
-                <n-text strong>
+                <n-text strong v-if="item.cost || item.requirement || item.label">
                   <span v-if="item.cost">{{ item.cost.map(c => `+${c.value} ${c.type}`).join(", ") }}:</span>
                   <span v-if="item.requirement">{{
                     item.requirement.map(v => ` ${v.arcana}
@@ -281,6 +284,10 @@ const hasRote = (name?: string) => {
 const hasRoteSkill = (name?: string) => {
   return hasRote(name) ? spell.roteSkill : undefined
 }
+const hasGrimoire = (name?: string) => {
+  if (!name || !caster.grimoires) return undefined;
+  return caster.grimoires.find((s) => s.name === name)
+}
 
 const skills = computed(() => {
   return { ...caster.skills.physical, ...caster.skills.mental, ...caster.skills.social }
@@ -349,26 +356,17 @@ const chooseSpell = (choice: Spell) => {
     scale: "s1",
   }
   spell.extraMana = choice.extraMana
-  spell.isPraxis = false
-  spell.isRote = false
+  spell.isGrimoire = choice.isGrimoire ?? false
+  spell.isPraxis = choice.isPraxis ?? false
+  spell.isRote = choice.isRote ?? false
   spell.page = choice.page
+  spell.roteSkill = choice.roteSkill
   if (spell.name === "Creative Thaumaturgy") {
     spell.custom = true
     spell.customName = undefined
   } else {
     spell.custom = false
     spell.customName = undefined
-  }
-
-  const casterHasPraxis = hasPraxis(choice.name)
-  if (casterHasPraxis) {
-    spell.isPraxis = true
-  }
-
-  const casterHasRote = hasRote(choice.name)
-  if (casterHasRote && casterHasRote.skill) {
-    spell.isRote = true
-    spell.roteSkill = skills.value[casterHasRote.skill].dots
   }
   scene.reset()
 }

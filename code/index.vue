@@ -30,11 +30,12 @@
                     <Beats />
                     <Health />
                     <Conditions />
-                    <Praxes />
-                    <Rotes />
-                    <Tools />
                     <Active />
                     <Saved />
+                    <Praxes />
+                    <Rotes />
+                    <Grimoires />
+                    <Tools />
                   </n-space>
                 </n-gi>
                 <n-gi span="1 600:6 900:4 1300:3">
@@ -71,6 +72,7 @@ import Health from "./components/Health.vue";
 import Beats from "./components/Beats.vue";
 import Praxes from "./components/Praxes.vue";
 import Rotes from "./components/Rotes.vue";
+import Grimoires from "./components/Grimoires.vue";
 import Tools from "./components/Tools.vue";
 import Conditions from "./components/Conditions.vue";
 import Merits from "./components/Merits.vue";

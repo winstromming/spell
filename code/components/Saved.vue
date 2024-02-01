@@ -11,17 +11,15 @@
           :key="item.id">
           <template #tags>
             <n-space :size="5">
-              <n-tag v-if="getRoteOrPraxis(caster, item) === 'praxis'" size="small" :bordered="false" round strong
-                style="text-transform: capitalize"> Praxis </n-tag>
-              <n-tag v-if="getRoteOrPraxis(caster, item) === 'rote'" size="small" :bordered="false" round strong
-                style="text-transform: capitalize"> Rote </n-tag>
+              <n-tag v-if="getCastingType(caster, item)" size="small" :bordered="false" round strong
+                style="text-transform: capitalize"> {{ getCastingType(caster, item) }} </n-tag>
               <n-tag size="small" :bordered="false" round strong
                 :type="getUsedReach(caster, item) > getFreeReach(caster, item) ? 'warning' : 'success'">
                 {{ getUsedReach(caster, item) }}/{{ getFreeReach(caster, item) }} Reach </n-tag>
               <n-tag size="small" :bordered="false" round strong type="success"> {{ getDicePool(caster, item, scene) }}
                 Dice
               </n-tag>
-              <n-tag size="small" :bordered="false" round strong type="success"> {{ getTotalMana(caster, item) }}
+              <n-tag size="small" :bordered="false" round strong type="success"> {{ getTotalMana(caster, item, scene) }}
                 Mana
               </n-tag>
               <n-tag size="small" :bordered="false" round strong type="error"> {{ getParadoxDice(caster, item, scene) }}
@@ -54,7 +52,7 @@
                 Remove
               </n-button>
               <n-space>
-                <n-button class="btn-only-icon-when-small" title="Cast" size="tiny" type="warning"
+                <n-button class="btn-only-icon-when-small" title="Prepare" size="tiny" type="warning"
                   @click="castSpell(item)">
                   <template #icon>
                     <n-icon>
@@ -79,7 +77,7 @@
                       <Build />
                     </n-icon>
                   </template>
-                  Load
+                  Edit
                 </n-button>
               </n-space>
             </n-space>
@@ -94,7 +92,7 @@
 
 import { cloneDeep, findIndex, merge } from "lodash";
 import Card from "../components/Card.vue"
-import { getCastingFactorsSummary, getCastingEffectsSummary, getYantrasSummary, getCastingTimeSummary, getFactorSummary, getDicePoolSummary, getDicePool, getTotalMana, getParadoxDice, getRoteOrPraxis, getUsedReach, getFreeReach, getPotencySummary, getDurationSummary, getRangeSummary, getScaleSummary, getParadoxSummary } from "../constants/methods";
+import { getCastingNameSummary, getRote, getCastingEffectsSummary, getCastingDescriptionSummary, getYantrasSummary, getCastingTimeSummary, getFactorSummary, getDicePoolSummary, getDicePool, getTotalMana, getParadoxDice, getUsedReach, getFreeReach, getPotencySummary, getDurationSummary, getRangeSummary, getScaleSummary, getParadoxSummary, getCastingType } from "../constants/methods";
 
 import { BookmarkOutline, Build, DocumentText, Flash, Trash } from "@vicons/ionicons5";
 import { caster, spell, scene } from "../store/store";
@@ -111,8 +109,8 @@ const unsaveSpell = (choice: Spell) => {
 const copySpell = (choice: Spell) => {
   const out = [];
   out.push("&{template:default}");
-  out.push(`{{name=**${choice.name}** (${choice.primaryArcana.arcana} ${Array.from({ length: choice.primaryArcana.level }, v => "&bull;").join("")})}}`)
-  out.push(`{{summary=${choice.description}\n(${choice.page})}}`)
+  out.push(`{{name=${getCastingNameSummary(caster, choice)}}}`)
+  out.push(`{{summary=${getCastingDescriptionSummary(caster, choice)}}}`)
   out.push(`{{casting=${getCastingTimeSummary(caster, choice)}}}`)
   out.push(`{{factors=${getFactorSummary(caster, choice)}}}`)
   out.push(`{{extras=${getCastingEffectsSummary(caster, choice) || "None"}}}`)
@@ -128,7 +126,7 @@ const loadSpell = (choice: Spell) => {
   const cloned = cloneDeep(choice)
   spell.reset()
   merge(spell, cloned)
-  message.success(`${choice.name} was loaded`)
+  message.success(`${choice.name} was prepared`)
 }
 const castSpell = (choice: Spell) => {
   const cloned = cloneDeep(choice)
@@ -139,12 +137,11 @@ const castSpell = (choice: Spell) => {
 
 const getCastingSummaryFor = (choice: Spell) => {
   let summary = []
-  let method = getRoteOrPraxis(caster, choice)
-  if (method === "rote") summary.push("Rote")
-  if (method === "praxis") summary.push("Praxis")
+  let method = getCastingType(caster, choice)
+  if (method) summary.push(method)
   summary.push(`${getUsedReach(caster, choice)}/${getFreeReach(caster, choice)} Reach`)
   summary.push(`${getDicePool(caster, choice, scene)} Dice`)
-  summary.push(`${getTotalMana(caster, choice)} Mana`)
+  summary.push(`${getTotalMana(caster, choice, scene)} Mana`)
   summary.push(`${getParadoxDice(caster, choice, scene)} Paradox`)
   return summary.join(", ")
 }

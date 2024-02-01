@@ -55,7 +55,7 @@ import Card from "../components/Card.vue"
 import { spell, caster, scene } from "../store/store"
 import type { Caster, Spell } from "../store/store"
 import { Trash, Bookmark, DocumentText, Flash } from '@vicons/ionicons5'
-import { getCastingEffectsSummary, getCastingFactorsSummary, getCastingTimeSummary, getDicePool, getDicePoolSummary, getFactorSummary, getFreeReach, getParadoxDice, getParadoxSummary, getTotalMana, getUsedReach, getYantrasSummary } from "../constants/methods";
+import { getCastingNameSummary, getCastingDescriptionSummary, getCastingEffectsSummary, getCastingFactorsSummary, getCastingTimeSummary, getDicePool, getDicePoolSummary, getFactorSummary, getFreeReach, getParadoxDice, getParadoxSummary, getTotalMana, getUsedReach, getYantrasSummary } from "../constants/methods";
 import { cloneDeep, max } from "lodash";
 import { useMessage } from "naive-ui";
 const message = useMessage()
@@ -117,8 +117,8 @@ const resetSpell = () => {
 const copySpell = (choice: Spell) => {
   const out = [];
   out.push("&{template:default}");
-  out.push(`{{name=**${choice.name}** (${choice.primaryArcana.arcana} ${Array.from({ length: choice.primaryArcana.level }, v => "&bull;").join("")})}}`)
-  out.push(`{{summary=${choice.description}\n(${choice.page})}}`)
+  out.push(`{{name=${getCastingNameSummary(caster, choice)}`)
+  out.push(`{{summary=${getCastingDescriptionSummary(caster, choice)}}}`)
   out.push(`{{casting=${getCastingTimeSummary(caster, choice)}}}`)
   out.push(`{{factors=${getCastingFactorsSummary(caster, choice)}}}`)
   out.push(`{{extras=${getCastingEffectsSummary(caster, choice) || "None"}}}`)
