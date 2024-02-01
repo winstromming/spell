@@ -134,7 +134,7 @@ const load = (source: typeof caster.rotes[number]) => {
     const cloned = cloneDeep(item)
     if (source.effect) cloned.description += `\n${source.effect}`
     spell.reset()
-    merge(spell, { ...cloned, isRote: true })
+    merge(spell, { ...cloned, isRote: true, roteSkill: source.skill })
     message.success(`${source.name} was prepared`)
   } else {
     message.warning(`${source.name} not found in spell list`)
