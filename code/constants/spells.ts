@@ -8863,6 +8863,38 @@ export const spells: Source[] = [
     description: "The Mage can determine if the subject will prove beneficial or baneful in the future. When acting on the information gained, the Mage can add the spell's potency to their Initiative.",
   },
   {
+    name: "Read History",
+    primaryArcana: {
+      arcana: "Time",
+      level: 1,
+    },
+    practice: "Knowing",
+    primaryFactor: "Potency",
+    roteSkills: ["Investigation", "Occult", "Empathy"],
+    page: "Tome of the Pentacle p19",
+    description: "Reveals the exact age of the subject or time elapsed since a specific event at which the subject was present, in which case the spell becomes Withstood by the subject's temporal sympathy to that event.",
+    additionalEffects: [
+      {
+        cost: [
+          {
+            type: "Reach",
+            value: 1,
+          },
+        ],
+        effect: "Learn time elapsed since the subject's last lacuna.",
+      },
+      {
+        cost: [
+          {
+            type: "Reach",
+            value: 1,
+          },
+        ],
+        effect: "Learn time elapsed since the subject's temporal sympathy was a specified strength.",
+      },
+    ],
+  },
+  {
     name: "Perfect Timing",
     primaryArcana: {
       arcana: "Time",
