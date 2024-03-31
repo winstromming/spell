@@ -11,13 +11,13 @@
           <template #content>
             <n-space vertical size="small">
               <n-text v-if="getCastingFactorsSummary(caster, item)"><b>Factors:</b> {{
-                getCastingFactorsSummary(caster, item)
-              }}.</n-text>
+    getCastingFactorsSummary(caster, item)
+  }}.</n-text>
               <n-text v-if="getCastingEffectsSummary(caster, item)"><b>Extra:</b> {{ getCastingEffectsSummary(caster,
-                item) }}</n-text>
+    item) }}</n-text>
               <n-text v-if="getYantrasSummary(caster, item)"><b>Yantras:</b> {{
-                getYantrasSummary(caster, item)
-              }}.</n-text>
+    getYantrasSummary(caster, item)
+                }}.</n-text>
             </n-space>
           </template>
           <template #footer>
@@ -48,7 +48,7 @@ import { caster, spell } from "../store/store";
 import type { Spell } from "../store/store";
 
 const uncastSpell = (choice: Spell) => {
-  let index = findIndex(caster.active, (choice) => choice.id === spell.id)
+  let index = findIndex(caster.active, (spell) => choice.id === spell.id)
   caster.active.splice(index, 1)
 };
 

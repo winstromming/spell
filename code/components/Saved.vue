@@ -29,15 +29,15 @@
           <template #content>
             <n-space vertical size="large">
               <n-text v-if="getCastingSummaryFor(item)"><b>Casting:</b> {{
-                getCastingSummaryFor(item)
-              }}.</n-text>
+    getCastingSummaryFor(item)
+  }}.</n-text>
               <n-text v-if="getFactorsSummaryFor(item)"><b>Factors:</b> {{
-                getFactorsSummaryFor(item)
-              }}.</n-text>
+    getFactorsSummaryFor(item)
+  }}.</n-text>
               <n-text v-if="getEffectsSummaryFor(item)"><b>Extra:</b> {{ getEffectsSummaryFor(item) }}</n-text>
               <n-text v-if="getYantrasSummary(caster, item)"><b>Yantras:</b> {{
-                getYantrasSummary(caster, item)
-              }}.</n-text>
+    getYantrasSummary(caster, item)
+  }}.</n-text>
             </n-space>
           </template>
           <template #footer>
@@ -102,7 +102,7 @@ import { useMessage } from "naive-ui";
 const message = useMessage()
 
 const unsaveSpell = (choice: Spell) => {
-  let index = findIndex(caster.saved, (c) => c.id === choice.id)
+  let index = findIndex(caster.saved, (spell) => spell.id === choice.id)
   caster.saved.splice(index, 1)
 };
 
