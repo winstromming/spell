@@ -14,12 +14,7 @@
           :summary="`${item.arcana} ${dots(item.level)}`">
           <template #content>
             <n-space vertical>
-              <n-text depth="3" italic>
-                <n-ellipsis :line-clamp="2">
-                  {{ description(item) }}
-                </n-ellipsis>
-              </n-text>
-              <n-input v-model:value="item.effect" type="textarea" placeholder="Custom additional effect"
+              <n-input v-model:value="item.description" type="textarea" placeholder="Description"
                 :autosize="{ minRows: 1 }" size="small" />
               <n-select v-model:value="item.skill" placeholder="Choose rote skill to use" size="small"
                 :options="item.skills.map((s) => ({ label: `${s} (+${skills[s]?.dots ?? 0})`, value: s }))"
@@ -105,7 +100,7 @@ const choose = (option: Source) => {
     level: option.primaryArcana.level,
     skills: option.roteSkills,
     skill: undefined,
-    effect: undefined,
+    description: option.description,
   });
 };
 
@@ -123,16 +118,11 @@ const name = (option: Rote) => {
   return option.name
 }
 
-const description = (option: Rote) => {
-  const normal = spells.find((s) => s.name === option.name)
-  return normal?.description || ""
-}
-
 const load = (source: typeof caster.rotes[number]) => {
   const item = spells.find((s) => s.name === source.name)
   if (item) {
     const cloned = cloneDeep(item)
-    if (source.effect) cloned.description += `\n${source.effect}`
+    if (source.description) cloned.description = source.description;
     spell.reset()
     merge(spell, { ...cloned, isRote: true, roteSkill: source.skill })
     message.success(`${source.name} was prepared`)

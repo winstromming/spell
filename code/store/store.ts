@@ -253,7 +253,7 @@ export const defaultCaster = {
     equipment: [],
   },
   praxes: [] as { name: string; arcana: Arcana; level: Level }[],
-  grimoires: [] as { name: string; arcana: Arcana; level: Level }[],
+  grimoires: [] as { name: string; arcana: Arcana; description: string; level: Level }[],
   rotes: [] as Rote[],
   tools: [] as Tool[],
   active: [] as Spell[],

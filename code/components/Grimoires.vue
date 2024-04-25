@@ -14,11 +14,8 @@
           :summary="`${item.arcana} ${dots(item.level)}`">
           <template #content>
             <n-space vertical>
-              <n-text depth="3" italic>
-                <n-ellipsis :line-clamp="2">
-                  {{ getDescriptionForSpell(item.name) }}
-                </n-ellipsis>
-              </n-text>
+              <n-input v-model:value="item.description" type="textarea" placeholder="Description"
+                :autosize="{ minRows: 1 }" size="small" />
             </n-space>
           </template>
           <template #footer>
@@ -93,6 +90,7 @@ const choose = (option: Source) => {
     name: option.name,
     arcana: option.primaryArcana.arcana,
     level: option.primaryArcana.level,
+    description: option.description,
   });
 };
 
@@ -101,17 +99,12 @@ const remove = (name: string) => {
   if (index !== -1) caster.grimoires.splice(index, 1)
 };
 
-const getDescriptionForSpell = (name: string) => {
-  const item = spells.find((s) => s.name === name)
-  if (item) return item.description
-  return ""
-}
-
 const load = (source: typeof caster.grimoires[number]) => {
   const item = spells.find((s) => s.name === source.name)
   if (item) {
     const cloned = cloneDeep(item)
     spell.reset()
+    if (source.description) cloned.description = source.description;
     merge(spell, { ...cloned, isGrimoire: true })
     message.success(`${source.name} was prepared`)
   } else {

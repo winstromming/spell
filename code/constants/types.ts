@@ -49,7 +49,7 @@ export type Rote = {
   level: Level
   skills: Skill[]
   skill?: Skill
-  effect?: string
+  description?: string
 }
 export type Source = {
   name: string
