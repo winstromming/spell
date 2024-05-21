@@ -4,9 +4,13 @@ import type { Caster, Spell, Scene } from "../store/store.js"
 import type { Yantra } from "./types.js"
 
 export const getCastingType = (caster: Caster, spell: Spell) => {
-  if (caster.rotes.findIndex((r) => r.name === spell.name) !== -1) return "Rote"
-  if (caster.praxes.findIndex((r) => r.name === spell.name) !== -1) return "Praxis"
-  if (caster.grimoires.findIndex((r) => r.name === spell.name) !== -1) return "Grimoire"
+  // if (caster.rotes.findIndex((r) => r.name === spell.name) !== -1) return "Rote"
+  // if (caster.praxes.findIndex((r) => r.name === spell.name) !== -1) return "Praxis"
+  // if (caster.grimoires.findIndex((r) => r.name === spell.name) !== -1) return "Grimoire"
+  // return null
+  if (spell.isRote) return "Rote"
+  if (spell.isPraxis) return "Praxis"
+  if (spell.isGrimoire) return "Grimoire"
   return null
 }
 
