@@ -37,19 +37,21 @@
 </template>
 
 <script setup lang="ts">
-import { caster } from "../store/store";
+import { caster, type Spell } from "../store/store";
 import Card from "../components/Card.vue"
 import { Trash, PricetagOutline } from "@vicons/ionicons5"
 import { computed, ref } from "vue";
 
 import { conditions } from "../constants/conditions"
+import { spells } from "../constants/spells";
 import type { Condition } from "../constants/types"
 import type { SelectInst } from "naive-ui";
+import { dots } from "../constants/functions";
 
 const select = ref<SelectInst | null>(null)
 const selected = ref<string | null>(null)
 
-const update = (value: string | Condition) => {
+const update = (value: string | Condition | Spell) => {
   let condition: Partial<Condition> = {};
   if (typeof value === "string") {
     condition.name = value;
@@ -57,6 +59,12 @@ const update = (value: string | Condition) => {
     condition.persist = false;
     condition.description = "";
     condition.page = "Custom";
+  } else if ("primaryArcana" in value) {
+    condition.name = `${value.name}`;
+    condition.type = `Spell (${value.primaryArcana.arcana})`;
+    condition.persist = false;
+    condition.description = `${value.description}`;
+    condition.page = value.page;
   } else {
     condition = value;
   }
@@ -80,6 +88,22 @@ const options = computed(() => {
           return {
             label: c.name,
             value: c,
+          }
+        }),
+    })
+  }
+  for (let [name, arcana] of Object.entries(caster.arcana)) {
+    options.push({
+      type: "group",
+      label: name,
+      key: name,
+      children: spells
+        .filter((s) => s.primaryArcana.arcana === name)
+        .sort((a, b) => a.primaryArcana.level - b.primaryArcana.level)
+        .map((s) => {
+          return {
+            label: `${dots(s.primaryArcana.level)} ${s.name}`,
+            value: s,
           }
         }),
     })

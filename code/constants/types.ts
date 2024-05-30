@@ -72,7 +72,7 @@ export type Source = {
 }
 export type Condition = {
   name: string
-  type: "Mental" | "Physical" | "Social" | "Supernatural" | "Awakened" | "Paradox" | "Other"
+  type: "Mental" | "Physical" | "Social" | "Supernatural" | "Awakened" | "Paradox" | "Other" | string
   page: string
   persist: true | false | undefined
   description: string
