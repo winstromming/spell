@@ -236,7 +236,7 @@ const standardPotencyOptions = computed(() => {
 const advancedPotencyOptions = computed(() => {
   let options = []
   let i = 0
-  while (i++ < 11) {
+  while (i++ < 12) {
     let penalty = (i - 1) * 2
 
     if (isPrimaryFactor("Potency") && spell.primaryArcana.arcana) {

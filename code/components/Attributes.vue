@@ -84,10 +84,10 @@ import { computed, watch } from "vue";
 
 
 watch(caster, () => {
-  caster.traits.Speed.base = caster.attributes.physical.Strength.dots + caster.attributes.physical.Dexterity.dots;
+  caster.traits.Speed.base = caster.attributes.physical.Strength.dots + caster.attributes.physical.Dexterity.dots + caster.traits.Size.base;
 });
 watch(caster, () => {
-  caster.traits.Speed.base = caster.attributes.physical.Strength.dots + caster.attributes.physical.Dexterity.dots;
+  caster.traits.Speed.base = caster.attributes.physical.Strength.dots + caster.attributes.physical.Dexterity.dots + caster.traits.Size.base;
 });
 watch(caster, () => {
   caster.traits.Defense.base = Math.min(caster.attributes.physical.Dexterity.dots, caster.attributes.mental.Wits.dots) + caster.skills.physical.Athletics.dots

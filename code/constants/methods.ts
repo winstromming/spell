@@ -1,5 +1,5 @@
 import { some, clone, range, filter } from "lodash"
-import { arcanaNames, baseCastingTimes, castingMethods, factors, gnosisManaLimits, durations, scales, practices, yantrasBaseData } from "./constants"
+import { baseCastingTimes, durations, scales, yantrasBaseData } from "./constants"
 import type { Caster, Spell, Scene } from "../store/store.js"
 import type { Yantra } from "./types.js"
 
@@ -145,7 +145,7 @@ export const getWithstand = (spell: Spell, scene: Scene) => {
 
 export const getPotencyPenalty = (caster: Caster, spell: Spell) => {
   if (spell === undefined || !spell.primaryArcana.arcana || !spell.primaryArcana.level) return 0
-  let penalty = (parseInt(spell.factors.potency[1]) - 1) * 2
+  let penalty = (parseInt(spell.factors.potency.substring(1)) - 1) * 2
   if (spell.primaryFactor === "Potency") {
     penalty -= (caster.arcana[spell.primaryArcana.arcana].dots - 1) * 2
   }
@@ -247,7 +247,7 @@ export const getParadoxDice = (caster: Caster, spell: Spell, scene: Scene) => {
 }
 
 export const getPotencySummary = (caster: Caster, spell: Spell) => {
-  let output = spell.factors.potency[1]
+  let output = spell.factors.potency.substring(1)
   output += " potency"
   if (spell.factors.potency[0] === "a") output += " (-2 Withstand)"
   return output
